@@ -1,0 +1,2 @@
+routine,N,threads,seed,repetitions,seconds_mean,GFLOP_s,TFLOP_s,checksum,raw_seconds,mkl_version,mkl_runtime_path,threading_runtime_maps,status
+raw_mkl_bf16bf16fp32,256,64,261160,10,4.23759e-05,791.82818536,0.79182818536,1980.78883791,"4.5e-05;3.9148e-05;3.9988e-05;3.9848e-05;6.3623e-05;4.0153e-05;4.0405e-05;3.8848e-05;3.8548e-05;3.8198e-05","Intel(R) oneAPI Math Kernel Library Version 2026.0-Product Build 20260401 for Intel(R) 64 architecture applications","/data/home/caiwl/ozAMX/third_party/code/mkl-2026/venv/lib/libmkl_rt.so.3","libmkl_gnu_thread.so.3;libgomp.so.1.0.0",ok

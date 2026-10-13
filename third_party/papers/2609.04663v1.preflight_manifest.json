@@ -1,0 +1,24 @@
+{
+  "reference_slug": "2609.04663v1",
+  "command": "PYTHONPATH=<local-pdf-tools> python3 <pdf_read_preflight.py> third_party/papers/2609.04663v1.pdf --output third_party/papers/2609.04663v1.pdf_read_preflight.json",
+  "status": "PASS",
+  "scope": "STRUCTURE_ONLY",
+  "generated_at": "2026-10-12T15:24:22.807309+00:00",
+  "sidecar": "third_party/papers/2609.04663v1.pdf_read_preflight.json",
+  "pdf_sha256": "11981bb2fc8be3d492a82aeb23898ee2ac999c1d5660fdd3c7fc2438615ef70f",
+  "declared_pages": 29,
+  "enumerated_pages": 29,
+  "reader_pages": 29,
+  "warnings": [],
+  "dependency": {
+    "name": "pypdf",
+    "version": "6.20.0",
+    "install_path": "third_party/code/pdf-tools",
+    "wheel": "pypdf-6.20.0-py3-none-any.whl",
+    "wheel_sha256": "f003fc2014814d264fe7dd3f9d435c158e23e1a85a2233f87a0a2d6d21c914ad"
+  },
+  "limitations": [
+    "Structural preflight only; it does not validate semantic completeness or page-level content fidelity.",
+    "No human reading or semantic review was performed."
+  ]
+}

@@ -1,0 +1,494 @@
+{
+  "diagnostic": "FP64 slice-budget alternatives; independent numerical diagnostic, no project kernel",
+  "paper_hypothesis": "rho45 global ceil(log2(max(abs(R)))) literal shift",
+  "alternatives": {
+    "direct_bf16_residual": "round BF16 directly from binary64 residual, then FP64 subtraction; diagnostic hypothesis only",
+    "diagnostic_rho44": "literal shifted procedure with rho=44; diagnostic hypothesis only"
+  },
+  "rho_values": {
+    "paper_literal_rho45": 45,
+    "diagnostic_rho44": 44,
+    "direct_bf16_residual": null
+  },
+  "slice_count": 6,
+  "slice_budgets": {
+    "6": "i+j<3",
+    "10": "i+j<4",
+    "15": "i+j<5",
+    "21": "i+j<6"
+  },
+  "seed": 20261012,
+  "numpy_version": "2.5.2",
+  "longdouble_note": "Host numpy.longdouble; inspect reported mantissa bits; not assumed IEEE binary128",
+  "random_stream_note": "Each size uses the same per-size PCG64 stream as the original 64,128,256 sweep; smaller A/B draws are advanced and discarded when running a larger size alone.",
+  "sizes": [
+    {
+      "n": 256,
+      "seed_sequence": "NumPy default_rng(PCG64); A then B uniform[-1,1]",
+      "reference_dtype": "numpy.longdouble",
+      "longdouble_storage_bytes": 16,
+      "longdouble_mantissa_bits": 64,
+      "methods": {
+        "paper_literal_rho45": {
+          "method": "paper_literal_rho45",
+          "hypothesis_status": "paper-literal reference",
+          "A_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999925116718249,
+              "sigma": 35184372088832.0,
+              "zero_component_count": 218,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0039061018782693413,
+              "v_after": -8
+            },
+            {
+              "slice": 1,
+              "v_before": -8,
+              "max_residual_before": 0.0039061018782693413,
+              "sigma": 137438953472.0,
+              "zero_component_count": 294,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.5258404855833518e-05,
+              "v_after": -16
+            },
+            {
+              "slice": 2,
+              "v_before": -16,
+              "max_residual_before": 1.5258404855833518e-05,
+              "sigma": 536870912.0,
+              "zero_component_count": 287,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 5.960039617391999e-08,
+              "v_after": -24
+            },
+            {
+              "slice": 3,
+              "v_before": -24,
+              "max_residual_before": 5.960039617391999e-08,
+              "sigma": 2097152.0,
+              "zero_component_count": 285,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 2.3282731298479575e-10,
+              "v_after": -32
+            },
+            {
+              "slice": 4,
+              "v_before": -32,
+              "max_residual_before": 2.3282731298479575e-10,
+              "sigma": 8192.0,
+              "zero_component_count": 289,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 9.094947017729282e-13,
+              "v_after": -40
+            },
+            {
+              "slice": 5,
+              "v_before": -40,
+              "max_residual_before": 9.094947017729282e-13,
+              "sigma": 32.0,
+              "zero_component_count": 327,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 3.552713678800501e-15,
+              "v_after": -48
+            }
+          ],
+          "B_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999903831701769,
+              "sigma": 35184372088832.0,
+              "zero_component_count": 198,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0039061457541742506,
+              "v_after": -8
+            },
+            {
+              "slice": 1,
+              "v_before": -8,
+              "max_residual_before": 0.0039061457541742506,
+              "sigma": 137438953472.0,
+              "zero_component_count": 299,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.525836791582691e-05,
+              "v_after": -16
+            },
+            {
+              "slice": 2,
+              "v_before": -16,
+              "max_residual_before": 1.525836791582691e-05,
+              "sigma": 536870912.0,
+              "zero_component_count": 274,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 5.960195115228828e-08,
+              "v_after": -24
+            },
+            {
+              "slice": 3,
+              "v_before": -24,
+              "max_residual_before": 5.960195115228828e-08,
+              "sigma": 2097152.0,
+              "zero_component_count": 264,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 2.3282553662795635e-10,
+              "v_after": -32
+            },
+            {
+              "slice": 4,
+              "v_before": -32,
+              "max_residual_before": 2.3282553662795635e-10,
+              "sigma": 8192.0,
+              "zero_component_count": 306,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 9.094947017729282e-13,
+              "v_after": -40
+            },
+            {
+              "slice": 5,
+              "v_before": -40,
+              "max_residual_before": 9.094947017729282e-13,
+              "sigma": 32.0,
+              "zero_component_count": 302,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 3.552713678800501e-15,
+              "v_after": -48
+            }
+          ],
+          "all_slices_exact_bf16": true,
+          "terminal_A_relative_fro": 2.824017345698862e-15,
+          "terminal_B_relative_fro": 2.820915518184093e-15,
+          "selected_product_errors": {
+            "6": {
+              "eF": 8.522469579230995e-08,
+              "scaledmax": 3.4557707478269226e-08,
+              "max_abs": 1.98644566270191e-06
+            },
+            "10": {
+              "eF": 3.631884904125142e-10,
+              "scaledmax": 1.3457004531134595e-10,
+              "max_abs": 7.990660549038464e-09
+            },
+            "15": {
+              "eF": 1.540158161397562e-12,
+              "scaledmax": 5.458666720042087e-13,
+              "max_abs": 3.5538120189693156e-11
+            },
+            "21": {
+              "eF": 6.4076426392908e-15,
+              "scaledmax": 2.229082185270226e-15,
+              "max_abs": 1.3714290120203643e-13
+            }
+          }
+        },
+        "direct_bf16_residual": {
+          "method": "direct_bf16_residual",
+          "hypothesis_status": "diagnostic alternative; not attributed to paper authors",
+          "A_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999925116718249,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0019530861189984705,
+              "v_after": -9
+            },
+            {
+              "slice": 1,
+              "v_before": -9,
+              "max_residual_before": 0.0019530861189984705,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 3.814520991740622e-06,
+              "v_after": -18
+            },
+            {
+              "slice": 2,
+              "v_before": -18,
+              "max_residual_before": 3.814520991740622e-06,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 7.448998973202947e-09,
+              "v_after": -27
+            },
+            {
+              "slice": 3,
+              "v_before": -27,
+              "max_residual_before": 7.448998973202947e-09,
+              "sigma": null,
+              "zero_component_count": 1,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.4546586157848651e-11,
+              "v_after": -36
+            },
+            {
+              "slice": 4,
+              "v_before": -36,
+              "max_residual_before": 1.4546586157848651e-11,
+              "sigma": null,
+              "zero_component_count": 252,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 2.842170943040401e-14,
+              "v_after": -45
+            },
+            {
+              "slice": 5,
+              "v_before": -45,
+              "max_residual_before": 2.842170943040401e-14,
+              "sigma": null,
+              "zero_component_count": 19323,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0,
+              "v_after": null
+            }
+          ],
+          "B_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999903831701769,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0019531130726864188,
+              "v_after": -9
+            },
+            {
+              "slice": 1,
+              "v_before": -9,
+              "max_residual_before": 0.0019531130726864188,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 3.814156480430597e-06,
+              "v_after": -18
+            },
+            {
+              "slice": 2,
+              "v_before": -18,
+              "max_residual_before": 3.814156480430597e-06,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 7.450490224769624e-09,
+              "v_after": -27
+            },
+            {
+              "slice": 3,
+              "v_before": -27,
+              "max_residual_before": 7.450490224769624e-09,
+              "sigma": null,
+              "zero_component_count": 0,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.4550805005342227e-11,
+              "v_after": -36
+            },
+            {
+              "slice": 4,
+              "v_before": -36,
+              "max_residual_before": 1.4550805005342227e-11,
+              "sigma": null,
+              "zero_component_count": 238,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 2.842170943040401e-14,
+              "v_after": -45
+            },
+            {
+              "slice": 5,
+              "v_before": -45,
+              "max_residual_before": 2.842170943040401e-14,
+              "sigma": null,
+              "zero_component_count": 19175,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0,
+              "v_after": null
+            }
+          ],
+          "all_slices_exact_bf16": true,
+          "terminal_A_relative_fro": 0.0,
+          "terminal_B_relative_fro": 0.0,
+          "selected_product_errors": {
+            "6": {
+              "eF": 6.467130948953277e-09,
+              "scaledmax": 2.3568355324050587e-09,
+              "max_abs": 1.4408862056974892e-07
+            },
+            "10": {
+              "eF": 1.0672583430461179e-11,
+              "scaledmax": 3.991185355113907e-12,
+              "max_abs": 2.4985366813695675e-10
+            },
+            "15": {
+              "eF": 1.7178555653693294e-14,
+              "scaledmax": 6.641820260778082e-15,
+              "max_abs": 4.027105187406725e-13
+            },
+            "21": {
+              "eF": 2.3133306907086352e-17,
+              "scaledmax": 9.724648420029646e-18,
+              "max_abs": 5.971785566050158e-16
+            }
+          }
+        },
+        "diagnostic_rho44": {
+          "method": "diagnostic_rho44",
+          "hypothesis_status": "diagnostic alternative; not attributed to paper authors",
+          "A_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999925116718249,
+              "sigma": 17592186044416.0,
+              "zero_component_count": 106,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0029296484606231576,
+              "v_after": -8
+            },
+            {
+              "slice": 1,
+              "v_before": -8,
+              "max_residual_before": 0.0029296484606231576,
+              "sigma": 68719476736.0,
+              "zero_component_count": 242,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.1435683014759945e-05,
+              "v_after": -16
+            },
+            {
+              "slice": 2,
+              "v_before": -16,
+              "max_residual_before": 1.1435683014759945e-05,
+              "sigma": 268435456.0,
+              "zero_component_count": 312,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 4.467744574299104e-08,
+              "v_after": -24
+            },
+            {
+              "slice": 3,
+              "v_before": -24,
+              "max_residual_before": 4.467744574299104e-08,
+              "sigma": 1048576.0,
+              "zero_component_count": 293,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.570561458663633e-10,
+              "v_after": -32
+            },
+            {
+              "slice": 4,
+              "v_before": -32,
+              "max_residual_before": 1.570561458663633e-10,
+              "sigma": 4096.0,
+              "zero_component_count": 276,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 4.547473508864641e-13,
+              "v_after": -41
+            },
+            {
+              "slice": 5,
+              "v_before": -41,
+              "max_residual_before": 4.547473508864641e-13,
+              "sigma": 8.0,
+              "zero_component_count": 148,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.1102230246251565e-15,
+              "v_after": -49
+            }
+          ],
+          "B_layers": [
+            {
+              "slice": 0,
+              "v_before": 0,
+              "max_residual_before": 0.9999903831701769,
+              "sigma": 17592186044416.0,
+              "zero_component_count": 97,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 0.0029294086091791183,
+              "v_after": -8
+            },
+            {
+              "slice": 1,
+              "v_before": -8,
+              "max_residual_before": 0.0029294086091791183,
+              "sigma": 68719476736.0,
+              "zero_component_count": 224,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.1433855382270153e-05,
+              "v_after": -16
+            },
+            {
+              "slice": 2,
+              "v_before": -16,
+              "max_residual_before": 1.1433855382270153e-05,
+              "sigma": 268435456.0,
+              "zero_component_count": 268,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 4.4532304066535744e-08,
+              "v_after": -24
+            },
+            {
+              "slice": 3,
+              "v_before": -24,
+              "max_residual_before": 4.4532304066535744e-08,
+              "sigma": 1048576.0,
+              "zero_component_count": 274,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.7117951500722484e-10,
+              "v_after": -32
+            },
+            {
+              "slice": 4,
+              "v_before": -32,
+              "max_residual_before": 1.7117951500722484e-10,
+              "sigma": 4096.0,
+              "zero_component_count": 313,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 6.754596881819452e-13,
+              "v_after": -40
+            },
+            {
+              "slice": 5,
+              "v_before": -40,
+              "max_residual_before": 6.754596881819452e-13,
+              "sigma": 16.0,
+              "zero_component_count": 332,
+              "component_is_exact_bf16": true,
+              "max_abs_residual_after": 1.7763568394002505e-15,
+              "v_after": -49
+            }
+          ],
+          "all_slices_exact_bf16": true,
+          "terminal_A_relative_fro": 7.91458102239819e-16,
+          "terminal_B_relative_fro": 1.4074737939929229e-15,
+          "selected_product_errors": {
+            "6": {
+              "eF": 3.7721107935290526e-08,
+              "scaledmax": 1.327087679891157e-08,
+              "max_abs": 9.121914682793763e-07
+            },
+            "10": {
+              "eF": 1.5180756386164958e-10,
+              "scaledmax": 5.4368595238499834e-11,
+              "max_abs": 3.598574844360103e-09
+            },
+            "15": {
+              "eF": 6.075339900147696e-13,
+              "scaledmax": 2.147414859298346e-13,
+              "max_abs": 1.390751814926705e-11
+            },
+            "21": {
+              "eF": 2.151878180809756e-15,
+              "scaledmax": 8.176672147403991e-16,
+              "max_abs": 5.154080287561591e-14
+            }
+          }
+        }
+      }
+    }
+  ]
+}

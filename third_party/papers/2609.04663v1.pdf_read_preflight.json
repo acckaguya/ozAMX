@@ -1,0 +1,12 @@
+{
+  "schema": "pdf_read_preflight/1",
+  "verdict": "PASS",
+  "file": "third_party/papers/2609.04663v1.pdf",
+  "sha256": "11981bb2fc8be3d492a82aeb23898ee2ac999c1d5660fdd3c7fc2438615ef70f",
+  "declared_page_count": 29,
+  "enumerated_page_count": 29,
+  "reader_page_count": 29,
+  "warnings": [],
+  "generated_at": "2026-10-12T15:24:22.807309+00:00",
+  "tool": "pdf_read_preflight/1.0.0"
+}

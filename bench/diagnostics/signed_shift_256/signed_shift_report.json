@@ -1,0 +1,145 @@
+{
+  "method": "diagnostic_signed_rho44",
+  "n": 256,
+  "seed": 20261012,
+  "status": "diagnostic only; not paper literal; no parameter search",
+  "reference": "numpy.longdouble, host 80-bit extended; same exported A/B",
+  "layers": {
+    "A": [
+      {
+        "slice": 0,
+        "v_before": 0,
+        "max_abs_residual_before": 0.9999925116718249,
+        "zero_component_count": 152,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 0.001953115880863443
+      },
+      {
+        "slice": 1,
+        "v_before": -9,
+        "max_abs_residual_before": 0.001953115880863443,
+        "zero_component_count": 123,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 3.8146753538192968e-06
+      },
+      {
+        "slice": 2,
+        "v_before": -18,
+        "max_abs_residual_before": 3.8146753538192968e-06,
+        "zero_component_count": 142,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 7.450328576297238e-09
+      },
+      {
+        "slice": 3,
+        "v_before": -27,
+        "max_abs_residual_before": 7.450328576297238e-09,
+        "zero_component_count": 125,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 1.4551915228366852e-11
+      },
+      {
+        "slice": 4,
+        "v_before": -36,
+        "max_abs_residual_before": 1.4551915228366852e-11,
+        "zero_component_count": 137,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 2.842170943040401e-14
+      },
+      {
+        "slice": 5,
+        "v_before": -45,
+        "max_abs_residual_before": 2.842170943040401e-14,
+        "zero_component_count": 238,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 0.0
+      }
+    ],
+    "B": [
+      {
+        "slice": 0,
+        "v_before": 0,
+        "max_abs_residual_before": 0.9999903831701769,
+        "zero_component_count": 133,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 0.0019531130726864188
+      },
+      {
+        "slice": 1,
+        "v_before": -9,
+        "max_abs_residual_before": 0.0019531130726864188,
+        "zero_component_count": 111,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 3.814682329572605e-06
+      },
+      {
+        "slice": 2,
+        "v_before": -18,
+        "max_abs_residual_before": 3.814682329572605e-06,
+        "zero_component_count": 142,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 7.450490224769624e-09
+      },
+      {
+        "slice": 3,
+        "v_before": -27,
+        "max_abs_residual_before": 7.450490224769624e-09,
+        "zero_component_count": 123,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 1.4551249094552077e-11
+      },
+      {
+        "slice": 4,
+        "v_before": -36,
+        "max_abs_residual_before": 1.4551249094552077e-11,
+        "zero_component_count": 151,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 2.842170943040401e-14
+      },
+      {
+        "slice": 5,
+        "v_before": -45,
+        "max_abs_residual_before": 2.842170943040401e-14,
+        "zero_component_count": 256,
+        "component_is_exact_bf16": true,
+        "max_abs_residual_after": 0.0
+      }
+    ]
+  },
+  "all_slices_exact_bf16": true,
+  "terminal_A_relative_fro": 0.0,
+  "terminal_B_relative_fro": 0.0,
+  "selected_product_errors": {
+    "6": {
+      "eF": 1.493568419286113e-08,
+      "scaledmax": 5.610834759003294e-09,
+      "max_abs": 3.541362035916354e-07
+    },
+    "10": {
+      "eF": 3.269055220684524e-11,
+      "scaledmax": 1.165519418129832e-11,
+      "max_abs": 7.478473290395589e-10
+    },
+    "15": {
+      "eF": 6.963600562382121e-14,
+      "scaledmax": 2.5473074476629118e-14,
+      "max_abs": 1.5810716451347684e-12
+    },
+    "21": {
+      "eF": 1.2468590571370224e-16,
+      "scaledmax": 5.099503511925879e-17,
+      "max_abs": 3.1303085124001484e-15
+    }
+  },
+  "full36_error": {
+    "eF": 2.7406068594047903e-19,
+    "scaledmax": 1.8749032541584453e-19,
+    "max_abs": 1.214306433183765e-17
+  },
+  "truncation21_error": {
+    "eF": 1.2468590571370224e-16,
+    "scaledmax": 5.099503511925879e-17,
+    "max_abs": 3.1303085124001484e-15
+  },
+  "export_sha256": "eadb9f8ba95fe791f77c9d3cdefae55eda5e4420fe696a7cf09cc045e43c3b7b"
+}

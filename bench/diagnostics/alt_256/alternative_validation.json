@@ -1,0 +1,17 @@
+{
+  "n": 256,
+  "methods": [
+    "diagnostic_rho44",
+    "direct_bf16_residual",
+    "paper_literal_rho45"
+  ],
+  "budgets": [
+    "6",
+    "10",
+    "15",
+    "21"
+  ],
+  "reference_dtype": "numpy.longdouble",
+  "longdouble_storage_bytes": 16,
+  "longdouble_mantissa_bits": 64
+}

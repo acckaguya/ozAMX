@@ -1,0 +1,49 @@
+# Local build and compiler products
+/build/
+**/__pycache__/
+*.py[cod]
+*.tmp
+/tools/amx_probe
+/bench/frozen/
+/bench/campaign.lock
+/bench/campaign_logs/
+/bench/pilot*.csv
+
+# Local/vendor environments and machine-specific state
+/third_party/code/
+/.aws/
+/.codex/
+/.agents/
+/traces/
+/docs/QUOTA_*
+/docs/REPRODUCTION_TRACE.md
+/docs/CAMPAIGN_STATE.md
+/docs/continuity.md
+/docs/resume_state.json
+/docs/trace/
+
+# Generated native diagnostic executables
+/bench/diagnostics/alt_256/native_alternative_accuracy
+/bench/diagnostics/signed_shift_256/native_signed_shift_accuracy
+
+# Local-only quota/account RPC operations and service launchers
+/tools/quota_snapshot.py
+/tools/quota_watch.py
+/tools/quota_service_diagnostic.py
+/tools/start_quota_watch_systemd.sh
+/tools/test_quota_watch.py
+/tools/start_campaign_systemd.sh
+/tools/start_finalize_systemd.sh
+
+# Local review notes, vendor PDF copy, and campaign runtime artifacts
+/docs/ARCHITECTURE_REVIEW.md
+/docs/environment.md
+/docs/reproduction-spec.md
+/third_party/docs/intel-architecture-isa-extensions-dec-2024.pdf
+/bench/full_sweep_runtime.log
+/bench/full_sweep_32768_fp64_p6.csv
+/bench/full_sweep_32768_fp64_p10.csv
+/bench/full_sweep_32768_fp64_p6_progress.fp64.32768.6.json
+
+# Private GitHub CLI configuration, if a local user chooses to keep it in-workspace
+/.github-cli-auth/
