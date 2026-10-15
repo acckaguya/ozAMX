@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "seed": "0x8454a11ce",
+  "shapes": [
+    [
+      1,
+      17,
+      31
+    ],
+    [
+      7,
+      33,
+      33
+    ],
+    [
+      17,
+      65,
+      257
+    ],
+    [
+      65,
+      129,
+      65
+    ],
+    [
+      256,
+      256,
+      256
+    ],
+    [
+      512,
+      512,
+      512
+    ],
+    [
+      256,
+      512,
+      256
+    ],
+    [
+      512,
+      256,
+      512
+    ]
+  ],
+  "precisions": [
+    "fp32",
+    "fp64-p6",
+    "fp64-p10",
+    "fp64-p15",
+    "fp64-p21"
+  ],
+  "checks": {
+    "default_cache_vs_cache0": {
+      "cases": 42,
+      "compared_slots": 3054720,
+      "bitwise_mismatches": 0
+    },
+    "candidate_cache_vs_cache0": {
+      "cases": 42,
+      "compared_slots": 3054720,
+      "bitwise_mismatches": 0
+    },
+    "default_vs_candidate_cache": {
+      "cases": 42,
+      "compared_slots": 3054720,
+      "bitwise_mismatches": 0
+    },
+    "default_vs_candidate_cache0": {
+      "cases": 42,
+      "compared_slots": 3054720,
+      "bitwise_mismatches": 0
+    }
+  },
+  "libraries": {
+    "default": {
+      "path": "/tmp/ozamx-optimized-8454h/libozamx.a",
+      "sha256": "5085d1aa4ba51686372b28bb37f90be6de0b915516b7321edb0cb7e42b0ad041"
+    },
+    "candidate": {
+      "path": "/tmp/ozamx-directpack/build/libozamx.a",
+      "sha256": "7005a3b04a4b3ed5dee8db9338d83176a6e3c361deaf344608a54c8d7f8b7bfe"
+    }
+  },
+  "source_sha256": {
+    "driver": "256cbf2cfa0847dbb2de7c532e4ad0fd2f8c3144a67a8927e9b664bbb1e6fc10",
+    "runner": "1102fdc63a5334722157f6235c0c7dac57c4e35ba784a9486ba525add51a30b7"
+  },
+  "scope": "eight rectangular cases, four larger dimensions at aligned 256/512 boundaries; padded A/B/C strides and tail canaries; full long-double oracle for small cases and 32 sampled C outputs per large case; FP32 overflow and FP64 invalid-input transactional checks; separate default and zero-byte cache processes; 128-bit deterministic digests compare every large-case output slot."
+}

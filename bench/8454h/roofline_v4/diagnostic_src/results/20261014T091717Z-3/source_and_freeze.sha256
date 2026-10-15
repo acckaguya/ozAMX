@@ -1,0 +1,8 @@
+0d025d9389bbf522701adb834de0675aee8feab784b6d2c84e643b323aa77667  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/src/gemm.cpp
+c50636e4eb5c57d0a6a60352e71697664a7ff93b7ca7f2b8ce91ed4de53913c7  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/bench/benchmark.cpp
+20fa073bb65b6de213b1dee7b8666b296645bf5da2b2c0042d85f09a99597574  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/CMakeLists.txt
+54bae1c8737fed1aba617ab21747689b2fd26f2150aadec37aa2c18f94d6c6cb  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/README.md
+94cc2a1404fed10d97625ad894b519f1b47594eaa56e8951e61967276ed93b06  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/tools/roofline_binary_gate_v4.cpp
+c9a03e92bed53a733c8ec431e6af435e6f2721fd831a23810e5cf043047e5e15  /home/caiweili/ozAMX/bench/8454h/roofline_v4/diagnostic_src/tools/run_binary_gate_v4.py
+06a934916fecd37bc297eefd48177b3802a30aa04113cffb546939c36c6ede42  /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/FROZEN_COMPLETE
+73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c  /home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a

@@ -1,0 +1,7 @@
+{
+  "requested_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/verbose-mode-supported-in-onemkl-112.html",
+  "retrieved_utc": "2026-10-14T13:00:03.847331+00:00",
+  "status": "failed",
+  "curl_exit_code": 7,
+  "failure": "curl: (7) Couldn't connect to server"
+}

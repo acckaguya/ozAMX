@@ -1,0 +1,3730 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+
+<html class="rwd geo-override no-js vis no-rtl headerfooter-menu3 " lang="en">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+    <meta charset="UTF-8"/>
+    
+
+
+
+
+
+<title>4th Gen Intel Xeon Processor Scalable Family, sapphire rapids</title>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="//intelcorp.scene7.com/">
+<link rel="dns-prefetch" href="//intelcorp.scene7.com/">
+
+    <link rel="preconnect" href="//cane.intel.com/">
+    <link rel="dns-prefetch" href="//cane.intel.com/">
+
+    <link rel="preconnect" href="//dogo.intel.com/">
+    <link rel="dns-prefetch" href="//dogo.intel.com/">
+
+
+
+
+
+    <link rel="preload" href="/content/dam/www/global/wap/performance-config.js" as="script" type="text/javascript">
+    <script type="text/javascript" src='/content/dam/www/global/wap/performance-config.js'></script>
+    <link rel="preload" href="/content/dam/www/global/wap/at-config.js" as="script" type="text/javascript">
+    <script type="text/javascript" src='/content/dam/www/global/wap/at-config.js'></script>
+    <link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/global/targetDataCookie.min.js" as="script" type="text/javascript">
+    <script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/global/targetDataCookie.min.js"></script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+    
+    
+    
+    
+        
+    
+    
+
+
+    
+        
+    
+    
+
+
+    
+    
+        
+    
+
+<script type="text/javascript">
+    var cq_tms = {
+        wa_emtcontenttype: "emtcontenttype:designanddevelopmentreference/developerguide/tuningandoptimizationguides",
+        wa_primarycontenttagging: "primarycontenttagging:processorsppchl1873/intelxeonprocessorsppchl2595/4thgenintelxeonscalableprocessorsppchl3228622",
+        wa_emttechnology: "emttechnology:inteltechnologies/oneapi",
+        wa_productapplication: "productapplication:gpugpgpu2000000046",
+        wa_rdcplatformcodenames: "rdcplatformcodenames:sapphirerapidsvplchl14260/sapphirerapidsvplchl24261/processorsvplchl34262/sapphirerapidsvplchl44263/sapphirerapidsspcpuvplchl54264",
+        
+        wa_industry_type: "",
+        wa_subject: "",
+        wa_emt_org: "",
+        wa_emt_intel: "",
+        wa_programidentifier: "ude",
+        wa_location: "us",
+        wa_language: "en",
+        wa_english_title: "Fourth Generation Xeon Scalable Family Overview",
+        wa_content_type: "tuningandoptimizationguides",
+        wa_intel_platform: "rdcplatformcodenames:sapphirerapidsvplchl14260/sapphirerapidsvplchl24261/processorsvplchl34262/sapphirerapidsvplchl44263/sapphirerapidsspcpuvplchl54264",
+        wa_applications: "",
+        wa_local: "en_US",
+        wa_intel_technology: "",
+        wa_system_type: "",
+        wa_product_name: "",
+        wa_audience: "",
+        wa_life_cycle: "",
+        wa_cq_url: "/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html",
+        wa_page_type_micro: "mf-article-long",
+        wa_env: "prd",
+        wa_cq_pub_env: "publish",
+        wa_transl_status: "",
+        wa_product_id: "126213,2000000046,228622",
+        wa_software: "",
+        wa_reference_design: "",
+        wa_codename: "rdcplatformcodenames:sapphirerapidsvplchl14260/sapphirerapidsvplchl24261/processorsvplchl34262/sapphirerapidsvplchl44263/sapphirerapidsspcpuvplchl54264",
+        wa_created_date: "1658775780000",
+        wa_modified_date: "1730228785315",
+        wa_off_time: "1924992000000",
+        wa_ownedby: "",
+        wa_managedby: "",
+        wa_idz_nid : "",
+        wa_event_type: "",
+        wa_idz_custom_tags: "",
+        wa_programming_language: "",
+        wa_skill_level: "",
+        wa_solution: "",
+        wa_product_formFactor: "",
+        wa_operating_system: "",
+        wa_marketing_products: "",
+        wa_ssg_third_party_prod_sys_sol: "",
+        wa_upeNamespace: "",
+        wa_doc_id:"",
+        wa_doc_version:"",
+        wa_doc_publishdate:"",
+        eloqua_disabled:"false",
+        wa_intel_prd_levels: '[{"level5":{"id":"126213","desc":"sapphirerapidsspcpuvplchl54264"},"level4":{"id":"126212","desc":"sapphirerapidsvplchl44263"},"level1":{"id":"126212","desc":"sapphirerapidsvplchl14260"},"level3":{"id":"873","desc":"processorsvplchl34262"},"productCategory":"rdcplatformcodenames","level2":{"id":"126212","desc":"sapphirerapidsvplchl24261"}},{"level5":{"id":"126213","desc":"sapphirerapidsspcpuvplchl54264"},"level4":{"id":"126212","desc":"sapphirerapidsvplchl44263"},"level1":{"id":"126212","desc":"sapphirerapidsvplchl14260"},"level3":{"id":"873","desc":"processorsvplchl34262"},"productCategory":"rdcplatformcodenames","level2":{"id":"126212","desc":"sapphirerapidsvplchl24261"}},{"level1":{"id":"873","desc":"processorsppchl1873"},"level3":{"id":"228622","desc":"4thgenintelxeonscalableprocessorsppchl3228622"},"productCategory":"primarycontenttagging","level2":{"id":"595","desc":"intelxeonprocessorsppchl2595"}}]',
+        
+        
+        
+        
+        
+        wa_uam_secondary_id: "",
+
+        
+        
+        wa_secondary_content_type: ""
+        
+        
+    };
+
+    
+    
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    var chatContextObj = {};
+    chatContextObj["locale"] = 'en-US';
+    chatContextObj["app"] = 'SATG';
+    chatContextObj["supportProductMap"] = 'NA';
+</script>
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/purify.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/virtual-assistant.min.js" defer></script>
+
+
+
+
+
+    <script type="text/javascript" src="/content/dam/www/global/wap/main/wap.js" async></script>
+
+
+    
+    
+    
+
+
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intelone-display-light.woff2" as="font" type="font/woff2" crossorigin="true">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intelone-display-regular.woff2" as="font" type="font/woff2" crossorigin="true">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intel-clear-latin.woff2" as="font" type="font/woff2" crossorigin="true">
+
+<link rel="preload" href="/content/dam/logos/intel-header-logo.svg" as="image">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" as="style">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.css" as="style" type="text/css">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.css" as="style" type="text/css">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.js" as="script">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/site-global-icons/resources/font/site-global-icons.woff2?14825464" as="font" type="font/woff2" crossorigin="true">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<!--[if lte IE 9]>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<![endif]-->
+
+
+    <meta name="twitter:card" content="summary_large_image"/>
+
+    <meta name="keywords" content="4th Gen Intel Xeon Processor Scalable Family, sapphire rapids"/>
+
+    <meta name="description" content="A technical overview of the 4th Gen Intel® Xeon® Processor Scalable Family based on the formerly codenamed Sapphire Rapids architecture."/>
+
+    <meta name="language" content="en"/>
+
+    <meta name="location" content="us"/>
+
+    <meta name="robots" content="follow,index,noarchive"/>
+
+    <meta name="X-Server" content="INTE-86"/>
+
+    <meta name="twitter:image" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/4th-gen-intel-xeon-scalable-processor-introduction.jpg"/>
+
+
+    <meta property="og:image" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/4th-gen-intel-xeon-scalable-processor-introduction.jpg"/>
+
+    <meta property="og:type" content="company"/>
+
+    <meta property="og:site_name" content="Intel"/>
+
+    <meta property="og:title" content="4th Gen Intel Xeon Processor Scalable Family, sapphire rapids"/>
+
+    <meta property="fb:admins" content="267985180046218"/>
+
+    <meta property="og:url" content="https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html"/>
+
+    <meta property="og:description" content="A technical overview of the 4th Gen Intel® Xeon® Processor Scalable Family based on the formerly codenamed Sapphire Rapids architecture."/>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+    <meta name="emtcontenttype" content="Content Type|Design and Development Reference|Development Guides|Tuning and Optimization Guides;"/>
+
+    <meta name="contentpath" content="/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview"/>
+
+    <meta name="authoreddate" content="2022-07-25T14:03:00.000-05:00"/>
+
+    <meta name="localecode" content="en_US"/>
+
+    <meta name="reimaginetoplevelcategory" content="Audience|Developer|Software Developer;Audience|IT Operations|IT Manager;"/>
+
+    <meta name="mime" content="text/html"/>
+
+    <meta name="format" content="article-long"/>
+
+    <meta name="localizedtagname" content="Tuning and Optimization Guides"/>
+
+    <meta name="excludefromviews" content="false"/>
+
+    <meta name="taxonomy" content="etm-4bbe71bd565a4a8b94bee1be210262a7;etm-6b088d69d83243a0aa3b986645a7e74b;etm-64851D67-C843-4353-92C7-7F0DB5914194;etm-AD760749-DB9B-4EEC-BEDD-2628E9167CCC;etm-aa2a8ffb0e5b41fe85bf2f5d50a71cf2;etm-068eb1a6ca5d4a89ad65d06a59ac0d71;"/>
+
+    <meta name="title" content="4th Gen Intel Xeon Processor Scalable Family, sapphire rapids"/>
+
+    <meta name="mintoread" content="0"/>
+
+    <meta name="menu" content="Developer Sub Navigation Breadcrumb"/>
+
+    <meta name="uettechnology" content="Technology|Intel® Technologies|oneAPI;"/>
+
+    <meta name="reimaginefilters" content="rdc Platform Codenames|Sapphire Rapids|Sapphire Rapids|Processors|Sapphire Rapids|Sapphire Rapids SP CPU;Technology|Intel® Technologies|oneAPI;Product Application|GPU/GPGPU;Primary Content Tagging|Processors|Intel® Xeon® Processors|4th Gen Intel® Xeon® Scalable Processors;"/>
+
+    <meta name="generic1" content="true"/>
+
+    <meta name="emtaudience" content="Audience|Developer|Software Developer;Audience|IT Operations|IT Manager;"/>
+
+    <meta name="intelkeywords" content="4th Gen Intel Xeon Processor Scalable Family, sapphire rapids"/>
+
+    <meta name="lastModifieddate" content="2022-07-25T14:03:00.000-05:00"/>
+
+    <meta name="thumbnailurl" content="https://www.intel.com/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/4th-gen-intel-xeon-scalable-processor-introduction.jpg"/>
+
+    <meta name="rdcproducts" content="rdc Platform Codenames|Sapphire Rapids|Sapphire Rapids|Processors|Sapphire Rapids|Sapphire Rapids SP CPU;"/>
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+
+
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon-16x16.png">
+<link rel="shortcut icon" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon.ico">
+    
+
+
+
+
+
+<link rel="canonical" href="https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html"/>
+<link rel="alternate" hreflang="en-us" href="https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html"/>
+            <link rel="alternate" hreflang="x-default" href="https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html"/>
+                
+    
+
+    
+        
+        
+            
+                
+                
+                    <link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-css.min.css" as="style"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-css.min.css" type="text/css"><link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" as="style"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-standalone-3_6_0.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/clientlibs/jquery-3_6_0.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/clientlibs/legacy-libs.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/modernizr.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/picturefill-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/handlebars.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/html5-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-cookie-2_1_3.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/detectizr.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.matchHeight.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-affix.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/moment.locales.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/scrollToPlugin.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/slick-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.scrollTo.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/fastclick.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.resize.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.touchswipe.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-detect.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-polyfill.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-init.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-ezmark.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/owl.carousel.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/polyfills.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/purify.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.js" defer></script>
+                
+            
+        
+    
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    
+
+<body class="page-is-published global-nav">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="skip-to-main-content">
+    <div class="sb-skipLinkWrapper invisible">
+        <a href="#primary-content" class="inline-block bg-greenDarkApron color-textWhite text-bold text-noUnderline sb-skipLink visible">Skip To Main Content</a>
+    </div>
+</div>
+
+<div class="promo-banner-content"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var isLoggedin = (document.cookie.indexOf('IGHFLoggedIn') != -1);
+    var currentURL = window.location.href;
+    if (currentURL.startsWith("https://isvc--isvcqa24.sandbox.my.site.com")) {
+        isLoggedin = true;
+        if (currentURL.includes("/onlinecasemgmt/warrantyinfo")) {
+            isLoggedin = false;
+        }
+    }
+</script>
+
+
+
+
+
+    
+        <div class="global">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.css" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+    
+    
+        <div class="global-nav-redesign global component" data-component="global-nav-redesign" data-component-id="1">
+            <header role="banner">
+                <nav class="intel-navbar advanced-search" role="navigation" aria-label="Main Navigation" data-igm="">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-wraper">
+
+                        <div class="navbar-logo">
+                            <a href="/content/www/us/en/homepage.html" alt="Intel homepage" class="intel-logo-rebrand">
+                                    
+                                <img src="/content/dam/logos/intel-header-logo.svg" height="300" width="118" alt="Intel logo - Return to the home page">
+                            </a>
+                        </div>
+
+                        <div class="navbar-left">
+                            <!-- mobile: menu toggle, sign in -->
+                            <div class="d-block d-sm-none">
+                                <button type="button"
+                                        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+                                        class="mega-hamburger nav-link-icon nav-link-icon-toggle collapsed"
+                                        data-bs-target="#primary-nav" aria-expanded="false" aria-controls="primary-nav"
+                                        data-mega-control="hamburger">
+                                    <span class="visually-hidden">Toggle Navigation</span>
+                                    <span class="fa-intel-menu icon-toggle-off"></span>
+                                    <span class="fa-cancel-thin icon-toggle-on"></span>
+                                </button>
+                            </div>
+
+                            <!-- START DYNAMIC NAVIGATION MENEU -->
+                            <div class="collapse mega-menu-collapse" id="primary-nav">
+                                <div class="mega-menu-wrap">
+                                    <ol class="mega-navbar unique-container-global-nav-items">
+                                        <!-- Start: Primary Nav Items -->
+
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- START MOBLE TOGGLE buttons -->
+                        <div class="navbar-right">
+
+
+                            <!-- START: NON-signed in panel -->
+                            <span id="not-logged-in-scenario" class="d-none">
+
+         <button type="button" title="Sign In"
+                 class="nav-link-icon nav-link-icon-toggle collapsed"
+                 data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+                 aria-expanded="false" aria-controls="panel-signin"
+                 onclick="intel.mytools.unifiedLogin();"
+                 data-mega-control="signin">
+            <span class="visually-hidden">Sign In</span>
+            <span class="fa-intel-user-o icon-toggle-off"></span>
+            <span class="fa-intel-user icon-toggle-on"></span>
+        </button>
+</span>
+
+<script>
+    var intel = intel || {};
+    intel.signinsimplifyConfig = {
+        authorizationUrl: '\/content\/dam\/intel\/authorization\/authorization.html',
+        locale: '',
+        messages: {
+            InvalidCredential: 'The username or password you entered was invalid.',
+            InvalidField: 'The username or password you entered was invalid.',
+            AccountDisabled: 'For security reasons, your account has been disabled. For help, <a href=\"#\" class=\"contactLink new-tab-link\" target=\"_blank\" rel=\"noopener noreferrer\" >contact us<\/a>.',
+            AccountLocked: 'Your account has been locked. For help, please read the <a href=\"#\" class=\"faqsLink new-tab-link\" target=\"_blank\" rel=\"noopener noreferrer\" >Sign In FAQ<\/a>.',
+            UserNotFound: 'The username or password you entered was invalid.',
+            Unknown: 'An unexpected error occurred. Try it again. For help, use the contact or support options below.',
+            PasswordExpired: 'Your password is expired. Please change your password.',
+            LoginAssistLink: 'https:\/\/signin.intel.com\/ContactUs.aspx',
+            faqsLink: '\/content\/www\/us\/en\/my\u002Dintel\/sign\u002Din\u002Dhelp.html'
+        },
+        nameField: 'Username',
+        passField: 'Password',
+        isPopup: true,
+        responseHref: 'https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html' + window.location.search + window.location.hash, 
+        sslDomainUrl: 'www.intel.com',
+        loginUrl: 'https:\/\/welcome.intel.com\/login.aspx?appid=258\x26qlogin=true',
+        ssoUri: '',
+        logoutUrl: 'https:\/\/welcome.intel.com\/logout.aspx',
+        logoutHref: 'https:\/\/signin.intel.com\/Logout?RedirectURL=https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html',
+        logoutIGHFHref: 'https:\/\/signin.intel.com\/Logout?RedirectURL=',
+        loginErrorID: '#login-error',
+        usernameID: '#username',
+        remembermeId: '#cbRememberMe',
+        formID: '#igm-form-signin',
+        unameErrorID: '#uname-error',
+        passID: '#password',
+        passError: '#pwd-error',
+        changePasswordUrl: '\/content\/www\/us\/en\/my\u002Dintel\/change\u002Dpassword.html',
+        emailVerificationUrl: '\/content\/www\/us\/en\/my\u002Dintel\/email\u002Dverification.external.html',
+        aboutToExpireEmailUrl: '\/content\/www\/us\/en\/my\u002Dintel\/email\u002Dverification.html',
+        renewalUrl: '\/content\/www\/us\/en\/secure\/technology\u002Dprovider\/forms\/renew\u002Dtechnology\u002Dprovider\u002Dmembership.html',
+        limitedUrl: '\/content\/www\/us\/en\/resellers\/limited\u002Dstatus\u002Dsecondary.html',
+        isaPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/solutions\u002Dalliance\/overview.html',
+        itpPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/technology\u002Dprovider\/iot\/overview.html',
+        itpisaPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/iot\u002Ditp\u002Disa\/overview.html',
+        isaRenewalURL: '\/content\/www\/us\/en\/secure\/partner\/forms\/solutions\u002Dalliance\u002Drenewal.html',
+        primaryPostLaunchURL: 'https:\/\/partner.intel.com\/s\/post\u002Dlaunch\u002Dprimary',
+        nonPrimaryPostLaunchURL: 'https:\/\/partner.intel.com\/s\/post\u002Dlaunch\u002Dnon\u002Dprimary',
+        idpUrl: 'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UnifiedLogin_SISU_CML_SAML\/generic\/login?entityId=www.intel.com',
+        headerSignInIdpUrl: 'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UnifiedLogin_SISU_CML_SAML\/generic\/login?entityId=www.intel.com\x26ui_locales=en',
+        headerSignOutIdpUrlB2B:'https:\/\/login.microsoftonline.com\/common\/oauth2\/v2.0\/logout?post_logout_redirect_uri=https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html' + window.location.search + window.location.hash,
+        headerSignOutIdpIGHFUrlB2B:'https:\/\/login.microsoftonline.com\/common\/oauth2\/v2.0\/logout?post_logout_redirect_uri=',
+        headerSignOutIdpUrlB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/logout?id_token_hint=$TOKEN$%26post_logout_redirect_uri=https:\/\/www.intel.com\/apps\/intel\/services\/unifiedlogout.json',
+        sessionAuthorizeUrlB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/authorize?client_id=8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%26scope=profile%20offline_access%208b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%20openid%26response_mode=fragment%26response_type=token%26prompt=none%26redirect_uri=',
+        sessionAuthorizeUrlB2B:'https:\/\/login.microsoftonline.com\/46c98d88\u002De344\u002D4ed4\u002D8496\u002D4ed7712e255d\/oauth2\/v2.0\/authorize?client_id=cb0ec60b\u002D608b\u002D4e76\u002D9d69\u002D1e5e0afb3456%26scope=openid%20profile%20offline_access%26response_mode=fragment%26response_type=token%26prompt=none%26redirect_uri=',
+        sessionInitUrl:'https:\/\/www.intel.com\/content\/www\/us\/en\/secure\/my\u002Dintel\/dashboard.html',
+        azureLocaleCode:'en',
+        allowedPathRegx:'^(.*intel.com.*$)|^(\/content\/.*$)',
+        signOutTokenGenB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/authorize?client_id=8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%26scope=profile offline_access+8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b+openid%26response_type=id_token%26prompt=none%26redirect_uri=',
+        validTargetURL:'https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html' + window.location.search + window.location.hash
+    };
+
+    function clearB2CIFrame(interval, iFrame) {
+        clearInterval(interval);
+        iFrame.parentNode.removeChild(iFrame);
+    }
+
+    function clearIFrame(interval, iFrame) {
+        clearInterval(interval);
+        iFrame.parentNode.removeChild(iFrame);
+    }
+    function createB2CIFrame(id, src) {
+        var authIFrame = document.createElement("iframe");
+        authIFrame.id = "sso-b2c-" + id;
+        authIFrame.hidden = "hidden";
+        authIFrame.src = src;
+        document.body.appendChild(authIFrame);
+        return authIFrame;
+    }
+    function createIFrame(id, src) {
+        var authIFrame = document.createElement("iframe");
+        authIFrame.id = "sso-" + id;
+        authIFrame.hidden = "hidden";
+        authIFrame.src = src;
+        document.body.appendChild(authIFrame);
+        return authIFrame;
+    }
+
+    function animateHumanoidIcon() {
+    	$("#not-logged-in-scenario").css("cursor", "not-allowed");
+    	$("#not-logged-in-scenario button").css("pointer-events", "none");
+    	$("#not-logged-in-scenario button span.icon-toggle-off").addClass('iia-beat-fade');
+	}
+
+    function resetHumanoidIcon() {
+    	$("#not-logged-in-scenario").css("cursor", "");
+        $("#not-logged-in-scenario button").css("pointer-events", "");
+    	$("#not-logged-in-scenario button span.icon-toggle-off").removeClass('iia-beat-fade');
+	}
+
+    function initiateB2CLogoutToken(type) {
+        return new Promise(function (resolve, reject) {
+            function authIFrameB2CIntervalWrapper(authIFrame) {
+                var authIFrameInterval = setInterval(function () {
+                    var authIFrameWindow = authIFrame.contentWindow;
+                    if (authIFrameWindow) {
+                        try {
+                            var authIFrameURL = authIFrameWindow.location.href;
+
+                            if (authIFrameURL) {
+                                if (authIFrameURL.includes("#id_token=")) {
+                                    clearB2CIFrame(authIFrameInterval, authIFrame);
+                                    return resolve({
+                                        id: authIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIFrame.id,
+                                        code: "SUCCESS",
+                                        id_token_hint:authIFrameURL.split("#id_token=")[1]
+                                    });
+                                } else if (authIFrameURL.includes("#error=")) {
+                                    clearB2CIFrame(authIFrameInterval, authIFrame);
+                                    return reject({
+                                        id: authIFrame.id,
+                                        msg: "FAILURE!" + "--" + authIFrame.id,
+                                        code: "FAILURE",
+                                    });
+                                } else {
+                                    authIFrameAttempts++;
+                                    if (
+                                        authIFrameAttempts ===
+                                        AUTH_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearB2CIFrame(authIFrameInterval, authIFrame);
+                                        return reject({
+                                            id: authIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearB2CIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (authIFrameAttempts === AUTH_IFRAME_MAX_ATTEMPTS) {
+                                clearB2CIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIFrameAttempts++;
+                        }
+                    } else {
+                        clearB2CIFrame(authIFrameInterval, authIFrame);
+                        return reject({
+                            id: authIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            var AUTH_IFRAME_MAX_ATTEMPTS = 80;
+            var authIFrameAttempts = 0;
+
+            var currentOrigin = encodeURIComponent(window.location.origin + ((intel.isIGHFCall === false && !/mark.intel.com/.test(window.location.hostname)) ? "/content/www/us/en/homepage.html" : "/"));
+            var redirectURI = currentOrigin;
+
+            var matchedSite =
+                window.INTELNAV &&
+                window.INTELNAV.CIDAAS &&
+                window.INTELNAV.CIDAAS.customRedirectSites.find((site) =>
+                    site.host.includes(window.location.host)
+                );
+            if (matchedSite) {
+                redirectURI += matchedSite.redirectURI;
+            }
+
+            var authURL = decodeURIComponent(intel.signinsimplifyConfig.signOutTokenGenB2C + redirectURI);
+            var authIFrame = createB2CIFrame(type, authURL);
+            authIFrameB2CIntervalWrapper(authIFrame);
+        });
+    }
+
+    function initiateAuth(type) {
+        return new Promise(function (resolve, reject) {
+            function authIFrameIntervalWrapper(authIFrame) {
+                let authIFrameInterval = setInterval(function () {
+                    let authIFrameWindow = authIFrame.contentWindow;
+                    if (authIFrameWindow) {
+                        try {
+                            let authIFrameURL = authIFrameWindow.location.href;
+                            if (authIFrameURL) {
+                                if (authIFrameURL.includes("#access_token=")) {
+                                    clearIFrame(authIFrameInterval, authIFrame);
+                                    return resolve({
+                                        id: authIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIFrame.id,
+                                        code: "SUCCESS",
+                                    });
+                                } else if (authIFrameURL.includes("#error=")) {
+                                    clearIFrame(authIFrameInterval, authIFrame);
+                                    return reject({
+                                        id: authIFrame.id,
+                                        msg: "FAILURE!" + "--" + authIFrame.id,
+                                        code: "FAILURE",
+                                    });
+                                } else {
+                                    authIFrameAttempts++;
+                                    if (
+                                        authIFrameAttempts ===
+                                        AUTH_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearIFrame(authIFrameInterval, authIFrame);
+                                        return reject({
+                                            id: authIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (authIFrameAttempts === AUTH_IFRAME_MAX_ATTEMPTS) {
+                                clearIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIFrameAttempts++;
+                        }
+                    } else {
+                        clearIFrame(authIFrameInterval, authIFrame);
+                        return reject({
+                            id: authIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            var AUTH_IFRAME_MAX_ATTEMPTS = 40;
+            var authIFrameAttempts = 0;
+
+            var authURL;
+            let tempIsIGHFCall = document.querySelectorAll('#recode50header').length > 0;
+            var currentOrigin =  encodeURIComponent(window.location.origin + ((!tempIsIGHFCall && !/mark.intel.com/.test(window.location.hostname)) ? intel.signinsimplifyConfig.authorizationUrl : "/"));
+            var redirectURI = currentOrigin;
+            var matchedSite =
+                window.INTELNAV &&
+                window.INTELNAV.CIDAAS &&
+                window.INTELNAV.CIDAAS.customRedirectSites.find((site) =>
+                    site.host.includes(window.location.host)
+                );
+            if (matchedSite) {
+                redirectURI += matchedSite.redirectURI;
+            }
+
+            if (type === "b2c") {
+                authURL = decodeURIComponent(
+                    intel.signinsimplifyConfig.sessionAuthorizeUrlB2C + redirectURI
+                );
+            } else {
+                authURL = decodeURIComponent(
+                    intel.signinsimplifyConfig.sessionAuthorizeUrlB2B + redirectURI
+                );
+            }
+
+            let authIFrame = createIFrame(type, authURL);
+            authIFrameIntervalWrapper(authIFrame);
+        });
+    }
+
+    function initiateIntelAuth() {
+        return new Promise(function (resolve, reject) {
+            function authIntelIFrameIntervalWrapper(authIntelIFrame) {
+                let authIntelIFrameInterval = setInterval(function () {
+                    let authIntelIFrameWindow = authIntelIFrame.contentWindow;
+                    if (authIntelIFrameWindow) {
+                        try {
+                            let authIntelIFrameURL = authIntelIFrameWindow.location.href;
+
+                            if (authIntelIFrameURL) {
+                                if (
+                                    authIntelIFrameURL.includes(
+                                        window.location.href
+                                    )
+                                ) {
+                                    clearIFrame(
+                                        authIntelIFrameInterval,
+                                        authIntelIFrame
+                                    );
+                                    return resolve({
+                                        id: authIntelIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIntelIFrame.id,
+                                        code: "SUCCESS",
+                                    });
+                                } else {
+                                    authIntelIFrameAttempts++;
+                                    if (
+                                        authIntelIFrameAttempts ===
+                                        AUTH_INTEL_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearIFrame(
+                                            authIntelIFrameInterval,
+                                            authIntelIFrame
+                                        );
+                                        return reject({
+                                            id: authIntelIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIntelIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearIFrame(
+                                    authIntelIFrameInterval,
+                                    authIntelIFrame
+                                );
+                                return reject({
+                                    id: authIntelIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIntelIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (
+                                authIntelIFrameAttempts ===
+                                AUTH_INTEL_IFRAME_MAX_ATTEMPTS
+                            ) {
+                                clearIFrame(
+                                    authIntelIFrameInterval,
+                                    authIntelIFrame
+                                );
+                                return reject({
+                                    id: authIntelIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIntelIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIntelIFrameAttempts++;
+                        }
+                    } else {
+                        clearIFrame(authIntelIFrameInterval, authIntelIFrame);
+                        return reject({
+                            id: authIntelIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIntelIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            let AUTH_INTEL_IFRAME_MAX_ATTEMPTS = 80;
+            let authIntelIFrameAttempts = 0;
+
+            let authIntelIFrame = createIFrame(
+                "sso-intel-b2c",
+                intel.signinsimplifyConfig.sessionInitUrl
+            );
+            authIntelIFrameIntervalWrapper(authIntelIFrame);
+        });
+	}
+
+    function getAuthenticationStatus() {
+        return new Promise(function (resolve, reject) {
+            initiateAuth("b2c")
+                .then(function (b2cSuccessRes) {
+                    return resolve(b2cSuccessRes);
+                })
+                .catch(function (b2cFailureRes) {
+                    var isB2BSite =
+                        window.INTELNAV &&
+                        window.INTELNAV.CIDAAS &&
+                        window.INTELNAV.CIDAAS.B2BSites.some((site) =>
+                            site.includes(window.location.host)
+                        );
+                    if (isB2BSite) {
+                        initiateAuth("b2b")
+                            .then(function (b2bSuccessRes) {
+                                return resolve(b2bSuccessRes);
+                            })
+                            .catch(function (b2bFailureRes) {
+                                return reject(b2bFailureRes);
+                            });
+                    } else {
+                        return reject(b2cFailureRes);
+                    }
+                });
+        });
+    }
+
+    function checkAEMSession(){
+        let isSessionExist = false;
+        if(!tempIsIGHF){
+            $.ajax({
+                url: "/libs/apps/intel/myintel/agsroles.json?validateAEMSession=Y",
+                async: false,
+                success: function (data) {
+                    if (data && data["isValidAEMSession"]) {
+                        document.cookie = "IGHFLoggedIn=true;domain=.intel.com;path=/";
+                        isLoggedin = true;
+                        isSessionExist = true;
+                    }
+                }
+            });
+        }
+        return isSessionExist;
+    }
+
+    if (
+        !isLoggedin &&
+        ((document.domain.indexOf("thailand") == -1 &&
+                document.domain.endsWith(".intel.com")) ||
+            document.getElementById("recode50header") != null) &&
+        navigator != null &&
+        navigator.userAgent.indexOf("CloudManagerTest") == -1
+    ) {
+        var tempIsIGHF = document.getElementById("recode50header");
+        if (tempIsIGHF) animateHumanoidIcon();
+        getAuthenticationStatus()
+            .then(function (res) {
+                let isSessionExist = checkAEMSession();
+                if(isSessionExist){
+                    intel.signinHeaderSimplify.initialize();
+                }else {
+                    var currentUrl = window.location.href;
+                    if (currentUrl.indexOf("service-maintenance-notice") === -1) {
+                        if (res.id === "sso-b2c") {
+                            var cookiename = "IGHFtarget";
+                        var samlcookieValue =
+                            cookiename +
+                            "=" +
+                            encodeURIComponent(currentUrl) +
+                            ";secure;path=/;domain=.intel.com";
+                        document.cookie = samlcookieValue;
+                        if (intel.isIGHFCall) {
+                            initiateIntelAuth().then(() => {
+                                isLoggedin = true;
+                                intel.signinHeaderSimplify.initialize();
+                            }).catch(() => {
+                                window.location.href = intel.signinsimplifyConfig.sessionInitUrl;
+                            });
+                        } else {
+                            window.location.href = intel.signinsimplifyConfig.sessionInitUrl;
+                        }
+                    } else {
+                        document.cookie = "IGHFLoggedIn=true;domain=.intel.com;path=/";
+                        if (intel.isIGHFCall) {
+                            isLoggedin = true;
+                            intel.signinHeaderSimplify.initialize();
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                }
+                }
+            })
+            .catch(()=>{
+				if (tempIsIGHF) resetHumanoidIcon();
+            });
+    }
+
+</script>
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="myinteldrpdown-template" type="text/x-handlebars-template">
+    <section class="myintel-tools-content" role="region"
+             aria-label="My Intel">
+        
+        <div class="card-header force-background solid brand-very-dark-gray my-intel-menu">
+            <button type="button" class="icon close float-end" data-igm-search-toggle="" aria-label="Close"
+                    tabindex="0" data-wap="" data-wap_ref="myintel-navmenu-closing">
+                <span></span>
+            </button>
+            <ul class="nav nav-tabs component">
+                
+                    
+                    
+                        
+                    
+                    
+                    
+                    
+                
+                <li role="presentation" class="active" data-step='1'  data-title='My Intel Dashboard and My Tools'  data-intro='<p>Click here to access the My Intel Dashboard from any Intel.com page. From here you can also access your Subscriptions page, as well as your personalized list of tools.</p>'>
+                    <a href="#my-intel" role="tab" tabindex="0">My Intel<span
+                            class="fa fa-user"></span></a>
+                </li>
+            </ul>
+        </div>
+        
+
+        <div class="my-intel-panel-body tab-content">
+            
+            <div role="tabpanel" class="tab-pane fade show active" id="my-intel">
+                <ul class="myintel-links">
+                    {{#each myintelpagelinks}}
+                    <li data-agsrole="{{{agsrole}}}"
+                        data-blacklistedagsrole="{{{blacklistedagsgroupname}}}"
+                        data-isinternal="{{{displayOnlyInternal}}}"
+                        data-isexternal="{{{displayOnlyExternal}}}"
+                        class="{{{class}}}">
+                        <a target="{{{target}}}"
+                           href="{{{href}}}" tabindex="0">{{{label}}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+                <div class="tools-pane component" data-component="myintel-tools" data-component-id="1">
+                    <h5 class="my-intel-tools">My Tools</h5>
+                    
+                    <ul class="myintel-links">
+                        {{#each mytoollinks}}
+                        <li class="myintellink"
+                            data-isinternal="{{{displayOnlyInternal}}}"
+                            data-isexternal="{{{displayOnlyExternal}}}">
+                            <h3 style="display:none;">{{{agsgroupname}}}</h3>
+                            <h4 style="display:none;">{{{blacklistedagsgroupname}}}</h4>
+                            <a tabindex="0" href="{{{linkurl}}}" target="_blank" rel="noopener noreferrer" title="">{{{linktext}}}</a>
+                            {{#if tooltip}}
+                            <a class="fa fa-help-circled" tabindex="0" data-bs-toggle="tooltip" data-html="true"
+                                  data-title="{{tooltip}}" data-placement="bottom" data-wap_ref="tooltip:{{{linktext}}}"><span class="visually-hidden">{{tooltip}}</span></a>
+                            {{/if}}
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+</script>
+
+
+<span id="logged-in-scenario" class="d-none">
+
+<button type="button" title="My Intel"
+        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+        class="nav-link-icon nav-link-icon-toggle collapsed" data-bs-target="#panel-signedin" aria-expanded="false"
+        aria-controls="panel-signedin" data-mega-control="signedin">
+    <span class="visually-hidden">My Intel</span>
+    <span class="fa-intel-user-checked-o icon-toggle-off"></span>
+    <span class="fa-intel-user-checked icon-toggle-on"></span>
+</button>
+
+<div class="mega-panel panel-layout-signed-in collapse" id="panel-signedin">
+    <div class="mega-panel-wrap">
+        <div class="mega-panel-body">
+            <div class="panel-content flex-content-wrap">
+
+                <!-- MyIntel Section -->
+                <!-- -------------------------------------------------------------- -->
+                <div class="panel-item d-none" id="myIntelPageLinks">
+                    <a id="myIntelPageLinksHeader" class="nav-l3 has-border has-link"></a> <!-- {{#if heading.onState}} selected{{/if}} {{#if heading.onStateParent}} selected-parent{{/if}} -->
+                    <div class="panel-item-content">
+                        <ul id="myIntelPageLinksItemList" class="panel-links nav-l4-list list-unstyled">
+
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- My Tools Section -->
+                <!-- -------------------------------------------------------------- -->
+                <div class="panel-item col-span-2" id="myIntelTools">
+                    
+                    <div class="nav-l3">
+                        My Tools
+                    </div>
+
+                    <div class="panel-item-content">
+                        <!--
+                            Note: right now this panel (myTools) has only one column/ul
+                            if more columns are needed, remove below's 'w-auto' class
+                        -->
+                        <ul class="panel-links nav-l4-list list-unstyled w-auto" id="mytools-ul">
+
+                            <!-- this 'li' will be used as the template to populate this section from the js -->
+                            <li class="d-none">
+                                <a class="nav-l4"></a>
+
+                                <button class="btn-tooltip-trigger d-none" data-bs-toggle="tooltip" data-placement="bottom"
+                                        title="">
+                                    <span>?</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item-actions">
+               <button type="button" class="btn btn-primary"
+                       data-sso-uri=''
+                       data-logout-uri="" data-wap="{&quot;linktype&quot;:&quot;logout&quot;}"
+                       onclick="intel.signinsimplify.signOut()">Sign Out</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</span>
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<button type="button" title="Language Selector"
+        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+        class="nav-link-icon nav-link-icon-toggle collapsed"
+        data-bs-target="#panel-language-selector" aria-label="English"
+        aria-expanded="false" aria-controls="panel-language-selector"
+        data-mega-control="language-selector">
+    <span class="fa-intel-globe-o icon-toggle-off"></span>
+    <span class="fa-intel-globe icon-toggle-on"></span>
+    <span class="nav-link-icon-label">English</span>
+</button>
+
+<div class="mega-panel panel-layout-language collapse" id="panel-language-selector"
+     aria-expanded="false" aria-selected="false">
+    <div class="mega-panel-wrap">
+        <div class="mega-panel-body">
+            <div class="mega-panel-heading">
+                <h2 class="nav-l2">
+                    
+                        
+                            Select Your Language
+                        
+                        
+                    
+                </h2>
+            </div>
+            <div class="panel-content flex-content-wrap">
+                
+                    <div class="panel-item">
+                        <!-- region.countryName is actually region name -->
+                        
+                        <ul class="list-unstyled panel-links nav-l4-list">
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="id_id" href="https://www.intel.co.id/content/www/id/id/homepage.html">
+                                            Bahasa Indonesia
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="de_de" href="https://www.intel.de/content/www/de/de/homepage.html">
+                                            Deutsch
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                    <li class="selected lang-option">
+                                
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="en_us" href="https://www.intel.com/content/www/us/en/homepage.html">
+                                            English
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="es_xl" href="https://www.intel.la/content/www/xl/es/homepage.html">
+                                            Español
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="fr_fr" href="https://www.intel.fr/content/www/fr/fr/homepage.html">
+                                            Français
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="pt_br" href="https://www.intel.com.br/content/www/br/pt/homepage.html">
+                                            Português
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                
+                    <div class="panel-item">
+                        <!-- region.countryName is actually region name -->
+                        
+                        <ul class="list-unstyled panel-links nav-l4-list">
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="vi_vn" href="https://www.intel.vn/content/www/vn/vi/homepage.html">
+                                            Tiếng Việt
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="th_th" href="https://www.thailand.intel.com/content/www/th/th/homepage.html">
+                                            ไทย
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="ko_kr" href="https://www.intel.co.kr/content/www/kr/ko/homepage.html">
+                                            한국어
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="ja_jp" href="https://www.intel.co.jp/content/www/jp/ja/homepage.html">
+                                            日本語
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="zh_cn" href="https://www.intel.cn/content/www/cn/zh/homepage.html">
+                                            简体中文
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="zh_tw" href="https://www.intel.com.tw/content/www/tw/zh/homepage.html">
+                                            繁體中文
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var newLangSelector = true;
+</script>
+
+                            <!-- END: NON-sign in panel -->
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        
+    
+
+
+    <button type="button" title="Search intel.com" class="nav-link-icon toggle-search collapsed"
+            data-bs-target="#simplify-search" aria-expanded="false"
+            aria-controls="simplify-search" data-mega-control="global-search">
+        <span class="visually-hidden">Toggle Search</span>
+        <span class="fa-global-search"></span>
+    </button>
+    <div class="mega-panel mega-search-panel collapse" id="simplify-search"
+         document-height="true">
+        <div class="mega-panel-wrap">
+            <div class="mega-panel-body">
+                <div class="panel-content">
+                    <div class="search-component search-component"
+                         data-igm-search-content="">
+                        <form class="mega-search-form search item" data-igm-search-control="" name="hpsform-new" id="hpsform-new" action="/content/www/us/en/search.html" role="search" onsubmit="return inputSearch()">
+                            <button type="submit" class="btn-mega-search icon"
+                                    aria-label="Search" tabindex="-1">
+                                <span class="visually-hidden">Search</span>
+                                <span class="fa-global-search"></span>
+                            </button>
+
+                            
+                                
+                                
+                                    <label for="mobile-search">
+                                        <span class="visually-hidden"><</span>
+                                        <input id="toplevelcategory" name="toplevelcategory" type="hidden" value="none">
+                                        <input id="query" name="query" type="hidden" value="">
+                                        <input data-tabindex="1" class="form-control" data-search-input
+                                               id="mobile-search" name="keyword" type="text"
+                                               data-igm-search-input title="Search" autocomplete="off"
+                                               data-target-result="#igm-search-result" aria-controls="mega-results-overlay" aria-label="Search Intel.com" placeholder="Search Intel.com">
+                                    </label>
+                                
+                            
+                            
+                            <button type="button" id="cls-btn-advanced" class="btn-mega-close fa-cancel-1 hide-flyout" aria-label="Clear Search Term" data-clear-input="clear-input">
+									<span class="visually-hidden">Close Search Panel</span>
+							</button>
+                                <button type="button" id="advanced-btn" class="btn-advance-filter fa-sliders hide-flyout" aria-label="Advanced Search Panel" data-mega-advanced-search="advanced-search">
+                                            <span class="visually-hidden">Advanced Search</span>
+                                </button>
+                            
+                            
+
+                        </form>
+                        <!-- 
+                            'hidden' class is conditionally removed on load @ intel.search-dropdown.js
+                         -->
+                        <div class="results-overlay mega-results-overlay search-quick-links "  aria-live="off"
+                             id="mega-results-overlay" data-component="wa_skip_track">
+                             
+                                 <div class="mega-close-container">
+									<button aria-label="Close search panel" class="btn-icon no-style close-result-toggle flyout-close" data-mega-close="global-search">
+									close
+									</button>
+								</div>
+                            
+                            <!-- Search Result Typeahead -->
+                            <div class="results-typeahead collapse" id="igm-search-result"
+                                 data-igm-search-results="">
+                                <div class="overlay-content">
+                                    <!--<h3>Top Results </h3>-->
+                                    <!-- added content-quick-search class -->
+                                    <div class="content-quick-search">
+                                    </div>
+                                </div>
+                                <div class="search-info">
+                                    <a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">
+                                        Sign In</a> to access restricted content
+                                </div>
+                            </div>
+                            <!-- Recent Searches: 1) display default search info if no search terms is available  -->
+                            <!-- Recent Searches: 2) display recenter terms when available and hide default search info  -->
+                            <div class="results-recent collapse" data-igm-search-related="">
+                                <div>
+                                    <!-- default search info -->
+                                    <div class="content-search-block content-search-info">
+                                        <h3>Using Intel.com Search</h3>
+                                        <p>You can easily search the entire Intel.com site in several ways.</p>
+                                        <ul>
+                                            <li>
+                                                Brand Name:
+                                                <strong>
+                                                    Core i9
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Document Number:
+                                                <strong>
+                                                    123456
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Code Name:
+                                                <strong>
+                                                    Emerald Rapids
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Special Operators:
+                                                <strong>
+                                                    “Ice Lake”, Ice AND Lake, Ice OR Lake, Ice*
+                                                </strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- quick links is always visible on the recents overlay -->
+                                    <div class="content-search-block content-quick-links">
+                                        <h3>Quick Links</h3>
+                                        <p>You can also try the quick links below to see results for most popular searches.</p>
+                                        <ul>
+                                            <li>
+                                                <a class="quick-link" rel="noopener noreferrer" href="https://www.intel.com/content/www/us/en/products/overview.html?wapkw=quicklink:products">
+                                                    Product Information
+                                                </a>
+                                            </li>
+                                            <li><a class="quick-link" rel="noopener noreferrer" href="https://www.intel.com/content/www/us/en/support.html?wapkw=quicklink:support">
+                                                Support
+                                            </a>
+                                            </li>
+                                            <li>
+                                                <a class="quick-link" rel="noopener noreferrer" href="https://downloadcenter.intel.com?wapkw=quicklink:download-center">
+                                                    Drivers & Software
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- recent search terms -->
+                                    <div class="results-overlay results-recent results component content-search-block content-recent" data-component="wa_skip_track"
+                                         data-component-id="1">
+                                        <div class="overlay-content recent-searches-terms">
+                                            <h3>Recent Searches</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="search-info">
+                                    <a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">
+                                        Sign In</a> to access restricted content
+                                </div>
+                            </div>
+                            
+                                 <div class="results-advanced collapse" data-igm-advanced-search="">
+											<div class="overlay-content">
+												<!-- default search info -->
+												<div class="content-search-block content-search-info component" data-component="wa_skip_track" data-component-id="1">
+													<h3>Advanced Search</h3>
+													<div class="controls-wrapper">
+														<div class="controls">
+															<div class="input-group select-control">
+																<select class="documentation-card-version-select" name="find-results" id="find-results">
+																	<option value="All of these terms" selected="">All of these terms</option>
+																	<option value="Any of these terms">Any of these terms</option>
+																	<option value="Exact term only">Exact term only</option>
+																</select>
+																<label class="select-label" for="find-results">Find results with</label>
+															</div>
+
+															<div class="input-group select-control">
+                                                                <select class="selectAdvanced" name="show-results-from" id="show-results-from">
+                                                                    <option value="allResults" selected="" aria-label="all Results">
+                                                                        All Results
+                                                                    </option>
+                                                                    <option value="Products" aria-label="Products">
+                                                                        Product Information
+                                                                    </option>
+                                                                    <option value="Support">
+                                                                        Support
+                                                                    </option>
+                                                                    <option value="Downloads">
+                                                                        Drivers & Software
+                                                                    </option>
+                                                                    <option value="Developers">
+                                                                        Documentation & Resources
+                                                                    </option>
+                                                                    <!-- <option value="Solutions">Solutions</option>-->
+                                                                    <option value="Partners">
+                                                                        Partners
+                                                                    </option>
+                                                                    <option value="forums">
+                                                                        Communities
+                                                                    </option>
+                                                                    <option value="Corporate">
+                                                                        Corporate
+                                                                    </option>
+                                                                </select>
+																<label class="select-label" for="show-results-from">Show results from</label>
+															</div>
+														</div>
+
+														<div class="controls">
+															<h3 
+                                                            >Only search in</h3>
+															<div class="input-group" aria-label="Only Search In">
+																<label for="search_title">
+																	<input name="search_title" id="search_title" type="checkbox">
+																	Title</label>
+
+																	<label for="search_description">
+																	<input name="search_description" id="search_description" type="checkbox">
+																Description</label>
+
+																	<label for="search_id">
+																	<input name="search_id" id="search_id" type="checkbox">Content ID</label>
+															</div>
+
+															<button role="button" type="button" class="btn btn-primary" id="advanced-search-submit" data-wap data-wap-ref="search-button">
+																Search
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="search-info">
+												<a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">Sign in</a> to access
+												restricted content.
+											</div>
+										</div>
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var global_config = {
+        "icsUrl": "https://supporttickets.intel.com/services/oauth2/authorize?response_type=token&client_id=3MVG9QDx8IX8nP5Rh0X3B7gohGtUh8sjFQ8Tw_U8sS9_PoVrupDFwZ_nwLcze2n64lGBbGchyUb7_9W8n8pAV&redirect_uri=https%3A%2F%2Fwww.intel.com%2Fcontent%2Fwww%2Fus%2Fen%2Fsecure%2Fmy-intel%2Ftoken.html",
+        "ipsUrl": "https://premiersupport.intel.com/IPS/services/oauth2/authorize?response_type=token&client_id=3MVG9xOCXq4ID1uEa5F2lCYAp6mmKvTMlKbMIrsMKShY2oOqs1ETvPRjwmhoPivHd9_U53EzmiyYxn3nVpA9J&redirect_uri=https%3A%2F%2Fwww.intel.com%2Fcontent%2Fwww%2Fus%2Fen%2Fsecure%2Fmy-intel%2Ftoken.html"
+    };
+
+
+    function inputSearch() {
+    if (globalSearch.advancedSearchFlag == 'true') {
+        var findResults = $("#find-results").val();
+        var showResults = $("#show-results-from").val();
+        var titleIsChecked = $("#search_title").is(":checked");
+        var descriptionIsChecked = $("#search_description").is(":checked");
+        var idIsChecked = $("#search_id").is(":checked");
+        var searchInputValue = $("#mobile-search").val();
+
+        if (findResults != 'All of these terms' || showResults != "allResults" || titleIsChecked || descriptionIsChecked || idIsChecked) {
+            if (searchInputValue) {
+                return advancedSearch();
+            }
+            else {
+                return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+            }
+        }
+
+        else {
+            return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+        }
+    }
+    return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+
+}
+
+
+    var globalSearch = globalSearch || {};
+    globalSearch = {
+        searchProvider: 'coveo',
+        baseSearchQuery: 'localecode:"en_US" NOT generic1:"false" ',
+        langRootPath: '/content/www/us/en',
+        headingTxt: 'Best Match',
+        locale: 'en_US',
+        typeAheadUrl: 'http://search.intel.com/SearchLookup/DataProvider.ashx',
+        bestMatchUrl: 'https://intelcorporationproductione78n25s6.org.coveo.com/rest/search/v2/querySuggest',
+        searchRealm: 'Default',
+        bestMatchQ1: 'NAR',
+        bestMatchQ2: 'en',
+        bestMatchQ11: 'sptitle,description,url,thumbnailurl,reimaginerootlevel',
+        progId: 'ude',
+        useEMTTags: true,
+        defaultPage: 'search.html',
+        ighfToken: 'xx6e698e8b-65ad-446c-9030-666d0ec92d15',
+        searchHub: 'entepriseSearch',
+        newNavRedesign: true,
+        advancedSearchFlag :'true',
+        gtvLabels: {
+            suggested: "",
+            products: "Product Information",
+            support: "Support",
+            developers: "Developers",
+            drivers: "Drivers",
+            forums: "Forums",
+            specifications: "Specifications",
+            download: "",
+            searchesRelatedTo: "",
+            search: "Search Intel.com",
+            inLabel: "in",
+            searchSupport: "Search Intel® Support",
+            intelcom: "",
+            forLabel: "for",
+            allResults: "All Results",
+            show: "Show",
+            results: "Results"
+        },
+        mobileResults: "5",
+        laptopResults: "10",
+        EDCProgramIdentifier: "false"
+    };
+</script>
+                        </div>
+                        <!-- END MOBILE TOGGLE buttons -->
+                    </div>
+                </nav>
+            </header>
+        </div>
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+    
+    
+    
+
+
+
+
+
+<div id="secondary-nav-1" class="component secondary-nav" data-component="subnavigation-breadcrumb"
+     data-component-id="1">
+    
+</div>
+
+
+    
+    
+        
+        
+            
+            <script type="application/ld+json">
+            
+ </script>
+        
+    
+
+
+
+<script type="text/javascript">
+    intel = intel || {};
+    intel.utils = intel.utils || {};
+    intel.utils.breadcrumbSource = "";
+    intel.utils.isDefaultSecondaryNavNeeded = "false";
+    intel.utils.displayTitle = "4th Gen Intel® Xeon® Processor Scalable Overview";
+    intel.utils.template = "/apps/intel/commons/templates/mobileFirst/mf-article-long";
+</script>
+
+        
+        <script type="text/javascript">
+            
+            var globalHeader = globalHeader || {};
+            globalHeader = {
+                currentPath: "https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html",
+                lanloc: "/us/en",
+                lanLoc: "US/en",
+                helpformurl: "",
+                intelHeaderFooterVersion: "menu3",
+                megaMenuPath: "/content/data/globalelements/US/en/globalnav4",
+                subMenuPath: "/content/data/globalelements/US/en/sub-navigation/idz/developer-sub-navigation-breadcrumb",
+                isCHF:false,
+                secureRedirectURL: "",
+                excludeGlobalNav4: "false",
+                allowSubNavigationBreadcrumb: "true",
+                breadcrumbParentPagePath: "/content/www/us/en/developer/topic-technology/high-performance-computing/overview",
+                myintelHeaderLinkAgs: "RDC Basic View,RDC Privileged Full,RDC Privileged Entitlement-AZAD,Intel Registration Center Access~RDC Privileged Full,Sales-PRM-External-Customers Employee-User~RDC Basic View,RDC Privileged Full",
+            }
+        </script>
+    
+
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/in-viewport.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.js" defer></script>
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.js" defer></script>
+</div>
+
+    
+    
+
+
+<section data-scroll-track="false">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 pull-right persistent-cta-integration-globalNav" id="alertMsg">
+                <div id="alertSupport">
+                    <div class="browser_detect" id="browserdetectid" style="display:none;">
+                        <p>The browser version you are using is not recommended for this site.<br/>Please consider upgrading to the latest version of your browser by clicking one of the following links.</p>
+                        <div class="browser_types">
+                            <ul>
+                                
+                                    <li><a href="https://support.apple.com/downloads/safari">Safari</a></li>
+                                
+                                    <li><a href="https://support.google.com/chrome/answer/95346?hl=en">Chrome</a></li>
+                                
+                                    <li><a href="https://www.microsoft.com/en-us/edge">Edge</a></li>
+                                
+                                    <li><a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<main id="primary-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" integrity="sha384-M5jmNxKC9EVnuqeMwRHvFuYUE8Hhp0TgBruj/GZRkYtiMrCRgH7yvv5KY+Owi7TW" crossorigin="anonymous">
+</script>
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/supportLibs/resources/js/SupportPageTool.js" type="text/javascript" defer></script>
+
+
+
+<div class="targetParsys intelparsys">
+</div>
+
+
+    
+        <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/salesForceArticleLibs.min.css" type="text/css"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism-linenumbers.min.css" type="text/css"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleNewUxLibs.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/salesForceArticleLibs.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/waypoints.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/sticky.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism-linenumbers.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleNewUxLibs.min.js" defer></script>
+        <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleIdzLibs.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/showdown.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/waypoints.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleIdzLibs.min.js" defer></script>
+        <div class="aggregation">
+            <div class="aggregation">
+
+
+
+
+
+    
+</div>
+
+        </div>
+        <main id="primary-content-main" data-toolbar-order="">
+            <div class="promotionsBanner marketingbanner">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/upeMarketingBanner.min.css" type="text/css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+        
+    
+</div>
+
+            <div class="articlehero">
+                <div class="articlehero">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+        
+            
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        
+            
+            
+                
+            
+        
+        
+        
+            
+            
+                
+            
+        
+        
+        
+
+        <div class="masthead-component article-marquee-component intel-brand-ux component"
+             data-component="articleHero" id="articleHero-1" data-component-id="1">
+            
+            
+                
+                    
+                        
+                        
+                        
+                        
+                    
+                    <div class="content-marquee-1_0_0 intel-ws solid blade theme-dark-default brand-classic-blue color-block  no-image">
+                        <div class="color-block-lighter">
+                            <div class="container">
+                                <div id="document">
+                                    <div class="marquee-heading-section">
+                                        <h1 class="h3">Technical Overview Of The 4th Gen Intel® Xeon® Scalable processor family</h1>
+                                    </div>
+                                    <div class="documentDetails">
+                                        <div class="document id">
+                                            
+                                                <span> ID </span>
+                                                <span class="idValue">766082</span>
+                                            
+                                        </div>
+                                        <div class="document update">
+                                            
+                                                <span> Updated </span>
+                                                <span class="UpdatedValue">7/25/2022</span>
+                                            
+                                        </div>
+                                        <div class="document version">
+                                            
+                                                <span> Version </span>
+                                                <span class="versionValue">
+                                                
+                                                    
+                                                        Latest
+                                                    
+                                                    
+                                                
+                                            </span>
+                                            
+                                        </div>
+                                        <!--Based on the feature flag/dialog checkbox, display the below div text -->
+                                        
+                                            
+                                            
+                                                <div class="public">Public</div>
+                                            
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+            
+        </div>
+        </div>
+        <!--Based on if the version is not latest, below alert text is displayed -->
+        
+            
+        
+    
+</div>
+
+            </div>
+            <article class="article article-long component developer-article" data-component-id="1"
+                     data-component="articletemplate">
+                <div class="container takeaway-container">
+                    <div class="component-padding">
+                        <div class="row">
+                            <div class="left-side col-md-4 col-lg-3">
+
+                                <div class="article-actions-mobile d-block d-md-none"></div>
+
+                                <!-- duplicated from articlehero for vertical layout -->
+                                
+                                    
+                                    
+                                        <div class="jumplinksContainer vertical set1 row" style="display:none;"></div>
+                                    
+                                
+
+                                <p class="author"></p>
+                                <!-- BUILT IN - ARTICLE INTRO COMPONENT -->
+                                <!-- duplicated from right column for mobile layout -->
+                                <div class="article-intro-first mobile row section d-block d-md-none"></div>
+                                <!-- END IN - ARTICLE INTRO COMPONENT -->
+
+                                <!-- BUILT IN - ARTICLE TAKEAWAY COMPONENT -->
+
+                                <div class="articletakeaway parbase">
+                                    <div class="articletakeaway parbase">
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+
+
+
+    
+</div>
+
+                                </div>
+
+                                <div class="article-intro-second">
+                                    <div class="articleintro1 articleintro">
+                                        <div>
+                                            <!--  BUILT IN - ARTICLE INTRO SECOND COMPONENT -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- only display this for authored pages and not salesforce pages-->
+                                <div class="authorcontainer">
+                                    <div>
+                                        <div class="no-author-img"></div>
+                                        <img class="author-img" src="" alt="author-image">
+                                    </div>
+                                    <div class="authordetails">
+                                        <div class="singleauthordetails">
+                                            <p id="singleauthorname" class="authorname"></p>
+                                            <p id="singleauthorbio" class="authorbio"></p>
+                                        </div>
+                                        <p id="coauthordetails"></p>
+                                        <p id="ldapauthordetails"><span>By</span></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="right-side col-md-8 col-lg-9">
+                                <div class="article-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- BEGIN NEW BUILD IN - Article Actions - DESKTOP -->
+                                            <div class="article-actions section d-none d-sm-block" role="toolbar">
+                                                <!-- NEW Download PDF link - migrated from .article-intro byline
+                                                    Hide this link if no PDF configured for this article
+                                                -->
+                                                <p class="articleDate"></p>
+
+                                                <button id="linkToPrintArticle"
+                                                        class="article-action linkToPrintArticle fa fa-print"
+                                                        data-bs-toogle="tooltip" data-bs-placement="bottom"
+                                                        title="Print"
+                                                        data-content-element="#primary-content-main"
+                                                        data-print-modal-name="PRINT"
+                                                        data-print-modal-style="height=400,width=800,scrollbars=yes"
+                                                        data-print-modal-title="Fourth Generation Xeon Scalable Family Overview"
+                                                        data-include-page-title="true"
+                                                        onclick="printArticle('#linkToPrintArticle');"
+                                                        aria-label="Print Article"></button>
+
+                                                <button id="linkToEmailArticle"
+                                                        class="article-action linkToEmailArticlefa fa-mail-1"
+                                                        data-bs-toogle="tooltip" data-bs-placement="bottom"
+                                                        title="Email"
+                                                        data-modal-title="Fourth Generation Xeon Scalable Family Overview"
+                                                        data-modal-subject="Link to the Intel Article"
+                                                        data-modal-body="Intel Article Link"
+                                                        onclick="emailArticle('#linkToEmailArticle');"
+                                                        aria-label="Email Article"></button>
+
+                                                <!--
+                                                    This will be for a future project
+                                                    <button id="linkBookMark" class="article-action fa fa-bookmark-empty" data-tooltip="tooltip" data-placement="top" data-container="body" title="BookMark"></button>
+                                                -->
+                                            </div>
+                                            <div class="article-intro-first section d-none d-sm-block">
+                                                <div class="articleintro">
+                                                    <div class="articleintro">
+
+
+
+
+
+
+
+        
+        
+
+
+
+
+
+
+
+<div class="container article-intro-first-child" id="articleintro" data-component="articleintro" data-component-id="1">
+
+    <div class="component-padding article-intro-padding">
+        <div class="article-intro byline">
+            
+            <div class="intropdf">
+                
+
+            </div>
+            
+            
+            
+
+                
+
+                
+                    <p id="authorName" class="articleIntroAuthor">David Mulnix</p>
+                
+
+                
+
+            
+
+            
+
+            
+        </div>
+    </div>
+</div>
+
+</div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="articlebladepar intelparsys">
+<div class="articleParagraph parbase section">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            <div id="articleparagraph-1" class="component" data-component="articleparagraph"
+                 data-component-id="1">
+                <div >
+                    
+                    
+
+
+
+
+
+
+
+    
+    <div class="container">
+        <div class="component-padding">
+            <div class="row">
+                <div class="col-md-4 takeaway-placeholder">
+                </div>
+                <div class="col-md-8 paragraph-placeholder">
+                    <div class="article-content">
+                        <div class="row">
+                            <div class="col-12 articlepara">
+                                <div class="modal fade modal-image" id="image-expand-modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close icon" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span></span></button>
+                                            </div>
+                                            <div class="modal-body"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    
+                                    
+                                        <p><p><img alt="" height="1080" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/4th-gen-intel-xeon-scalable-processor-introduction.jpg" width="1920"/></p>
+
+<p>This paper discusses the new features and enhancements available in the 4th Gen Intel Xeon processors (formerly codenamed Sapphire Rapids) and how developers can take advantage of them. The 10nm enhanced SuperFin processor provides core microarchitecture changes and new technologies including the third generation of Intel&reg; Optane&trade; DC persistent memory, on-die accelerators, Compute Express Link&trade; (CXL&trade;), and more. Data center workloads can benefit from the increased core count, increased instructions per cycle, increased Intel&reg; UPI GT/s, increased processor cache sizes, increased memory MT/s, and additional PCI Express and CXL lanes.</p>
+
+<p>The table below provides a comparison between the third and fourth generation of the Intel Xeon Scalable processor family. The fourth generation builds on features found in the third generation. New capabilities/changes relative to the previous generation are in <strong><em>Bolded Italic. </em></strong>Note that the table below reflects the top capabilities for each category. There are many <a href="/content/www/us/en/products/details/processors/xeon/scalable.html">models</a> of processors available with different feature combinations.</p>
+
+<p><strong>Table 1. The Next-Generation Intel Xeon Scalable Processor Family Microarchitecture Overview</strong></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:811px">
+	<tbody>
+		<tr>
+			<td>&nbsp;</td>
+			<td colspan="2" rowspan="1"><strong><em>3rd Generation Intel&reg;&nbsp; Xeon&reg;&nbsp; Scalable processor family with&nbsp;Intel&reg; C620A series chipset</em></strong></td>
+			<td><strong><em>4th Gen Intel Xeon Scalable processor family with Intel&reg; C741 series chipset</em></strong></td>
+		</tr>
+		<tr>
+			<td>Socket Count</td>
+			<td>1 and 2</td>
+			<td>4 and 8 glue less</td>
+			<td>1S, 2S, 4S, &amp; glueless 8S (&gt;8S via xNC support)</td>
+		</tr>
+		<tr>
+			<td>Die Size</td>
+			<td>10nm</td>
+			<td>14nm</td>
+			<td><strong><em>10nm (enhanced SuperFin)</em></strong></td>
+		</tr>
+		<tr>
+			<td>Processor Core Count</td>
+			<td>Up to 40 cores (80 cores with Intel&reg; Hyper-Threading Technology (Intel&reg; HT Technology)) per socket</td>
+			<td>Up to 28 cores (56 cores with Intel&reg; Hyper-Threading Technology (Intel&reg; HT Technology)) per socket</td>
+			<td><strong><em>Up to 60 cores (120 cores with Intel&reg; Hyper-Threading Technology (Intel&reg; HT Technology)) per socket</em></strong></td>
+		</tr>
+		<tr>
+			<td>Cache</td>
+			<td>
+			<ul>
+				<li>First Level Cache: 32 KB Instruction Cache 48 KB Data Cache</li>
+				<li>Mid-Level Cache: 1.25 MB private per core</li>
+				<li>Last Level Cache: 1.5 MB per core</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li>First Level Cache: 32 KB Instruction Cache 32 KB Data Cache</li>
+				<li>Mid-Level Cache: 1 MB private per core</li>
+				<li>Last Level Cache: 1.375 MB per core</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li>First Level Cache: 32 KB Instruction Cache 48 KB Data Cache</li>
+				<li><strong><em>Mid-Level Cache: 2 MB private per core</em></strong></li>
+				<li><strong><em>Last Level Cache: 1.875 MB per core</em></strong></li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>Socket Type</td>
+			<td colspan="2" rowspan="1">Socket P+</td>
+			<td><strong><em>Socket E</em></strong></td>
+		</tr>
+		<tr>
+			<td>TDP</td>
+			<td>Up to 270W</td>
+			<td>Up to 250W</td>
+			<td><strong><em>Up to 350W</em></strong></td>
+		</tr>
+		<tr>
+			<td>New Features</td>
+			<td>Intel&reg; Resource Director Technology (Intel&reg; RDT), Intel&reg; SST-BF on select skus, Intel&reg; Volume Management Device (Intel&reg; VMD) 2.0, Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512), Intel&reg; Deep Learning Boost (Intel&reg; DL Boost), VBMI, Intel&reg; Speed Select Technology - Core Power (Intel&reg; SST-CP), Intel&reg; Speed Select Technology - Turbo Frequency (Intel&reg; SST-TF) and enhanced Intel&reg; Speed Select Technology - Performance Profile (Intel&reg; SST-PP) on select skus, Intel&reg; VROC 7.5, Intel&reg; PFR, Converged Boot Guard and Intel TXT, Crypto Enhancements: (2xAES, SHA Extensions, VPMADD52), Intel&reg; Software Guard Extensions (Intel&reg; SGX), Intel&reg; Total Memory Encryption (Intel&reg; TME) with 64 keys, Intel&reg; Volume Management Device 2.0, PECI 4.0, enhanced power management features.</td>
+			<td>BFLOAT16, Intel&reg; PFR, Intel&reg; SST-TF on select skus, next generation of Intel&reg; Virtual RAID on CPU (Intel&reg; VROC), Converged Intel&reg; Boot Guard and Intel&reg; Trusted Execution Technology (Intel&reg; TXT)</td>
+			<td><strong><em>Intel&reg; AMX (INT8 &amp; BFLOAT16), Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) (new FP16 data type), Intel&reg; Total Memory Encryption (Intel&reg; TME) with 128 keys, Next-Gen Intel&reg; Quick Assist Technology (Intel&reg; QAT), Intel&reg; DLB, Intel&reg; DSA, Intel&reg; In-Memory Analytics Accelerator (Intel&reg; IAA)</em></strong></td>
+		</tr>
+		<tr>
+			<td>Physical/Virtual address bits</td>
+			<td>52/57</td>
+			<td>46/48</td>
+			<td>52/57</td>
+		</tr>
+		<tr>
+			<td>Memory controllers / Sub-Numa clusters</td>
+			<td>4 / 2</td>
+			<td>2 / 2</td>
+			<td><strong><em>4 / 4</em></strong></td>
+		</tr>
+		<tr>
+			<td>Memory DDR4</td>
+			<td>
+			<ul>
+				<li>Up to 8 channels DDR4 per CPU</li>
+				<li>Up to 16 DIMMs per socket</li>
+				<li>Up to 3200 MT/s 2DPC</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li>Up to 6 channels DDR4 per CPU</li>
+				<li>Up to 12 DIMMs per socket</li>
+				<li>Up to 2933 MT/s 2DPC</li>
+				<li>Up to 3200 MT/s 1DPC</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li><strong><em>Up to 8 channels DDR5 per CPU</em></strong></li>
+				<li><strong><em>Up to 4400 MT/s 2DPC</em></strong></li>
+				<li><strong><em>Up to 4800 MT/s 1DPC</em></strong></li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>Intel&reg; Optane&trade; memory support</td>
+			<td colspan="2" rowspan="1">2nd Gen Intel Optane DC persistent memory module (DDRT, In-Tile Mode, and App Direct) up to 512GB</td>
+			<td><strong><em>3rd Gen Intel Optane DC persistent memory module (DDRT2, X-Tile Mode, and Cached App Direct) up 512GB</em></strong></td>
+		</tr>
+		<tr>
+			<td>Number of Intel&reg; Ultra Path Interconnect (Intel&reg; UPI) Interconnects</td>
+			<td>Up to 3 links per CPU (x20 wide)</td>
+			<td>Up to 6 links per CPU (x20 wide)</td>
+			<td><strong><em>Up to 4 links per CPU (x24 wide)</em></strong></td>
+		</tr>
+		<tr>
+			<td>Intel&reg; UPI Interconnect Speed</td>
+			<td>Up to 11.2 GT/s</td>
+			<td><strong><em>Up to 10.4 GT/s</em></strong></td>
+			<td><strong><em>Up to 16 GT/s</em></strong></td>
+		</tr>
+		<tr>
+			<td>PCIe</td>
+			<td>
+			<ul>
+				<li>Up to 64 lanes per CPU (bifurcation support: x16, x8, x4)</li>
+				<li>PCIe Gen 4 support</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li><strong><em>Up to 48 lanes per CPU (bifurcation support: x16, x8, x4)</em></strong></li>
+				<li><strong><em>PCIe Gen 3 support</em></strong></li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li><strong><em>80 PCIe lanes with Flex Bus/CXL** - per CPU</em></strong></li>
+				<li><strong><em>PCIe Gen 5.0 support (NTB @ PCIe 4.0)</em></strong></li>
+				<li><strong><em>4</em></strong><strong><em>8 lanes North/ 32 lanes South of socket</em></strong></li>
+				<li><strong><em>PCIe bifurcation support: x16, x8, x4, x2(Gen4)</em></strong></li>
+				<li><strong><em>Intel&reg; Scalable I/O Virtualization (Intel&reg; Scalable IOV)</em></strong></li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="2">Chipset Features</td>
+			<td colspan="2" rowspan="1">
+			<ul>
+				<li>Intel&reg; QuickAssist Technology (Intel&reg; QAT)</li>
+				<li>Enhanced Serial Peripheral Interface (eSPI)</li>
+			</ul>
+			</td>
+			<td>Enhanced Serial Peripheral Interface (eSPI)</td>
+		</tr>
+		<tr>
+			<td colspan="2" rowspan="1">
+			<ul>
+				<li>Up to 14 SATA 3</li>
+				<li>Up to 14,USB 2.0</li>
+				<li>Up to 10 USB 3.0</li>
+			</ul>
+			</td>
+			<td>
+			<ul>
+				<li><strong><em>Up to 20 SATA 3</em></strong></li>
+				<li>Up to 14 USB 2.0</li>
+				<li><strong><em>Up to 10 ports of USB 3.1 Gen1 (5Gbps)</em></strong></li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h4><strong>Intel&reg; Optane&trade; persistent memory 300 series</strong></h4>
+
+<p>The next generation of Intel&reg; Optane&trade; persistent memory modules are a form of large capacity memory that can function in either a volatile or non-volatile state and provides a new tier positioned between DRAM and storage. Traditional memory in computer architecture is volatile. The content of volatile memory is only able to exist so long as the system supplies power. If there is a power loss, the data is immediately lost.&nbsp;Persistent memory maintains the integrity of the information stored in it, even when power has been lost or cycled on the system. The persistent memory is byte addressable, cache coherent, and provides software with direct access to persistence without paging. The 300 series supports the same operating modes as previous generations - App Direct (AD), Memory Mode (MM), Mixed Mode (AD + MM).</p>
+
+<p>The table below provides a memory comparison between the previous and next generation of persistent memory.&nbsp;New capabilities/changes relative to the previous generation in&nbsp;<strong><em>Bolded Italic.</em></strong></p>
+
+<p><strong>Table 2. Intel&reg; Optane&trade; persistent memory Overview</strong></p>
+
+<table>
+	<thead>
+		<tr>
+			<th style="width:210px">
+			<p><a id="_Hlk66085126"></a><strong>Intel&reg; Optane&trade; DC Persistent Memory Family</strong></p>
+			</th>
+			<th style="width:279px">
+			<p><strong>Intel&reg; Optane&trade; persistent memory 200 series</strong></p>
+			</th>
+			<th style="width:372px">
+			<p><strong><em>Intel&reg; Optane&trade; persistent memory 300 series</em></strong></p>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><strong>Supported Number of Sockets</strong></td>
+			<td>2 or 4 sockets</td>
+			<td><strong><em>2, 4 or 8 sockets</em></strong></td>
+		</tr>
+		<tr>
+			<td><strong>Number of Channels per Socket</strong></td>
+			<td>Up to 8</td>
+			<td>Up to 8</td>
+		</tr>
+		<tr>
+			<td><strong>DIMM Capacity</strong></td>
+			<td colspan="2">
+			<p>128GB, 256GB, 512GB</p>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Platform Capacity</strong></td>
+			<td colspan="2">
+			<p>Up to 4TB per socket of persistent memory</p>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>DDR-T Speeds</strong></td>
+			<td>Up to 3200 MT/sec</td>
+			<td><strong><em>Up to 4800 MT/sec</em></strong></td>
+		</tr>
+		<tr>
+			<td><strong>Security</strong></td>
+			<td>AES-256 encryption</td>
+			<td>
+			<p><strong><em>+FIPS140-3 level 2 compliance</em></strong></p>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>TDP Power Sustained</strong></td>
+			<td colspan="2">
+			<p>Up to 15W</p>
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Data Persistence in Power Failure Event</strong></td>
+			<td>
+			<p>ADR,&nbsp;eADR (Optional)</p>
+			</td>
+			<td>
+			<p>ADR,<strong><em> FastADR (Optional)</em></strong></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<p>The latest version of persistent memory on the platform supports remote persistent memory (RPMEM) operations. This enables Intel&reg; Data Direct I/O (Intel&reg; DDIO) to participate in remote memory interactions reducing power and increasing bandwidth. RPMEM also adds atomic write operations for RDMA, while RDMA reads no longer must wait for data to be pushed to the Asynchronous DRAM Refresh (ADR) domain. Overall RPMEM eliminates software participation in the replication process reducing wait times. Lastly RPMEM is compatible with Advanced Configuration and Power Interface (ACPI) standards providing interaction with steering tags. This allows persistent memory to be handled ubiquitously and IO to be steered directly to persistent or volatile memory.</p>
+
+<p>&nbsp;</p>
+
+<h4><strong>Uniform Memory Access Domain</strong></h4>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-uma.png" width="1056"/></p>
+
+<p>&nbsp;</p>
+
+<p><strong>Figure 1 &ndash; Block Diagram Representing UMA</strong></p>
+
+<p>Over the course of time the density of processors, memory controllers, interconnects and supporting infrastructure continues to expand on the die, while the geometry gets smaller. This correlates to an increase in the amount of time it takes for data to move from one side of the die to another. A uniform memory access (UMA) domain is where we originally started and is still an option on the system. It provides a single contiguous address space that is interleaved among all the memory controllers. UMA does not provide a way to optimize data flow from the nearest resources. This is normally done through processor affinity which is a way to dictate what processor(s) a given software thread uses. Therefore, all cores have equal access to the last level cache and to memory when they are part of an UMA domain. In this situation you may have a processor accessing a memory controller or a slice of the last level cache that is on the opposite side of the die versus from the nearest.</p>
+
+<p>&nbsp;</p>
+
+<h4><strong>Sub-NUMA Clustering</strong></h4>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-2-snc.png" width="1056"/></p>
+
+<p><strong>Figure 2 &ndash; Block Diagram Representing Domains Of sub-NUMA With Two Clusters</strong></p>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-4-snc.png" width="1056"/></p>
+
+<p><strong>Figure 3 &ndash; Block Diagram Representing Domains Of sub-NUMA With Four Clusters</strong></p>
+
+<p>To decrease the latency of data movements across the die sub-NUMA clusters (SNC) were introduced. In a two cluster SNC (SNC-2), two localization domains exist within a processor. Each domain has mapped addresses from the local memory controller and local Last Level Cache (LLC) slices. Processors in the local domain will use the local memory controller and local LLC slices. Processors in the local domain will observe lower LLC and memory latency compared to latency on accesses mapped to locations outside of the same SNC domain.</p>
+
+<p>SNC has a unique location for every address in the LLC, and it is never duplicated within the LLC banks. Localization of addresses within the LLC for each SNC domain applies only to addresses mapped to the memory controllers in the same socket. All addresses mapped to memory on remote sockets are uniformly distributed across all LLC banks independent of the SNC mode. Therefore, even in the SNC mode, the entire LLC capacity on the socket is available to each core, and the LLC capacity reported through the CPUID is not affected by the SNC mode.</p>
+
+<p>Figure 2 represents a two-cluster configuration that consists of SNC Domain 0 and 1 in addition to their associated cores, LLCs, and memory controllers. Each SNC domain contains half of the processors on the socket, half of the LLC banks, and one of the memory controllers with its associated DDR channels. The affinity of cores, LLC, and memory within a domain are expressed via software using the OS NUMA affinity parameters, which can take SNC domains into account in scheduling tasks and allocating memory to a process for optimal performance.</p>
+
+<p>The latest generation of silicon provides either 2 domain or 4 domain versions of SNC. SNC is enabled at the BIOS level and requires that the memory be symmetrically populated, and the software must be optimized to take advantage of it. If these criteria can be met it will provide the best performance out of all the modes of operation.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Hemisphere and Quadrant Modes</strong></h4>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-hemisphere.png" width="1056"/></p>
+
+<p><strong>Figure 4 &ndash; Block Diagram Representing Domains Of Hemisphere Mode</strong></p>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-quadrant.png" width="1056"/></p>
+
+<p><strong>Figure 5 &ndash; Block Diagram Representing Domains Of Quadrant Mode</strong></p>
+
+<p>For those customers who can meet the requirement of having symmetrically populated memory but who do not wish to alter their software as must be done with sub-NUMA clustering there are two new modes available. Hemisphere and Quadrant divide the die into either two or four domains respectively. Each processor has access to all the caching agents and memory controllers. However, based on a hash function each home agent will automatically ensure the caching agent is routed to the closest memory controller within the same domain. Once a processor accesses a caching agent the distance is minimized as it is always going to interact with the closest memory controller. These modes of operation will tend to produce a better performance result as compared to UMA but not as good as compared to sub-NUMA clustering. The settings are found within the BIOS with Quadrant as the default.&nbsp; The mode used by the BIOS will be dictated by the memory symmetry.&nbsp; If memory symmetry cannot be met for quadrant mode, then hemisphere mode will be used. If there still isn&rsquo;t enough symmetrical memory for hemisphere mode, then the system will default to UMA mode.</p>
+
+<p>&nbsp;</p>
+
+<h4><strong>New Instructions</strong></h4>
+
+<p>The latest generation of silicon has a new microarchitecture core that brings with it a variety of enhancements which are covered in greater detail throughout this article. In this section we will touch upon some of the instructions that are associated with these changes. A portion of the new instructions center around Accelerator interfacing Architecture (AiA). These are built into the ISA and are an enhancement on the x86 processors meant to optimize data movement by accelerator devices to host services. The instructions MOVDIR, MOVDIR64B, ENQCMD, ENQCMDS, User Interrupts, User IPIs, Umonitor, Umwait, and PAUSE are focused on the AiA operations. The MOVDIR/MOVDIR64B instructions are to offload data movements to the accelerator. The ENQCMD/ENQCMDS instructions facilitate shared and dedicated work queues allowing the hardware to manage the process. This avoids wasting a core processor resource on a persistent thread. Lastly the user interrupts, IPIs, Umonitor, Umwait, and PAUSE instructions deal with signaling and synchronization aspects of the accelerators.</p>
+
+<p>Instructions to support AI workloads via Intel AMX includes Int8 for inference, Bfloat16 for inference/training, and Xsave to help with the management by the operating systems of the dedicated silicon tiles. While Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) includes FP16 which replicates the FP32(SP) computation instruction using a new FP16 data type to help with support for complex number arithmetic. This can be of value for signal and image processing and specifically with 5G networks.</p>
+
+<p>For virtualization there is Hypervisor Linear Address Translation (HLAT) which can be used by the VMM to enforce guest linear address translation to guest physical addresses. When combined with enhanced page-table capability it helps to ensure VMM-enforced guest translations are not tampered with by untrusted system software.</p>
+
+<p>On the security side Intel&reg; Control-Flow Enforcement Technology (Intel&reg; CET) defends the shadow stack against return-oriented programming by implementing a duplicate shadow stack that is managed by the CPU. The two stacks are compared on a call to make sure there are no unexpected discrepancies.</p>
+
+<p>Lastly Intel TSX has two new commands, XSUSLDTRK (suspend tracking load address) and XRESLDTRK (resume tracking load address). These commands allow programmers to choose which memory accesses do not need to be tracked in the TSX read set. This has the potential to benefit in-memory database by reducing the capacity aborts by allowing the software to exclude certain load addresses from entering the transaction read set.</p>
+
+<p>For additional information see the <a href="https://cdrdv2.intel.com/v1/dl/getContent/671488">Intel&reg; 64 and IA-32 Architectures Optimization Reference Manual</a> and the <a href="/content/www/us/en/content-details/812218/intel-architecture-instruction-set-extensions-programming-reference.html">Intel&reg; Architecture Instruction Set Extensions Programming Reference</a>.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Built-In Accelerators</strong></h4>
+
+<p>In the fourth generation of the Intel Xeon Scalable processor family an emphasis has been placed on incorporating multiple accelerators into the processor package. The accelerators bring new functional capabilities to support popular use cases associated with AI, cryptographic, in-memory database analytics, and data movement operations. They also help to optimize the throughput of code simply because they are physically closer to the processor. The accelerators can work individually or in combination with each other to help create a multi-layered approach to improving performance. They include next-gen Intel&reg; QuickAssist Technology (Intel&reg; QAT), Intel&reg; In-Memory Analytics Accelerator (Intel&reg; IAA), Intel&reg; Data Streaming Accelerator (Intel&reg; DSA), and Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX).</p>
+
+<p>&nbsp;</p>
+
+<h4><strong>Cryptographic Acceleration</strong></h4>
+
+<p>Intel has longstanding practice of enhancing cryptographic cipher performance through the introduction of new instructions, improvements to processor microarchitecture, and innovative algorithm optimizations. Intel&rsquo;s latest version of Intel Xeon Scalable Processor is no exception and provides performance improvements for a variety of widely adopted public key cryptographic ciphers, symmetric ciphers, and cryptographic hash algorithms.&nbsp;</p>
+
+<p>Public Key cryptography is a category of cryptographic ciphers widely used for authentication and key exchange when establishing a secure TLS connection between two systems.&nbsp; Based on large integer math, the ciphers require compute intensive multiplication and squaring primitives to support the cryptographic algorithm. The AVX512 Integer Fused Multiply Add (IFMA) VPMADD52* instructions support efficient large number multiplication operations with a four-fold increase in parallelism over previous architectures. RSA, ECDSA, and ECDHE public key cryptographic cipher performance can be improved incorporating these instructions into your specific algorithm computation primitives. When these instructions are used in combination with cryptographic multi-buffer processing techniques can yield significant performance improvements.</p>
+
+<p>Advanced Encryption Standard (AES) symmetric ciphers can be optimized to take advantage of Vectorized AES-NI. When used with 512-bit wide registers, one can process up to four AES 128-bit blocks per instruction delivering a significant improvement in bulk encryption throughput in a variety of modes (Ex. AES-GCM).</p>
+
+<p>Cryptographic hash algorithms benefit from the introduction of Vectorized Carryless Multiply (CLMUL) and SHA-Extensions being added to the architecture.&nbsp; Vectorized CLMUL provides throughput gains for processing Galois Hash (GHASH) and with specific instructions added to help support SHA-256, this aims at improving performance over previous Intel Xeon Scalable processor architectures. These new instructions are compatible with <a href="https://core.dpdk.org/download/">Data Plane Development KIT DPDK</a>, <a href="https://github.com/intel/QAT_Engine">Intel OpenSSL Engine</a>, <a href="https://github.com/intel/isa-l">Intel Storage Acceleration library (ISAL)</a>, <a href="https://github.com/intel/intel-ipsec-mb">IPSec Multi-Buffer Library</a> and <a href="https://github.com/intel/ipp-crypto/tree/develop/sources/ippcp/crypto_mb">IPP Multi-Buffer Library</a>.</p>
+
+<p>Previous generations of Intel QAT resided within the chipset. While the next generation of Intel QAT has been moved inside of the processor package optimizing its interaction with the processor cores due to physical proximity. This next generation provides 200Gbs Crypto, 160Gbs verified compression, 100kops PFS ECDHE and RSA 2K Decrypt. The technology can provide benefits of data compression for data lakes, file systems, distributed storage systems, memory infrastructure optimization, next generation firewall, wireless core and edge, content delivery controllers, OpenSSL, SSL/TLS, and more.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Intel&reg; In-Memory Analytics Accelerator (Intel&reg; IAA)</strong></h4>
+
+<p>Big data and in-memory databases are frequently utilized together to optimize results for various use cases such as fraud prevention in financial services, personalization of products and services, as well as analysis of sensor data to look for preventative maintenance. Intel IAA is an accelerator that has been designed to help benefit in-memory databases and analytic workloads. There are three main areas that Intel IAA can assist with analytics primitives (scan, filter, etc.), sparse data compression and memory tiering.</p>
+
+<p><img alt="" height="410" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-iaa1.png" width="728"/></p>
+
+<p><strong>Figure 6 &ndash; Compression/Decompression</strong></p>
+
+<p>Compression and decompression are frequently used or desirable when dealing with big data stored in-memory or on a storage array. Decompression maybe a requirement as part of applying data analytics such as with a table scan. The accelerator is designed to pull data from the last level cache, memory or storage decompress it and apply analytics primitives. The output from the transaction can be sent back to the cache, memory or storage. All of this work is offloaded from the processor core.</p>
+
+<p>For AI workloads there can be many zero values introduced into the matrix of data that is being worked on. These zero values are known as sparsity. If sparsity can be reduced an improvement in the performance should follow for AI workloads. The accelerator has the capability to pull data from memory and apply sparsity compression. The data is then sent to the last level cache to be worked on by the AI workload.</p>
+
+<p><img alt="" height="749" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-iaa2.png" width="1331"/></p>
+
+<p><strong>Figure 7 &ndash; Memory Tiering</strong></p>
+
+<p>Memory tiering is the concept of dividing memory into different areas to help with resource management. Hot data that is more frequently executed can reside in an area where it has a faster throughput to the processor while less used cold data can reside on an area that has slower throughput to the processor. The more frequently used memory might be stored in memory while less used data might be stored on a hard drive. Intel IAA can provide a hybrid solution for memory tiering by compressing a portion of the data within the memory space creating a warm location for the data to reside within. The memory footprint for a workload and the total cost of ownership for a data center may be reduced via compression-based memory tiering.</p>
+
+<p>Intel IAA has up to four instances per socket that are available to offload data from the processor core. From a software perspective each instance is exposed as a PCI-Express complex integrated endpoint. Intel IAA supports a variety of PCI-SIG* Defined services to provide highly scalable configurations. It also supports shared virtual memory allowing the device to operate directly in the applications virtual address space without requiring pinned memory.</p>
+
+<p>Intel IAA instances are identified by the operating system via the <a href="https://github.com/intel/idxd-driver">Intel&reg; Data Accelerator Driver (IDXD)</a> which can be utilized by software libraries and frameworks to manage work queues. One way to do this is through the <a href="https://github.com/intel/qpl/tree/v0.1.20">Intel&reg; Query processing Library</a>. It can be used to assign work queues and groups to Intel IAA at which point the API can be called to offload work to the hardware accelerator. The<a href="https://cdrdv2.intel.com/v1/dl/getcontent/780887"> Intel&reg; In-Memory Analytics Accelerator (Intel&reg; IAA) Enabling Guide </a>covers the process for those who would like an overview of enabling Intel IAA. While deeper insight into the architecture information can be found within the <a href="https://cdrdv2.intel.com/v1/dl/getContent/721858">Intel&reg; In-Memory Analytics Accelerator Architecture Specification</a>.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Intel&reg; Data Streaming Accelerator (Intel&reg; DSA) </strong></h4>
+
+<p>Intel DSA is a replacement to Intel&reg; Quick Data Technology. It is designed to help offload common data mover operations from the processor cores that might be found in storage applications, hypervisors, persistent memory operations, networking applications, operating system cache flushing, page zeroing and memory moves. More specific uses that Intel DSA may assist with include virtual machine fast checkpoint analysis, vSwitch network virtualization, fast replication across non-transparent bridge (NTB), and applications that focus on analytics, in-memory databases, and messaging.</p>
+
+<p>From a hardware perspective Intel DSA has up to four instances per socket depending on the model, available to offload data from the processor core. It supports the data movement between any component on the platform including all compatible attached memory and IO devices. For example, the data movement between the processor cache to main memory, between the processor cache to an addon card, and between two addon cards is supported.</p>
+
+<p>From a software perspective the data can be shared concurrently across the operating system, virtual machine manager, virtual machines, containers, and application processes. A shared virtual memory space allows the device to operate directly in the applications virtual address space without requiring pinned memory. Each instance of Intel DSA is exposed as a PCI-Express complex integrated endpoint and supports a variety of PCI-SIG* Defined services creating highly scalable configurations.</p>
+
+<p>Intel DSA instances are identified by the operating system via the <a href="https://github.com/intel/idxd-driver">Intel&reg; Data Accelerator Driver (IDXD)</a> which can be utilized by software libraries and frameworks to manage work queues. Compatible libraries for ease of adoption can be found in the <a href="https://core.dpdk.org/download/">Data Plane Development KIT DPDK</a>, the <a href="https://github.com/spdk">Storage Performance Development Kit</a>, with a more generic <a href="https://doc.dpdk.org/guides-21.11/prog_guide/dmadev.html">dmadev</a> abstraction that can be used with other copy-offload engines, <a href="https://doc.dpdk.org/guides-21.11/dmadevs/index.html">DMA drivers</a>, and an example <a href="https://doc.dpdk.org/guides-21.11/sample_app_ug/dma.html">application</a>. Additional resources include: <a href="https://01.org/blogs/2019/introducing-intel-data-streaming-accelerator">Introducing The Intel&reg; Data Streaming Accelerator (Intel&reg; DSA)</a>, <a href="https://cdrdv2.intel.com/v1/dl/getContent/671116">Intel&reg; DSA Specification</a>, <a href="https://github.com/intel/idxd-driver">Intel&reg; Data Accelerator Driver GitHub* repository</a>, Intel&reg; Data Accelerator Driver Overview on GitHub.io, <a href="https://github.com/intel/idxd-config">Intel&reg; Data Accelerator Control Utility and Library</a>, <a href="/content/www/us/en/developer/articles/technical/opencl-20-shared-virtual-memory-overview.html">Shared Virtual Memory</a>, Intel&reg; Scalable I/O Virtualization, <a href="/content/www/us/en/developer/articles/technical/intel-sdm.html">Intel&reg; 64 and IA-32 Architectures Software Developer Manuals</a>,<a href="/content/www/us/en/content-details/671116/intel-data-streaming-accelerator-architecture-specification.html">&nbsp;Intel&reg; Data Streaming Acceleration Architecture Specification</a>&nbsp;and the <a href="https://cdrdv2.intel.com/v1/dl/getContent/759709">Intel&reg; Data Streaming Accelerator User Guide</a>.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX)</strong></h4>
+
+<p>[embed]6318295073112[/embed]</p>
+
+<p>Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX) is designed primarily to improve deep learning inference &amp; training performance. It is a new 64-bit programming paradigm consisting of two components: a set of 2-dimensional registers (tiles) representing sub-arrays from a larger 2-dimensional memory image, and an accelerator able to operate on tiles, the first implementation is called TMUL (tile matrix multiply unit). Intel AMX provides the programmer with configurable tile sizes for flexibility supplied as metadata. A single instruction is capable of autonomously executing multi-cycles in the tile and accelerator hardware. Since execution is driven through metadata, an existing Intel AMX binary could more easily take advantage of changes over time in the Tile sizes without adjustments to the software coding.</p>
+
+<p><img alt="" height="596" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-dl1.png" width="1056"/></p>
+
+<p><strong>Figure 8 - Conceptual Diagram Of The Intel AMX Architecture.</strong></p>
+
+<p>An Intel architecture host drives the algorithm, the memory blocking, loop indices and pointer arithmetic. Tile loads and stores and accelerator commands are sent to multi-cycle execution units. Intel AMX instructions are synchronous in the Intel architecture instruction stream and the memory loaded and stored by the tile instructions is coherent with respect to the host&rsquo;s memory accesses. There are no restrictions on interleaving of Intel architecture and Intel AMX code or restrictions on the resources the host can use in parallel with Intel AMX (e.g., Intel AVX512). There is also no architectural requirement on the Intel architecture compute capability of the Intel architecture host other than it supports 64-bit mode.</p>
+
+<p>Intel AVX512 code that is using the FP32 data type will continue to use the Intel AVX512 code path on the platform. Developers that want to convert their FP32 based deep learning models over to BF16 or INT8 for use with Intel AMX can utilize the <a href="/content/www/us/en/developer/tools/oneapi/neural-compressor.html">Intel&reg; Neural Compressor</a>. This tool will make the conversion process easier.&nbsp; While the following article provides you with a code sample tutorial,&nbsp;<a href="/content/www/us/en/developer/articles/code-sample/advanced-matrix-extensions-intrinsics-functions.html">Code Sample: Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX) - Intrinsics Functions</a>&nbsp;and you can get code samples directly on <a href="https://github.com/intel/AMX-TMUL-Code-Samples">Github</a>.</p>
+
+<p>Intel AMX supports int8 (all sign combinations) with int32 accumulation as well as Bfloat16 with IEEE SP accumulation. It is supported by various tools and libraries which include <a href="https://github.com/oneapi-src/oneDNN">Intel&reg; oneAPI Deep Neural Network Library (oneDNN)</a>, <a href="/content/www/us/en/developer/tools/oneapi/onemkl-download.html">Intel&reg; oneAPI Math Kernel Library (oneMKL)</a>, <a href="https://github.com/oneapi-src/oneCCL">Intel&reg; oneAPI Collective Communications Library (oneCCL)</a>, <a href="https://github.com/oneapi-src/oneDAL">Intel&reg; oneAPI Data Analytics Library (oneDAL)</a>, <a href="/content/www/us/en/developer/tools/oneapi/neural-compressor.html">Intel&reg; Neural Compressor</a>, and <a href="/content/www/us/en/developer/tools/openvino-toolkit/overview.html">Intel OpenVINO Toolkit version</a>. More detailed information can be found in <a href="https://cdrdv2.intel.com/v1/dl/getContent/671368">Intel&reg; Architecture Instruction Set Extensions Programming Reference</a>. Support for this new technology can be found in Linux Kernel version 5.18+ and Windows Server version 2022+. Use cases that may benefit from Intel AMX include Natural language processing, media analytics, media processing and delivery, image recognition, machine language translation and reinforcement learning.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Intel&reg; Dynamic Load Balancer (Intel&reg; DLB)</strong></h4>
+
+<p>There has been an increase in the number of work queues due to the introduction of the new accelerators. Intel DLB has been provided to help manage these work queues across the processor cores using dedicated logic. The dedicated logic manages the queue head and tail pointers stored in memory that are used by the producers and consumers. The hardware frees up the software from this process improves scalability, avoids spinlock penalties, and atomicity is maintained with load variations as the work is dynamically distributed across the processor cores.</p>
+
+<p>While Intel DLB can balance the loading for the accelerators it isn&rsquo;t limited to just that application. Traffic generated in other areas of the platform such as from CXL or the network can also be managed. Network traffic for example can benefit from Intel DLB in the areas of streaming data processing, elephant flow handling, vSwitch, Vector Packet Processing routers, and IPSec security gateways.</p>
+
+<p><img alt="" height="506" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-dlb1.png" width="899"/></p>
+
+<p><strong>Figure 9 &ndash; Queues Managed By Software</strong></p>
+
+<p><img alt="" height="506" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-dlb2.png" width="899"/></p>
+
+<p><strong>Figure 10 &ndash; Queues Managed By Dedicated Hardware Logic (Intel DLB)</strong></p>
+
+<p>The use of queues in memory with traditional method of work communication between producers (adding to the queue) and consumers (removing from the queue).</p>
+
+<p>In figure 9 the queues are managed by software only (without Intel DLB).</p>
+
+<ul>
+	<li>Queue keeps the work list in order</li>
+	<li>Queue head/tail pointers also stored in memory and their status is verified via enqueue/dequeue software</li>
+	<li>Fundamental performance and algorithmic limitations to this approach:
+	<ul>
+		<li>Impact Of Lock Latency</li>
+		<li>Lock Contention</li>
+		<li>Memory Latency</li>
+		<li>Cache And Snooping Behaviors</li>
+		<li>Polling Of Multiple Queues</li>
+	</ul>
+	</li>
+</ul>
+
+<p>In figure 10 the queues are managed by Intel DLB.</p>
+
+<ul>
+	<li>Head/tail pointers and queue are stored within Intel&reg; DLB local memory</li>
+	<li>Compute and polling limitations are solved by using purpose-built logics within Intel&reg; DLB (represented by the Enqueue/Dequeue Logic blocks)</li>
+	<li>Performance improves due these changes include:
+	<ul>
+		<li>Core Cycles Freed To Do Other Work</li>
+		<li>Lock-Free Access</li>
+		<li>Polling Reduction</li>
+		<li>No Cross-Core Snooping For Queue Access</li>
+		<li>Reduced Impact Of Memory And Caching Behaviors</li>
+		<li>High Queuing Throughput</li>
+		<li>Load Balance Across Consumers</li>
+	</ul>
+	</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p><strong>Resources:</strong></p>
+
+<p><a href="https://networkbuilders.intel.com/solutionslibrary/queue-management-and-load-balancing-on-intel-architecture">Queue Management and Load Balancing on Intel&reg; Architecture</a></p>
+
+<div>
+<p><a href="/content/www/us/en/download/686372/intel-dynamic-load-balancer.html">Intel&reg; Dynamic Load Balancer Driver</a></p>
+
+<p><a href="https://networkbuilders.intel.com/university/course/intelr-dynamic-load-balancer-intelr-dlb">Intel&reg; Dynamic Load Balancer (Intel&reg; DLB) Training</a></p>
+
+<p><a href="/content/www/us/en/developer/articles/technical/proof-points-of-dynamic-load-balancer-dlb.html">Proof Points of&nbsp;Intel&reg; Dynamic Load Balancer&nbsp;(Intel&reg; DLB)</a></p>
+</div>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Compute Express Link&trade; (CXL&trade;)</strong></h4>
+
+<p>Compute Express Link&trade; (CXL&trade;) is an open interconnect <a href="https://www.computeexpresslink.org">standard</a> that utilizes the fifth generation PCI express physical layer providing more efficient movement of user and kernel level data between the host processor and the attached devices such as Field Programmable Gate Arrays, Graphics Processor Units, or network controllers. CXL makes it possible for cache coherent accesses from the attached devices to the host processor cache. Along with memory accesses from the host processor to memory on the attached device. The built-in accelerators on the platform such as Intel IAA, Intel DSA, Intel QAT, and Intel AMX utilize CXL to optimize their productivity.</p>
+
+<p>CXL has a flexible processor port attached to the PCI express bus that is capable of auto-negotiating the protocols associated with either PCI express or CXL. A device attached to PCIe has to go through layers and checks in order for the data to reach the processor. While a device using the CXL protocols is able to bypass the PCIe hierarchy and obtain a more direct communication with the processor through address translation and access to the physical address space. This means that by comparison CXL is able to provide increased bandwidth and lower latencies as compared to PCI express.</p>
+
+<p>On our latest generation of the platform, we have what is called a flex bus. The flex bus is capable of providing both standard PCIe interconnects as well as up to four CXL interconnects 16 lanes wide with up to 32 Gigabits per second. The flex bus supports hot swappable PCIe devices, while CXL devices are only recognized and supported by the BIOS at boot time.</p>
+
+<p>There are three protocols utilized by CXL. They are CXL.io, CXL.cache, and CXL.mem.</p>
+
+<p>CXL.io protocol operates in similar to the PCIe protocol and follows the same base PCIe specifications for the transaction and link layers. It is used for load and store operations, discovery, interrupts, enumeration, RAS features, etc. Regardless of the use case CXL.io is a required protocol in order to manage and operate the CXL device. CXL.io does provide some additional enhancements that are specific to the CXL protocol for management of the device, memory address translation services and power events.</p>
+
+<p>CXL.cache is a protocol that utilizes hardware cache coherency with a 64 byte cache line. It is designed to provide coherent access from the attached device to the processor cache. The protocol will snoop the coherent cached state for the attached device that made the request. It is possible to use a subset of transactions to avoid snoop requests if the attached device doesn&rsquo;t implement a cache. The protocol uses host physical addressing only and most of the requests are unordered.</p>
+
+<p>CXL.mem protocol provides a host processor with ability to perform simple reads and writes to an attached device that has its own private memory. The protocol is transactional which allows it to interface with any type of memory. Therefore, you can use DDR, Optane, or even HBM and it could be in a flat model, far memory or even a mix of near and far memory. The protocol uses host physical addressing only.</p>
+
+<p><img alt="" height="410" src="/content/dam/developer/articles/technical/fourth-generation-xeon-scalable-family-overview/spr-cxl.png" width="728"/></p>
+
+<p><strong>Figure 11 - Use Case Examples</strong></p>
+
+<p>The platform supports CXL version <a href="https://www.computeexpresslink.org/download-the-specification">1.1</a> with two different use models. Type one use model is associated with attached caching devices without private memory while type two use model is associated with an attached device with private memory.</p>
+
+<p>Type one devices might include a smart NIC or an accelerator. The CXL.io protocol can be used to communicate and configure the devices. While the CXL.cache protocol can be used for non-coherent flows to read the latest value of the cache. Alternatively, the entire cache line can be updated without taking ownership by the attached device using push write flows. The CXL.cache protocol can also use coherent flows to take ownership of the cache line to modify it.</p>
+
+<p>Two of the more interesting use cases associated with Type one devices would be PGAS NICs and NIC atomics. Partitioned Global Address Space (PGAS) programming models offer a shared address space model that simplifies programming while exposing data and thread locality to enhance performance. Normally this model uses PCIe that must deal with PCIe&rsquo;s ordering scheme, which in this situation can require a serialized approach. CXL takes the PGAS model utilized by the NICs into a much more simplified and faster solution primarily because it is able to bypass the PCIe ordering scheme. It is able to do this by prefetching the cache locations and then ordering transactions. The second use case can benefit NICs that support different atomic types. PCI express protocols can limit which atomics end up being useable by the NIC as it typically requires industry acceptance. CXL.cache however doesn&rsquo;t have the same atomic limitations found with PCI express protocols because you can directly access them within the cache. This opens up the possibility for atomics associated with floating point operations used by NICs on the CXL bus.</p>
+
+<p>Type two devices are when the processor is working with other accelerators that have memory attached. This could include other processors, graphics processing units or field programmable array units. The attached memory on any of these devices appears as additional system memory to the host processor but with a different proximity and latency. The software can determine the proximity and latency for the attached device memory and access it via the CXL.mem protocol. This use case may benefit In-memory databases and AI deep learning applications.</p>
+
+<p>From a programming perspective legacy software that was designed to interact with PCIe devices will view CXL devices as part of a PCIe compliant root complex integrated endpoint. The devices will be capable of standard PCIe interactions via software including multi-function and SR-IOV. In terms of software designed to operate with CXL it starts with the firmware. The firmware will initialize the bus, setup the registers, and communicate the address to the operating system using the CXL early discovery table which is a new type of an ACPI table. By following the CXL 1.1 specification and utilizing the CXL Device Designated Vendor Specific Extended Capability (DVSEC) structure the programmer can create software to interact with the CXL device.</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Resources:</strong></p>
+
+<p><a href="https://cdrdv2.intel.com/v1/dl/getContent/643805">CXL Memory Device Software Guide</a>&nbsp;describes how system firmware, OS and UEFI may configure CXL Type 3 devices, much of the information will be applicable to CXL 1.1</p>
+
+<p><a href="/content/www/us/en/content-details/644330/content-details.html">CXL-cache/mem Protocol Interface (CPI) specification</a>&nbsp;has been developed to map coherent protocols between an agent and a fabric</p>
+
+<p><a href="https://cdrdv2.intel.com/v1/dl/getContent/644200">Streaming Fabric Interface (SFI) Specification</a> has been developed to map Load/Store protocols (like PCIe) between an agent and a fabric.</p>
+
+<h4>&nbsp;</h4>
+
+<h4><strong>Intel&reg; Scalable I/O Virtualization (</strong><a id="_Hlk102062815"></a><strong>Intel&reg; Scalable IOV)</strong></h4>
+
+<p>Scalability is a necessity as the capabilities of the processor and platform continue to expand over time. Intel Scalable IOV is designed to handle the increased demand for IO operations associated with virtualized environments. Intel Scalable IOV has replaced the pre-existing Single root IO virtualization (SR-IOV) technology by providing a flexible composition of Virtual Functions using software from native hardware interfaces. While SR-IOV implements a complete virtual function interface, Intel Scalable IOV instead uses a lightweight assignable device interface (ADIs) that is optimized for fast data path operations for direct access from the guest. Intel Scalable IOV easily interfaces with PCIe or CXL via Process Address Space IDs (PASIDs). Thereby allowing multiple guest operating systems to natively share PCIe or CXL devices simultaneously. Intel Scalable IOV supports all the accelerators found on the latest generation of silicon as well as any discrete accelerators.</p>
+
+<p>Virtual devices are dynamically composed from fast-path resources and slow-path software emulation, therefore the technology requires support by the operating system and virtual machine manager through device drivers and firmware. For additional insights see the <a href="/content/www/us/en/content-details/671403/intel-scalable-i-o-virtualization-technical-specification.html">Intel&reg; Scalable I/O Virtualization Technical Specification.</a></p>
+
+<div>
+<p>&nbsp;</p>
+
+<p><strong>Additional Resources:</strong></p>
+
+<p><a href="/content/www/us/en/developer/articles/technical/xeon-scalable-processor-max-series.html">Technical Overview Of The Intel&reg; Xeon&reg; Scalable processor Max Series</a></p>
+
+<p><a href="/content/www/us/en/content-details/780887/intel-in-memory-analytics-accelerator-intel-iaa.html">Intel&reg; In-Memory Analytics Accelerator (Intel&reg; IAA) Enabling Guide</a></p>
+
+<p><a href="/content/www/us/en/developer/articles/technical/proof-points-of-dynamic-load-balancer-dlb.html">Proof Points of&nbsp;Intel&reg; Dynamic Load Balancer&nbsp;(Intel&reg; DLB)</a></p>
+
+<p><a href="/content/www/us/en/developer/articles/code-sample/advanced-matrix-extensions-intrinsics-functions.html">Code Sample: Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX) - Intrinsics Functions</a></p>
+
+<p><a href="https://github.com/intel/pcm">Intel&reg; Performance Counter Monitor (Intel&reg; PCM)</a></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><strong>The Author:</strong> David Mulnix is a software engineer and has been with Intel Corporation for over 20 years. His areas of focus include technical content development and training, software automation, server performance and power analysis with <a href="https://www.spec.org/power_ssj2008/">SPECPower</a>, and he supported the development effort for the <a href="https://www.spec.org/sert/">Server Efficiency Rating Tool<sup>TM</sup></a>.</p>
+</div>
+
+<p><strong>Contributors:</strong> Arijit Biswas, Ruchira Sasanka, Vinodh Gopal, Wajdi Feghali, Mahesh Wagh, Alberto Villarreal and Dan Zimmerman</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Notices/Disclaimers</strong></p>
+
+<p>Performance varies by use, configuration and other factors. Learn more on the Performance Index site.</p>
+
+<p>No product or component can be absolutely secure.</p>
+
+<p>Code names are used by Intel to identify products, technologies, or services that are in development and not publicly available. These a​​re not &quot;commercial&quot; names and not intended to function as trademarks</p>
+
+<p>Intel disclaims all express and implied warranties, including without limitation, the implied warranties of merchantability, fitness for a particular purpose, and non-infringement, as well as any warranty arising from course of performance, course of dealing, or usage in trade</p>
+
+<p>Your costs and results may vary.</p>
+
+<p>Intel technologies may require enabled hardware, software or service activation.</p>
+
+<p>&copy; Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.</p>
+</p>
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+
+
+
+                </div>
+            </div>
+        
+    
+</div>
+</div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="article-tags-first section d-none d-sm-block">
+                                    <div class="article-tags-component">
+                                        <div class="articletags parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                    <div class="d-none">
+                        
+                        <sup>1</sup>
+                    </div>
+                
+
+                <div class="big-parser">
+                    <!-- BEGIN NEW BUILT IN - ARTICLE BLADE PARSYS4 - DRAG COMPONENTS HERE - 2 Column -->
+                    <div class="automatedbladepar4">
+                        <div class="container">
+                            <div class="row">
+                                <div class="left-side col-sm-8 col-md-6">
+                                    <div class="relatedArticles">
+                                        <div class="articlebladepar4 detailText">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        <div id="detailtext-1" class="l3-detail-text-component intel-brand-ux has-rte-buttons" role="region" aria-label="Detail Text 1" data-component="detailtext" data-component-id="1">
+            
+            
+            
+            
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-10 col-xl-8 detail-blockquote">
+                            
+                    </div>
+                </div>
+            </div>
+            </div>
+    
+
+</div>
+
+                                    </div>
+                                </div>
+                                <div class="left-side col-sm-8 col-md-6">
+                                    <div class="recentlyViewedPages">
+                                        <div class="articlebladepar5 intelparsys">
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="big-parser">
+                    <div class="articlebladepar1 intelparsys">
+</div>
+
+
+                    
+
+                    
+                    <div class="articlebladepar3 intelparsys">
+</div>
+
+                    <div class="contactUs contact">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.css" as="style">
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.js" defer></script>
+
+
+</div>
+
+                </div>
+                
+                    
+
+
+
+
+
+
+
+
+
+
+<div class="jumplinks jumplink rwd-jumplinks d-none">
+    <style>
+        .has-jumplinks:not(.left-side) .jumplinksContainer {
+            min-height: 60px;
+            width: 100%;
+            height: auto
+        }
+    </style>
+    
+
+
+
+
+
+
+
+    
+
+
+
+
+
+<div class="nav-overflower spynav nav-spy component" data-component="jumplink" data-component-id="1">
+    <div class="wrap-1  nav-affixer off-screen">
+        <div class="wrap-2 overflower">
+            <ul class="nav overflower-inner">
+                
+            </ul>
+        </div>
+    </div>
+    <div class="paddlesJumplink">
+        <button class="left-paddle-jumplink paddle">
+            <span aria-hidden="true" class="fa fa-angle-left"></span>
+        </button>
+        <button class="right-paddle-jumplink paddle">
+            <span aria-hidden="true" class="fa fa-angle-right"></span>
+        </button>
+    </div>
+</div>
+
+</div>
+
+
+                
+                
+                    
+                        <div id="contextualFooter-PlaceHolder" class="contextualFooter"></div>
+                    
+                
+
+            </article>
+        </main>
+    
+    
+
+
+
+
+
+    <div class="disclaimer parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+        
+        
+            <div class="disclaimer-component intel-ws link-default theme-light-default">
+                <div class="container disclaimer-container ws-comp-standard-padding">
+                    <h4 class="h6">Product and Performance Information</h4>
+                    
+                    
+                    
+                        
+                            <div class="disclaimer"><sup>1</sup><p>Performance varies by use, configuration and other factors. Learn more at&nbsp;<a href="http://www.intel.com/PerformanceIndex" title="Follow link">www.Intel.com/PerformanceIndex</a>.</p>
+</div>
+                        
+                    
+                    
+                    
+                </div>
+            </div>
+        
+    
+
+<div class="translationDisclaimer parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+</div>
+
+</div>
+
+
+
+
+    <div class="helpModule getHelpComponent parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            <div id="getHelpComponent-1" class="component get-help-module" data-component="getHelpComponent"
+                 data-component-id="1">
+                <aside id="gethelp" class="right d-none" role="dialog" data-help-config-url = "/libs/intel/get-help.us_en.default">
+                    <div class="wrapper">
+                        
+                        <div class="navbar-gh" aria-label="Get Help Dialog Header">
+                            <a name="gethelp_button" id="gethelp_button"></a>
+                            
+                            <button class="navbar-toggler btn btn-primary collapsed justify-content-between"
+                                    type="button" data-bs-toggle="collapse" data-target="#gethelp-accordion"
+                                    aria-controls="gethelp-accordion" aria-expanded="false"
+                                    aria-label="Get Help Dialog" data-btn-ref="get-help" data-wap="" data-wap_ref="get-help-collapsed">
+                <span class="navbar-toggler-icon-gethelp  chat-icon icon align-icons fa-user-headset" aria-hidden="true"
+                      title=""></span>
+                                <span id="gethelp-heading" class="navbar-toggler-title" aria-hidden="true">Get Help</span>
+                                
+                                <span class="navbar-toggler-icon-close icon align-icons fa-cancel-thin" aria-hidden="true"
+                                      title="Close Get Help Dialog"></span>
+                            </button>
+                        </div>
+
+                        <ul id="gethelp-accordion" class="accordion panel-group collapse" data-allow-toggle=""
+                            aria-label="Accordion">
+                        </ul>
+
+                    </div>
+
+                </aside>
+            </div>
+            <textarea id="get-help-stylesheet-path" title="" style="display:none;">
+                
+                <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/get-help.min.css" type="text/css">
+            </textarea>
+            <script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/get-help.min.js" defer></script>
+        
+    
+
+</div>
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="global blade solid brand-lighter-gray theme-light-2 component" data-component-id="1"
+        data-component="footer" role="contentinfo" data-wap_type="wa_skip_track" id="skip-footer">
+    <div class="container">
+        <div class="content-footer">
+            <div class="content">
+                
+                    
+                        
+                            <ul class="footer-links">
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/company-overview/company-overview.html">Company Overview</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/support/contact-us.html">Contact Intel</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/newsroom/home.html">News</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.intc.com/">Investors</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/jobs/life-at-intel.html">Careers</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/corporate-responsibility/corporate-responsibility.html">Corporate Responsibility</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/inclusion/inclusion-at-intel.html">Inclusion</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/company-overview/public-policy.html">Public Policy</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <ul class="footer-links social">
+                                
+                                    <li>
+                                        <a href="https://www.facebook.com/Intel" target="" aria-label="Intel on Facebook" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://twitter.com/intel" target="" aria-label="Intel on Twitter" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.linkedin.com/company/intel-corporation" target="" aria-label="Intel on LinkedIn" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.youtube.com/user/channelintel?sub_confirmation=1" target="" aria-label="Intel on YouTube" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-youtube"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.instagram.com/intel/" target="" aria-label="Intel on Instagram" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                
+                            </ul>
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                        
+                            <ul class="footer-links secondary-links" id="footerSecondaryLinks">
+                                
+                                    <li>
+                                        
+                                            
+                                            
+                                                <small>© Intel Corporation</small>
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/legal/terms-of-use.html">
+                                                            <small>Terms of Use</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/legal/trademarks.html">
+                                                            <small>*Trademarks</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/content/www/us/en/privacy/intel-cookie-notice.html" data-cookie-notice="true">
+                                                                    <small>Cookies</small>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/privacy/intel-privacy-notice.html">
+                                                            <small>Privacy</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/corporate-responsibility/statement-combating-modern-slavery.html">
+                                                            <small>Supply Chain Transparency </small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/siteindex.html">
+                                                            <small>Site Map</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/support/articles/000098122/services.html">
+                                                            <small>Recycling</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/#" data-wap_ref="dns" id="wap_dns">
+                                                                    <small>Your Privacy Choices</small>
+                                                                    
+                                                                        <span style="height:10px;width:28px;display:inline-block;position:relative;"><svg style="position:absolute;width:28px;bottom:-2px;" version="1.1" id="Layer_1" xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink x="0px" y="0px" viewBox="0 0 30 14" xml:space="preserve"><title>California Consumer Privacy Act (CCPA) Opt-Out Icon</title><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#0066FF;}.st2{fill:#FFFFFF;}.st3{fill:#0066FF;}</style><g><g id="final---dec.11-2020_1_"><g id="_x30_208-our-toggle_2_" transform="translate(-1275.000000, -200.000000)"><g id="Final-Copy-2_2_" transform="translate(1275.000000, 200.000000)"><path class="st0" d="M7.4,12.8h6.8l3.1-11.6H7.4C4.2,1.2,1.6,3.8,1.6,7S4.2,12.8,7.4,12.8z"></path></g></g></g><g id="final---dec.11-2020"><g id="_x30_208-our-toggle" transform="translate(-1275.000000, -200.000000)"><g id="Final-Copy-2" transform="translate(1275.000000, 200.000000)"><path class="st1" d="M22.6,0H7.4c-3.9,0-7,3.1-7,7s3.1,7,7,7h15.2c3.9,0,7-3.1,7-7S26.4,0,22.6,0z M1.6,7c0-3.2,2.6-5.8,5.8-5.8 h9.9l-3.1,11.6H7.4C4.2,12.8,1.6,10.2,1.6,7z"></path><path id="x" class="st2" d="M24.6,4c0.2,0.2,0.2,0.6,0,0.8l0,0L22.5,7l2.2,2.2c0.2,0.2,0.2,0.6,0,0.8c-0.2,0.2-0.6,0.2-0.8,0 l0,0l-2.2-2.2L19.5,10c-0.2,0.2-0.6,0.2-0.8,0c-0.2-0.2-0.2-0.6,0-0.8l0,0L20.8,7l-2.2-2.2c-0.2-0.2-0.2-0.6,0-0.8 c0.2-0.2,0.6-0.2,0.8,0l0,0l2.2,2.2L23.8,4C24,3.8,24.4,3.8,24.6,4z"></path><path id="y" class="st3" d="M12.7,4.1c0.2,0.2,0.3,0.6,0.1,0.8l0,0L8.6,9.8C8.5,9.9,8.4,10,8.3,10c-0.2,0.1-0.5,0.1-0.7-0.1l0,0 L5.4,7.7c-0.2-0.2-0.2-0.6,0-0.8c0.2-0.2,0.6-0.2,0.8,0l0,0L8,8.6l3.8-4.5C12,3.9,12.4,3.9,12.7,4.1z"></path></g></g></g></g></svg></span>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/content/www/us/en/privacy/privacy-residents-certain-states.html" data-wap_ref="nac" id="wap_nac">
+                                                                    <small>Notice at Collection</small>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                            </ul>
+                        
+                    
+                
+                
+                    <div class="footer-disclaimer">
+                            <p>Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration, and other factors. Learn more at <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/"><u>intel.com/performanceindex</u></a>. // See our complete legal <u><a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C">Notices and Disclaimers</a></u>. // Intel is committed to respecting human rights and avoiding causing or contributing to adverse impacts on human rights. See Intel’s <u><a href="/content/www/us/en/policy/policy-human-rights.html">Global Human Rights Principles</a></u>. Intel’s products and software are intended only to be used in applications that do not cause or contribute to adverse impacts on human rights.</p>
+
+                    </div>
+                
+            </div>
+            <div class="logo-container">
+                <a href="/content/www/us/en/homepage.html" class="footer-logo-rebrand" aria-label="Intel Footer Logo" title="Intel Footer Logo">
+                    <img src="/content/dam/logos/intel-footer-logo.svg" height="300" width="118" class="footer-logo-rebrand" alt="Intel Footer Logo" title="Intel Footer Logo">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    <textarea id="defers" title="" style="display:none;">
+    <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/commons-page.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/commons-page.min.js" defer></script>
+
+
+<script>!function(){var e=setInterval(function(){"undefined"!=typeof $CQ&&($CQ(function(){CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation"),CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/intel",window.location.pathname.substr(0,window.location.pathname.indexOf(".")))}),clearInterval(e))},100)}();</script>
+
+
+
+
+
+
+
+
+
+
+</textarea>
+
+
+</body>
+
+</html>
+
+

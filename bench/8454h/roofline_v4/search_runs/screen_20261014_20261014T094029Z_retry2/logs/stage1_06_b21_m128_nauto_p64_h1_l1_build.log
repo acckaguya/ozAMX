@@ -1,0 +1,24 @@
+Scanning dependencies of target ozamx
+[ 12%] Building CXX object CMakeFiles/ozamx.dir/src/gemm.cpp.o
+[ 12%] Building CXX object CMakeFiles/ozamx.dir/src/runtime.cpp.o
+[ 18%] Building ASM object CMakeFiles/ozamx.dir/src/kernels.S.o
+[ 25%] Linking CXX static library libozamx.a
+[ 25%] Built target ozamx
+[ 31%] Building CXX object CMakeFiles/ozamx_benchmark.dir/bench/benchmark.cpp.o
+[ 37%] Building CXX object CMakeFiles/ozamx_optimization_benchmark.dir/bench/optimization_benchmark.cpp.o
+[ 43%] Linking CXX executable ozamx_optimization_benchmark
+[ 43%] Built target ozamx_optimization_benchmark
+[ 50%] Building CXX object CMakeFiles/ozamx_roofline_binary_gate_v4.dir/tools/roofline_binary_gate_v4.cpp.o
+[ 56%] Linking CXX executable ozamx_roofline_binary_gate_v4
+[ 56%] Built target ozamx_roofline_binary_gate_v4
+[ 62%] Building CXX object CMakeFiles/ozamx_validation.dir/tests/validation.cpp.o
+[ 68%] Linking CXX executable ozamx_benchmark
+[ 68%] Built target ozamx_benchmark
+[ 75%] Building CXX object CMakeFiles/ozamx_late_path_probe.dir/tests/final_late_path_probe.cpp.o
+[ 81%] Linking CXX executable ozamx_late_path_probe
+[ 81%] Built target ozamx_late_path_probe
+[ 87%] Building CXX object CMakeFiles/ozamx_alias_output_probe.dir/tests/bounded_commit_alias_probe.cpp.o
+[ 93%] Linking CXX executable ozamx_validation
+[ 93%] Built target ozamx_validation
+[100%] Linking CXX executable ozamx_alias_output_probe
+[100%] Built target ozamx_alias_output_probe

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "bench/8454h/roofline_v4/packed_layout_src/tools/packed_layout_search.py", line 329, in <module>
+    raise SystemExit(main())
+  File "bench/8454h/roofline_v4/packed_layout_src/tools/packed_layout_search.py", line 324, in main
+    execute(args.phase, args.result_dir.resolve())
+  File "bench/8454h/roofline_v4/packed_layout_src/tools/packed_layout_search.py", line 307, in execute
+    run_search(out)
+  File "bench/8454h/roofline_v4/packed_layout_src/tools/packed_layout_search.py", line 270, in run_search
+    run_bench(v3, "frozen_v3_initial", out, 0, 8192, 7, "fp64")
+  File "bench/8454h/roofline_v4/packed_layout_src/tools/packed_layout_search.py", line 216, in run_bench
+    record = out / "records" / tag
+TypeError: unsupported operand type(s) for /: 'PosixPath' and 'int'

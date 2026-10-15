@@ -1,0 +1,182 @@
+{
+  "status": "complete",
+  "date_utc": "2026-10-13",
+  "source_sha256": {
+    "src/gemm.cpp": "6000a02d83e00905ed8c44aeacb3d68f88842265949db143f3fcd4fbaad686e0",
+    "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "src/tuning.hpp": "6322622d5d3155afecab75df442f199bc211f079e065c17ff424ca04d10c9cf3",
+    "CMakeLists.txt": "420cef8d18f5ac7d39504a77b2725af89b2d58f3e7172c6acb3e2231b5ad6c47",
+    "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05"
+  },
+  "frozen_control": {
+    "binary": "/tmp/ozamx-production-final/ozamx_optimization_benchmark",
+    "binary_sha256": "eece364647b16906862dd0820a46f08ad62b53a0275dde29a9e1fae097d59893",
+    "library": {
+      "path": "/tmp/ozamx-production-final/libozamx.a",
+      "sha256": "ddfe885c2ba58089accd4e747aecb53a18422554e06fc409965e2f47b7d92251"
+    },
+    "cmake_cache": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "OZAMX_ENABLE_OPENMP": "ON",
+      "OZAMX_CACHE_BLOCK": "128",
+      "OZAMX_PREP_GRAIN": "16384",
+      "OZAMX_MIN_COMPUTE_WORK": "8",
+      "OZAMX_TILELOAD_HINT": "1",
+      "OZAMX_LOAD_SCHEDULE": "0",
+      "OZAMX_LOOP_ORDER": "0",
+      "OZAMX_MN_ORDER": "0"
+    },
+    "library_compile_flags": "-O3 -DNDEBUG -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -O3 -fopenmp",
+    "library_compile_definitions": "-DOZAMX_CACHE_BLOCK=128 -DOZAMX_LOAD_SCHEDULE=0 -DOZAMX_LOOP_ORDER=0 -DOZAMX_MIN_COMPUTE_WORK=8 -DOZAMX_MN_ORDER=0 -DOZAMX_PREP_GRAIN=16384 -DOZAMX_TILELOAD_HINT=1"
+  },
+  "candidates": {
+    "b1": {
+      "recon_batch64": 1,
+      "library": {
+        "path": "/tmp/ozamx-roof-batch64/build-b1/libozamx.a",
+        "sha256": "fac27ed138fcaf8ddb927162402dfc4f7da48ebeb666d7425265b0f460b0ff6e"
+      },
+      "benchmark": {
+        "path": "/tmp/ozamx-roof-batch64/build-b1/ozamx_optimization_benchmark",
+        "sha256": "44a4442591ed82f6d0ae9ac719bfd3294a13ef7ca7bbea9a115210ffe4d349b7"
+      },
+      "cmake_cache": {
+        "CMAKE_BUILD_TYPE:STRING": "Release",
+        "OZAMX_BUILD_DIAGNOSTICS:BOOL": "ON",
+        "OZAMX_CACHE_BLOCK:STRING": "128",
+        "OZAMX_ENABLE_OPENMP:BOOL": "ON",
+        "OZAMX_LOAD_SCHEDULE:STRING": "0",
+        "OZAMX_LOOP_ORDER:STRING": "0",
+        "OZAMX_MIN_COMPUTE_WORK:STRING": "8",
+        "OZAMX_MN_ORDER:STRING": "0",
+        "OZAMX_PREP_GRAIN:STRING": "16384",
+        "OZAMX_RECON_BATCH64:STRING": "1",
+        "OZAMX_TILELOAD_HINT:STRING": "1"
+      },
+      "library_compile_flags": "-O3 -DNDEBUG -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -O3 -fopenmp",
+      "library_compile_definitions": "-DOZAMX_CACHE_BLOCK=128 -DOZAMX_LOAD_SCHEDULE=0 -DOZAMX_LOOP_ORDER=0 -DOZAMX_MIN_COMPUTE_WORK=8 -DOZAMX_MN_ORDER=0 -DOZAMX_PREP_GRAIN=16384 -DOZAMX_RECON_BATCH64=1 -DOZAMX_TILELOAD_HINT=1"
+    },
+    "b2": {
+      "recon_batch64": 2,
+      "library": {
+        "path": "/tmp/ozamx-roof-batch64/build-b2/libozamx.a",
+        "sha256": "07f026d47eec7cdca331ac424ea81d9de54b08bf2f1388ffc047bc93f58d222f"
+      },
+      "benchmark": {
+        "path": "/tmp/ozamx-roof-batch64/build-b2/ozamx_optimization_benchmark",
+        "sha256": "79054f62305da83b9e59fa690b0cf5c85f40afc823cdfbe124154f219d47be9d"
+      },
+      "cmake_cache": {
+        "CMAKE_BUILD_TYPE:STRING": "Release",
+        "OZAMX_BUILD_DIAGNOSTICS:BOOL": "ON",
+        "OZAMX_CACHE_BLOCK:STRING": "128",
+        "OZAMX_ENABLE_OPENMP:BOOL": "ON",
+        "OZAMX_LOAD_SCHEDULE:STRING": "0",
+        "OZAMX_LOOP_ORDER:STRING": "0",
+        "OZAMX_MIN_COMPUTE_WORK:STRING": "8",
+        "OZAMX_MN_ORDER:STRING": "0",
+        "OZAMX_PREP_GRAIN:STRING": "16384",
+        "OZAMX_RECON_BATCH64:STRING": "2",
+        "OZAMX_TILELOAD_HINT:STRING": "1"
+      },
+      "library_compile_flags": "-O3 -DNDEBUG -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -O3 -fopenmp",
+      "library_compile_definitions": "-DOZAMX_CACHE_BLOCK=128 -DOZAMX_LOAD_SCHEDULE=0 -DOZAMX_LOOP_ORDER=0 -DOZAMX_MIN_COMPUTE_WORK=8 -DOZAMX_MN_ORDER=0 -DOZAMX_PREP_GRAIN=16384 -DOZAMX_RECON_BATCH64=2 -DOZAMX_TILELOAD_HINT=1"
+    },
+    "b4": {
+      "recon_batch64": 4,
+      "library": {
+        "path": "/tmp/ozamx-roof-batch64/build-b4/libozamx.a",
+        "sha256": "3b108997f9290dd2d2dcabf8b3e915073a36e9d9e0ee5ea61fd36b48edb16c09"
+      },
+      "benchmark": {
+        "path": "/tmp/ozamx-roof-batch64/build-b4/ozamx_optimization_benchmark",
+        "sha256": "01042b8edb156c906fe6a632d2f48089d78fcf20ef3725299fae452391c86a5c"
+      },
+      "cmake_cache": {
+        "CMAKE_BUILD_TYPE:STRING": "Release",
+        "OZAMX_BUILD_DIAGNOSTICS:BOOL": "ON",
+        "OZAMX_CACHE_BLOCK:STRING": "128",
+        "OZAMX_ENABLE_OPENMP:BOOL": "ON",
+        "OZAMX_LOAD_SCHEDULE:STRING": "0",
+        "OZAMX_LOOP_ORDER:STRING": "0",
+        "OZAMX_MIN_COMPUTE_WORK:STRING": "8",
+        "OZAMX_MN_ORDER:STRING": "0",
+        "OZAMX_PREP_GRAIN:STRING": "16384",
+        "OZAMX_RECON_BATCH64:STRING": "4",
+        "OZAMX_TILELOAD_HINT:STRING": "1"
+      },
+      "library_compile_flags": "-O3 -DNDEBUG -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -O3 -fopenmp",
+      "library_compile_definitions": "-DOZAMX_CACHE_BLOCK=128 -DOZAMX_LOAD_SCHEDULE=0 -DOZAMX_LOOP_ORDER=0 -DOZAMX_MIN_COMPUTE_WORK=8 -DOZAMX_MN_ORDER=0 -DOZAMX_PREP_GRAIN=16384 -DOZAMX_RECON_BATCH64=4 -DOZAMX_TILELOAD_HINT=1"
+    }
+  },
+  "environment": {
+    "cpu_affinity": "taskset -c 0-63",
+    "physical_topology": "CPU IDs 0-63 are physical cores 0-63, one SMT thread each",
+    "omp_num_threads": 64,
+    "omp_proc_bind": "close",
+    "omp_places": "cores",
+    "omp_dynamic": false,
+    "workspace_cache_bytes": 2147483648
+  },
+  "measurement": {
+    "sizes": [
+      1024,
+      4096,
+      8192
+    ],
+    "precision": "fp64",
+    "budgets": [
+      6,
+      21
+    ],
+    "repetitions": 5,
+    "warmups_per_size_budget": 1,
+    "order": [
+      "run01_frozen_before",
+      "run02_batch1",
+      "run03_batch2",
+      "run04_batch4",
+      "run05_frozen_middle",
+      "run06_batch4_repeat",
+      "run07_batch2_repeat",
+      "run08_frozen_after"
+    ],
+    "all_rep_samples_preserved": true,
+    "no_outlier_exclusion": true,
+    "available_process_counters": [
+      "minor_faults",
+      "major_faults",
+      "voluntary_switches",
+      "involuntary_switches",
+      "user_s",
+      "system_s",
+      "max_rss_kib"
+    ],
+    "hardware_cache_dram_counters": "not collected"
+  },
+  "runner": {
+    "path": "bench/8454h/roofline/search_batch64/runner.sh",
+    "sha256": "81605acd45253fa49ffdfb7bba1885a64119e433af368f53ee6e8b834a24fa05",
+    "exclusive_lock": "/tmp/ozamx-perf.lock held across all eight processes"
+  },
+  "host": {
+    "kernel": "5.15.0-161-generic",
+    "machine": "x86_64",
+    "cpu_model": "Intel(R) Xeon(R) Platinum 8454H",
+    "microcode": "0x2b000643",
+    "frequency_policy": "not controlled or sampled during this sweep"
+  },
+  "output_csv_sha256": {
+    "run01_frozen_before.csv": "28bb7cf3f1a2865bb2ccf383555426259217bf63fe400c1e7be368a69b5b6939",
+    "run02_batch1.csv": "3b82ba68567aeae5b1c0064ec72c21ece7d36e86eaf454fa828636db1301727b",
+    "run03_batch2.csv": "3b70af9da6793ea75fa63fba4cc9516299d6e427cdc66dd83e00c0197a05542d",
+    "run04_batch4.csv": "ddd97179a0c147d129eaef72711decb6376300bcb220b272f816544dfb72adda",
+    "run05_frozen_middle.csv": "4d18bd77cb62ed544c7fdf889c9af912f3ca75d717d595ae6eb5eadab2f96236",
+    "run06_batch4_repeat.csv": "7b6fbae4ec46c3d64a3092e4616d00785a1e01d008b0918e5b09bd30741276d8",
+    "run07_batch2_repeat.csv": "e56dda422d5e65ba8491dc4ccfdc232903f58dcf1df03a60665919be6ffaaba1",
+    "run08_frozen_after.csv": "42cdf51e1bd5e6132fbc23461360c0cb858e12c53fc90a6699bd3eee95c9f990"
+  },
+  "comparison_json_sha256": "e34f53517a5297305bd820c5290fc485f04e36e885d368fd75b299c277c19461",
+  "completed_csv_count": 8
+}

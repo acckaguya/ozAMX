@@ -1,0 +1,8 @@
+{
+  "complete": true,
+  "archive": "bench/8454h/versions/v3_paper_release",
+  "manifest_sha256": "cc0e6bab8b5f0d7785988e551d3de2a38ac056e366530b749c06d6394772e0d1",
+  "configurations": 66,
+  "library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "completed_utc": "2026-10-14T09:16:49.592183+00:00"
+}

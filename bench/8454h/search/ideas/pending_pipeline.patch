@@ -1,0 +1,107 @@
+--- a/src/gemm.cpp
++++ b/src/gemm.cpp
+@@ -15,9 +15,11 @@
+ 
+ extern "C" void ozamx_bf16_six(const std::uint16_t* const*,const std::uint16_t* const*,float*,unsigned);
+ extern "C" void ozamx_bf16_product(const std::uint16_t*,const std::uint16_t*,float*,unsigned);
++extern "C" void ozamx_bf16_product_pending(const std::uint16_t*,const std::uint16_t*,float*,unsigned);
+ namespace ozamx {
+ namespace {
+ constexpr std::size_t BM=256,BN=256,BK=256,TM=32,TN=32,TK=32,CACHE_BLOCK=tuning::cache_block;
++constexpr bool late_check=true;
+ using Clock=std::chrono::steady_clock;
+ double elapsed(Clock::time_point a,Clock::time_point b){return std::chrono::duration<double>(b-a).count();}
+ std::size_t checked_mul(std::size_t a,std::size_t b){return detail::mul(a,b);}
+@@ -77,14 +79,15 @@
+ inline bool nonfinite(__m512 x){return _mm512_cmpeq_epi32_mask(_mm512_and_si512(_mm512_castps_si512(x),_mm512_set1_epi32(0x7f800000)),_mm512_set1_epi32(0x7f800000))!=0;}
+ inline bool nonfinite(__m512d x){return _mm512_cmpeq_epi64_mask(_mm512_and_si512(_mm512_castpd_si512(x),_mm512_set1_epi64(0x7ff0000000000000LL)),_mm512_set1_epi64(0x7ff0000000000000LL))!=0;}
+ inline void accumulate32(float* block,const float* micro,std::size_t stride,int& bad){
+-    for(std::size_t i=0;i<TM;++i)for(std::size_t j=0;j<TN;j+=16){const auto r=_mm512_add_ps(_mm512_load_ps(block+i*stride+j),_mm512_load_ps(micro+i*TN+j));bad|=nonfinite(r);_mm512_store_ps(block+i*stride+j,r);}
++    for(std::size_t i=0;i<TM;++i)for(std::size_t j=0;j<TN;j+=16){const auto r=_mm512_add_ps(_mm512_load_ps(block+i*stride+j),_mm512_load_ps(micro+i*TN+j));if constexpr(!late_check)bad|=nonfinite(r);_mm512_store_ps(block+i*stride+j,r);}
+ }
+ inline void accumulate64(double* block,const float* micro,std::size_t stride,int& bad){
+     for(std::size_t i=0;i<TM;++i)for(std::size_t j=0;j<TN;j+=16){
+-        const auto f=_mm512_load_ps(micro+i*TN+j);bad|=nonfinite(f);
++        const auto f=_mm512_load_ps(micro+i*TN+j);if constexpr(!late_check)bad|=nonfinite(f);
+         const auto lo=_mm512_cvtps_pd(_mm512_castps512_ps256(f)),hi=_mm512_cvtps_pd(_mm512_extractf32x8_ps(f,1));
+         const auto r0=_mm512_add_pd(_mm512_load_pd(block+i*stride+j),lo),r1=_mm512_add_pd(_mm512_load_pd(block+i*stride+j+8),hi);
+-        bad|=nonfinite(r0)|nonfinite(r1);_mm512_store_pd(block+i*stride+j,r0);_mm512_store_pd(block+i*stride+j+8,r1);
++        if constexpr(!late_check)bad|=nonfinite(r0)|nonfinite(r1);
++        _mm512_store_pd(block+i*stride+j,r0);_mm512_store_pd(block+i*stride+j+8,r1);
+     }
+ }
+ template<class T>inline void zero_block(T* p,std::size_t count){for(std::size_t i=0;i<count;i+=64/sizeof(T))_mm512_store_si512(p+i,_mm512_setzero_si512());}
+@@ -133,7 +136,15 @@
+                     const unsigned steps=unsigned(ceil_div(std::min(BK,k-kb*BK),TK));
+                     const auto mb=(row+i)/BM,nb=(col+j)/BN,mi=(row+i)%BM,nj=(col+j)%BN;
+                     if constexpr(std::is_same_v<T,float>){run_fp32_micro<3>(p,mb,nb,kb,mi,nj,micro,steps);accumulate32(block+i*cb+j,micro,cb,bad);}else{
+-                        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,micro,steps);accumulate64(block+i*cb+j,micro,cb,bad);}
++                        bool pending=false;
++                        const auto ap=apanel_index<0>(mb,kb,mi,0,p.kblocks),bp=bpanel_index(kb,nb,0,nj,p.nblocks);
++                        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){
++                            ozamx_bf16_product_pending(p.a[ai].data()+ap,p.b[diagonal-ai].data()+bp,micro,steps);
++                            if(pending)accumulate64(block+i*cb+j,micro,cb,bad);
++                            store_32x32(micro);
++                            pending=true;
++                        }
++                        accumulate64(block+i*cb+j,micro,cb,bad);
+                     }
+             };
+             if constexpr(tuning::loop_order==0){
+@@ -142,6 +153,12 @@
+             }else{
+                 for(std::size_t i=0;i<rows;i+=TM)for(std::size_t j=0;j<cols;j+=TN)
+                     for(std::size_t kb=0;kb<p.kblocks;++kb)compute_at(kb,i,j);
++            }
++            if constexpr(late_check){
++                for(std::size_t q=0;q<cb*cb;q+=64/sizeof(T)){
++                    if constexpr(std::is_same_v<T,float>)bad|=nonfinite(_mm512_load_ps(block+q));
++                    else bad|=nonfinite(_mm512_load_pd(block+q));
++                }
+             }
+             for(std::size_t i=0;i<rows;++i)copy_row(result.data()+(row+i)*n+col,block+i*cb,cols);
+         }
+--- a/src/kernels.S
++++ b/src/kernels.S
+@@ -152,4 +152,41 @@
+     ret
+     .cfi_endproc
+ .size ozamx_bf16_product,.-ozamx_bf16_product
++.p2align 5
++.globl ozamx_bf16_product_pending
++.hidden ozamx_bf16_product_pending
++.type ozamx_bf16_product_pending,@function
++ozamx_bf16_product_pending:
++    .cfi_startproc
++    movl $64, %r8d
++    movl $64, %r9d
++    tilezero %tmm4
++    tilezero %tmm5
++    tilezero %tmm6
++    tilezero %tmm7
++.p2align 4
++.Lpending_k:
++#if OZAMX_LOAD_SCHEDULE
++    input_load (%rdi,%r8,1), %tmm0
++    input_load 1024(%rdi,%r8,1), %tmm1
++    input_load (%rsi,%r9,1), %tmm2
++    input_load 1024(%rsi,%r9,1), %tmm3
++    quadrant_products
++#else
++    input_load (%rdi,%r8,1), %tmm0
++    input_load (%rsi,%r9,1), %tmm2
++    tdpbf16ps %tmm2, %tmm0, %tmm4
++    input_load 1024(%rsi,%r9,1), %tmm3
++    tdpbf16ps %tmm3, %tmm0, %tmm5
++    input_load 1024(%rdi,%r8,1), %tmm1
++    tdpbf16ps %tmm2, %tmm1, %tmm6
++    tdpbf16ps %tmm3, %tmm1, %tmm7
++#endif
++    addq $2048, %rdi
++    addq $2048, %rsi
++    decl %ecx
++    jnz .Lpending_k
++    ret
++    .cfi_endproc
++.size ozamx_bf16_product_pending,.-ozamx_bf16_product_pending
+ .section .note.GNU-stack,"",@progbits

@@ -1,0 +1,1 @@
+taskset -c 0-63 /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/build/ozamx_benchmark --sizes 1024 --threads 2 --reps 10 --seed 260904 --precision fp32 --distribution uniform --output /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/results/scaling_fp32_n1024_t2.csv --checkpoint /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/checkpoints/scaling_fp32_n1024_t2 --resume 

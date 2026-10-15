@@ -1,0 +1,708 @@
+{
+  "configurations": {
+    "fp64_n8192_b21": {
+      "N": 8192,
+      "budget": 21,
+      "byte_exact_match": true,
+      "complete": true,
+      "output_sha256": {
+        "candidate": "94edf26c27f8072c021a0a4836fededfbcd5409bcff21c07be8d5eea6f45cdb2",
+        "control": "94edf26c27f8072c021a0a4836fededfbcd5409bcff21c07be8d5eea6f45cdb2"
+      },
+      "precision": "fp64",
+      "samples": [
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.592993548,
+              "compute_reconstruct_seconds": 0.53726459,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.35e-06,
+              "parent_finished_unix_seconds": 1791982340.127626,
+              "parent_started_unix_seconds": 1791982339.534344,
+              "profile_total_seconds": 0.592984652,
+              "split_seconds": 0.055718712,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.575549201,
+              "compute_reconstruct_seconds": 0.517282619,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.064e-06,
+              "parent_finished_unix_seconds": 1791982339.5142372,
+              "parent_started_unix_seconds": 1791982338.9382963,
+              "profile_total_seconds": 0.575539468,
+              "split_seconds": 0.058255785,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:20Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 0,
+          "started_utc": "2026-10-14T12:52:18Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.572954053,
+              "compute_reconstruct_seconds": 0.496132383,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 8.92e-07,
+              "parent_finished_unix_seconds": 1791982340.7239761,
+              "parent_started_unix_seconds": 1791982340.1507142,
+              "profile_total_seconds": 0.572946332,
+              "split_seconds": 0.076813057,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.653832259,
+              "compute_reconstruct_seconds": 0.573653654,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 8.12e-07,
+              "parent_finished_unix_seconds": 1791982341.3982077,
+              "parent_started_unix_seconds": 1791982340.7440715,
+              "profile_total_seconds": 0.653823395,
+              "split_seconds": 0.080168929,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:21Z",
+          "order": [
+            "candidate",
+            "control"
+          ],
+          "rep": 1,
+          "started_utc": "2026-10-14T12:52:20Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.637473999,
+              "compute_reconstruct_seconds": 0.589808209,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 6.26e-07,
+              "parent_finished_unix_seconds": 1791982342.6449394,
+              "parent_started_unix_seconds": 1791982342.0071433,
+              "profile_total_seconds": 0.637464786,
+              "split_seconds": 0.047655951,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.566642237,
+              "compute_reconstruct_seconds": 0.510070215,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.018e-06,
+              "parent_finished_unix_seconds": 1791982341.9870446,
+              "parent_started_unix_seconds": 1791982341.420128,
+              "profile_total_seconds": 0.566634238,
+              "split_seconds": 0.056563005,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:22Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 2,
+          "started_utc": "2026-10-14T12:52:21Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.598029817,
+              "compute_reconstruct_seconds": 0.538564226,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 6.23e-07,
+              "parent_finished_unix_seconds": 1791982343.2658112,
+              "parent_started_unix_seconds": 1791982342.6674547,
+              "profile_total_seconds": 0.598020003,
+              "split_seconds": 0.059455154,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.593299693,
+              "compute_reconstruct_seconds": 0.541650559,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.098e-06,
+              "parent_finished_unix_seconds": 1791982343.879517,
+              "parent_started_unix_seconds": 1791982343.285904,
+              "profile_total_seconds": 0.593289701,
+              "split_seconds": 0.051638044,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:23Z",
+          "order": [
+            "candidate",
+            "control"
+          ],
+          "rep": 3,
+          "started_utc": "2026-10-14T12:52:22Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.554709056,
+              "compute_reconstruct_seconds": 0.507442189,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 7.98e-07,
+              "parent_finished_unix_seconds": 1791982345.115452,
+              "parent_started_unix_seconds": 1791982344.5604727,
+              "profile_total_seconds": 0.55470126,
+              "split_seconds": 0.047258273,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.638154923,
+              "compute_reconstruct_seconds": 0.554830713,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 6.33e-07,
+              "parent_finished_unix_seconds": 1791982344.5403826,
+              "parent_started_unix_seconds": 1791982343.9019814,
+              "profile_total_seconds": 0.638147618,
+              "split_seconds": 0.083316272,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:25Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 4,
+          "started_utc": "2026-10-14T12:52:23Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.65808741,
+              "compute_reconstruct_seconds": 0.578103143,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 8.07e-07,
+              "parent_finished_unix_seconds": 1791982345.7968185,
+              "parent_started_unix_seconds": 1791982345.1383715,
+              "profile_total_seconds": 0.658074482,
+              "split_seconds": 0.079970532,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.582179057,
+              "compute_reconstruct_seconds": 0.532177763,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 9.39e-07,
+              "parent_finished_unix_seconds": 1791982346.3994648,
+              "parent_started_unix_seconds": 1791982345.8169122,
+              "profile_total_seconds": 0.582169082,
+              "split_seconds": 0.04999038,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:26Z",
+          "order": [
+            "candidate",
+            "control"
+          ],
+          "rep": 5,
+          "started_utc": "2026-10-14T12:52:25Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.645669919,
+              "compute_reconstruct_seconds": 0.594364029,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.39e-06,
+              "parent_finished_unix_seconds": 1791982347.6427455,
+              "parent_started_unix_seconds": 1791982346.9967377,
+              "profile_total_seconds": 0.645659575,
+              "split_seconds": 0.051294156,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.553719158,
+              "compute_reconstruct_seconds": 0.507589709,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 9.72e-07,
+              "parent_finished_unix_seconds": 1791982346.976629,
+              "parent_started_unix_seconds": 1791982346.4225874,
+              "profile_total_seconds": 0.553711386,
+              "split_seconds": 0.046120705,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:27Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 6,
+          "started_utc": "2026-10-14T12:52:26Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.893458049,
+              "compute_reconstruct_seconds": 0.847102156,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.28e-06,
+              "parent_finished_unix_seconds": 1791982348.559179,
+              "parent_started_unix_seconds": 1791982347.6654878,
+              "profile_total_seconds": 0.893451148,
+              "split_seconds": 0.046347712,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 1.500731746,
+              "compute_reconstruct_seconds": 1.453459081,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 7.88e-07,
+              "parent_finished_unix_seconds": 1791982350.08028,
+              "parent_started_unix_seconds": 1791982348.5792704,
+              "profile_total_seconds": 1.500722313,
+              "split_seconds": 0.047262444,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:30Z",
+          "order": [
+            "candidate",
+            "control"
+          ],
+          "rep": 7,
+          "started_utc": "2026-10-14T12:52:27Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 2.199251384,
+              "compute_reconstruct_seconds": 2.146103484,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 8.45e-07,
+              "parent_finished_unix_seconds": 1791982354.3164482,
+              "parent_started_unix_seconds": 1791982352.116926,
+              "profile_total_seconds": 2.199242639,
+              "split_seconds": 0.05313831,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 1.992883992,
+              "compute_reconstruct_seconds": 1.944407539,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 1.042e-06,
+              "parent_finished_unix_seconds": 1791982352.096836,
+              "parent_started_unix_seconds": 1791982350.103678,
+              "profile_total_seconds": 1.992878533,
+              "split_seconds": 0.048469952,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:34Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 8,
+          "started_utc": "2026-10-14T12:52:30Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.619509092,
+              "compute_reconstruct_seconds": 0.565418821,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 7.53e-07,
+              "parent_finished_unix_seconds": 1791982354.9662325,
+              "parent_started_unix_seconds": 1791982354.3464887,
+              "profile_total_seconds": 0.619501953,
+              "split_seconds": 0.054082379,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.574329984,
+              "compute_reconstruct_seconds": 0.51716271,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 8.18e-07,
+              "parent_finished_unix_seconds": 1791982355.5609741,
+              "parent_started_unix_seconds": 1791982354.9863229,
+              "profile_total_seconds": 0.57431886,
+              "split_seconds": 0.057155332,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:35Z",
+          "order": [
+            "candidate",
+            "control"
+          ],
+          "rep": 9,
+          "started_utc": "2026-10-14T12:52:34Z"
+        },
+        {
+          "calls": {
+            "candidate": {
+              "api_wall_seconds": 0.597777771,
+              "compute_reconstruct_seconds": 0.530915266,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 7.83e-07,
+              "parent_finished_unix_seconds": 1791982356.7941542,
+              "parent_started_unix_seconds": 1791982356.1960623,
+              "profile_total_seconds": 0.597767748,
+              "split_seconds": 0.066851699,
+              "status": "ok"
+            },
+            "control": {
+              "api_wall_seconds": 0.588538295,
+              "compute_reconstruct_seconds": 0.540084927,
+              "input_a_fnv1a64": 13810933163018490071,
+              "input_b_fnv1a64": 15406754589121001766,
+              "pack_seconds": 7.17e-07,
+              "parent_finished_unix_seconds": 1791982356.1759646,
+              "parent_started_unix_seconds": 1791982355.5871193,
+              "profile_total_seconds": 0.588529197,
+              "split_seconds": 0.048443553,
+              "status": "ok"
+            }
+          },
+          "finished_utc": "2026-10-14T12:52:36Z",
+          "order": [
+            "control",
+            "candidate"
+          ],
+          "rep": 10,
+          "started_utc": "2026-10-14T12:52:35Z"
+        }
+      ],
+      "warmup_sessions": [
+        {
+          "calls": [
+            {
+              "calls": {
+                "candidate": {
+                  "api_wall_seconds": 0.687890098,
+                  "compute_reconstruct_seconds": 0.548643999,
+                  "input_a_fnv1a64": 13810933163018490071,
+                  "input_b_fnv1a64": 15406754589121001766,
+                  "pack_seconds": 8.74e-07,
+                  "profile_total_seconds": 0.687874412,
+                  "split_seconds": 0.139229539,
+                  "status": "ok"
+                },
+                "control": {
+                  "api_wall_seconds": 0.71220125,
+                  "compute_reconstruct_seconds": 0.567998175,
+                  "input_a_fnv1a64": 13810933163018490071,
+                  "input_b_fnv1a64": 15406754589121001766,
+                  "pack_seconds": 8.14e-07,
+                  "profile_total_seconds": 0.712185653,
+                  "split_seconds": 0.144186664,
+                  "status": "ok"
+                }
+              },
+              "order": [
+                "control",
+                "candidate"
+              ],
+              "rep": 0
+            }
+          ],
+          "process_session": 1
+        }
+      ],
+      "warmups": []
+    }
+  },
+  "process_sessions": [
+    {
+      "children_ready": {
+        "candidate": {
+          "actual_omp_threads": 64,
+          "amx_permission": true,
+          "calling_cpu": 0,
+          "calling_thread_affinity_cpus": [
+            0
+          ],
+          "event": "ready",
+          "inherited_affinity_cpus": [
+            0
+          ],
+          "max_omp_threads": 64,
+          "omp_thread_cpus": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63
+          ],
+          "requested_omp_threads": 64
+        },
+        "control": {
+          "actual_omp_threads": 64,
+          "amx_permission": true,
+          "calling_cpu": 0,
+          "calling_thread_affinity_cpus": [
+            0
+          ],
+          "event": "ready",
+          "inherited_affinity_cpus": [
+            0
+          ],
+          "max_omp_threads": 64,
+          "omp_thread_cpus": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63
+          ],
+          "requested_omp_threads": 64
+        }
+      },
+      "started_utc": "2026-10-14T12:52:11Z"
+    }
+  ],
+  "run_config": {
+    "budget": 21,
+    "build_commands": [
+      [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-mamx-tile",
+        "-mamx-bf16",
+        "-ffp-contract=off",
+        "-fopenmp",
+        "-pthread",
+        "-I",
+        "/home/caiweili/ozAMX/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group2_fp64_n8192_b21/child_control"
+      ],
+      [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-mamx-tile",
+        "-mamx-bf16",
+        "-ffp-contract=off",
+        "-fopenmp",
+        "-pthread",
+        "-I",
+        "/home/caiweili/ozAMX/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/build_group2/libozamx.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group2_fp64_n8192_b21/child_candidate"
+      ]
+    ],
+    "candidate_lib": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/build_group2/libozamx.a",
+    "candidate_sha256": "5fa23575f72f8a9a337ef8dc3de2b1fc4e0ddb9bb1daefef095a045be944f30c",
+    "candidate_tag": "group2_fp64_n8192_b21",
+    "child_binaries": {
+      "candidate": {
+        "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group2_fp64_n8192_b21/child_candidate",
+        "sha256": "68b1069ca033d662f0fc0bfb2433e3461c36d84d4dd8530bf0fb60818659c98d"
+      },
+      "control": {
+        "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group2_fp64_n8192_b21/child_control",
+        "sha256": "f843e70d0492bf0d0e328518bf584584437c9a0431a4b6b0ca7ba3c80644cf87"
+      }
+    },
+    "compile_flags": [
+      "-std=c++17",
+      "-O3",
+      "-march=sapphirerapids",
+      "-mamx-tile",
+      "-mamx-bf16",
+      "-ffp-contract=off",
+      "-fopenmp",
+      "-pthread"
+    ],
+    "compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "control_lib": "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+    "control_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+    "cpu_affinity": "0-63",
+    "distribution": "std::uniform_real_distribution<T>(-1,1), mt19937_64; A then B",
+    "driver_sha256": "5cd6bfb93d4c42ef6865c8fbf890927388430c1a231aae08a1a9ce31261ddfac",
+    "driver_source": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+    "environment": {
+      "GOMP_SPINCOUNT": null,
+      "MKL_DYNAMIC": "FALSE",
+      "MKL_INTERFACE_LAYER": "LP64",
+      "MKL_NUM_THREADS": "64",
+      "MKL_THREADING_LAYER": "GNU",
+      "OMP_DYNAMIC": "FALSE",
+      "OMP_NUM_THREADS": "64",
+      "OMP_PLACES": "cores",
+      "OMP_PROC_BIND": "close",
+      "OMP_WAIT_POLICY": null,
+      "OZAMX_WORKSPACE_CACHE_BYTES": "2147483648"
+    },
+    "openmp_runtime_request": {
+      "places": "cores",
+      "proc_bind": "close",
+      "threads": 64
+    },
+    "parent_inter_call_pause_seconds": 0.02,
+    "precision": "fp64",
+    "python": "3.10.12",
+    "reps": 11,
+    "runner_sha256": "981787dba57cf8e5d8f6c15b08381c14f0d38c9f289b734bd53ed564d87b1317",
+    "runner_source": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/run_matched_runtime.py",
+    "seed_rule": "260904 + N",
+    "shared_host_note": "GNU OpenMP runtime-default waiting is explicitly restored for both children; OMP_WAIT_POLICY and GOMP_SPINCOUNT are unset, with a 20 ms parent-side pause after each API call.",
+    "sizes": [
+      8192
+    ],
+    "threads": 64,
+    "wait_policy_environment": "OMP_WAIT_POLICY and GOMP_SPINCOUNT unset",
+    "wait_policy_variant": "runtime",
+    "warmups": 1
+  }
+}

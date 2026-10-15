@@ -1,0 +1,19 @@
+{
+  "recorded_utc": "2026-10-14T09:40:42Z",
+  "host": "Ubuntu 22.04.5 LTS, Linux 5.15.0-161-generic",
+  "cpu": "Intel Xeon Platinum 8454H; 2 sockets × 32 physical cores, 2-way SMT; 64 physical cores selected",
+  "cpu_features": ["AMX_TILE", "AMX_BF16"],
+  "numa_nodes": 2,
+  "affinity": "taskset -c 0-63",
+  "openmp": {"OMP_NUM_THREADS": "64", "OMP_PLACES": "cores", "OMP_PROC_BIND": "close", "OMP_DYNAMIC": "FALSE"},
+  "compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "compile_flags": "-O3 -std=c++17 -march=sapphirerapids -ffp-contract=off -fopenmp",
+  "timing_window": "Each measurement synchronizes workers and runs for at least 80 ms; allocation, first-touch, tile setup and result validation are outside the timed interval.",
+  "first_touch": "Each OpenMP worker allocates and initializes its own input buffer and Local state before timing.",
+  "benchmark_lock": "/tmp/ozamx-perf.lock (flock held for compile, disassembly, and complete run)",
+  "mkl": "Not linked or called by this calibration executable; MKL version is not applicable.",
+  "timed_window_sum_s": 13.722011675,
+  "warmup_window_sum_s": 4.574273193,
+  "all_measurement_windows_sum_s": 18.296284868,
+  "whole_process_wall_time": "Not separately captured; excludes no inference from per-measurement windows."
+}

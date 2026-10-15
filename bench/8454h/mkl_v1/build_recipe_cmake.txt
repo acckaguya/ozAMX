@@ -1,0 +1,13 @@
+# Rebuild the frozen v1 static library and the wall-instrumented reference driver.
+# Run the CMake build and compiler invocation while holding flock -x /tmp/ozamx-perf.lock.
+cmake -S bench/8454h/versions/v1 -B /tmp/ozamx-mkl-v1-build \
+  -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON \
+  -DOZAMX_BUILD_DIAGNOSTICS=OFF -DBUILD_TESTING=OFF
+cmake --build /tmp/ozamx-mkl-v1-build --target ozamx -j 8
+g++ -O3 -std=c++17 -mamx-tile -mamx-bf16 -fopenmp \
+  -Ibench/8454h/versions/v1/include -Ithird_party/code/mkl-current/include \
+  bench/benchmark.cpp /tmp/ozamx-mkl-v1-build/libozamx.a \
+  -Lthird_party/code/mkl-current/lib \
+  -Wl,-rpath,<absolute-workspace>/third_party/code/mkl-current/lib \
+  -Wl,--no-as-needed -l:libmkl_rt.so.3 -ldl \
+  -o /tmp/ozamx-mkl-v1-build/ozamx_benchmark

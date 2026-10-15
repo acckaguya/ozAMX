@@ -1,0 +1,110 @@
+{
+  "schema": "ozamx_paper_alignment_reference_v1",
+  "paper": {
+    "title": "BF16 Component-Product Emulation of FP32 and FP64 GEMM on Intel AMX",
+    "authors": ["Bing Cui", "Yu Liu"],
+    "version": "arXiv:2609.04663v1",
+    "date": "2026-09-04",
+    "local_pdf": "third_party/papers/2609.04663v1.pdf",
+    "protocol_source": "docs/REPRODUCTION_SPEC.md",
+    "study_source": "docs/PAPER_STUDY.md"
+  },
+  "paper_locations": {
+    "experiment_platform_and_repetitions": "§7.1, printed p.17",
+    "input_distributions": "§7.3, printed p.18",
+    "raw_bf16_headroom": "Figure 6, printed p.20",
+    "table4_accuracy": "Table 4, printed p.21 / PDF physical p.21",
+    "fp32_speedup": "Figure 7, printed p.22",
+    "fp32_thread_scaling": "Figure 8, printed p.23",
+    "fp64_performance": "Figure 9, printed p.24",
+    "preprocessing_breakdown": "Figure 10, printed p.25"
+  },
+  "protocol": {
+    "matrix_shapes": "square",
+    "sizes": [256, 512, 1024, 2048, 4096, 8192, 16384, 32768],
+    "full_core_threads": 64,
+    "warmups_per_configuration": 1,
+    "timed_repetitions": 10,
+    "reported_repetition_statistic": "arithmetic_mean",
+    "input_distribution": "uniform[-1,1]",
+    "rng": null,
+    "seed": null,
+    "rng_seed_note": "The paper does not specify an RNG or seed.",
+    "accuracy_reference": {
+      "fp32": "oneMKL SGEMM",
+      "fp64": "oneMKL DGEMM"
+    },
+    "accuracy_metrics": {
+      "eF": "||Chat-Cref||_F / ||Cref||_F",
+      "e_scaled": "max_ij |(Chat-Cref)_ij| / (|A||B|)_ij",
+      "zero_denominator": "Report absolute error separately."
+    },
+    "performance_throughput": "2*N^3 / elapsed_seconds; counts target-precision GEMM work, not component products",
+    "end_to_end_timer": "Wall time includes decomposition, packing, AMX compute, and reconstruction; excludes input initialization and reference computation. One-time AMX permission/setup excluded from steady state.",
+    "platform": {
+      "cpu": "dual-socket Intel Xeon Platinum 8462Y+",
+      "os": "Rocky Linux 9.3",
+      "toolchain": "Intel oneAPI 2026.1",
+      "blas": "oneMKL 2026.1",
+      "openmp": "Intel OpenMP",
+      "compile_flags": "-O3 -march=native -mkl -qopenmp",
+      "affinity": "KMP_AFFINITY=compact",
+      "frequency_policy": "Fixed during each measurement campaign"
+    }
+  },
+  "table4_modes": {
+    "fp32_p6": {"precision": "fp32", "budget": 6, "eF_scale": 1e-7, "e_scaled_scale": 1e-7},
+    "fp64_p6": {"precision": "fp64", "budget": 6, "eF_scale": 1e-8, "e_scaled_scale": 1e-8},
+    "fp64_p10": {"precision": "fp64", "budget": 10, "eF_scale": 1e-11, "e_scaled_scale": 1e-11},
+    "fp64_p15": {"precision": "fp64", "budget": 15, "eF_scale": 1e-14, "e_scaled_scale": 1e-14},
+    "fp64_p21": {"precision": "fp64", "budget": 21, "eF_scale": 1e-16, "e_scaled_scale": 1e-16}
+  },
+  "table4_accuracy": {
+    "value_order": "eF, e_scaled",
+    "values_as_printed_before_scale": {
+      "256": {"fp32_p6": [3.02, 2.25], "fp64_p6": [1.49, 0.546], "fp64_p10": [3.26, 1.30], "fp64_p15": [6.95, 2.49], "fp64_p21": [5.71, 3.41]},
+      "512": {"fp32_p6": [3.06, 1.54], "fp64_p6": [1.49, 0.441], "fp64_p10": [3.25, 0.931], "fp64_p15": [6.94, 1.88], "fp64_p21": [5.88, 2.96]},
+      "1024": {"fp32_p6": [3.59, 1.22], "fp64_p6": [1.49, 0.338], "fp64_p10": [3.26, 0.693], "fp64_p15": [6.97, 1.40], "fp64_p21": [6.96, 2.79]},
+      "2048": {"fp32_p6": [3.72, 0.941], "fp64_p6": [1.49, 0.234], "fp64_p10": [3.25, 0.510], "fp64_p15": [6.95, 1.08], "fp64_p21": [7.45, 2.16]},
+      "4096": {"fp32_p6": [3.83, 0.556], "fp64_p6": [1.49, 0.173], "fp64_p10": [3.25, 0.387], "fp64_p15": [6.96, 0.765], "fp64_p21": [8.19, 1.67]},
+      "8192": {"fp32_p6": [3.97, 0.416], "fp64_p6": [1.49, 0.124], "fp64_p10": [3.25, 0.286], "fp64_p15": [6.96, 0.615], "fp64_p21": [9.41, 1.52]},
+      "16384": {"fp32_p6": [4.18, 0.406], "fp64_p6": [1.49, 0.0936], "fp64_p10": [3.25, 0.210], "fp64_p15": [6.96, 0.440], "fp64_p21": [11.4, 1.61]},
+      "32768": {"fp32_p6": [4.58, 0.375], "fp64_p6": [1.49, 0.0680], "fp64_p10": [3.25, 0.148], "fp64_p15": [6.96, 0.304], "fp64_p21": [14.6, 1.93]}
+    },
+    "unit_note": "Multiply each printed pair by that mode's eF_scale and e_scaled_scale to obtain true values."
+  },
+  "figure7_fp32_speedup": {
+    "definition": "paper AMX-FP32 end-to-end speedup over oneMKL SGEMM",
+    "sizes": [256, 512, 1024, 2048, 4096, 8192, 16384, 32768],
+    "speedup": [2.56, 2.17, 1.70, 1.39, 1.14, 1.16, 1.25, 1.32]
+  },
+  "figure6_raw_bf16": {
+    "sizes": [256, 512, 1024, 2048, 4096, 8192, 16384, 32768],
+    "series_as_labeled_gflops": {
+      "oneMKL_bf16bf16fp32": [0.21, 0.60, 2.72, 18.47, 23.3, 35.47, 38.08, 32.28],
+      "oneMKL_SGEMM": [0.03, 0.14, 0.98, 4.52, 8.09, 9.40, 8.97, 8.16],
+      "oneMKL_DGEMM": [0.03, 0.14, 0.86, 2.64, 4.43, 5.21, 4.47, 4.73]
+    },
+    "unit_caveat": "The figure labels these values GFLOPS, but the magnitude is suspicious for the stated hardware and GEMM sizes. Preserve the printed values and label; do not silently convert them. Local results report their measured GFLOP/s and TFLOP/s explicitly."
+  },
+  "figure8_thread_scaling": {
+    "precision": "fp32",
+    "sizes": [1024, 4096, 16384],
+    "threads": [2, 4, 8, 16, 32, 64],
+    "point_values": null,
+    "reported_trends": [
+      "N=1024 reaches its best point at 32 threads and declines at 64 threads.",
+      "N=4096 and N=16384 absolute throughput increases with thread count.",
+      "FP32 speedup over SGEMM narrows as thread count increases; reported tested points remain above 1.1x."
+    ]
+  },
+  "figure9_fp64_performance": {
+    "point_values": null,
+    "reported_trends": [
+      "FP64 p6 crosses DGEMM near N=4096 and reaches a reported maximum speedup of 1.72x.",
+      "FP64 p10 only slightly exceeds DGEMM at N=16384 and N=32768.",
+      "FP64 p15 and p21 do not exceed DGEMM at tested sizes."
+    ],
+    "note": "No exact data table is available; do not digitize or fabricate exact points."
+  }
+}

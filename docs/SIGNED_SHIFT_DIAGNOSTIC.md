@@ -46,13 +46,10 @@ python3 tools/diagnose_signed_shift.py
 重编译原生诊断（当前工作目录为仓库根目录）：
 
 ```sh
-g++ -std=c++17 -O3 -mamx-tile -mamx-bf16 -fopenmp \
-  -Iinclude -Ithird_party/code/mkl-2026/venv/include \
-  tools/native_signed_shift_accuracy.cpp src/runtime.cpp \
-  third_party/code/mkl-2026/venv/lib/libmkl_rt.so.3 \
-  -Wl,-rpath,/data/home/caiwl/ozAMX/third_party/code/mkl-2026/venv/lib \
-  -o bench/diagnostics/signed_shift_256/native_signed_shift_accuracy
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON \
+  -DOZAMX_ONEMKL_ROOT="$PWD/third_party/code/mkl-2026/venv"
+cmake --build build --target ozamx_native_signed_shift_accuracy -j4
 MKL_THREADING_LAYER=GNU MKL_NUM_THREADS=1 OMP_NUM_THREADS=64 \
-  bench/diagnostics/signed_shift_256/native_signed_shift_accuracy \
+  build/ozamx_native_signed_shift_accuracy \
   bench/diagnostics/signed_shift_256 > /tmp/signed_shift_native.csv
 ```

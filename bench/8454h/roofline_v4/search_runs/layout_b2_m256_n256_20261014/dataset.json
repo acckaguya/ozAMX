@@ -1,0 +1,11 @@
+{
+  "schema": "ozamx-v4-search-dataset-1",
+  "phase": "layout",
+  "base_candidate_id": "b2_m256_n256_p64_h1_l1",
+  "seed_base": 260904,
+  "threads": 64,
+  "cpuset": "0-63",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "search_gemm_sha256": "a89c6cc49c41f242a1d7945a870ab5f7d789caca927b7f712dd7e987e3af5b74"
+}

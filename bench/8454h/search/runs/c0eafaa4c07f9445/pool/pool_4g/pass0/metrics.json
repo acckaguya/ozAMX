@@ -1,0 +1,129 @@
+{
+  "budgets": "6,21",
+  "definitions": {
+    "OZAMX_CACHE_BLOCK": 128,
+    "OZAMX_LOAD_SCHEDULE": 0,
+    "OZAMX_LOOP_ORDER": 0,
+    "OZAMX_MIN_COMPUTE_WORK": 8,
+    "OZAMX_MN_ORDER": 0,
+    "OZAMX_PREP_GRAIN": 32768,
+    "OZAMX_TILELOAD_HINT": 0
+  },
+  "environment_overrides": {
+    "OZAMX_WORKSPACE_CACHE_BYTES": "4294967296"
+  },
+  "expected_configurations": 3,
+  "frozen_baseline_binary_sha256": "16c3533ee33685ba2622d82886fa9014e7dbdf5dbfcbc6e0a8e663bc69f07d1f",
+  "gate_summary_json": "bench/8454h/search/runs/c0eafaa4c07f9445/pool/pool_4g/pass0/gate_summary.json",
+  "gate_summary_sha256": "f7650e2e306c07f45cc96797fd01860e1d1ab71a29d6b5b6dba139ca30ec61c1",
+  "job_fingerprint": "e2f4d69c8ae61ef36dd0ede3248f23e0a759939ed66c3716d098108b0da1fbe4",
+  "metrics": {
+    "fp32/8192/6": {
+      "checksums": [
+        -17313.910584384343,
+        -17313.910584384343,
+        -17313.910584384343,
+        -17313.910584384343,
+        -17313.910584384343
+      ],
+      "compute_median_s": 0.17912992,
+      "extra_numeric_medians": {
+        "involuntary_switches": 7.0,
+        "major_faults": 0.0,
+        "max_rss_kib": 2615932.0,
+        "minor_faults": 0.0,
+        "system_s": 0.0,
+        "user_s": 11.516193,
+        "voluntary_switches": 63.0,
+        "wall_s": 0.195275732
+      },
+      "n": 5,
+      "objective_field": "wall_s",
+      "objective_median_s": 0.195275732,
+      "pack_median_s": 0.007506775,
+      "split_median_s": 0.00842518,
+      "total_max_s": 0.228603799,
+      "total_mean_s": 0.1996094264,
+      "total_median_s": 0.195267959,
+      "total_min_s": 0.187299179,
+      "total_stdev_s": 0.016582670873032446
+    },
+    "fp64/8192/21": {
+      "checksums": [
+        354799.8531100277,
+        354799.8531100277,
+        354799.8531100277,
+        354799.8531100277,
+        354799.8531100277
+      ],
+      "compute_median_s": 0.729628925,
+      "extra_numeric_medians": {
+        "involuntary_switches": 66.0,
+        "major_faults": 0.0,
+        "max_rss_kib": 6299972.0,
+        "minor_faults": 65763.0,
+        "system_s": 0.7283620000000006,
+        "user_s": 44.17269000000002,
+        "voluntary_switches": 120.0,
+        "wall_s": 0.828203556
+      },
+      "n": 5,
+      "objective_field": "wall_s",
+      "objective_median_s": 0.828203556,
+      "pack_median_s": 0.017023344,
+      "split_median_s": 0.05795207,
+      "total_max_s": 1.039051703,
+      "total_mean_s": 0.8602282768,
+      "total_median_s": 0.828193024,
+      "total_min_s": 0.788869982,
+      "total_stdev_s": 0.10213630740671262
+    },
+    "fp64/8192/6": {
+      "checksums": [
+        354799.90504274797,
+        354799.90504274797,
+        354799.90504274797,
+        354799.90504274797,
+        354799.90504274797
+      ],
+      "compute_median_s": 0.259270245,
+      "extra_numeric_medians": {
+        "involuntary_switches": 29.0,
+        "major_faults": 0.0,
+        "max_rss_kib": 3945488.0,
+        "minor_faults": 0.0,
+        "system_s": 0.03371899999999961,
+        "user_s": 17.887295999999992,
+        "voluntary_switches": 63.0,
+        "wall_s": 0.319660975
+      },
+      "n": 5,
+      "objective_field": "wall_s",
+      "objective_median_s": 0.319660975,
+      "pack_median_s": 0.008115274,
+      "split_median_s": 0.053207914,
+      "total_max_s": 0.333581143,
+      "total_mean_s": 0.31832845660000003,
+      "total_median_s": 0.319653199,
+      "total_min_s": 0.300820088,
+      "total_stdev_s": 0.011735220933117817
+    }
+  },
+  "pass": 0,
+  "phase_wall_s": {
+    "benchmark_process_wall_s": 18.241304990835488,
+    "build_s": 4.9378426391631365,
+    "cmake_configure_s": 0.7602772498503327,
+    "ctest_s": 0.044953824020922184,
+    "equivalence_gate_s": 9.401648827828467
+  },
+  "raw_csv": "bench/8454h/search/runs/c0eafaa4c07f9445/pool/pool_4g/pass0/optimization_benchmark.csv",
+  "raw_rows": 33,
+  "raw_sha256": "8d3c59d0436ce743d135b7f2ae67aec3e34036da5ea262c7f4b5501aaae6586a",
+  "repetitions": 5,
+  "runner_version": 2,
+  "sizes": "8192",
+  "stage": "pool",
+  "study_fingerprint": "c0eafaa4c07f9445406dea2d62abc81d982da40aeae5b34f26c2ea1f4dbc0663",
+  "variant": "pool_4g"
+}

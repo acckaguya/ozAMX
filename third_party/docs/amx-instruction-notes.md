@@ -1,6 +1,6 @@
 # Intel AMX-BF16 实现核对笔记
 
-以下摘录依据 Intel 官方托管的 *Intel Architecture Instruction Set Extensions Programming Reference*（本地文件 `intel-architecture-isa-extensions-programming-reference-dec-2024.pdf`，URL 与哈希见 `../SOURCES.md`）。AMX 指令语义以 Intel 手册为准，论文只规定本次复现的算法和调度。手册也提示部分 AMX 指令已移入最新 Intel SDM；若有歧义，应再查当前 SDM。
+以下笔记最初依据 Intel 官方托管的 *Intel Architecture Instruction Set Extensions Programming Reference*，2026-10-13 已以当前 SDM v093 和 Linux XSTATE 规范复核。当前原始文档、8454H 平台资料和 SIMD 示例见 [资料库入口](../intel/README.md)；SDM Vol.2B 的 `TDPBF16PS` 条目为印刷页4-715/716。AMX 指令语义以对应版本 Intel 手册为准，论文规定本次复现的算法和调度；未来指令汇编中的条目不表示8454H全部支持。
 
 ## Tile 与内存布局
 
@@ -16,10 +16,12 @@
 
 ## CPU/OS 权限与安全 dispatch
 
-- CPU feature bits 并不足以保证可执行 AMX。XTILECFG/XTILEDATA 属于扩展处理器状态；Linux 应用需要以 `arch_prctl(ARCH_REQ_XCOMP_PERM, XFEATURE_XTILEDATA)` 请求 XTILEDATA 权限（feature number 18）。权限按线程授予。主线程 probe 成功不能授权 OpenMP workers；每个可能执行 tile 指令的 worker 都必须先请求并获得权限。
+- CPU feature bits 并不足以保证可执行 AMX。XTILECFG/XTILEDATA 属于扩展处理器状态；Linux 应用需要以 `arch_prctl(ARCH_REQ_XCOMP_PERM, XFEATURE_XTILEDATA)` 请求动态特征许可（feature number 18）。[Linux官方XSTATE规范](https://www.kernel.org/doc/html/latest/arch/x86/xstate.html)明确许可按进程有效，fork继承、exec清除；各task首次使用时另行分配状态缓冲。此前“许可按线程授予、每个worker必须分别请求”的说法混淆了进程许可和线程状态，现已纠正。当前8454H同进程worker核验见 [机器快照](../intel/xeon-8454h/hardware-snapshot/snapshot.json)。各执行线程仍需正确配置和管理自己的tile状态；优化前的每worker查询是实现选择，当前实现由调用方确认并缓存进程权限。
 - 运行时先检查 CPU 的 AMX-TILE 和 AMX-BF16 能力，再请求/确认 OS 权限。未支持或未获权限时，不应执行 `LDTILECFG` 等 AMX 指令；应在进入 AMX 路径前 dispatch，使非 AMX 主机收到明确错误而不是 `SIGILL`。
 - kernel 结束后以 `TILERELEASE` 释放 tile state。按论文计时边界，tile 配置可在 timed compute 区域之前完成，并在 kernel 之后释放。
 
-## 本机编译与指令证据
+## 历史平台编译与指令证据
 
 本机 GCC 11.4.0 使用 `-mamx-tile -mamx-bf16` 成功编译并运行 `tools/amx_probe.c`。输出为 `AMX_PERM=OK`、`AMX_EXEC=OK sample_c00=64.0 expected=64.0`。该 probe 在执行指令前请求 `XFEATURE_XTILEDATA`，并计算已知 BF16 矩阵积。此结果证明本机编译器头文件提供 `_tile_dpbf16ps`，且当前主机/OS 允许该基础指令路径；它不验证论文的分解、打包或组件积求和顺序。
+
+上段为2026-10-12 Gold6430实验记录，不能当作当前8454H的新性能测量。当前平台的CPUID/XCR0、进程许可和指令执行核验单独保存在上述机器快照中；AVX2、AVX-512及BF16/FP16指令研读见 [综合笔记](../intel/8454H_STUDY.md)。

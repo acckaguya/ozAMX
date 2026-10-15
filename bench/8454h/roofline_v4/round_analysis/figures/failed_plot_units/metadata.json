@@ -1,0 +1,42 @@
+{
+  "status": "superseded_invalid_unit_scaling",
+  "created_utc": "2026-10-14T13:12:48.327776+00:00",
+  "reason": "rate coordinates were plotted in GFLOP/s while reference calibration constants were expressed in TFLOP/s; the calibration lines were therefore low by 1000x and invalid for scientific comparison.",
+  "artifacts": [
+    {
+      "file": "v3_vs_v4_fp32_p6.png",
+      "bytes": 157628,
+      "sha256": "bd52b9629f579f25ed9fc3d6c8be53b17b9ba29dfe1da2631223c3ad9754aeb8"
+    },
+    {
+      "file": "v3_vs_v4_fp64_p6.png",
+      "bytes": 156651,
+      "sha256": "9a7fcfd097f2b6897b8c6a2c57369a2e2294dc94e9766732ee3a73e70c1105e4"
+    },
+    {
+      "file": "v3_vs_v4_fp64_p6.svg",
+      "bytes": 106960,
+      "sha256": "88fcf561a7a39bca128774d4fca6b20043d781502221da272f717f85c022420d"
+    },
+    {
+      "file": "v3_vs_v4_fp32_p6.svg",
+      "bytes": 104416,
+      "sha256": "7ce1dc1d4e723b0d5b9144d68de0bddab40ced2cc541ccbee082d140e61a4dc0"
+    },
+    {
+      "file": "all_paired_api_ratios.svg",
+      "bytes": 112094,
+      "sha256": "40b725200f040ea6490f062991b33f73ff61b4d936fe64e1f00870adc7e7cd96"
+    },
+    {
+      "file": "all_paired_api_ratios.png",
+      "bytes": 151303,
+      "sha256": "20bb7de3ef6c4f9e1dab44a2a65273e85e7e18710ce727eedd89467c54d184f7"
+    },
+    {
+      "file": "round_plot_data.json",
+      "bytes": 267570,
+      "sha256": "fcf6561c42b7897b859656bbd83eba93dd1cc25c3bb34dcd604455077c6adb48"
+    }
+  ]
+}

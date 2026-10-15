@@ -1,0 +1,68 @@
+{
+  "started_utc": "2026-10-13T17:58:01Z",
+  "platform": "Linux-5.15.0-161-generic-x86_64-with-glibc2.35",
+  "candidate_clone": "/tmp/ozamx-roof-numa-b",
+  "frozen_binary_source_path": "/tmp/ozamx-production-final/ozamx_optimization_benchmark",
+  "cpu_allowed_list": "Cpus_allowed_list:\t0-127",
+  "launch_affinity": "taskset -c 0-63",
+  "openmp": {
+    "threads": 64,
+    "places": "cores",
+    "proc_bind": "close",
+    "dynamic": false
+  },
+  "workspace_cache_bytes": 2147483648,
+  "cli": {
+    "sizes": [
+      4096,
+      8192
+    ],
+    "precision": "all",
+    "fp64_budgets": [
+      6,
+      21
+    ],
+    "warmups": 1,
+    "repetitions": 5
+  },
+  "run_order": [
+    "frozen_2g_a",
+    "control0_2g",
+    "numa1_2g_a",
+    "frozen_2g_b",
+    "numa1_2g_b",
+    "frozen_2g_c"
+  ],
+  "driver_compile": {
+    "compiler": "g++",
+    "flags": "-std=c++17 -O3 -march=sapphirerapids -ffp-contract=off -fopenmp",
+    "include": "clone/include for both candidate/control so GemmTimings ABI matches each library"
+  },
+  "numa_call": "syscall(SYS_getcpu, &cpu, &node, nullptr); copy-team workers use node/rank assignment; compute workers re-query node; non-0/1 or syscall failure falls back to original p.b",
+  "hashes_sha256": {
+    "frozen_binary": "eece364647b16906862dd0820a46f08ad62b53a0275dde29a9e1fae097d59893",
+    "frozen_v2_manifest": "0811f7ba2169b4ca37de5a3ac670cd54435572cd7d30cf909ae7a6d992c6463e",
+    "frozen_lib": "ddfe885c2ba58089accd4e747aecb53a18422554e06fc409965e2f47b7d92251",
+    "candidate_lib": "1d4cfb149bf0f71dbb9c4164f5e24a987cf115b93fb5996c57294074cafd3a7d",
+    "control_lib": "c5a78ba80cc2b3679d8c2ebfe5031a9960e0282937a61c781f5be65837bb6a08",
+    "frozen_copy": "eece364647b16906862dd0820a46f08ad62b53a0275dde29a9e1fae097d59893",
+    "candidate_driver": "4054b35865c82acf2d2ae0dfd7f47254714a5e0e747c6aa1502b43ddaa8f7c24",
+    "control_driver": "a0a1c51b0a26db81478f5be1035d5a5250c88e854170251d4fd6b7e6c7585ee3",
+    "source_files": {
+      "include/ozamx/gemm.hpp": "1ce3a122b0bfe61901fe77d5a5399c2215ca93461a7324be786b5ccafabe4c20",
+      "src/gemm.cpp": "f31b0766eedeb8e52993d0eb0bdb5255be140c57c78297c6b2e3a971b0751143",
+      "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+      "src/main.cpp": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+      "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+      "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+      "src/tuning.hpp": "9a80b29ce7b9f8b8ce6f86ad245af6e81299113d728fcdf47d89d5a879a16102",
+      "bench/optimization_benchmark.cpp": "ee59828d0a9a17d8136ff751766bddc10519d66e6ba74630b4c826cccdcf6398",
+      "CMakeLists.txt": "3aba7ce6b7f3601d9b8c178cd81b3d024be848034e8d1a08b73e5ce9721ec20c"
+    },
+    "artifact_flags_candidate": "abfbff358d654a9c851b5a2567f3abc0221655c6c219e7fc68f52a871e4e37b8",
+    "artifact_flags_control": "f938e091b67256c11f16c85508e1eec6f45bd82fcc615cc7db6a43121db78039",
+    "artifact_flags_frozen": "f527264022b7646f55998d1b3178d9607c03dcb7aafe5dec02e60eff5b487aa3",
+    "frozen_CMakeCache": "82b33ffe8fbd459b91fcce3246310e4bfed891bf4d69c69beb1ababaa7ccc471",
+    "frozen_compile_commands": "2402f0c287bebe8141450f67ee5cca434748a709b80a24eb5835e112fe87824c"
+  }
+}

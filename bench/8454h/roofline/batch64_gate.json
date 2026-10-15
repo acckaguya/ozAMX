@@ -1,0 +1,309 @@
+{
+  "status": "pass",
+  "scope": "isolated batch64 candidate gate; no performance measurements",
+  "source_base": "bench/8454h/versions/v2 frozen source",
+  "patch_sha256": "603e7ea15d12e63df2d42ef6419a6c60db4804c2cb1adb2fbc3849db488e7b66",
+  "source_sha256": {
+    "src/gemm.cpp": "6000a02d83e00905ed8c44aeacb3d68f88842265949db143f3fcd4fbaad686e0",
+    "src/tuning.hpp": "6322622d5d3155afecab75df442f199bc211f079e065c17ff424ca04d10c9cf3",
+    "CMakeLists.txt": "420cef8d18f5ac7d39504a77b2725af89b2d58f3e7172c6acb3e2231b5ad6c47"
+  },
+  "build": {
+    "type": "Release",
+    "openmp": true,
+    "compiler": "GNU 11.4.0",
+    "macro": "OZAMX_RECON_BATCH64",
+    "compiled_values": [
+      1,
+      2,
+      4
+    ]
+  },
+  "libraries": {
+    "batch1": {
+      "sha256": "fac27ed138fcaf8ddb927162402dfc4f7da48ebeb666d7425265b0f460b0ff6e"
+    },
+    "batch2": {
+      "sha256": "07f026d47eec7cdca331ac424ea81d9de54b08bf2f1388ffc047bc93f58d222f"
+    },
+    "batch4": {
+      "sha256": "3b108997f9290dd2d2dcabf8b3e915073a36e9d9e0ee5ea61fd36b48edb16c09"
+    }
+  },
+  "extended_cache_cache0": {
+    "batch2": {
+      "status": "pass",
+      "seed": "0x8454a11ce",
+      "shapes": [
+        [
+          1,
+          17,
+          31
+        ],
+        [
+          7,
+          33,
+          33
+        ],
+        [
+          17,
+          65,
+          257
+        ],
+        [
+          65,
+          129,
+          65
+        ],
+        [
+          256,
+          256,
+          256
+        ],
+        [
+          512,
+          512,
+          512
+        ],
+        [
+          256,
+          512,
+          256
+        ],
+        [
+          512,
+          256,
+          512
+        ],
+        [
+          1024,
+          1024,
+          1024
+        ]
+      ],
+      "precisions": [
+        "fp32",
+        "fp64-p6",
+        "fp64-p10",
+        "fp64-p15",
+        "fp64-p21"
+      ],
+      "checks": {
+        "default_cache_vs_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "candidate_cache_vs_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "default_vs_candidate_cache": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "default_vs_candidate_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        }
+      },
+      "libraries": {
+        "default": {
+          "path": "/tmp/ozamx-roof-batch64/build-b1/libozamx.a",
+          "sha256": "fac27ed138fcaf8ddb927162402dfc4f7da48ebeb666d7425265b0f460b0ff6e"
+        },
+        "candidate": {
+          "path": "/tmp/ozamx-roof-batch64/build-b2/libozamx.a",
+          "sha256": "07f026d47eec7cdca331ac424ea81d9de54b08bf2f1388ffc047bc93f58d222f"
+        }
+      },
+      "source_sha256": {
+        "driver": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+        "runner": "9a13a1c8508d788127f51c82479c0253f42b0a580eb33926c3605b3720687525"
+      },
+      "scope": "nine rectangular cases, aligned 256/512 and 1024-cubed boundaries; padded A/B/C strides and tail canaries; full long-double oracle for small cases and 32 sampled C outputs per large case; FP32 overflow and FP64 invalid-input transactional checks; separate default and zero-byte cache processes; 128-bit deterministic digests compare every large-case output slot."
+    },
+    "batch4": {
+      "status": "pass",
+      "seed": "0x8454a11ce",
+      "shapes": [
+        [
+          1,
+          17,
+          31
+        ],
+        [
+          7,
+          33,
+          33
+        ],
+        [
+          17,
+          65,
+          257
+        ],
+        [
+          65,
+          129,
+          65
+        ],
+        [
+          256,
+          256,
+          256
+        ],
+        [
+          512,
+          512,
+          512
+        ],
+        [
+          256,
+          512,
+          256
+        ],
+        [
+          512,
+          256,
+          512
+        ],
+        [
+          1024,
+          1024,
+          1024
+        ]
+      ],
+      "precisions": [
+        "fp32",
+        "fp64-p6",
+        "fp64-p10",
+        "fp64-p15",
+        "fp64-p21"
+      ],
+      "checks": {
+        "default_cache_vs_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "candidate_cache_vs_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "default_vs_candidate_cache": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        },
+        "default_vs_candidate_cache0": {
+          "cases": 47,
+          "compared_slots": 8333440,
+          "bitwise_mismatches": 0
+        }
+      },
+      "libraries": {
+        "default": {
+          "path": "/tmp/ozamx-roof-batch64/build-b1/libozamx.a",
+          "sha256": "fac27ed138fcaf8ddb927162402dfc4f7da48ebeb666d7425265b0f460b0ff6e"
+        },
+        "candidate": {
+          "path": "/tmp/ozamx-roof-batch64/build-b4/libozamx.a",
+          "sha256": "3b108997f9290dd2d2dcabf8b3e915073a36e9d9e0ee5ea61fd36b48edb16c09"
+        }
+      },
+      "source_sha256": {
+        "driver": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+        "runner": "9a13a1c8508d788127f51c82479c0253f42b0a580eb33926c3605b3720687525"
+      },
+      "scope": "nine rectangular cases, aligned 256/512 and 1024-cubed boundaries; padded A/B/C strides and tail canaries; full long-double oracle for small cases and 32 sampled C outputs per large case; FP32 overflow and FP64 invalid-input transactional checks; separate default and zero-byte cache processes; 128-bit deterministic digests compare every large-case output slot."
+    }
+  },
+  "equivalence_100case": {
+    "batch2": {
+      "baseline_t1_vs_optimized_t1": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "baseline_t1_vs_optimized_t4": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "baseline_t1_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t1_vs_optimized_t4": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t1_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t4_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      }
+    },
+    "batch4": {
+      "baseline_t1_vs_optimized_t1": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "baseline_t1_vs_optimized_t4": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "baseline_t1_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t1_vs_optimized_t4": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t1_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      },
+      "optimized_t4_vs_optimized_t64": {
+        "bitwise_mismatches_including_signed_zero": 0,
+        "cases": 100,
+        "compared_c_slots_including_padding": 2322780,
+        "padding_guard_failures": 0
+      }
+    },
+    "batch2_candidate_library_sha256": "07f026d47eec7cdca331ac424ea81d9de54b08bf2f1388ffc047bc93f58d222f",
+    "batch4_candidate_library_sha256": "3b108997f9290dd2d2dcabf8b3e915073a36e9d9e0ee5ea61fd36b48edb16c09"
+  },
+  "performance": {
+    "run": false,
+    "reason": "root requested performance scheduling separately"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "benchmark_binary": "/tmp/ozamx-mkl-production-final/ozamx_benchmark",
+  "benchmark_binary_sha256": "266a2dfff5f6ffe03978ea9b1e98600e0ccc8bdca9c48447e021e5ed18bec461",
+  "benchmark_source_sha256": "f07ddbb048f46738f97bc19607151b8d2112c2b9e30df93865db20249169b473",
+  "cmake_cache_sha256": "82b33ffe8fbd459b91fcce3246310e4bfed891bf4d69c69beb1ababaa7ccc471",
+  "cmake_compile_commands_sha256": "2402f0c287bebe8141450f67ee5cca434748a709b80a24eb5835e112fe87824c",
+  "cmake_options": {
+    "CMAKE_BUILD_TYPE:STRING": "Release",
+    "OZAMX_BUILD_PROBE:BOOL": "ON",
+    "OZAMX_CACHE_BLOCK:STRING": "128",
+    "OZAMX_ENABLE_OPENMP:BOOL": "ON",
+    "OZAMX_LOAD_SCHEDULE:STRING": "0",
+    "OZAMX_LOOP_ORDER:STRING": "0",
+    "OZAMX_MIN_COMPUTE_WORK:STRING": "8",
+    "OZAMX_MN_ORDER:STRING": "0",
+    "OZAMX_ONEMKL_ROOT:PATH": "/home/caiweili/ozAMX/third_party/code/mkl-current",
+    "OZAMX_ONEMKL_RUNTIME:FILEPATH": "/home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3",
+    "OZAMX_PREP_GRAIN:STRING": "16384",
+    "OZAMX_TILELOAD_HINT:STRING": "1"
+  },
+  "compiler": "GCC/G++ 11.4.0",
+  "driver_compile_flags": "-O3 -std=c++17 -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -fopenmp",
+  "fresh_static_library": "/tmp/ozamx-production-final/libozamx.a",
+  "measurement": {
+    "API_wall_scope": "full gemm_*_profiled call including dispatch and teardown",
+    "MKL_DYNAMIC": "FALSE",
+    "MKL_INTERFACE_LAYER": "LP64",
+    "MKL_NUM_THREADS": "64",
+    "MKL_THREADING_LAYER": "GNU",
+    "MKL_wall_scope": "GEMM call only",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "64",
+    "OMP_PLACES": "cores",
+    "OMP_PROC_BIND": "close",
+    "OZAMX_WORKSPACE_CACHE_BYTES": "2147483648",
+    "cpu_set": "0-63",
+    "distribution": "uniform[-1,1]",
+    "lock": "flock -x /tmp/ozamx-perf.lock",
+    "precision": "FP32 p6; FP64 p6,p10,p15,p21",
+    "resolved_seed": "260904+N",
+    "seed_base": 260904,
+    "sizes": [
+      256,
+      1024,
+      4096,
+      8192
+    ],
+    "timed_reps": 5,
+    "warmup": "one first call per configuration"
+  },
+  "mkl_runtime": {
+    "path": "/home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3",
+    "sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+    "threading_layer": "GNU",
+    "version": "Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications"
+  },
+  "outputs": {
+    "checkpoint_count": 20,
+    "checkpoint_prefix": "bench/8454h/mkl_production/checkpoint_final_prod",
+    "configuration_count": 20,
+    "csv": "bench/8454h/mkl_production/full_production.csv",
+    "csv_sha256": "50dfff366f26201aef2517583787470bb29da9c3c81a32c689275e3d20d5a37a"
+  },
+  "schema": "ozamx-final-production-mkl-provenance-v1",
+  "source_id": "mkl-wall-production-final-20261013",
+  "source_sha256": {
+    "CMakeLists.txt": "38fe0d708528f348aa7449c5933bbbdf1fe2c363e03bda16a0c7caa0aa0ee366",
+    "bench/8454h/mkl_production/benchmark_production.cpp": "f07ddbb048f46738f97bc19607151b8d2112c2b9e30df93865db20249169b473",
+    "bench/benchmark.cpp": "5adddf4dc7ed4548f58ed76e4ce47cf93b0b5b6a803d0f238313cd31cab03da1",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "src/gemm.cpp": "8a5d27440c604df9304b75769e3c048a6748789aab6ee8fed3a5c3446335a85b",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/tuning.hpp": "2dc89e5f8a0986da508eca9931e94130be96a0b098c9f0ab8d35a6217ecb4798"
+  },
+  "static_library_sha256": "ddfe885c2ba58089accd4e747aecb53a18422554e06fc409965e2f47b7d92251"
+}

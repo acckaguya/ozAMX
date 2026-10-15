@@ -1,0 +1,54 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,6 +4,7 @@
+ option(OZAMX_ENABLE_OPENMP "Enable OpenMP parallel execution" ON)
+ option(OZAMX_BUILD_PROBE "Build the standalone AMX instruction probe" ON)
+ 
++set(OZAMX_WORKSPACE_HUGEPAGES 0 CACHE STRING "Private workspace MADV_HUGEPAGE hint")
+ set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
+ set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")
+ set(OZAMX_MIN_COMPUTE_WORK 8 CACHE STRING "Small-shape output tasks per worker")
+@@ -12,7 +13,7 @@
+ set(OZAMX_LOOP_ORDER 0 CACHE STRING "Compute loops: 0=BK outer, 1=microtile outer")
+ set(OZAMX_MN_ORDER 0 CACHE STRING "Output task order: 0=row major, 1=column major")
+ set(OZAMX_TUNING_DEFINITIONS)
+-foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER)
++foreach(knob WORKSPACE_HUGEPAGES CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER)
+   if(NOT "${OZAMX_${knob}}" MATCHES "^[0-9]+$")
+     message(FATAL_ERROR "OZAMX_${knob} must be a nonnegative integer")
+   endif()
+--- a/src/preprocess.hpp
++++ b/src/preprocess.hpp
+@@ -1,4 +1,11 @@
+ #pragma once
++#ifndef OZAMX_WORKSPACE_HUGEPAGES
++#define OZAMX_WORKSPACE_HUGEPAGES 0
++#endif
++#if OZAMX_WORKSPACE_HUGEPAGES
++#include <sys/mman.h>
++#include <unistd.h>
++#endif
+ 
+ #include "ozamx/gemm.hpp"
+ 
+@@ -50,7 +57,19 @@
+         Slot* newest=nullptr;
+         for(auto& s:slots)if(s.ptr&&s.bytes==bytes&&(!newest||s.age>newest->age))newest=&s;
+         if(newest){void* p=newest->ptr;retained-=newest->bytes;*newest={};return p;}
+-        void* p=nullptr;if(posix_memalign(&p,64,bytes)!=0)throw std::bad_alloc();return p;
++        void* p=nullptr;if(posix_memalign(&p,64,bytes)!=0)throw std::bad_alloc();
++#if OZAMX_WORKSPACE_HUGEPAGES
++        // Advise only complete pages strictly inside this owned allocation.
++        // A declined hint keeps the ordinary mapping; contents are unchanged.
++        if(bytes>=2*1024*1024){
++            const long queried_page=::sysconf(_SC_PAGESIZE);
++            if(queried_page>0){const auto page=std::uintptr_t(queried_page),begin=reinterpret_cast<std::uintptr_t>(p),end=begin+bytes;
++                const auto first=((begin+page-1)/page)*page,last=(end/page)*page;
++                if(last>first)(void)::madvise(reinterpret_cast<void*>(first),last-first,MADV_HUGEPAGE);
++            }
++        }
++#endif
++        return p;
+     }
+     void release(void* p,std::size_t bytes) noexcept {
+         if(!p)return;

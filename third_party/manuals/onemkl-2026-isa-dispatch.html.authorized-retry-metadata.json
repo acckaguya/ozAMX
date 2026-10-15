@@ -1,0 +1,10 @@
+{
+  "requested_url": "https://www.intel.com/content/www/us/en/docs/onemkl/developer-guide-linux/2026-0/instruction-set-specific-dispatch-on-intel-archs.html",
+  "retrieved_utc": "2026-10-14T13:04:37.327384+00:00",
+  "attempt": "authorized_network_retry",
+  "status": "downloaded",
+  "curl_exit_code": 0,
+  "file": "third_party/manuals/onemkl-2026-isa-dispatch.html",
+  "bytes": 367030,
+  "sha256": "a0a17f3a7adccbdf4d194aba7fb0c25110e7229a1b10a695b3d66bc46005f040"
+}

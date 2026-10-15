@@ -1,0 +1,3 @@
+command: /usr/bin/python3 /home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_src/tools/run_binary_gate_v4.py --candidate-library /home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_15_b2_m256_n256_p64_h1_l1__mode3_b2_m256_n256_p64_h1_l1/libozamx.a --output /home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/gate_b2_m256_n256.json --lock-held
+
+{"status": "pass", "completed_cases": 20, "output": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/gate_b2_m256_n256.json"}

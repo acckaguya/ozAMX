@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "verified_utc": "2026-10-14",
+  "archives": {
+    "v2": {
+      "manifest_entries": 33,
+      "manifest_sha256": "0811f7ba2169b4ca37de5a3ac670cd54435572cd7d30cf909ae7a6d992c6463e",
+      "verified": true
+    },
+    "v2_release": {
+      "manifest_entries": 69,
+      "manifest_sha256": "8b68d0d095b38f117cb10083ae5272847c533821d037fbdba7c091b06e6d950b",
+      "verified": true
+    },
+    "v3_release": {
+      "manifest_entries": 309,
+      "manifest_sha256": "bba4aca69c821426d61d529175f7af0738d425446f7ca38c576042b4ce697fcd",
+      "verified": true
+    }
+  },
+  "v3_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "source_and_binary_consistency": "Current V3 core/header/CMake/benchmark/results/model files equal the frozen archive. Independent archived-source Release build and 3/3 CTest passed; its library is byte-identical to the production and archived binary.",
+  "validation_artifacts": [
+    "binary_gate.json",
+    "noomp_gate.json",
+    "extended47_cache_gate.json",
+    "production_native_audit.json"
+  ],
+  "mkl": {
+    "formal_configurations": 20,
+    "formal_reps_per_configuration": 5,
+    "matched_configurations": 75,
+    "matched_reps_per_configuration": 7,
+    "timing_scope": "ozAMX full API; oneMKL GEMM only; both raw data preserved"
+  },
+  "archive_boundary": "V3 source is independently buildable. Historical V2 and mkl_production links refer to separate existing workspace archives. Vendor oneMKL dependencies and candidate executables are excluded; source snapshots, raw data, hashes and one V3 production static library are retained."
+}

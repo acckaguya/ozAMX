@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "description": "Sixteen-run first pass: baseline, one-factor values across every knob, and three targeted interactions. Update only after production tuning macros are frozen.",
+  "variants": [
+    {"name": "default", "definitions": {}},
+    {"name": "cache32", "definitions": {"OZAMX_CACHE_BLOCK": 32}},
+    {"name": "cache64", "definitions": {"OZAMX_CACHE_BLOCK": 64}},
+    {"name": "cache256", "definitions": {"OZAMX_CACHE_BLOCK": 256}},
+    {"name": "prep16k", "definitions": {"OZAMX_PREP_GRAIN": 16384}},
+    {"name": "prep64k", "definitions": {"OZAMX_PREP_GRAIN": 65536}},
+    {"name": "minwork1", "definitions": {"OZAMX_MIN_COMPUTE_WORK": 1}},
+    {"name": "minwork4", "definitions": {"OZAMX_MIN_COMPUTE_WORK": 4}},
+    {"name": "minwork16", "definitions": {"OZAMX_MIN_COMPUTE_WORK": 16}},
+    {"name": "tileload_t1", "definitions": {"OZAMX_TILELOAD_HINT": 1}},
+    {"name": "load_schedule_grouped", "definitions": {"OZAMX_LOAD_SCHEDULE": 1}},
+    {"name": "loop_order_microtile", "definitions": {"OZAMX_LOOP_ORDER": 1}},
+    {"name": "mn_order_column", "definitions": {"OZAMX_MN_ORDER": 1}},
+    {"name": "combo_t1_grouped", "definitions": {"OZAMX_TILELOAD_HINT": 1, "OZAMX_LOAD_SCHEDULE": 1}},
+    {"name": "combo_cache64_prep16k", "definitions": {"OZAMX_CACHE_BLOCK": 64, "OZAMX_PREP_GRAIN": 16384}},
+    {"name": "combo_loop_mn_alternate", "definitions": {"OZAMX_LOOP_ORDER": 1, "OZAMX_MN_ORDER": 1}}
+  ]
+}

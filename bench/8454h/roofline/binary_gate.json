@@ -1,0 +1,768 @@
+{
+  "status": "pass",
+  "started_utc": "2026-10-13T18:27:30Z",
+  "comparison": "Full C storage including each row's LD pad and 64-byte trailing guard is streamed from each process and compared byte-for-byte in 64 KiB chunks; no full outputs are written to files.",
+  "execution": {
+    "frozen_then_adaptive_per_case": true,
+    "affinity": "taskset -c 0-63",
+    "threads": 64,
+    "places": "cores",
+    "proc_bind": "close",
+    "dynamic": false,
+    "large_compute_overlap": false
+  },
+  "header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "driver_sha256": "6ee7c7b2ed423c52e2481756b51d1073229b55b49bdcbdabda965d0fc6f342df",
+  "frozen_library_sha256": "ddfe885c2ba58089accd4e747aecb53a18422554e06fc409965e2f47b7d92251",
+  "adaptive_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "build_commands": [
+    {
+      "name": "frozen",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/versions/v2/include",
+        "/home/caiweili/ozAMX/tools/roofline_binary_gate.cpp",
+        "/tmp/ozamx-production-final/libozamx.a",
+        "-o",
+        "/tmp/ozamx-roofline-binary-gate/frozen"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/build_frozen.log"
+    },
+    {
+      "name": "adaptive",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/versions/v2/include",
+        "/home/caiweili/ozAMX/tools/roofline_binary_gate.cpp",
+        "/tmp/ozamx-roof-adaptive/build/libozamx.a",
+        "-o",
+        "/tmp/ozamx-roofline-binary-gate/adaptive"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/build_adaptive.log"
+    }
+  ],
+  "cases": [
+    {
+      "case": "f32_4096_cube",
+      "id": 1,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "lda_ldb_ldc": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16781328,
+      "expected_bytes": 67125312,
+      "bytes_compared": 67125312,
+      "full_output_sha256": {
+        "frozen": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4",
+        "adaptive": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_01.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_01.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p6",
+      "id": 2,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "lda_ldb_ldc": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "adaptive": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_02.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_02.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p10",
+      "id": 3,
+      "precision": "fp64",
+      "budget": 10,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "lda_ldb_ldc": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "adaptive": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_03.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_03.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p15",
+      "id": 4,
+      "precision": "fp64",
+      "budget": 15,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "lda_ldb_ldc": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "adaptive": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_04.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_04.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p21",
+      "id": 5,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "lda_ldb_ldc": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "adaptive": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_05.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_05.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f32_4096x4097x257",
+      "id": 6,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4097,
+        257
+      ],
+      "lda_ldb_ldc": [
+        258,
+        4098,
+        4098
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16785424,
+      "expected_bytes": 67141696,
+      "bytes_compared": 67141696,
+      "full_output_sha256": {
+        "frozen": "5f34a720099265f1e1574f78784913938675ed79e63e6d15f8f320bfa814c772",
+        "adaptive": "5f34a720099265f1e1574f78784913938675ed79e63e6d15f8f320bfa814c772"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67141696,
+          "slots": 16785424,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67141696,
+          "slots": 16785424,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_06.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_06.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4096x4097x257_p21",
+      "id": 7,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4097,
+        257
+      ],
+      "lda_ldb_ldc": [
+        258,
+        4098,
+        4098
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16785416,
+      "expected_bytes": 134283328,
+      "bytes_compared": 134283328,
+      "full_output_sha256": {
+        "frozen": "e8cd425439ff83356631e2fe7e7eff220b8c296078ddc1ebe92977dd62e7614d",
+        "adaptive": "e8cd425439ff83356631e2fe7e7eff220b8c296078ddc1ebe92977dd62e7614d"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283328,
+          "slots": 16785416,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283328,
+          "slots": 16785416,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_07.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_07.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_4097x4096x4097_p21",
+      "id": 8,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4097,
+        4096,
+        4097
+      ],
+      "lda_ldb_ldc": [
+        4098,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_slot_count_including_padding_and_tail": 16785417,
+      "expected_bytes": 134283336,
+      "bytes_compared": 134283336,
+      "full_output_sha256": {
+        "frozen": "2fb78a8048b9bf0a5937ceda199915a604f1386ac72f437eeb3ccf3037950be5",
+        "adaptive": "2fb78a8048b9bf0a5937ceda199915a604f1386ac72f437eeb3ccf3037950be5"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283336,
+          "slots": 16785417,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283336,
+          "slots": 16785417,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_08.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_08.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_wide_overflow_k512",
+      "id": 9,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        512
+      ],
+      "lda_ldb_ldc": [
+        513,
+        4097,
+        4097
+      ],
+      "mode": "overflow_transaction",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de",
+        "adaptive": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": true
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": true
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_09.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_09.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_wide_cancellation_k512",
+      "id": 10,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        512
+      ],
+      "lda_ldb_ldc": [
+        513,
+        4097,
+        4097
+      ],
+      "mode": "cancellation_transaction",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de",
+        "adaptive": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": true
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": true
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_10.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_10.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_alias_a_equals_c_p6",
+      "id": 11,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        256
+      ],
+      "lda_ldb_ldc": [
+        257,
+        4097,
+        4097
+      ],
+      "mode": "alias_a_equals_c",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "13d597540acab4b06ad2ff11a87a7852b835f4b56debc98954e1dd8311658f44",
+        "adaptive": "13d597540acab4b06ad2ff11a87a7852b835f4b56debc98954e1dd8311658f44"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_11.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_11.stderr.log"
+      },
+      "pass": true
+    },
+    {
+      "case": "f64_alias_b_equals_c_p6",
+      "id": 12,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        256
+      ],
+      "lda_ldb_ldc": [
+        257,
+        4097,
+        4097
+      ],
+      "mode": "alias_b_equals_c",
+      "expected_slot_count_including_padding_and_tail": 16781320,
+      "expected_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "frozen": "3f365cc8fc66cf72a1efb78ea2709b9af2b51b7c03499ad58ef75e1b17e2f803",
+        "adaptive": "3f365cc8fc66cf72a1efb78ea2709b9af2b51b7c03499ad58ef75e1b17e2f803"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "headers": [
+        {
+          "binary": "frozen",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        },
+        {
+          "binary": "adaptive",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "unchanged": false
+        }
+      ],
+      "child_exit_codes": {
+        "frozen": 0,
+        "adaptive": 0
+      },
+      "extra_output_bytes": {
+        "frozen": false,
+        "adaptive": false
+      },
+      "stderr_logs": {
+        "frozen": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/frozen_12.stderr.log",
+        "adaptive": "/home/caiweili/ozAMX/bench/8454h/roofline/binary_gate_logs/adaptive_12.stderr.log"
+      },
+      "pass": true
+    }
+  ],
+  "failure": null,
+  "completed_utc": "2026-10-13T18:27:44Z"
+}

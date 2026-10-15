@@ -1,0 +1,1256 @@
+{
+  "status": "pass",
+  "started_utc": "2026-10-14T10:19:11Z",
+  "reference": "immutable V3 release artifact; full C allocation streamed and compared byte-for-byte",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "candidate_library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/builds/mode0_a4096_b4096_ra0_rb0/libozamx.a",
+  "candidate_library_sha256": "dd7a51d1bedd491969241214fc8d8b8cc36549a98778f3eafe433ed21988e07d",
+  "driver_sha256": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad",
+  "header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "runner_sha256": "65c27a75da7522414602c6bd0b51b4d4ef32efdcf4a6a5922ec3f7f4cf8a5d7e",
+  "build_commands": [
+    {
+      "binary": "v3",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/versions/v3_release/repo/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/packed_layout_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/gates/candidate_03_a4096_b4096_ra0_rb0_bin/v3"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/gates/candidate_03_a4096_b4096_ra0_rb0_logs/build_v3.log"
+    },
+    {
+      "binary": "candidate",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/roofline_v4/packed_layout_src/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/packed_layout_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/builds/mode0_a4096_b4096_ra0_rb0/libozamx.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/gates/candidate_03_a4096_b4096_ra0_rb0_bin/candidate"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/packed_rotation_screen_20261014T101506Z/gates/candidate_03_a4096_b4096_ra0_rb0_logs/build_candidate.log"
+    }
+  ],
+  "case_order": "V3 then candidate, isolated processes",
+  "cases": [
+    {
+      "case": "f32_4096_cube",
+      "id": 1,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 67125312,
+      "bytes_compared": 67125312,
+      "full_output_sha256": {
+        "v3": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4",
+        "candidate": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p6",
+      "id": 2,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "candidate": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p10",
+      "id": 3,
+      "precision": "fp64",
+      "budget": 10,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "candidate": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p15",
+      "id": 4,
+      "precision": "fp64",
+      "budget": 15,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "candidate": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p21",
+      "id": 5,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "candidate": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_4096x4097x257",
+      "id": 6,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4097,
+        257
+      ],
+      "leading_dimensions": [
+        258,
+        4098,
+        4098
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 67141696,
+      "bytes_compared": 67141696,
+      "full_output_sha256": {
+        "v3": "5f34a720099265f1e1574f78784913938675ed79e63e6d15f8f320bfa814c772",
+        "candidate": "5f34a720099265f1e1574f78784913938675ed79e63e6d15f8f320bfa814c772"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67141696,
+          "slots": 16785424,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67141696,
+          "slots": 16785424,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096x4097x257_p21",
+      "id": 7,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4097,
+        257
+      ],
+      "leading_dimensions": [
+        258,
+        4098,
+        4098
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134283328,
+      "bytes_compared": 134283328,
+      "full_output_sha256": {
+        "v3": "e8cd425439ff83356631e2fe7e7eff220b8c296078ddc1ebe92977dd62e7614d",
+        "candidate": "e8cd425439ff83356631e2fe7e7eff220b8c296078ddc1ebe92977dd62e7614d"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283328,
+          "slots": 16785416,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283328,
+          "slots": 16785416,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4097x4096x4097_p21",
+      "id": 8,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4097,
+        4096,
+        4097
+      ],
+      "leading_dimensions": [
+        4098,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134283336,
+      "bytes_compared": 134283336,
+      "full_output_sha256": {
+        "v3": "2fb78a8048b9bf0a5937ceda199915a604f1386ac72f437eeb3ccf3037950be5",
+        "candidate": "2fb78a8048b9bf0a5937ceda199915a604f1386ac72f437eeb3ccf3037950be5"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283336,
+          "slots": 16785417,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134283336,
+          "slots": 16785417,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_wide_overflow_k512",
+      "id": 9,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        512
+      ],
+      "leading_dimensions": [
+        513,
+        4097,
+        4097
+      ],
+      "mode": "overflow_transaction",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de",
+        "candidate": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f64_wide_overflow_k512 ozamx::Error: FP64 inputs must be finite and lie within the normal BF16 exponent range\n",
+        "candidate": "case=f64_wide_overflow_k512 ozamx::Error: FP64 inputs must be finite and lie within the normal BF16 exponent range\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_wide_cancellation_k512",
+      "id": 10,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        512
+      ],
+      "leading_dimensions": [
+        513,
+        4097,
+        4097
+      ],
+      "mode": "cancellation_transaction",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de",
+        "candidate": "e3cf880e35bba7810e5efbcefc86e14dbe77fc48bbc4bb35c88901a7ad3917de"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f64_wide_cancellation_k512 ozamx::Error: FP64 inputs must be finite and lie within the normal BF16 exponent range\n",
+        "candidate": "case=f64_wide_cancellation_k512 ozamx::Error: FP64 inputs must be finite and lie within the normal BF16 exponent range\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_alias_a_equals_c_p6",
+      "id": 11,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        256
+      ],
+      "leading_dimensions": [
+        257,
+        4097,
+        4097
+      ],
+      "mode": "alias_a_equals_c",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "13d597540acab4b06ad2ff11a87a7852b835f4b56debc98954e1dd8311658f44",
+        "candidate": "13d597540acab4b06ad2ff11a87a7852b835f4b56debc98954e1dd8311658f44"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_alias_b_equals_c_p6",
+      "id": 12,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        256
+      ],
+      "leading_dimensions": [
+        257,
+        4097,
+        4097
+      ],
+      "mode": "alias_b_equals_c",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "3f365cc8fc66cf72a1efb78ea2709b9af2b51b7c03499ad58ef75e1b17e2f803",
+        "candidate": "3f365cc8fc66cf72a1efb78ea2709b9af2b51b7c03499ad58ef75e1b17e2f803"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_late_overflow_k4096",
+      "id": 13,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "overflow_transaction",
+      "expected_full_c_allocation_bytes": 96,
+      "bytes_compared": 96,
+      "full_output_sha256": {
+        "v3": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023",
+        "candidate": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f32_late_overflow_k4096 ozamx::Error: AMX component product or reconstructed output became non-finite\n",
+        "candidate": "case=f32_late_overflow_k4096 ozamx::Error: AMX component product or reconstructed output became non-finite\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_late_cancellation_k4096",
+      "id": 14,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "cancellation_transaction",
+      "expected_full_c_allocation_bytes": 96,
+      "bytes_compared": 96,
+      "full_output_sha256": {
+        "v3": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023",
+        "candidate": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f32_late_cancellation_k4096 ozamx::Error: AMX component product or reconstructed output became non-finite\n",
+        "candidate": "case=f32_late_cancellation_k4096 ozamx::Error: AMX component product or reconstructed output became non-finite\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_late_nan_input_k4096",
+      "id": 15,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "nan_input_transaction",
+      "expected_full_c_allocation_bytes": 96,
+      "bytes_compared": 96,
+      "full_output_sha256": {
+        "v3": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023",
+        "candidate": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f32_late_nan_input_k4096 ozamx::Error: FP32 input/residual is non-finite or outside the supported normal range\n",
+        "candidate": "case=f32_late_nan_input_k4096 ozamx::Error: FP32 input/residual is non-finite or outside the supported normal range\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_late_inf_input_k4096",
+      "id": 16,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "inf_input_transaction",
+      "expected_full_c_allocation_bytes": 96,
+      "bytes_compared": 96,
+      "full_output_sha256": {
+        "v3": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023",
+        "candidate": "0e3ca26683769ff9c1940d36f1301f82f66799cdb699b0195526faaf3224f023"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 96,
+          "slots": 24,
+          "guard_failures": 0,
+          "caller_c_unchanged": true,
+          "exception_kind": "ozamx::Error"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "case=f32_late_inf_input_k4096 ozamx::Error: FP32 input/residual is non-finite or outside the supported normal range\n",
+        "candidate": "case=f32_late_inf_input_k4096 ozamx::Error: FP32 input/residual is non-finite or outside the supported normal range\n"
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_alias_a_equals_c_k4096",
+      "id": 17,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "alias_a_equals_c",
+      "expected_full_c_allocation_bytes": 32840,
+      "bytes_compared": 32840,
+      "full_output_sha256": {
+        "v3": "ef8db833e3834756922bc1667fe0dd9ccaa83a7708fbe3626acef5e86cdb0a99",
+        "candidate": "ef8db833e3834756922bc1667fe0dd9ccaa83a7708fbe3626acef5e86cdb0a99"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 32840,
+          "slots": 8210,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 32840,
+          "slots": 8210,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_alias_b_equals_c_k4096",
+      "id": 18,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        2,
+        3,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4,
+        4
+      ],
+      "mode": "alias_b_equals_c",
+      "expected_full_c_allocation_bytes": 65600,
+      "bytes_compared": 65600,
+      "full_output_sha256": {
+        "v3": "08cf3a55e765c58b8d8ea357f151141bc5a3d9dd3be964175c3b41e950b6aa72",
+        "candidate": "08cf3a55e765c58b8d8ea357f151141bc5a3d9dd3be964175c3b41e950b6aa72"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 65600,
+          "slots": 16400,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 65600,
+          "slots": 16400,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f32_wide_geometry_k1",
+      "id": 19,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4096,
+        1
+      ],
+      "leading_dimensions": [
+        2,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 67125312,
+      "bytes_compared": 67125312,
+      "full_output_sha256": {
+        "v3": "81592c588bdab66ce0ad9247cb20b39482826eaa4de4872c81fdc0f35fe8a2e3",
+        "candidate": "81592c588bdab66ce0ad9247cb20b39482826eaa4de4872c81fdc0f35fe8a2e3"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_wide_geometry_k1_p21",
+      "id": 20,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4096,
+        1
+      ],
+      "leading_dimensions": [
+        2,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "2eb15e1498a0b6df65621c5c43302d6a9a526616a1324e1f8f97f532b75b6c6c",
+        "candidate": "2eb15e1498a0b6df65621c5c43302d6a9a526616a1324e1f8f97f532b75b6c6c"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    }
+  ],
+  "failure": null,
+  "completed_utc": "2026-10-14T10:19:27Z"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "ozamx-v4-roofline-round-completion-1",
+  "scope": "search execution, numeric validation, current main acceptance, reports; archive construction has its own verification",
+  "overall_status": "complete",
+  "completed_utc": "2026-10-14T13:17:03.282708+00:00",
+  "current_source_version": "0.4.0",
+  "timed_parameter_configurations": 65,
+  "v3_paper_configurations_complete": 66,
+  "frozen_v3_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "adopted_main_library_sha256": "7adcc98996d5a88aa21f74038a42710a28496cf601f2127c016b8e8687801b68",
+  "main_source_files": {
+    "CMakeLists.txt": "e692c6066ef66229c6ebc1e857d94db704770598fa602e308bfa29c2602356de",
+    "src/gemm.cpp": "498fe70a1c7d343c67b19b495409fe0bbfb4440746fca4d03e7a02ce282c3eba",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+    "src/tuning.hpp": "2dc89e5f8a0986da508eca9931e94130be96a0b098c9f0ab8d35a6217ecb4798",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "bench/benchmark.cpp": "1ff045bd32a5f77686ce27e5d8bb1406b5887b43ed1158c25653dcf13c80a5c6"
+  },
+  "adopted_dispatch": {
+    "precision": "FP32",
+    "cache_block": 128,
+    "min_mn_at_least": 4096,
+    "max_mn_at_most": 8192,
+    "k_min": 4096,
+    "k_max": 8192,
+    "macroblock": [
+      256,
+      256
+    ]
+  },
+  "verification": {
+    "openmp_ctest": "3/3 pass",
+    "openmp_full_gate": "23/23 pass",
+    "no_openmp_ctest": "3/3 pass",
+    "no_openmp_eligible_full_output": "pass",
+    "current_main_matched_configurations": 8,
+    "oneMKL_supplement_configurations": 10
+  },
+  "final_fp32_api_mean_time_ratios": {
+    "4096": 0.95902,
+    "8192": 0.92416
+  },
+  "hardware_limit_achieved": false,
+  "report": "docs/8454H_V4_ROUND_RESULTS.md",
+  "report_sha256": "a2b5b3b1f64b3501bff1ae936679478c2d7c85d99a4d76aac8674ada98622aed",
+  "figure_unit_correction_metadata_sha256": "09ab67166afc140b01ae5829833029ecc717f630fa6121bb6c00204ebf5d3563",
+  "archive_target": "bench/8454h/versions/v4_roofline_search_round1",
+  "archive_status": "ready_to_freeze"
+}

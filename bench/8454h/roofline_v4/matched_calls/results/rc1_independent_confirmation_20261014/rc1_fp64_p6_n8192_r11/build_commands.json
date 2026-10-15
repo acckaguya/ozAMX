@@ -1,0 +1,38 @@
+{
+  "commands": [
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-march=sapphirerapids",
+      "-mamx-tile",
+      "-mamx-bf16",
+      "-ffp-contract=off",
+      "-fopenmp",
+      "-pthread",
+      "-I",
+      "/home/caiweili/ozAMX/include",
+      "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+      "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+      "-o",
+      "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/rc1_independent_confirmation_20261014/rc1_fp64_p6_n8192_r11/child_control"
+    ],
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-march=sapphirerapids",
+      "-mamx-tile",
+      "-mamx-bf16",
+      "-ffp-contract=off",
+      "-fopenmp",
+      "-pthread",
+      "-I",
+      "/home/caiweili/ozAMX/include",
+      "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+      "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_20261014T122531Z/build/libozamx.a",
+      "-o",
+      "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/rc1_independent_confirmation_20261014/rc1_fp64_p6_n8192_r11/child_candidate"
+    ]
+  ]
+}

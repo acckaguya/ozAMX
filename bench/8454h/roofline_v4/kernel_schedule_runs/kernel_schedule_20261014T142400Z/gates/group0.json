@@ -1,0 +1,236 @@
+{
+  "status": "pass",
+  "started_utc": "2026-10-14T12:48:14Z",
+  "reference": "immutable V3 release artifact; full C allocation streamed and compared byte-for-byte",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "candidate_library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/build_group0/libozamx.a",
+  "candidate_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "driver_sha256": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad",
+  "header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "runner_sha256": "502001b001a759a9e01eb992c8da10030b14e8112c44da660a224628bad56be3",
+  "build_commands": [
+    {
+      "binary": "v3",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release/v3_release/repo/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release/v3_release/artifacts/libozamx_v3.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/gates/group0_bin/v3"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/gates/group0_logs/build_v3.log"
+    },
+    {
+      "binary": "candidate",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_src/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/build_group0/libozamx.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/gates/group0_bin/candidate"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/gates/group0_logs/build_candidate.log"
+    }
+  ],
+  "case_order": "V3 then candidate, isolated processes",
+  "cases": [
+    {
+      "case": "f32_4096_cube",
+      "id": 1,
+      "precision": "fp32",
+      "budget": null,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 67125312,
+      "bytes_compared": 67125312,
+      "full_output_sha256": {
+        "v3": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4",
+        "candidate": "c8d69cc762835c62962321f76f14fc59f18036ab168b8723471ff26bd37849b4"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 67125312,
+          "slots": 16781328,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_4096_cube_p6",
+      "id": 2,
+      "precision": "fp64",
+      "budget": 6,
+      "shape_mnk": [
+        4096,
+        4096,
+        4096
+      ],
+      "leading_dimensions": [
+        4097,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848",
+        "candidate": "d20040927b1ce51f68e848204c24c0a2f3485d8b212ce5f9e75b09e044388848"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    },
+    {
+      "case": "f64_wide_geometry_k1_p21",
+      "id": 20,
+      "precision": "fp64",
+      "budget": 21,
+      "shape_mnk": [
+        4096,
+        4096,
+        1
+      ],
+      "leading_dimensions": [
+        2,
+        4097,
+        4097
+      ],
+      "mode": "normal",
+      "expected_full_c_allocation_bytes": 134250560,
+      "bytes_compared": 134250560,
+      "full_output_sha256": {
+        "v3": "2eb15e1498a0b6df65621c5c43302d6a9a526616a1324e1f8f97f532b75b6c6c",
+        "candidate": "2eb15e1498a0b6df65621c5c43302d6a9a526616a1324e1f8f97f532b75b6c6c"
+      },
+      "byte_mismatches": 0,
+      "first_mismatch_offset": null,
+      "binary_semantics": [
+        {
+          "binary": "v3",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        },
+        {
+          "binary": "candidate",
+          "valid": true,
+          "status": 0,
+          "payload_bytes": 134250560,
+          "slots": 16781320,
+          "guard_failures": 0,
+          "caller_c_unchanged": false,
+          "exception_kind": "none"
+        }
+      ],
+      "exception_stderr": {
+        "v3": "",
+        "candidate": ""
+      },
+      "child_exit_codes": {
+        "v3": 0,
+        "candidate": 0
+      },
+      "extra_output_bytes": [
+        false,
+        false
+      ],
+      "pass": true
+    }
+  ],
+  "failure": null,
+  "completed_utc": "2026-10-14T12:48:17Z"
+}

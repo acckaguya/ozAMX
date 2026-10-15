@@ -1,5 +1,13 @@
 # Intel AMX/BF16 primary-source index
 
+## Current Xeon Platinum 8454H collection — 2026-10-13
+
+The current architecture/SIMD/AMX collection is indexed in [README.md](README.md), with a combined study in [8454H_STUDY.md](8454H_STUDY.md). It includes unmodified Intel SDM v093 Volumes 1/2B/2C, Optimization Manual Vol.1 v050, an offline Intrinsics Guide, SKU/NUMA/tuning documentation, and pinned Intel/oneDNN code references. Provenance and SHA-256 are recorded in [manuals/manifest.json](manuals/manifest.json), [xeon-8454h/manifest.json](xeon-8454h/manifest.json), and [examples/manifest.json](examples/manifest.json).
+
+Linux XSTATE documentation is collected as the operating-system authority: AMX permission is process-wide, while register-state buffers are managed per task. The current machine snapshot is separate from the old Gold6430 benchmark environment. The source list below is retained as the earlier 2026-10-12 reference index; its kernel/library observations are historical, and older microarchitecture tuning details must not be projected onto the 8454H.
+
+## Earlier source index — 2026-10-12
+
 Retrieved/checked 2026-10-12. These are Intel-hosted official sources. The source summaries below are brief working notes for this reproduction; consult the linked manuals for normative details.
 
 1. **Intel Architecture Instruction Set Extensions Programming Reference**, Intel PDF: <https://cdrdv2-public.intel.com/843860/architecture-instruction-set-extensions-programming-reference-dec-24.pdf>

@@ -1,0 +1,54 @@
+{
+  "schema": "ozamx-page-layout-source-identity-1",
+  "recorded_utc": "2026-10-14T12:18:22Z",
+  "base_origin_sidecar": "SOURCE_ORIGIN.json",
+  "base_origin_sha256": "9d0e98f38d6e1f827a6b674dc7d320ad2fd331a242fe37f7a3c7e39ead08bd91",
+  "base_note": "SOURCE_ORIGIN describes diagnostic selective-copy provenance, not the page-layout experiment. Current page-specific hashes are separately recorded below and again in each run dataset/build identity.",
+  "files": {
+    "CMakeLists.txt": {
+      "sha256": "186f95d4fb8d9ee1be8bd87df02b0df61cb5387513add13fd7e0e5eb25822bca",
+      "diagnostic_base_sha256": "20fa073bb65b6de213b1dee7b8666b296645bf5da2b2c0042d85f09a99597574"
+    },
+    "bench/benchmark.cpp": {
+      "sha256": "97b597f1afd80fc7c2fea2e33adff64ab9018df8a7d42ba5824ce1c73b228d98",
+      "diagnostic_base_sha256": "59a757b819bdc14385f4d9965dbeddb0675b5e7fa0290f2b879df6fdcbae47c0"
+    },
+    "src/gemm.cpp": {
+      "sha256": "1da049687a7517f00a934d632df70efdf74a81af7bea0a182667ece782b4214b",
+      "diagnostic_base_sha256": "0d025d9389bbf522701adb834de0675aee8feab784b6d2c84e643b323aa77667"
+    },
+    "src/preprocess.hpp": {
+      "sha256": "69bd097e8130a0f60014bd11b668dc818fc169b54e3126a79be9a71252ee80bf",
+      "diagnostic_base_sha256": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31"
+    },
+    "src/kernels.S": {
+      "sha256": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+      "diagnostic_base_sha256": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68"
+    },
+    "tests/page_layout_probe.cpp": {
+      "sha256": "bb3cef0dc28975893006ff688be17a2bef608ac435e2ac47d862d44cde059067",
+      "diagnostic_base_sha256": null
+    },
+    "tools/run_page_layout.py": {
+      "sha256": "9fe14d35ca6cd722827c08bc8d0214e15d6e28e5669c2089b3dd07241dc772a1",
+      "diagnostic_base_sha256": null
+    }
+  },
+  "contract": {
+    "large_threshold_bytes": 2097152,
+    "small_alignment_bytes": 64,
+    "large_alignment_variants_bytes": [
+      4096,
+      2097152
+    ],
+    "madv_hugepage_variants": [
+      0,
+      1
+    ],
+    "madvise": "pointer-aligned allocation base; floor(logical payload bytes/4096)*4096 only",
+    "allocation_payload_roundup": false,
+    "pool_key_and_cache_limit": "logical payload bytes unchanged",
+    "free": "std::free unchanged",
+    "assembly": "src/kernels.S must match diagnostic base SHA exactly"
+  }
+}

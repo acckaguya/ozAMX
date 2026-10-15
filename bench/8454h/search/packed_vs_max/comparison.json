@@ -1,0 +1,228 @@
+{
+  "configurations": [
+    {
+      "budget": 6,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "14444.976434674812"
+        ],
+        "compute_median_s": 0.0014193515,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 1009.0,
+        "pack_median_s": 1.22e-07,
+        "phase_total_median_s": 0.0027862069999999997,
+        "reps": 14,
+        "split_median_s": 0.0013435565,
+        "wall_median_s": 0.002788309
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": -2.864043543299799,
+      "packed_residual": {
+        "checksum_values": [
+          "14444.976434674812"
+        ],
+        "compute_median_s": 0.001422894,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 1009.0,
+        "pack_median_s": 1.17e-07,
+        "phase_total_median_s": 0.00286757,
+        "reps": 14,
+        "split_median_s": 0.0014441385,
+        "wall_median_s": 0.0028705220000000004
+      },
+      "precision": "fp64",
+      "size": 1024
+    },
+    {
+      "budget": 21,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "14444.976238948602"
+        ],
+        "compute_median_s": 0.002199069,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 1006.0,
+        "pack_median_s": 9.4e-08,
+        "phase_total_median_s": 0.0038140674999999997,
+        "reps": 14,
+        "split_median_s": 0.001612617,
+        "wall_median_s": 0.0038169479999999997
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": -16.26965137142944,
+      "packed_residual": {
+        "checksum_values": [
+          "14444.976238948602"
+        ],
+        "compute_median_s": 0.0028104865,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 1006.0,
+        "pack_median_s": 1.27e-07,
+        "phase_total_median_s": 0.004556464499999999,
+        "reps": 14,
+        "split_median_s": 0.0017524625,
+        "wall_median_s": 0.0045586195
+      },
+      "precision": "fp64",
+      "size": 1024
+    },
+    {
+      "budget": 6,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "-3206.554205637658"
+        ],
+        "compute_median_s": 0.0253114575,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 0.0,
+        "pack_median_s": 1.705e-07,
+        "phase_total_median_s": 0.0355052975,
+        "reps": 14,
+        "split_median_s": 0.010006195499999999,
+        "wall_median_s": 0.0355126325
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": -2.939029388722325,
+      "packed_residual": {
+        "checksum_values": [
+          "-3206.554205637658"
+        ],
+        "compute_median_s": 0.0255544985,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 0.0,
+        "pack_median_s": 2.215e-07,
+        "phase_total_median_s": 0.036581491,
+        "reps": 14,
+        "split_median_s": 0.010574106,
+        "wall_median_s": 0.0365879635
+      },
+      "precision": "fp64",
+      "size": 4096
+    },
+    {
+      "budget": 21,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "-3206.5634707107279"
+        ],
+        "compute_median_s": 0.09016398049999999,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 145.5,
+        "pack_median_s": 2.36e-07,
+        "phase_total_median_s": 0.1017949245,
+        "reps": 14,
+        "split_median_s": 0.011148336,
+        "wall_median_s": 0.1018078235
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": 0.31564928319876007,
+      "packed_residual": {
+        "checksum_values": [
+          "-3206.5634707107279"
+        ],
+        "compute_median_s": 0.08975298749999999,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 0.0,
+        "pack_median_s": 2.385e-07,
+        "phase_total_median_s": 0.101478715,
+        "reps": 14,
+        "split_median_s": 0.011627582000000001,
+        "wall_median_s": 0.101487479
+      },
+      "precision": "fp64",
+      "size": 4096
+    },
+    {
+      "budget": 6,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "354799.90504274797"
+        ],
+        "compute_median_s": 0.24773999549999998,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 131073.0,
+        "pack_median_s": 2.6299999999999996e-07,
+        "phase_total_median_s": 0.32022224099999996,
+        "reps": 14,
+        "split_median_s": 0.0731391525,
+        "wall_median_s": 0.3761458155
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": -4.422059242311127,
+      "packed_residual": {
+        "checksum_values": [
+          "354799.90504274797"
+        ],
+        "compute_median_s": 0.24835901999999999,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 131073.0,
+        "pack_median_s": 2.91e-07,
+        "phase_total_median_s": 0.33626696899999997,
+        "reps": 14,
+        "split_median_s": 0.08116187650000001,
+        "wall_median_s": 0.3935487755
+      },
+      "precision": "fp64",
+      "size": 8192
+    },
+    {
+      "budget": 21,
+      "checksums_equal": true,
+      "fused_max": {
+        "checksum_values": [
+          "354799.85311002767"
+        ],
+        "compute_median_s": 0.7040824889999999,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 271938.5,
+        "pack_median_s": 3.74e-07,
+        "phase_total_median_s": 0.8122832025,
+        "reps": 14,
+        "split_median_s": 0.104908428,
+        "wall_median_s": 0.9061713819999999
+      },
+      "fused_max_wall_delta_percent_vs_packed_residual": -3.1252881270478983,
+      "packed_residual": {
+        "checksum_values": [
+          "354799.85311002767"
+        ],
+        "compute_median_s": 0.719823263,
+        "major_fault_median": 0.0,
+        "minor_fault_median": 295067.0,
+        "pack_median_s": 3.93e-07,
+        "phase_total_median_s": 0.8378875610000001,
+        "reps": 14,
+        "split_median_s": 0.111351004,
+        "wall_median_s": 0.935405499
+      },
+      "precision": "fp64",
+      "size": 8192
+    }
+  ],
+  "files": {
+    "pass0_packed.csv": {
+      "repetitions_per_configuration": 7,
+      "sha256": "b34ec4dd9da7886c2302f781f47f0667442aacdc331940622cc847b42e33d56b"
+    },
+    "pass1_max.csv": {
+      "repetitions_per_configuration": 7,
+      "sha256": "92e7a87762473e82bc085139984b966bcbbc874108004984d25deba49c02f70f"
+    },
+    "pass2_packed.csv": {
+      "repetitions_per_configuration": 7,
+      "sha256": "d2fa816dc902c134c30deae9c2cf483b5b231f242127ac0954972b51851eabb0"
+    },
+    "pass3_max.csv": {
+      "repetitions_per_configuration": 7,
+      "sha256": "a5df5975adb59a56d9d72fc74074718612a374936fc9c6660f5e26d96b19a2b4"
+    }
+  },
+  "method": "Aggregate the two passes per candidate (14 repetitions/config), compare medians. Alternation limits monotonic drift but not general runtime variance.",
+  "ordering": [
+    "packed",
+    "fused_max",
+    "packed",
+    "fused_max"
+  ],
+  "schema": "ozamx-packed-vs-max-alternating-v1"
+}

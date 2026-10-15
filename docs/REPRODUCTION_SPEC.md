@@ -1,5 +1,7 @@
 # 复现规范：AMX 上以 BF16 component products 模拟 FP32/FP64 GEMM
 
+本文保留原论文复现的数值规范；下文实现和计时细节描述优化前版本。2026-10-13 的 8454H 优化保留产品顺序与 BK=256，更新了 SIMD 分片/打包、内存布局、调度、权限缓存和累加还原。当前实现与同机测量见 [8454H_PERFORMANCE_BASELINE.md](8454H_PERFORMANCE_BASELINE.md)。
+
 ## 来源与实验对象
 
 来源为 Cui、Liu，*BF16 Component-Product Emulation of FP32 and FP64 GEMM on Intel AMX*，arXiv:2609.04663v1，2026-09-04；本地论文 `third_party/papers/2609.04663v1.pdf`。完整研读与证据覆盖见 [PAPER_STUDY.md](PAPER_STUDY.md)。当前 PDF 无作者实现链接或 appendix。

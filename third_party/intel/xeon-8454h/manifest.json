@@ -1,0 +1,175 @@
+{
+  "manifest_version": 1,
+  "study_directory": "third_party/intel/xeon-8454h/",
+  "created_utc": "2026-10-13",
+  "retrieval_note": "Intel source copies fetched by curl with HTTP 200 and the recorded final URL. HTML saved as vendor reading copies; PDFs retained byte-for-byte. Source records distinguish family guidance from SKU-specific specification and current machine observations.",
+  "license_boundary_overview": "Intel sources remain Intel copyrighted material. The SDM notices allow unmodified copies and do not permit document derivatives; no broader open license is asserted for Intel HTML, product brief or technology guide.",
+  "machine_snapshot": {
+    "local_path": "third_party/intel/xeon-8454h/hardware-snapshot/snapshot.json",
+    "companion_text": "third_party/intel/xeon-8454h/hardware-snapshot/snapshot.txt",
+    "captured_utc": "2026-10-13T05:18:21+00:00",
+    "no_global_settings_changed": true
+  },
+  "pdf_text_extractions": {
+    "isa_reference": "/tmp/ozamx-8454h/isa-extensions.txt",
+    "fp16_guide": "/tmp/ozamx-8454h/avx512-fp16-guide.txt",
+    "product_brief": "/tmp/ozamx-8454h/product-brief.txt",
+    "shared_sdm_vol1": "/tmp/ozamx-8454h/sdm-vol1.txt",
+    "shared_sdm_vol2b": "/tmp/ozamx-8454h/sdm-vol2b.txt"
+  },
+  "sources": [
+    {
+      "kind": "official-product-specification-html",
+      "title": "Intel ARK: Xeon Platinum 8454H",
+      "original_url": "https://www.intel.com/content/www/us/en/products/sku/231738/intel-xeon-platinum-8454h-processor-82-5m-cache-2-10-ghz/specifications.html",
+      "final_url": "https://www.intel.com/content/www/us/en/products/sku/231738/intel-xeon-platinum-8454h-processor-82-5m-cache-2-10-ghz/specifications.html",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": null,
+      "vendor_updated": "Live ARK page at retrieval",
+      "local_path": "third_party/intel/xeon-8454h/source-html/ark-8454h.html",
+      "bytes": 265544,
+      "sha256": "6976aa916a1cd4eac7a7abbb1828f4b00df04eb4631ef315884e1b2ff543f237",
+      "purpose": "Exact per-SKU clocks, cache, UPI, DDR, scalability and AMX specification. Product capability only, not actual system configuration.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-product-specification-html",
+      "title": "Intel ARK: Xeon Gold 6430",
+      "original_url": "https://www.intel.com/content/www/us/en/products/sku/231737/intel-xeon-gold-6430-processor-60m-cache-2-10-ghz/specifications.html",
+      "final_url": "https://www.intel.com/content/www/us/en/products/sku/231737/intel-xeon-gold-6430-processor-60m-cache-2-10-ghz/specifications.html",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": null,
+      "vendor_updated": "Live ARK page at retrieval",
+      "local_path": "third_party/intel/xeon-8454h/source-html/ark-gold6430.html",
+      "bytes": 263750,
+      "sha256": "aa0328498182c02d3ceecfa54290adb0c289dbcf48a5cb2136b3f00af15f531c",
+      "purpose": "Model-level comparison to the older benchmark processor.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-technical-overview-html",
+      "title": "Technical Overview of 4th Gen Intel Xeon Scalable Processor Family",
+      "original_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html",
+      "final_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/fourth-generation-xeon-scalable-family-overview.html",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "Intel Developer paper ID 766082",
+      "vendor_updated": "2022-07-25",
+      "local_path": "third_party/intel/xeon-8454h/source-html/4th-gen-family-overview.html",
+      "bytes": 179330,
+      "sha256": "ade5c3b5f0d1ce90dc9df8fc432f3f8bdd2b745338d3d924a1abb7c336647b25",
+      "purpose": "Sapphire Rapids family architecture, cache, NUMA/SNC, memory and UPI context; family values must not be assigned to every SKU.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-workload-tuning-html",
+      "title": "Tuning Guide for AI on 4th Generation Intel Xeon Scalable Processors",
+      "original_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html",
+      "final_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "Intel Developer ID 767351",
+      "vendor_updated": "2023-02-01",
+      "local_path": "third_party/intel/xeon-8454h/source-html/ai-tuning-4th-gen.html",
+      "bytes": 190784,
+      "sha256": "ad401a2ca79ed056673101c3f26bf0b2cd2802c3b465d163349ef3d971e7be89",
+      "purpose": "AMX/BF16, NUMA/thread/memory population tuning; example is Xeon 8480 and AI workloads.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-workload-tuning-html",
+      "title": "Media Processing Basics Tuning Guide on 4th Gen Intel Xeon Scalable Processors",
+      "original_url": "https://www.intel.com/content/www/us/en/developer/articles/guide/media-basics-tuning-guide-4th-gen-xeon-scalable.html",
+      "final_url": "https://www.intel.com/content/www/us/en/developer/articles/guide/media-basics-tuning-guide-4th-gen-xeon-scalable.html",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "Intel Developer guide; version not exposed in saved page",
+      "vendor_updated": "Page retrieval 2026-10-13",
+      "local_path": "third_party/intel/xeon-8454h/source-html/media-tuning-4th-gen.html",
+      "bytes": 168227,
+      "sha256": "510e28207b12ef6b72cec7bb61e03fd4a1887fd03da8344c4914c32c3d74df05",
+      "purpose": "NUMA/SNC and DDR population guidance plus runtime verification; media-specific recommendations are not ozAMX results.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-generation-product-brief-pdf",
+      "title": "4th Gen Intel Xeon Scalable Processors Product Brief",
+      "original_url": "https://www.intel.com/content/dam/www/central-libraries/us/en/documents/2023-09/4th-gen-xeon-revised-product-brief.pdf",
+      "final_url": "https://www.intel.com/content/dam/www/central-libraries/us/en/documents/2023-09/4th-gen-xeon-revised-product-brief.pdf",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "2023-09 product brief",
+      "vendor_updated": null,
+      "local_path": "third_party/intel/xeon-8454h/pdfs/4th-gen-xeon-product-brief.pdf",
+      "bytes": 635468,
+      "sha256": "6210bc9050e668ab7024eb828c0dbd04bb53ccecac3e7d4f1c5446d4d47d7c37",
+      "purpose": "Generation-level context for Platinum/Gold features, DDR5, UPI and AVX-512; ARK used for exact 8454H facts.",
+      "license_boundary": "Intel copyrighted source; no open reuse license inferred."
+    },
+    {
+      "kind": "official-isa-reference-pdf",
+      "title": "Intel Architecture Instruction Set Extensions and Future Features Programming Reference",
+      "original_url": "https://cdrdv2-public.intel.com/843860/architecture-instruction-set-extensions-programming-reference-dec-24.pdf",
+      "final_url": "https://cdrdv2-public.intel.com/843860/architecture-instruction-set-extensions-programming-reference-dec-24.pdf",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "319433-056, December 2024",
+      "vendor_updated": null,
+      "local_path": "third_party/intel/xeon-8454h/pdfs/intel-architecture-instruction-set-extensions-programming-reference-dec24.pdf",
+      "bytes": 8138628,
+      "sha256": "bbffe2b3bc6129cd9131a7c4981ab0c4b34fbc89a3032be0c7f822736f4b1bad",
+      "purpose": "CPUID and extension reference; includes future / non-Sapphire Rapids extensions, check target annotations.",
+      "license_boundary": "Intel copyright. Document notice permits unmodified copies; no document modification or derivative rights inferred."
+    },
+    {
+      "kind": "official-architecture-technology-guide-pdf",
+      "title": "Intel AVX-512 FP16 Instruction Set for Intel Xeon Processor-Based Products",
+      "original_url": "https://builders.intel.com/docs/networkbuilders/intel-avx-512-fp16-instruction-set-for-intel-xeon-processor-based-products-technology-guide-1710148129.pdf",
+      "final_url": "https://builders.intel.com/docs/networkbuilders/intel-avx-512-fp16-instruction-set-for-intel-xeon-processor-based-products-technology-guide-1710148129.pdf",
+      "retrieved_utc_date": "2026-10-13",
+      "version_or_date": "Revision 004, March 2024",
+      "vendor_updated": null,
+      "local_path": "third_party/intel/xeon-8454h/pdfs/intel-avx512-fp16-technology-guide.pdf",
+      "bytes": 518627,
+      "sha256": "c9690ceb4995b9cbf44d447f8fe3d471ef422645428e1c731e917875c126eaae",
+      "purpose": "4th Gen Xeon FP16 vector ISA, numerics and rounding. FP16 is distinct from BF16.",
+      "license_boundary": "Intel copyright; no open license stated in guide; preserved unchanged with attribution."
+    },
+    {
+      "kind": "shared-official-intel-sdm-pdf",
+      "title": "Intel 64 and IA-32 Architectures Software Developer Manual Vol. 1",
+      "original_url": "https://cdrdv2.intel.com/v1/dl/getContent/671436",
+      "final_url": "https://cdrdv2.intel.com/v1/dl/getContent/671436",
+      "retrieved_utc_date": "pre-existing shared source (verified 2026-10-13)",
+      "version_or_date": "093, September 2026",
+      "local_path": "third_party/intel/manuals/sdm-vol1-v093.pdf",
+      "bytes": 3656572,
+      "sha256": "f6ffc430dfa2dada4f791b1ecb462810e59827befe9a9c23f9160941eea642f9",
+      "purpose": "AMX state/XSAVE prerequisites; printed Vol. 1 section 13.5.14.",
+      "license_boundary": "Unmodified Intel SDM copy; notice says an unmodified copy may be published, no right to modify or make document derivatives. Referenced from shared manuals; not duplicated in xeon-8454h/."
+    },
+    {
+      "kind": "shared-official-intel-sdm-pdf",
+      "title": "Intel 64 and IA-32 Architectures Software Developer Manual Vol. 2B",
+      "original_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+      "final_url": "https://cdrdv2.intel.com/v1/dl/getContent/671241",
+      "retrieved_utc_date": "pre-existing shared source (verified 2026-10-13)",
+      "version_or_date": "253667-093US, September 2026; Intel index updated 2026-10-09",
+      "local_path": "third_party/intel/manuals/sdm-vol2b-v093.pdf",
+      "bytes": 6915682,
+      "sha256": "a261998ace8e07f624bf3e2486bb6cfe950fb8be8d0dc9631bcecb4c5ec953e4",
+      "purpose": "Normative TDPBF16PS instruction definition; printed pages 4-715/716.",
+      "license_boundary": "Unmodified Intel SDM copy; notice says an unmodified copy may be published, no right to modify or make document derivatives. Referenced from shared manuals; not duplicated in xeon-8454h/."
+    }
+  ],
+  "runtime_semantics_sources": [
+    {
+      "title": "Linux x86 extended state documentation",
+      "url": "https://www.kernel.org/doc/html/latest/arch/x86/xstate.html",
+      "purpose": "Clarifies AMX XTILEDATA permission semantics (process-level permission, fork/exec behavior); no duplicate copy saved because core agent is collecting this source."
+    }
+  ],
+  "external_context_sources": [
+    {
+      "title": "Intel SDM/Optimization Reference Manuals index",
+      "url": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
+      "observed_metadata": "Intel page ID 767375, updated 2026-10-09, says downloadable SDM PDF volumes are v093 and ORM Volumes 1/2 are v050.",
+      "purpose": "Confirms shared SDM edition currency at capture; no copy saved because it is core/shared source material."
+    }
+  ]
+}

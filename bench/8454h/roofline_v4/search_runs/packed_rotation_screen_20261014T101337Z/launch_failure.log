@@ -1,0 +1,1 @@
+Execution never reached freeze validation, lock acquisition, compilation, or benchmarking. The chosen --result-dir was created to stage the offline analyzer, so the runner correctly refused to overwrite it with FileExistsError. No CPU work or benchmark timing was started.

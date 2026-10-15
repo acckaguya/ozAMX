@@ -1,0 +1,7 @@
+{
+  "requested_url": "https://www.intel.com/content/www/us/en/docs/onemkl/developer-guide-linux/2026-0/instruction-set-specific-dispatch-on-intel-archs.html",
+  "retrieved_utc": "2026-10-14T13:00:03.838838+00:00",
+  "status": "failed",
+  "curl_exit_code": 7,
+  "failure": "curl: (7) Couldn't connect to server"
+}

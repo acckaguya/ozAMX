@@ -1,0 +1,36 @@
+{
+  "counts": {
+    "manuals": {
+      "manifest_entries": 10,
+      "exists_and_metadata_ok": 10,
+      "special_signature_checked": 5,
+      "special_signature_ok": 5
+    },
+    "examples": {
+      "manifest_entries": 39,
+      "exists_and_metadata_ok": 39,
+      "special_signature_checked": 1,
+      "special_signature_ok": 1
+    },
+    "xeon": {
+      "manifest_entries": 10,
+      "exists_and_metadata_ok": 10,
+      "special_signature_checked": 5,
+      "special_signature_ok": 5
+    }
+  },
+  "issues": [],
+  "unlisted_files": [],
+  "duplicate_pdfs": [],
+  "suspicious_html": [],
+  "pdf_count": 7,
+  "corrections": [
+    {
+      "manifest": "manuals",
+      "path": "third_party/intel/manuals/optimization-reference-manual-v1-050.pdf",
+      "corrected_from_sha256": "96f2c3fe35ded582eb12a79778398de3d53cc8814b0e21c00477a538730b6acb",
+      "corrected_to_sha256": "4da42303a8d82a0b4e4ffebfdb669d6b57d85a038887421339e25ca37b67d61b",
+      "sha256_verified_utc_date": "2026-10-13"
+    }
+  ]
+}

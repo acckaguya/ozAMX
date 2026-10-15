@@ -1,0 +1,10 @@
+# Exact full-sweep arguments and environment. The run held flock -x on
+# /tmp/ozamx-perf.lock from before launch until completion.
+LD_LIBRARY_PATH=<absolute-workspace>/third_party/code/mkl-current/lib \
+OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE \
+MKL_NUM_THREADS=64 MKL_DYNAMIC=FALSE MKL_THREADING_LAYER=GNU MKL_INTERFACE_LAYER=LP64 \
+taskset -c 0-63 /tmp/ozamx-mkl-v1-build/ozamx_benchmark \
+  --sizes 256,1024,4096,8192 --threads 64 --reps 5 --precision all \
+  --budgets 6,10,15,21 --seed 260904 \
+  --checkpoint bench/8454h/mkl_v1/checkpoint_v1_cmake \
+  --output bench/8454h/mkl_v1/full_cmake.csv

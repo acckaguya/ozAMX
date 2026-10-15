@@ -1,0 +1,95 @@
+{
+  "status": "pass",
+  "seed": "0x8454a11ce",
+  "shapes": [
+    [
+      1,
+      17,
+      31
+    ],
+    [
+      7,
+      33,
+      33
+    ],
+    [
+      17,
+      65,
+      257
+    ],
+    [
+      65,
+      129,
+      65
+    ],
+    [
+      256,
+      256,
+      256
+    ],
+    [
+      512,
+      512,
+      512
+    ],
+    [
+      256,
+      512,
+      256
+    ],
+    [
+      512,
+      256,
+      512
+    ],
+    [
+      1024,
+      1024,
+      1024
+    ]
+  ],
+  "precisions": [
+    "fp32",
+    "fp64-p6",
+    "fp64-p10",
+    "fp64-p15",
+    "fp64-p21"
+  ],
+  "checks": {
+    "default_cache_vs_cache0": {
+      "cases": 47,
+      "compared_slots": 8333440,
+      "bitwise_mismatches": 0
+    },
+    "candidate_cache_vs_cache0": {
+      "cases": 47,
+      "compared_slots": 8333440,
+      "bitwise_mismatches": 0
+    },
+    "default_vs_candidate_cache": {
+      "cases": 47,
+      "compared_slots": 8333440,
+      "bitwise_mismatches": 0
+    },
+    "default_vs_candidate_cache0": {
+      "cases": 47,
+      "compared_slots": 8333440,
+      "bitwise_mismatches": 0
+    }
+  },
+  "libraries": {
+    "default": {
+      "path": "/tmp/ozamx-optimized-8454h/libozamx.a",
+      "sha256": "5085d1aa4ba51686372b28bb37f90be6de0b915516b7321edb0cb7e42b0ad041"
+    },
+    "candidate": {
+      "path": "/tmp/ozamx-v2-candidate/build/libozamx.a",
+      "sha256": "adf0d236d1927d46802b4eeb0dde87932c148fbb2c254130fbffc99765aedc85"
+    }
+  },
+  "source_sha256": {
+    "driver": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+    "runner": "2601f87eec394caac0ccefbfebbb683afc3ae0d25acdc7a88383f57c325ad43a"
+  },
+  "scope": "nine rectangular cases, aligned 256/512 and 1024-cubed boundaries; padded A/B/C strides and tail canaries; full long-double oracle for small cases and 32 sampled C outputs per large case; FP32 overflow and FP64 invalid-input transactional checks; separate default and zero-byte cache processes; 128-bit deterministic digests compare every large-case output slot."
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "ozamx-adaptive-release-validation-1",
+  "started_utc": "2026-10-14T12:30:27Z",
+  "source_tree": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_n512_src",
+  "source_identity_sha256": "f2a54bee5f4ffba1e82baee571d89b26291592b57e3376c2161a4fffbab8fc49",
+  "candidate_source_sha256": "3eb3a02165187f7205a7226b27d40d8a4bf0056ebe621ee4b60568fa8b62fdf9",
+  "frozen_library": "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "mkl_runtime": "/home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "gate_runner": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_src/tools/run_binary_gate_v4.py",
+  "gate_runner_sha256": "502001b001a759a9e01eb992c8da10030b14e8112c44da660a224628bad56be3",
+  "steps": [
+    {
+      "label": "configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_n512_src",
+        "-B",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DOZAMX_ENABLE_OPENMP=ON",
+        "-DOZAMX_BUILD_PROBE=ON",
+        "-DOZAMX_ONEMKL_ROOT=/home/caiweili/ozAMX/third_party/code/mkl-current",
+        "-DOZAMX_CACHE_BLOCK=128",
+        "-DOZAMX_PREP_GRAIN=16384",
+        "-DOZAMX_MIN_COMPUTE_WORK=8",
+        "-DOZAMX_TILELOAD_HINT=1",
+        "-DOZAMX_LOAD_SCHEDULE=0",
+        "-DOZAMX_LOOP_ORDER=0",
+        "-DOZAMX_MN_ORDER=0"
+      ],
+      "exit_code": 0,
+      "log": "logs/configure.log"
+    },
+    {
+      "label": "build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/build",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "log": "logs/build.log"
+    },
+    {
+      "label": "ctest",
+      "argv": [
+        "ctest",
+        "--test-dir",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/build",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "log": "logs/ctest.log"
+    },
+    {
+      "label": "full20_gate",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_src/tools/run_binary_gate_v4.py",
+        "--candidate-library",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/build/libozamx.a",
+        "--output",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/gates/adaptive_full20.json",
+        "--lock-held"
+      ],
+      "exit_code": 0,
+      "log": "logs/full20_gate.log"
+    }
+  ],
+  "status": "pass",
+  "lock_acquired_utc": "2026-10-14T12:30:27Z",
+  "candidate_library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adaptive_release_runs/adaptive_geom_n512_20261014T134200Z/build/libozamx.a",
+  "candidate_library_sha256": "48f2027ea51fba716d642b08abe0240ac3bfc3004ae79f2f26ac9089290ff9c8",
+  "ctest_pass": true,
+  "full_gate_status": "pass",
+  "full_gate_cases": 20,
+  "full_gate_all_cases_pass": true,
+  "completed_utc": "2026-10-14T12:31:02Z"
+}

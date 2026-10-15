@@ -1,0 +1,142 @@
+{
+  "candidate_libraries": {
+    "b2_m256_n256": {
+      "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_15_b2_m256_n256_p64_h1_l1__mode3_b2_m256_n256_p64_h1_l1/libozamx.a",
+      "sha256": "64d18638896aec77d6ae5977870c592f654c0454edd57f83d8901efaedb41222"
+    },
+    "b2_m256_n512": {
+      "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_16_b2_m256_n512_p64_h1_l1__mode3_b2_m256_n512_p64_h1_l1/libozamx.a",
+      "sha256": "cd983b8c582efa878b61d8c1e57c7178e2080efdf7ff38fcb5d73663c59bd8b6"
+    }
+  },
+  "candidates": {
+    "b2_m256_n256": {
+      "gate": {
+        "candidate_library_sha256": "64d18638896aec77d6ae5977870c592f654c0454edd57f83d8901efaedb41222",
+        "cases": 20,
+        "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/gate_b2_m256_n256.json",
+        "status": "pass"
+      },
+      "library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_15_b2_m256_n256_p64_h1_l1__mode3_b2_m256_n256_p64_h1_l1/libozamx.a",
+      "library_sha256": "64d18638896aec77d6ae5977870c592f654c0454edd57f83d8901efaedb41222",
+      "matched": {
+        "fp32": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp32/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp32/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p10": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p10/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p10/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p15": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p15/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p15/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p21": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p21/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p21/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p6": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p6/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p6/matched_calls.json",
+          "status": "pass"
+        }
+      }
+    },
+    "b2_m256_n512": {
+      "gate": {
+        "candidate_library_sha256": "cd983b8c582efa878b61d8c1e57c7178e2080efdf7ff38fcb5d73663c59bd8b6",
+        "cases": 20,
+        "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/gate_b2_m256_n512.json",
+        "status": "pass"
+      },
+      "library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_16_b2_m256_n512_p64_h1_l1__mode3_b2_m256_n512_p64_h1_l1/libozamx.a",
+      "library_sha256": "cd983b8c582efa878b61d8c1e57c7178e2080efdf7ff38fcb5d73663c59bd8b6",
+      "matched": {
+        "fp32": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp32/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp32/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p10": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p10/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p10/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p15": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p15/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p15/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p21": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p21/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p21/matched_calls.json",
+          "status": "pass"
+        },
+        "fp64_p6": {
+          "configs": 3,
+          "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p6/metadata.json",
+          "path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n512/fp64_p6/matched_calls.json",
+          "status": "pass"
+        }
+      }
+    }
+  },
+  "control_library": "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+  "control_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "finished_utc": "2026-10-14T12:22:21Z",
+  "gate_case_count": 20,
+  "gate_runner": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_src/tools/run_binary_gate_v4.py",
+  "matched_settings": {
+    "GOMP_SPINCOUNT": "0",
+    "OMP_WAIT_POLICY": "PASSIVE",
+    "OZAMX_WORKSPACE_CACHE_BYTES": "2147483648",
+    "pin": "0-63",
+    "threads": 64
+  },
+  "matched_workloads": [
+    {
+      "budget": null,
+      "precision": "fp32"
+    },
+    {
+      "budget": 6,
+      "precision": "fp64"
+    },
+    {
+      "budget": 10,
+      "precision": "fp64"
+    },
+    {
+      "budget": 15,
+      "precision": "fp64"
+    },
+    {
+      "budget": 21,
+      "precision": "fp64"
+    }
+  ],
+  "required_control_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "sizes": [
+    1024,
+    4096,
+    8192
+  ],
+  "started_utc": "2026-10-14T12:18:28Z",
+  "status": "pass",
+  "timed_repetitions": 7,
+  "warmups": 1
+}

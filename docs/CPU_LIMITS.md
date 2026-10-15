@@ -1,5 +1,7 @@
 # 本次执行的 CPU quota 可见性检查
 
+此检查属于历史 Gold 实验环境，路径和计数器不能代表当前 8454H 会话。当前机器快照与测量条件见 [8454H_PERFORMANCE_BASELINE.md](8454H_PERFORMANCE_BASELINE.md)。
+
 检查日期：2026-10-12 UTC。只读取 cgroup 元数据和计数器，没有运行压力测试，也没有改变线程数、affinity 或基准配置。
 
 ## 路径和控制器

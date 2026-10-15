@@ -1,0 +1,4414 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+
+<html class="rwd geo-override no-js vis no-rtl headerfooter-menu3 " lang="en">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+    <meta charset="UTF-8"/>
+    
+
+
+
+
+
+<title>Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable...</title>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="//intelcorp.scene7.com/">
+<link rel="dns-prefetch" href="//intelcorp.scene7.com/">
+
+    <link rel="preconnect" href="//cane.intel.com/">
+    <link rel="dns-prefetch" href="//cane.intel.com/">
+
+    <link rel="preconnect" href="//dogo.intel.com/">
+    <link rel="dns-prefetch" href="//dogo.intel.com/">
+
+
+
+
+
+    <link rel="preload" href="/content/dam/www/global/wap/performance-config.js" as="script" type="text/javascript">
+    <script type="text/javascript" src='/content/dam/www/global/wap/performance-config.js'></script>
+    <link rel="preload" href="/content/dam/www/global/wap/at-config.js" as="script" type="text/javascript">
+    <script type="text/javascript" src='/content/dam/www/global/wap/at-config.js'></script>
+    <link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/global/targetDataCookie.min.js" as="script" type="text/javascript">
+    <script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/global/targetDataCookie.min.js"></script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+    
+    
+    
+    
+    
+        
+    
+
+
+    
+        
+    
+    
+
+
+    
+    
+        
+    
+
+<script type="text/javascript">
+    var cq_tms = {
+        wa_emtprogramminglanguage: "emtprogramminglanguage:sycl",
+        wa_emtcontenttype: "emtcontenttype:designanddevelopmentreference/developerguide/tuningandoptimizationguides",
+        wa_emtpartnerprogram: "emtpartnerprogram:intelcipintelcloudinsiderprogram",
+        wa_rsoftware: "rsoftware:componentsproducts2000000142/inteldpccompatibilitytool2000000179,rsoftware:developmenttools2000000144/openvinotoolkit2000000224",
+        wa_emttechnology: "emttechnology:thirdpartytechnologies/tensorflow",
+        wa_productapplication: "productapplication:cpu2000000038",
+        
+        wa_industry_type: "",
+        wa_subject: "",
+        wa_emt_org: "",
+        wa_emt_intel: "",
+        wa_programidentifier: "ude",
+        wa_location: "us",
+        wa_language: "en",
+        wa_english_title: "Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable Processors",
+        wa_content_type: "tuningandoptimizationguides",
+        wa_intel_platform: "",
+        wa_applications: "",
+        wa_local: "en_US",
+        wa_intel_technology: "",
+        wa_system_type: "",
+        wa_product_name: "",
+        wa_audience: "",
+        wa_life_cycle: "",
+        wa_cq_url: "/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html",
+        wa_page_type_micro: "mf-article-long",
+        wa_env: "prd",
+        wa_cq_pub_env: "publish",
+        wa_transl_status: "",
+        wa_product_id: "2000000038,2000000179,2000000224",
+        wa_software: "rsoftware:componentsproducts2000000142/inteldpccompatibilitytool2000000179,rsoftware:developmenttools2000000144/openvinotoolkit2000000224",
+        wa_reference_design: "",
+        wa_codename: "",
+        wa_created_date: "1675237560000",
+        wa_modified_date: "1741028366795",
+        wa_off_time: "1924992000000",
+        wa_ownedby: "",
+        wa_managedby: "",
+        wa_idz_nid : "",
+        wa_event_type: "",
+        wa_idz_custom_tags: "",
+        wa_programming_language: "emtprogramminglanguage:sycl",
+        wa_skill_level: "",
+        wa_solution: "",
+        wa_product_formFactor: "",
+        wa_operating_system: "",
+        wa_marketing_products: "",
+        wa_ssg_third_party_prod_sys_sol: "",
+        wa_upeNamespace: "",
+        wa_doc_id:"",
+        wa_doc_version:"",
+        wa_doc_publishdate:"",
+        eloqua_disabled:"false",
+        
+        
+        
+        
+        
+        wa_uam_secondary_id: "",
+
+        
+        
+        wa_secondary_content_type: ""
+        
+        
+    };
+
+    
+    
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    var chatContextObj = {};
+    chatContextObj["locale"] = 'en-US';
+    chatContextObj["app"] = 'SATG';
+    chatContextObj["supportProductMap"] = 'NA';
+</script>
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/purify.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/virtual-assistant.min.js" defer></script>
+
+
+
+
+
+    <script type="text/javascript" src="/content/dam/www/global/wap/main/wap.js" async></script>
+
+
+    
+    
+    
+
+
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intelone-display-light.woff2" as="font" type="font/woff2" crossorigin="true">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intelone-display-regular.woff2" as="font" type="font/woff2" crossorigin="true">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/Fonts/resources/intel-clear-latin.woff2" as="font" type="font/woff2" crossorigin="true">
+
+<link rel="preload" href="/content/dam/logos/intel-header-logo.svg" as="image">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" as="style">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.css" as="style" type="text/css">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.css" as="style" type="text/css">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.js" as="script">
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/site-global-icons/resources/font/site-global-icons.woff2?14825464" as="font" type="font/woff2" crossorigin="true">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<!--[if lte IE 9]>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<![endif]-->
+
+
+    <meta name="twitter:card" content="summary_large_image"/>
+
+    <meta name="keywords" content="4th Generation, SPR, Sapphire Rapids, Tuning Guide, AI, OpenVino, AMX, IAX, INC, Intel"/>
+
+    <meta name="description" content="Recommendations for tuning the 4th Generation Intel® Xeon® Scalable Processor platform for Intel® optimized AI Toolkits."/>
+
+    <meta name="language" content="en"/>
+
+    <meta name="location" content="us"/>
+
+    <meta name="robots" content="follow,index,noarchive"/>
+
+    <meta name="X-Server" content="INTE-86"/>
+
+    <meta name="twitter:image" content="https://www.intel.com/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig1.png"/>
+
+
+    <meta property="og:image" content="https://www.intel.com/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig1.png"/>
+
+    <meta property="og:type" content="company"/>
+
+    <meta property="og:site_name" content="Intel"/>
+
+    <meta property="og:title" content="Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable..."/>
+
+    <meta property="fb:admins" content="267985180046218"/>
+
+    <meta property="og:url" content="https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html"/>
+
+    <meta property="og:description" content="Recommendations for tuning the 4th Generation Intel® Xeon® Scalable Processor platform for Intel® optimized AI Toolkits."/>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+    <meta name="emtcontenttype" content="Content Type|Design and Development Reference|Development Guides|Tuning and Optimization Guides;"/>
+
+    <meta name="contentpath" content="/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation"/>
+
+    <meta name="authoreddate" content="2023-01-10T12:10:00.000+08:00"/>
+
+    <meta name="software" content="Software|Components & Products|Intel® DPC++ Compatibility Tool;Software|Development Tools|OpenVINO™ Toolkit;"/>
+
+    <meta name="localecode" content="en_US"/>
+
+    <meta name="reimaginetoplevelcategory" content="Audience|Developer|Artificial Intelligence (AI) Application Developer;"/>
+
+    <meta name="mime" content="text/html"/>
+
+    <meta name="format" content="article-long"/>
+
+    <meta name="localizedtagname" content="Tuning and Optimization Guides"/>
+
+    <meta name="excludefromviews" content="false"/>
+
+    <meta name="taxonomy" content="etm-5563C7F5-EEC5-46A9-ACA7-0063742D5EC6;etm-ecc7ddbc9c3b4c508ea5a9050fd189f9;etm-d0df0d8ba9ae4e1baa53ecaeb390f076;etm-0571d7dc9c8845dc9f4a8682bd0337fc;etm-bd7e6ab0b34d4e95901e82eaa67c07a8;etm-52ca462e290248fb99cfadce4bb7c8a3;etm-f39d7cdc6135472fa6b34b08564804b5;"/>
+
+    <meta name="title" content="Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable Processors"/>
+
+    <meta name="mintoread" content="0"/>
+
+    <meta name="menu" content="Developer Sub Navigation Breadcrumb"/>
+
+    <meta name="programminglanguage" content="Programming Language|SYCL*;"/>
+
+    <meta name="uettechnology" content="Technology|Third-Party Technologies|TensorFlow*;"/>
+
+    <meta name="reimaginefilters" content="Product Application|CPU;Software|Components & Products|Intel® DPC++ Compatibility Tool;Software|Development Tools|OpenVINO™ Toolkit;Technology|Third-Party Technologies|TensorFlow*;Programming Language|SYCL*;Partner Program|Intel® Cloud Insider Program (Intel® CIP);"/>
+
+    <meta name="partnerprogram" content="Partner Program|Intel® Cloud Insider Program (Intel® CIP);"/>
+
+    <meta name="generic1" content="true"/>
+
+    <meta name="emtaudience" content="Audience|Developer|Artificial Intelligence (AI) Application Developer;"/>
+
+    <meta name="intelkeywords" content="4th Generation, SPR, Sapphire Rapids, Tuning Guide, AI, OpenVino, AMX, IAX, INC, Intel"/>
+
+    <meta name="lastModifieddate" content="2023-02-01T15:46:00.000+08:00"/>
+
+    <meta name="thumbnailurl" content="https://www.intel.com/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig1.png"/>
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+
+
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon-16x16.png">
+<link rel="shortcut icon" href="/etc.clientlibs/settings/wcm/designs/intel/default/resources/favicon.ico">
+    
+
+
+
+
+
+<link rel="canonical" href="https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html"/>
+<link rel="alternate" hreflang="en-us" href="https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html"/>
+            <link rel="alternate" hreflang="x-default" href="https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html"/>
+                
+    
+
+    
+        
+        
+            
+                
+                
+                    <link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-css.min.css" as="style"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-css.min.css" type="text/css"><link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" as="style"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-standalone-3_6_0.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/clientlibs/jquery-3_6_0.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/us/en/clientlibs/legacy-libs.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/modernizr.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/picturefill-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/handlebars.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/html5-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-cookie-2_1_3.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/detectizr.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.matchHeight.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/bootstrap-affix.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/moment.locales.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/scrollToPlugin.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/slick-js.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.scrollTo.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/fastclick.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.resize.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery.touchswipe.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-detect.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-polyfill.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/overthrow-init.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/jquery-ezmark.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/owl.carousel.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/polyfills.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/purify.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/intc-core.min.js" defer></script>
+                
+            
+        
+    
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    
+
+<body class="page-is-published global-nav">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="skip-to-main-content">
+    <div class="sb-skipLinkWrapper invisible">
+        <a href="#primary-content" class="inline-block bg-greenDarkApron color-textWhite text-bold text-noUnderline sb-skipLink visible">Skip To Main Content</a>
+    </div>
+</div>
+
+<div class="promo-banner-content"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var isLoggedin = (document.cookie.indexOf('IGHFLoggedIn') != -1);
+    var currentURL = window.location.href;
+    if (currentURL.startsWith("https://isvc--isvcqa24.sandbox.my.site.com")) {
+        isLoggedin = true;
+        if (currentURL.includes("/onlinecasemgmt/warrantyinfo")) {
+            isLoggedin = false;
+        }
+    }
+</script>
+
+
+
+
+
+    
+        <div class="global">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.css" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+    
+    
+        <div class="global-nav-redesign global component" data-component="global-nav-redesign" data-component-id="1">
+            <header role="banner">
+                <nav class="intel-navbar advanced-search" role="navigation" aria-label="Main Navigation" data-igm="">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-wraper">
+
+                        <div class="navbar-logo">
+                            <a href="/content/www/us/en/homepage.html" alt="Intel homepage" class="intel-logo-rebrand">
+                                    
+                                <img src="/content/dam/logos/intel-header-logo.svg" height="300" width="118" alt="Intel logo - Return to the home page">
+                            </a>
+                        </div>
+
+                        <div class="navbar-left">
+                            <!-- mobile: menu toggle, sign in -->
+                            <div class="d-block d-sm-none">
+                                <button type="button"
+                                        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+                                        class="mega-hamburger nav-link-icon nav-link-icon-toggle collapsed"
+                                        data-bs-target="#primary-nav" aria-expanded="false" aria-controls="primary-nav"
+                                        data-mega-control="hamburger">
+                                    <span class="visually-hidden">Toggle Navigation</span>
+                                    <span class="fa-intel-menu icon-toggle-off"></span>
+                                    <span class="fa-cancel-thin icon-toggle-on"></span>
+                                </button>
+                            </div>
+
+                            <!-- START DYNAMIC NAVIGATION MENEU -->
+                            <div class="collapse mega-menu-collapse" id="primary-nav">
+                                <div class="mega-menu-wrap">
+                                    <ol class="mega-navbar unique-container-global-nav-items">
+                                        <!-- Start: Primary Nav Items -->
+
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- START MOBLE TOGGLE buttons -->
+                        <div class="navbar-right">
+
+
+                            <!-- START: NON-signed in panel -->
+                            <span id="not-logged-in-scenario" class="d-none">
+
+         <button type="button" title="Sign In"
+                 class="nav-link-icon nav-link-icon-toggle collapsed"
+                 data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+                 aria-expanded="false" aria-controls="panel-signin"
+                 onclick="intel.mytools.unifiedLogin();"
+                 data-mega-control="signin">
+            <span class="visually-hidden">Sign In</span>
+            <span class="fa-intel-user-o icon-toggle-off"></span>
+            <span class="fa-intel-user icon-toggle-on"></span>
+        </button>
+</span>
+
+<script>
+    var intel = intel || {};
+    intel.signinsimplifyConfig = {
+        authorizationUrl: '\/content\/dam\/intel\/authorization\/authorization.html',
+        locale: '',
+        messages: {
+            InvalidCredential: 'The username or password you entered was invalid.',
+            InvalidField: 'The username or password you entered was invalid.',
+            AccountDisabled: 'For security reasons, your account has been disabled. For help, <a href=\"#\" class=\"contactLink new-tab-link\" target=\"_blank\" rel=\"noopener noreferrer\" >contact us<\/a>.',
+            AccountLocked: 'Your account has been locked. For help, please read the <a href=\"#\" class=\"faqsLink new-tab-link\" target=\"_blank\" rel=\"noopener noreferrer\" >Sign In FAQ<\/a>.',
+            UserNotFound: 'The username or password you entered was invalid.',
+            Unknown: 'An unexpected error occurred. Try it again. For help, use the contact or support options below.',
+            PasswordExpired: 'Your password is expired. Please change your password.',
+            LoginAssistLink: 'https:\/\/signin.intel.com\/ContactUs.aspx',
+            faqsLink: '\/content\/www\/us\/en\/my\u002Dintel\/sign\u002Din\u002Dhelp.html'
+        },
+        nameField: 'Username',
+        passField: 'Password',
+        isPopup: true,
+        responseHref: 'https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html' + window.location.search + window.location.hash, 
+        sslDomainUrl: 'www.intel.com',
+        loginUrl: 'https:\/\/welcome.intel.com\/login.aspx?appid=258\x26qlogin=true',
+        ssoUri: '',
+        logoutUrl: 'https:\/\/welcome.intel.com\/logout.aspx',
+        logoutHref: 'https:\/\/signin.intel.com\/Logout?RedirectURL=https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html',
+        logoutIGHFHref: 'https:\/\/signin.intel.com\/Logout?RedirectURL=',
+        loginErrorID: '#login-error',
+        usernameID: '#username',
+        remembermeId: '#cbRememberMe',
+        formID: '#igm-form-signin',
+        unameErrorID: '#uname-error',
+        passID: '#password',
+        passError: '#pwd-error',
+        changePasswordUrl: '\/content\/www\/us\/en\/my\u002Dintel\/change\u002Dpassword.html',
+        emailVerificationUrl: '\/content\/www\/us\/en\/my\u002Dintel\/email\u002Dverification.external.html',
+        aboutToExpireEmailUrl: '\/content\/www\/us\/en\/my\u002Dintel\/email\u002Dverification.html',
+        renewalUrl: '\/content\/www\/us\/en\/secure\/technology\u002Dprovider\/forms\/renew\u002Dtechnology\u002Dprovider\u002Dmembership.html',
+        limitedUrl: '\/content\/www\/us\/en\/resellers\/limited\u002Dstatus\u002Dsecondary.html',
+        isaPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/solutions\u002Dalliance\/overview.html',
+        itpPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/technology\u002Dprovider\/iot\/overview.html',
+        itpisaPRMDashBoardURL: '\/content\/www\/us\/en\/secure\/partner\/iot\u002Ditp\u002Disa\/overview.html',
+        isaRenewalURL: '\/content\/www\/us\/en\/secure\/partner\/forms\/solutions\u002Dalliance\u002Drenewal.html',
+        primaryPostLaunchURL: 'https:\/\/partner.intel.com\/s\/post\u002Dlaunch\u002Dprimary',
+        nonPrimaryPostLaunchURL: 'https:\/\/partner.intel.com\/s\/post\u002Dlaunch\u002Dnon\u002Dprimary',
+        idpUrl: 'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UnifiedLogin_SISU_CML_SAML\/generic\/login?entityId=www.intel.com',
+        headerSignInIdpUrl: 'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UnifiedLogin_SISU_CML_SAML\/generic\/login?entityId=www.intel.com\x26ui_locales=en',
+        headerSignOutIdpUrlB2B:'https:\/\/login.microsoftonline.com\/common\/oauth2\/v2.0\/logout?post_logout_redirect_uri=https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html' + window.location.search + window.location.hash,
+        headerSignOutIdpIGHFUrlB2B:'https:\/\/login.microsoftonline.com\/common\/oauth2\/v2.0\/logout?post_logout_redirect_uri=',
+        headerSignOutIdpUrlB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/logout?id_token_hint=$TOKEN$%26post_logout_redirect_uri=https:\/\/www.intel.com\/apps\/intel\/services\/unifiedlogout.json',
+        sessionAuthorizeUrlB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/authorize?client_id=8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%26scope=profile%20offline_access%208b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%20openid%26response_mode=fragment%26response_type=token%26prompt=none%26redirect_uri=',
+        sessionAuthorizeUrlB2B:'https:\/\/login.microsoftonline.com\/46c98d88\u002De344\u002D4ed4\u002D8496\u002D4ed7712e255d\/oauth2\/v2.0\/authorize?client_id=cb0ec60b\u002D608b\u002D4e76\u002D9d69\u002D1e5e0afb3456%26scope=openid%20profile%20offline_access%26response_mode=fragment%26response_type=token%26prompt=none%26redirect_uri=',
+        sessionInitUrl:'https:\/\/www.intel.com\/content\/www\/us\/en\/secure\/my\u002Dintel\/dashboard.html',
+        azureLocaleCode:'en',
+        allowedPathRegx:'^(.*intel.com.*$)|^(\/content\/.*$)',
+        signOutTokenGenB2C:'https:\/\/consumer.intel.com\/intelcorpb2c.onmicrosoft.com\/B2C_1A_UNIFIEDLOGIN_SISU_STD_OIDC\/oauth2\/v2.0\/authorize?client_id=8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b%26scope=profile offline_access+8b32f2f3\u002D7a32\u002D4902\u002D8821\u002D1df682b7043b+openid%26response_type=id_token%26prompt=none%26redirect_uri=',
+        validTargetURL:'https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html' + window.location.search + window.location.hash
+    };
+
+    function clearB2CIFrame(interval, iFrame) {
+        clearInterval(interval);
+        iFrame.parentNode.removeChild(iFrame);
+    }
+
+    function clearIFrame(interval, iFrame) {
+        clearInterval(interval);
+        iFrame.parentNode.removeChild(iFrame);
+    }
+    function createB2CIFrame(id, src) {
+        var authIFrame = document.createElement("iframe");
+        authIFrame.id = "sso-b2c-" + id;
+        authIFrame.hidden = "hidden";
+        authIFrame.src = src;
+        document.body.appendChild(authIFrame);
+        return authIFrame;
+    }
+    function createIFrame(id, src) {
+        var authIFrame = document.createElement("iframe");
+        authIFrame.id = "sso-" + id;
+        authIFrame.hidden = "hidden";
+        authIFrame.src = src;
+        document.body.appendChild(authIFrame);
+        return authIFrame;
+    }
+
+    function animateHumanoidIcon() {
+    	$("#not-logged-in-scenario").css("cursor", "not-allowed");
+    	$("#not-logged-in-scenario button").css("pointer-events", "none");
+    	$("#not-logged-in-scenario button span.icon-toggle-off").addClass('iia-beat-fade');
+	}
+
+    function resetHumanoidIcon() {
+    	$("#not-logged-in-scenario").css("cursor", "");
+        $("#not-logged-in-scenario button").css("pointer-events", "");
+    	$("#not-logged-in-scenario button span.icon-toggle-off").removeClass('iia-beat-fade');
+	}
+
+    function initiateB2CLogoutToken(type) {
+        return new Promise(function (resolve, reject) {
+            function authIFrameB2CIntervalWrapper(authIFrame) {
+                var authIFrameInterval = setInterval(function () {
+                    var authIFrameWindow = authIFrame.contentWindow;
+                    if (authIFrameWindow) {
+                        try {
+                            var authIFrameURL = authIFrameWindow.location.href;
+
+                            if (authIFrameURL) {
+                                if (authIFrameURL.includes("#id_token=")) {
+                                    clearB2CIFrame(authIFrameInterval, authIFrame);
+                                    return resolve({
+                                        id: authIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIFrame.id,
+                                        code: "SUCCESS",
+                                        id_token_hint:authIFrameURL.split("#id_token=")[1]
+                                    });
+                                } else if (authIFrameURL.includes("#error=")) {
+                                    clearB2CIFrame(authIFrameInterval, authIFrame);
+                                    return reject({
+                                        id: authIFrame.id,
+                                        msg: "FAILURE!" + "--" + authIFrame.id,
+                                        code: "FAILURE",
+                                    });
+                                } else {
+                                    authIFrameAttempts++;
+                                    if (
+                                        authIFrameAttempts ===
+                                        AUTH_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearB2CIFrame(authIFrameInterval, authIFrame);
+                                        return reject({
+                                            id: authIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearB2CIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (authIFrameAttempts === AUTH_IFRAME_MAX_ATTEMPTS) {
+                                clearB2CIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIFrameAttempts++;
+                        }
+                    } else {
+                        clearB2CIFrame(authIFrameInterval, authIFrame);
+                        return reject({
+                            id: authIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            var AUTH_IFRAME_MAX_ATTEMPTS = 80;
+            var authIFrameAttempts = 0;
+
+            var currentOrigin = encodeURIComponent(window.location.origin + ((intel.isIGHFCall === false && !/mark.intel.com/.test(window.location.hostname)) ? "/content/www/us/en/homepage.html" : "/"));
+            var redirectURI = currentOrigin;
+
+            var matchedSite =
+                window.INTELNAV &&
+                window.INTELNAV.CIDAAS &&
+                window.INTELNAV.CIDAAS.customRedirectSites.find((site) =>
+                    site.host.includes(window.location.host)
+                );
+            if (matchedSite) {
+                redirectURI += matchedSite.redirectURI;
+            }
+
+            var authURL = decodeURIComponent(intel.signinsimplifyConfig.signOutTokenGenB2C + redirectURI);
+            var authIFrame = createB2CIFrame(type, authURL);
+            authIFrameB2CIntervalWrapper(authIFrame);
+        });
+    }
+
+    function initiateAuth(type) {
+        return new Promise(function (resolve, reject) {
+            function authIFrameIntervalWrapper(authIFrame) {
+                let authIFrameInterval = setInterval(function () {
+                    let authIFrameWindow = authIFrame.contentWindow;
+                    if (authIFrameWindow) {
+                        try {
+                            let authIFrameURL = authIFrameWindow.location.href;
+                            if (authIFrameURL) {
+                                if (authIFrameURL.includes("#access_token=")) {
+                                    clearIFrame(authIFrameInterval, authIFrame);
+                                    return resolve({
+                                        id: authIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIFrame.id,
+                                        code: "SUCCESS",
+                                    });
+                                } else if (authIFrameURL.includes("#error=")) {
+                                    clearIFrame(authIFrameInterval, authIFrame);
+                                    return reject({
+                                        id: authIFrame.id,
+                                        msg: "FAILURE!" + "--" + authIFrame.id,
+                                        code: "FAILURE",
+                                    });
+                                } else {
+                                    authIFrameAttempts++;
+                                    if (
+                                        authIFrameAttempts ===
+                                        AUTH_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearIFrame(authIFrameInterval, authIFrame);
+                                        return reject({
+                                            id: authIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (authIFrameAttempts === AUTH_IFRAME_MAX_ATTEMPTS) {
+                                clearIFrame(authIFrameInterval, authIFrame);
+                                return reject({
+                                    id: authIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIFrameAttempts++;
+                        }
+                    } else {
+                        clearIFrame(authIFrameInterval, authIFrame);
+                        return reject({
+                            id: authIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            var AUTH_IFRAME_MAX_ATTEMPTS = 40;
+            var authIFrameAttempts = 0;
+
+            var authURL;
+            let tempIsIGHFCall = document.querySelectorAll('#recode50header').length > 0;
+            var currentOrigin =  encodeURIComponent(window.location.origin + ((!tempIsIGHFCall && !/mark.intel.com/.test(window.location.hostname)) ? intel.signinsimplifyConfig.authorizationUrl : "/"));
+            var redirectURI = currentOrigin;
+            var matchedSite =
+                window.INTELNAV &&
+                window.INTELNAV.CIDAAS &&
+                window.INTELNAV.CIDAAS.customRedirectSites.find((site) =>
+                    site.host.includes(window.location.host)
+                );
+            if (matchedSite) {
+                redirectURI += matchedSite.redirectURI;
+            }
+
+            if (type === "b2c") {
+                authURL = decodeURIComponent(
+                    intel.signinsimplifyConfig.sessionAuthorizeUrlB2C + redirectURI
+                );
+            } else {
+                authURL = decodeURIComponent(
+                    intel.signinsimplifyConfig.sessionAuthorizeUrlB2B + redirectURI
+                );
+            }
+
+            let authIFrame = createIFrame(type, authURL);
+            authIFrameIntervalWrapper(authIFrame);
+        });
+    }
+
+    function initiateIntelAuth() {
+        return new Promise(function (resolve, reject) {
+            function authIntelIFrameIntervalWrapper(authIntelIFrame) {
+                let authIntelIFrameInterval = setInterval(function () {
+                    let authIntelIFrameWindow = authIntelIFrame.contentWindow;
+                    if (authIntelIFrameWindow) {
+                        try {
+                            let authIntelIFrameURL = authIntelIFrameWindow.location.href;
+
+                            if (authIntelIFrameURL) {
+                                if (
+                                    authIntelIFrameURL.includes(
+                                        window.location.href
+                                    )
+                                ) {
+                                    clearIFrame(
+                                        authIntelIFrameInterval,
+                                        authIntelIFrame
+                                    );
+                                    return resolve({
+                                        id: authIntelIFrame.id,
+                                        msg: "SUCCESS!" + "--" + authIntelIFrame.id,
+                                        code: "SUCCESS",
+                                    });
+                                } else {
+                                    authIntelIFrameAttempts++;
+                                    if (
+                                        authIntelIFrameAttempts ===
+                                        AUTH_INTEL_IFRAME_MAX_ATTEMPTS
+                                    ) {
+                                        clearIFrame(
+                                            authIntelIFrameInterval,
+                                            authIntelIFrame
+                                        );
+                                        return reject({
+                                            id: authIntelIFrame.id,
+                                            msg:
+                                                "ERROR - MAX (TIMING)!" +
+                                                "--" +
+                                                authIntelIFrame.id,
+                                            code: "ERROR",
+                                        });
+                                    }
+                                }
+                            } else {
+                                clearIFrame(
+                                    authIntelIFrameInterval,
+                                    authIntelIFrame
+                                );
+                                return reject({
+                                    id: authIntelIFrame.id,
+                                    msg: "ERROR - URL!" + "--" + authIntelIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                        } catch (err) {
+                            if (
+                                authIntelIFrameAttempts ===
+                                AUTH_INTEL_IFRAME_MAX_ATTEMPTS
+                            ) {
+                                clearIFrame(
+                                    authIntelIFrameInterval,
+                                    authIntelIFrame
+                                );
+                                return reject({
+                                    id: authIntelIFrame.id,
+                                    msg:
+                                        "ERROR - MAX (CORS)!" +
+                                        "--" +
+                                        authIntelIFrame.id,
+                                    code: "ERROR",
+                                });
+                            }
+                            authIntelIFrameAttempts++;
+                        }
+                    } else {
+                        clearIFrame(authIntelIFrameInterval, authIntelIFrame);
+                        return reject({
+                            id: authIntelIFrame.id,
+                            msg: "ERROR - DOM!" + "--" + authIntelIFrame.id,
+                            code: "ERROR",
+                        });
+                    }
+                }, 500);
+            }
+
+            let AUTH_INTEL_IFRAME_MAX_ATTEMPTS = 80;
+            let authIntelIFrameAttempts = 0;
+
+            let authIntelIFrame = createIFrame(
+                "sso-intel-b2c",
+                intel.signinsimplifyConfig.sessionInitUrl
+            );
+            authIntelIFrameIntervalWrapper(authIntelIFrame);
+        });
+	}
+
+    function getAuthenticationStatus() {
+        return new Promise(function (resolve, reject) {
+            initiateAuth("b2c")
+                .then(function (b2cSuccessRes) {
+                    return resolve(b2cSuccessRes);
+                })
+                .catch(function (b2cFailureRes) {
+                    var isB2BSite =
+                        window.INTELNAV &&
+                        window.INTELNAV.CIDAAS &&
+                        window.INTELNAV.CIDAAS.B2BSites.some((site) =>
+                            site.includes(window.location.host)
+                        );
+                    if (isB2BSite) {
+                        initiateAuth("b2b")
+                            .then(function (b2bSuccessRes) {
+                                return resolve(b2bSuccessRes);
+                            })
+                            .catch(function (b2bFailureRes) {
+                                return reject(b2bFailureRes);
+                            });
+                    } else {
+                        return reject(b2cFailureRes);
+                    }
+                });
+        });
+    }
+
+    function checkAEMSession(){
+        let isSessionExist = false;
+        if(!tempIsIGHF){
+            $.ajax({
+                url: "/libs/apps/intel/myintel/agsroles.json?validateAEMSession=Y",
+                async: false,
+                success: function (data) {
+                    if (data && data["isValidAEMSession"]) {
+                        document.cookie = "IGHFLoggedIn=true;domain=.intel.com;path=/";
+                        isLoggedin = true;
+                        isSessionExist = true;
+                    }
+                }
+            });
+        }
+        return isSessionExist;
+    }
+
+    if (
+        !isLoggedin &&
+        ((document.domain.indexOf("thailand") == -1 &&
+                document.domain.endsWith(".intel.com")) ||
+            document.getElementById("recode50header") != null) &&
+        navigator != null &&
+        navigator.userAgent.indexOf("CloudManagerTest") == -1
+    ) {
+        var tempIsIGHF = document.getElementById("recode50header");
+        if (tempIsIGHF) animateHumanoidIcon();
+        getAuthenticationStatus()
+            .then(function (res) {
+                let isSessionExist = checkAEMSession();
+                if(isSessionExist){
+                    intel.signinHeaderSimplify.initialize();
+                }else {
+                    var currentUrl = window.location.href;
+                    if (currentUrl.indexOf("service-maintenance-notice") === -1) {
+                        if (res.id === "sso-b2c") {
+                            var cookiename = "IGHFtarget";
+                        var samlcookieValue =
+                            cookiename +
+                            "=" +
+                            encodeURIComponent(currentUrl) +
+                            ";secure;path=/;domain=.intel.com";
+                        document.cookie = samlcookieValue;
+                        if (intel.isIGHFCall) {
+                            initiateIntelAuth().then(() => {
+                                isLoggedin = true;
+                                intel.signinHeaderSimplify.initialize();
+                            }).catch(() => {
+                                window.location.href = intel.signinsimplifyConfig.sessionInitUrl;
+                            });
+                        } else {
+                            window.location.href = intel.signinsimplifyConfig.sessionInitUrl;
+                        }
+                    } else {
+                        document.cookie = "IGHFLoggedIn=true;domain=.intel.com;path=/";
+                        if (intel.isIGHFCall) {
+                            isLoggedin = true;
+                            intel.signinHeaderSimplify.initialize();
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                }
+                }
+            })
+            .catch(()=>{
+				if (tempIsIGHF) resetHumanoidIcon();
+            });
+    }
+
+</script>
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="myinteldrpdown-template" type="text/x-handlebars-template">
+    <section class="myintel-tools-content" role="region"
+             aria-label="My Intel">
+        
+        <div class="card-header force-background solid brand-very-dark-gray my-intel-menu">
+            <button type="button" class="icon close float-end" data-igm-search-toggle="" aria-label="Close"
+                    tabindex="0" data-wap="" data-wap_ref="myintel-navmenu-closing">
+                <span></span>
+            </button>
+            <ul class="nav nav-tabs component">
+                
+                    
+                    
+                        
+                    
+                    
+                    
+                    
+                
+                <li role="presentation" class="active" data-step='1'  data-title='My Intel Dashboard and My Tools'  data-intro='<p>Click here to access the My Intel Dashboard from any Intel.com page. From here you can also access your Subscriptions page, as well as your personalized list of tools.</p>'>
+                    <a href="#my-intel" role="tab" tabindex="0">My Intel<span
+                            class="fa fa-user"></span></a>
+                </li>
+            </ul>
+        </div>
+        
+
+        <div class="my-intel-panel-body tab-content">
+            
+            <div role="tabpanel" class="tab-pane fade show active" id="my-intel">
+                <ul class="myintel-links">
+                    {{#each myintelpagelinks}}
+                    <li data-agsrole="{{{agsrole}}}"
+                        data-blacklistedagsrole="{{{blacklistedagsgroupname}}}"
+                        data-isinternal="{{{displayOnlyInternal}}}"
+                        data-isexternal="{{{displayOnlyExternal}}}"
+                        class="{{{class}}}">
+                        <a target="{{{target}}}"
+                           href="{{{href}}}" tabindex="0">{{{label}}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+                <div class="tools-pane component" data-component="myintel-tools" data-component-id="1">
+                    <h5 class="my-intel-tools">My Tools</h5>
+                    
+                    <ul class="myintel-links">
+                        {{#each mytoollinks}}
+                        <li class="myintellink"
+                            data-isinternal="{{{displayOnlyInternal}}}"
+                            data-isexternal="{{{displayOnlyExternal}}}">
+                            <h3 style="display:none;">{{{agsgroupname}}}</h3>
+                            <h4 style="display:none;">{{{blacklistedagsgroupname}}}</h4>
+                            <a tabindex="0" href="{{{linkurl}}}" target="_blank" rel="noopener noreferrer" title="">{{{linktext}}}</a>
+                            {{#if tooltip}}
+                            <a class="fa fa-help-circled" tabindex="0" data-bs-toggle="tooltip" data-html="true"
+                                  data-title="{{tooltip}}" data-placement="bottom" data-wap_ref="tooltip:{{{linktext}}}"><span class="visually-hidden">{{tooltip}}</span></a>
+                            {{/if}}
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+</script>
+
+
+<span id="logged-in-scenario" class="d-none">
+
+<button type="button" title="My Intel"
+        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+        class="nav-link-icon nav-link-icon-toggle collapsed" data-bs-target="#panel-signedin" aria-expanded="false"
+        aria-controls="panel-signedin" data-mega-control="signedin">
+    <span class="visually-hidden">My Intel</span>
+    <span class="fa-intel-user-checked-o icon-toggle-off"></span>
+    <span class="fa-intel-user-checked icon-toggle-on"></span>
+</button>
+
+<div class="mega-panel panel-layout-signed-in collapse" id="panel-signedin">
+    <div class="mega-panel-wrap">
+        <div class="mega-panel-body">
+            <div class="panel-content flex-content-wrap">
+
+                <!-- MyIntel Section -->
+                <!-- -------------------------------------------------------------- -->
+                <div class="panel-item d-none" id="myIntelPageLinks">
+                    <a id="myIntelPageLinksHeader" class="nav-l3 has-border has-link"></a> <!-- {{#if heading.onState}} selected{{/if}} {{#if heading.onStateParent}} selected-parent{{/if}} -->
+                    <div class="panel-item-content">
+                        <ul id="myIntelPageLinksItemList" class="panel-links nav-l4-list list-unstyled">
+
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- My Tools Section -->
+                <!-- -------------------------------------------------------------- -->
+                <div class="panel-item col-span-2" id="myIntelTools">
+                    
+                    <div class="nav-l3">
+                        My Tools
+                    </div>
+
+                    <div class="panel-item-content">
+                        <!--
+                            Note: right now this panel (myTools) has only one column/ul
+                            if more columns are needed, remove below's 'w-auto' class
+                        -->
+                        <ul class="panel-links nav-l4-list list-unstyled w-auto" id="mytools-ul">
+
+                            <!-- this 'li' will be used as the template to populate this section from the js -->
+                            <li class="d-none">
+                                <a class="nav-l4"></a>
+
+                                <button class="btn-tooltip-trigger d-none" data-bs-toggle="tooltip" data-placement="bottom"
+                                        title="">
+                                    <span>?</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="item-actions">
+               <button type="button" class="btn btn-primary"
+                       data-sso-uri=''
+                       data-logout-uri="" data-wap="{&quot;linktype&quot;:&quot;logout&quot;}"
+                       onclick="intel.signinsimplify.signOut()">Sign Out</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</span>
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<button type="button" title="Language Selector"
+        data-wap="{&quot;linktype&quot;:&quot;level1&quot;}"
+        class="nav-link-icon nav-link-icon-toggle collapsed"
+        data-bs-target="#panel-language-selector" aria-label="English"
+        aria-expanded="false" aria-controls="panel-language-selector"
+        data-mega-control="language-selector">
+    <span class="fa-intel-globe-o icon-toggle-off"></span>
+    <span class="fa-intel-globe icon-toggle-on"></span>
+    <span class="nav-link-icon-label">English</span>
+</button>
+
+<div class="mega-panel panel-layout-language collapse" id="panel-language-selector"
+     aria-expanded="false" aria-selected="false">
+    <div class="mega-panel-wrap">
+        <div class="mega-panel-body">
+            <div class="mega-panel-heading">
+                <h2 class="nav-l2">
+                    
+                        
+                            Select Your Language
+                        
+                        
+                    
+                </h2>
+            </div>
+            <div class="panel-content flex-content-wrap">
+                
+                    <div class="panel-item">
+                        <!-- region.countryName is actually region name -->
+                        
+                        <ul class="list-unstyled panel-links nav-l4-list">
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="id_id" href="https://www.intel.co.id/content/www/id/id/homepage.html">
+                                            Bahasa Indonesia
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="de_de" href="https://www.intel.de/content/www/de/de/homepage.html">
+                                            Deutsch
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                    <li class="selected lang-option">
+                                
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="en_us" href="https://www.intel.com/content/www/us/en/homepage.html">
+                                            English
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="es_xl" href="https://www.intel.la/content/www/xl/es/homepage.html">
+                                            Español
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="fr_fr" href="https://www.intel.fr/content/www/fr/fr/homepage.html">
+                                            Français
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="pt_br" href="https://www.intel.com.br/content/www/br/pt/homepage.html">
+                                            Português
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                
+                    <div class="panel-item">
+                        <!-- region.countryName is actually region name -->
+                        
+                        <ul class="list-unstyled panel-links nav-l4-list">
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="vi_vn" href="https://www.intel.vn/content/www/vn/vi/homepage.html">
+                                            Tiếng Việt
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="th_th" href="https://www.thailand.intel.com/content/www/th/th/homepage.html">
+                                            ไทย
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="ko_kr" href="https://www.intel.co.kr/content/www/kr/ko/homepage.html">
+                                            한국어
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="ja_jp" href="https://www.intel.co.jp/content/www/jp/ja/homepage.html">
+                                            日本語
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="zh_cn" href="https://www.intel.cn/content/www/cn/zh/homepage.html">
+                                            简体中文
+                                    </a>
+                                </li>
+                            
+                                
+                                
+                                
+                                    <li class="lang-option">
+                                
+                                
+                                    
+                                    
+                                        
+                                    
+                                
+                                    <a class="nav-l4" data-locale="zh_tw" href="https://www.intel.com.tw/content/www/tw/zh/homepage.html">
+                                            繁體中文
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var newLangSelector = true;
+</script>
+
+                            <!-- END: NON-sign in panel -->
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        
+    
+
+
+    <button type="button" title="Search intel.com" class="nav-link-icon toggle-search collapsed"
+            data-bs-target="#simplify-search" aria-expanded="false"
+            aria-controls="simplify-search" data-mega-control="global-search">
+        <span class="visually-hidden">Toggle Search</span>
+        <span class="fa-global-search"></span>
+    </button>
+    <div class="mega-panel mega-search-panel collapse" id="simplify-search"
+         document-height="true">
+        <div class="mega-panel-wrap">
+            <div class="mega-panel-body">
+                <div class="panel-content">
+                    <div class="search-component search-component"
+                         data-igm-search-content="">
+                        <form class="mega-search-form search item" data-igm-search-control="" name="hpsform-new" id="hpsform-new" action="/content/www/us/en/search.html" role="search" onsubmit="return inputSearch()">
+                            <button type="submit" class="btn-mega-search icon"
+                                    aria-label="Search" tabindex="-1">
+                                <span class="visually-hidden">Search</span>
+                                <span class="fa-global-search"></span>
+                            </button>
+
+                            
+                                
+                                
+                                    <label for="mobile-search">
+                                        <span class="visually-hidden"><</span>
+                                        <input id="toplevelcategory" name="toplevelcategory" type="hidden" value="none">
+                                        <input id="query" name="query" type="hidden" value="">
+                                        <input data-tabindex="1" class="form-control" data-search-input
+                                               id="mobile-search" name="keyword" type="text"
+                                               data-igm-search-input title="Search" autocomplete="off"
+                                               data-target-result="#igm-search-result" aria-controls="mega-results-overlay" aria-label="Search Intel.com" placeholder="Search Intel.com">
+                                    </label>
+                                
+                            
+                            
+                            <button type="button" id="cls-btn-advanced" class="btn-mega-close fa-cancel-1 hide-flyout" aria-label="Clear Search Term" data-clear-input="clear-input">
+									<span class="visually-hidden">Close Search Panel</span>
+							</button>
+                                <button type="button" id="advanced-btn" class="btn-advance-filter fa-sliders hide-flyout" aria-label="Advanced Search Panel" data-mega-advanced-search="advanced-search">
+                                            <span class="visually-hidden">Advanced Search</span>
+                                </button>
+                            
+                            
+
+                        </form>
+                        <!-- 
+                            'hidden' class is conditionally removed on load @ intel.search-dropdown.js
+                         -->
+                        <div class="results-overlay mega-results-overlay search-quick-links "  aria-live="off"
+                             id="mega-results-overlay" data-component="wa_skip_track">
+                             
+                                 <div class="mega-close-container">
+									<button aria-label="Close search panel" class="btn-icon no-style close-result-toggle flyout-close" data-mega-close="global-search">
+									close
+									</button>
+								</div>
+                            
+                            <!-- Search Result Typeahead -->
+                            <div class="results-typeahead collapse" id="igm-search-result"
+                                 data-igm-search-results="">
+                                <div class="overlay-content">
+                                    <!--<h3>Top Results </h3>-->
+                                    <!-- added content-quick-search class -->
+                                    <div class="content-quick-search">
+                                    </div>
+                                </div>
+                                <div class="search-info">
+                                    <a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">
+                                        Sign In</a> to access restricted content
+                                </div>
+                            </div>
+                            <!-- Recent Searches: 1) display default search info if no search terms is available  -->
+                            <!-- Recent Searches: 2) display recenter terms when available and hide default search info  -->
+                            <div class="results-recent collapse" data-igm-search-related="">
+                                <div>
+                                    <!-- default search info -->
+                                    <div class="content-search-block content-search-info">
+                                        <h3>Using Intel.com Search</h3>
+                                        <p>You can easily search the entire Intel.com site in several ways.</p>
+                                        <ul>
+                                            <li>
+                                                Brand Name:
+                                                <strong>
+                                                    Core i9
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Document Number:
+                                                <strong>
+                                                    123456
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Code Name:
+                                                <strong>
+                                                    Emerald Rapids
+                                                </strong>
+                                            </li>
+                                            <li>
+                                                Special Operators:
+                                                <strong>
+                                                    “Ice Lake”, Ice AND Lake, Ice OR Lake, Ice*
+                                                </strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- quick links is always visible on the recents overlay -->
+                                    <div class="content-search-block content-quick-links">
+                                        <h3>Quick Links</h3>
+                                        <p>You can also try the quick links below to see results for most popular searches.</p>
+                                        <ul>
+                                            <li>
+                                                <a class="quick-link" rel="noopener noreferrer" href="https://www.intel.com/content/www/us/en/products/overview.html?wapkw=quicklink:products">
+                                                    Product Information
+                                                </a>
+                                            </li>
+                                            <li><a class="quick-link" rel="noopener noreferrer" href="https://www.intel.com/content/www/us/en/support.html?wapkw=quicklink:support">
+                                                Support
+                                            </a>
+                                            </li>
+                                            <li>
+                                                <a class="quick-link" rel="noopener noreferrer" href="https://downloadcenter.intel.com?wapkw=quicklink:download-center">
+                                                    Drivers & Software
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- recent search terms -->
+                                    <div class="results-overlay results-recent results component content-search-block content-recent" data-component="wa_skip_track"
+                                         data-component-id="1">
+                                        <div class="overlay-content recent-searches-terms">
+                                            <h3>Recent Searches</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="search-info">
+                                    <a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">
+                                        Sign In</a> to access restricted content
+                                </div>
+                            </div>
+                            
+                                 <div class="results-advanced collapse" data-igm-advanced-search="">
+											<div class="overlay-content">
+												<!-- default search info -->
+												<div class="content-search-block content-search-info component" data-component="wa_skip_track" data-component-id="1">
+													<h3>Advanced Search</h3>
+													<div class="controls-wrapper">
+														<div class="controls">
+															<div class="input-group select-control">
+																<select class="documentation-card-version-select" name="find-results" id="find-results">
+																	<option value="All of these terms" selected="">All of these terms</option>
+																	<option value="Any of these terms">Any of these terms</option>
+																	<option value="Exact term only">Exact term only</option>
+																</select>
+																<label class="select-label" for="find-results">Find results with</label>
+															</div>
+
+															<div class="input-group select-control">
+                                                                <select class="selectAdvanced" name="show-results-from" id="show-results-from">
+                                                                    <option value="allResults" selected="" aria-label="all Results">
+                                                                        All Results
+                                                                    </option>
+                                                                    <option value="Products" aria-label="Products">
+                                                                        Product Information
+                                                                    </option>
+                                                                    <option value="Support">
+                                                                        Support
+                                                                    </option>
+                                                                    <option value="Downloads">
+                                                                        Drivers & Software
+                                                                    </option>
+                                                                    <option value="Developers">
+                                                                        Documentation & Resources
+                                                                    </option>
+                                                                    <!-- <option value="Solutions">Solutions</option>-->
+                                                                    <option value="Partners">
+                                                                        Partners
+                                                                    </option>
+                                                                    <option value="forums">
+                                                                        Communities
+                                                                    </option>
+                                                                    <option value="Corporate">
+                                                                        Corporate
+                                                                    </option>
+                                                                </select>
+																<label class="select-label" for="show-results-from">Show results from</label>
+															</div>
+														</div>
+
+														<div class="controls">
+															<h3 
+                                                            >Only search in</h3>
+															<div class="input-group" aria-label="Only Search In">
+																<label for="search_title">
+																	<input name="search_title" id="search_title" type="checkbox">
+																	Title</label>
+
+																	<label for="search_description">
+																	<input name="search_description" id="search_description" type="checkbox">
+																Description</label>
+
+																	<label for="search_id">
+																	<input name="search_id" id="search_id" type="checkbox">Content ID</label>
+															</div>
+
+															<button role="button" type="button" class="btn btn-primary" id="advanced-search-submit" data-wap data-wap-ref="search-button">
+																Search
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="search-info">
+												<a href="javascript:void();" class="login-toggle" data-activate-mega-control="signin">Sign in</a> to access
+												restricted content.
+											</div>
+										</div>
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var global_config = {
+        "icsUrl": "https://supporttickets.intel.com/services/oauth2/authorize?response_type=token&client_id=3MVG9QDx8IX8nP5Rh0X3B7gohGtUh8sjFQ8Tw_U8sS9_PoVrupDFwZ_nwLcze2n64lGBbGchyUb7_9W8n8pAV&redirect_uri=https%3A%2F%2Fwww.intel.com%2Fcontent%2Fwww%2Fus%2Fen%2Fsecure%2Fmy-intel%2Ftoken.html",
+        "ipsUrl": "https://premiersupport.intel.com/IPS/services/oauth2/authorize?response_type=token&client_id=3MVG9xOCXq4ID1uEa5F2lCYAp6mmKvTMlKbMIrsMKShY2oOqs1ETvPRjwmhoPivHd9_U53EzmiyYxn3nVpA9J&redirect_uri=https%3A%2F%2Fwww.intel.com%2Fcontent%2Fwww%2Fus%2Fen%2Fsecure%2Fmy-intel%2Ftoken.html"
+    };
+
+
+    function inputSearch() {
+    if (globalSearch.advancedSearchFlag == 'true') {
+        var findResults = $("#find-results").val();
+        var showResults = $("#show-results-from").val();
+        var titleIsChecked = $("#search_title").is(":checked");
+        var descriptionIsChecked = $("#search_description").is(":checked");
+        var idIsChecked = $("#search_id").is(":checked");
+        var searchInputValue = $("#mobile-search").val();
+
+        if (findResults != 'All of these terms' || showResults != "allResults" || titleIsChecked || descriptionIsChecked || idIsChecked) {
+            if (searchInputValue) {
+                return advancedSearch();
+            }
+            else {
+                return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+            }
+        }
+
+        else {
+            return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+        }
+    }
+    return INTEL_TYPE_AHEAD.onSubmitHps('Search', '/content/www/us/en', 'en_US');
+
+}
+
+
+    var globalSearch = globalSearch || {};
+    globalSearch = {
+        searchProvider: 'coveo',
+        baseSearchQuery: 'localecode:"en_US" NOT generic1:"false" ',
+        langRootPath: '/content/www/us/en',
+        headingTxt: 'Best Match',
+        locale: 'en_US',
+        typeAheadUrl: 'http://search.intel.com/SearchLookup/DataProvider.ashx',
+        bestMatchUrl: 'https://intelcorporationproductione78n25s6.org.coveo.com/rest/search/v2/querySuggest',
+        searchRealm: 'Default',
+        bestMatchQ1: 'NAR',
+        bestMatchQ2: 'en',
+        bestMatchQ11: 'sptitle,description,url,thumbnailurl,reimaginerootlevel',
+        progId: 'ude',
+        useEMTTags: true,
+        defaultPage: 'search.html',
+        ighfToken: 'xx6e698e8b-65ad-446c-9030-666d0ec92d15',
+        searchHub: 'entepriseSearch',
+        newNavRedesign: true,
+        advancedSearchFlag :'true',
+        gtvLabels: {
+            suggested: "",
+            products: "Product Information",
+            support: "Support",
+            developers: "Developers",
+            drivers: "Drivers",
+            forums: "Forums",
+            specifications: "Specifications",
+            download: "",
+            searchesRelatedTo: "",
+            search: "Search Intel.com",
+            inLabel: "in",
+            searchSupport: "Search Intel® Support",
+            intelcom: "",
+            forLabel: "for",
+            allResults: "All Results",
+            show: "Show",
+            results: "Results"
+        },
+        mobileResults: "5",
+        laptopResults: "10",
+        EDCProgramIdentifier: "false"
+    };
+</script>
+                        </div>
+                        <!-- END MOBILE TOGGLE buttons -->
+                    </div>
+                </nav>
+            </header>
+        </div>
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+    
+    
+    
+
+
+
+
+
+<div id="secondary-nav-1" class="component secondary-nav" data-component="subnavigation-breadcrumb"
+     data-component-id="1">
+    
+</div>
+
+
+    
+    
+        
+        
+            
+            <script type="application/ld+json">
+            
+ </script>
+        
+    
+
+
+
+<script type="text/javascript">
+    intel = intel || {};
+    intel.utils = intel.utils || {};
+    intel.utils.breadcrumbSource = "";
+    intel.utils.isDefaultSecondaryNavNeeded = "false";
+    intel.utils.displayTitle = "Tuning Guide for AI on the 4th Generation";
+    intel.utils.template = "/apps/intel/commons/templates/mobileFirst/mf-article-long";
+</script>
+
+        
+        <script type="text/javascript">
+            
+            var globalHeader = globalHeader || {};
+            globalHeader = {
+                currentPath: "https://www.intel.com/content/www/us/en/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation.html",
+                lanloc: "/us/en",
+                lanLoc: "US/en",
+                helpformurl: "",
+                intelHeaderFooterVersion: "menu3",
+                megaMenuPath: "/content/data/globalelements/US/en/globalnav4",
+                subMenuPath: "/content/data/globalelements/US/en/sub-navigation/idz/developer-sub-navigation-breadcrumb",
+                isCHF:false,
+                secureRedirectURL: "",
+                excludeGlobalNav4: "false",
+                allowSubNavigationBreadcrumb: "true",
+                breadcrumbParentPagePath: "/content/www/us/en/developer/topic-technology/artificial-intelligence/overview",
+                myintelHeaderLinkAgs: "RDC Basic View,RDC Privileged Full,RDC Privileged Entitlement-AZAD,Intel Registration Center Access~RDC Privileged Full,Sales-PRM-External-Customers Employee-User~RDC Basic View,RDC Privileged Full",
+            }
+        </script>
+    
+
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/in-viewport.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/nav.min.js" defer></script>
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/secondaryNav.min.js" defer></script>
+</div>
+
+    
+    
+
+
+<section data-scroll-track="false">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 pull-right persistent-cta-integration-globalNav" id="alertMsg">
+                <div id="alertSupport">
+                    <div class="browser_detect" id="browserdetectid" style="display:none;">
+                        <p>The browser version you are using is not recommended for this site.<br/>Please consider upgrading to the latest version of your browser by clicking one of the following links.</p>
+                        <div class="browser_types">
+                            <ul>
+                                
+                                    <li><a href="https://support.apple.com/downloads/safari">Safari</a></li>
+                                
+                                    <li><a href="https://support.google.com/chrome/answer/95346?hl=en">Chrome</a></li>
+                                
+                                    <li><a href="https://www.microsoft.com/en-us/edge">Edge</a></li>
+                                
+                                    <li><a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<main id="primary-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" integrity="sha384-M5jmNxKC9EVnuqeMwRHvFuYUE8Hhp0TgBruj/GZRkYtiMrCRgH7yvv5KY+Owi7TW" crossorigin="anonymous">
+</script>
+
+<script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/supportLibs/resources/js/SupportPageTool.js" type="text/javascript" defer></script>
+
+
+
+<div class="targetParsys intelparsys">
+</div>
+
+
+    
+        <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/salesForceArticleLibs.min.css" type="text/css"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism-linenumbers.min.css" type="text/css"><link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleNewUxLibs.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/salesForceArticleLibs.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/waypoints.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/sticky.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/prism-linenumbers.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleNewUxLibs.min.js" defer></script>
+        <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleIdzLibs.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/showdown.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/externallibs/waypoints.min.js" defer></script><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/articleIdzLibs.min.js" defer></script>
+        <div class="aggregation">
+            <div class="aggregation">
+
+
+
+
+
+    
+</div>
+
+        </div>
+        <main id="primary-content-main" data-toolbar-order="">
+            <div class="promotionsBanner marketingbanner">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/upeMarketingBanner.min.css" type="text/css">
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
+        
+    
+</div>
+
+            <div class="articlehero">
+                <div class="articlehero">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+        
+            
+                
+            
+            
+            
+            
+            
+            
+            
+        
+        
+            
+            
+                
+            
+        
+        
+        
+            
+                
+            
+            
+        
+        
+        
+
+        <div class="masthead-component article-marquee-component intel-brand-ux component"
+             data-component="articleHero" id="articleHero-1" data-component-id="1">
+            
+            
+                
+                    
+                        
+                        
+                        
+                        
+                    
+                    <div class="content-marquee-1_0_0 intel-ws solid blade theme-dark-default brand-classic-blue color-block  no-image">
+                        <div class="color-block-lighter">
+                            <div class="container">
+                                <div id="document">
+                                    <div class="marquee-heading-section">
+                                        <h1 class="h3">Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable Processors</h1>
+                                    </div>
+                                    <div class="documentDetails">
+                                        <div class="document id">
+                                            
+                                                <span> ID </span>
+                                                <span class="idValue">767351</span>
+                                            
+                                        </div>
+                                        <div class="document update">
+                                            
+                                                <span> Updated </span>
+                                                <span class="UpdatedValue">2/1/2023</span>
+                                            
+                                        </div>
+                                        <div class="document version">
+                                            
+                                                <span> Version </span>
+                                                <span class="versionValue">
+                                                
+                                                    
+                                                        Latest
+                                                    
+                                                    
+                                                
+                                            </span>
+                                            
+                                        </div>
+                                        <!--Based on the feature flag/dialog checkbox, display the below div text -->
+                                        
+                                            
+                                            
+                                                <div class="public">Public</div>
+                                            
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+            
+        </div>
+        </div>
+        <!--Based on if the version is not latest, below alert text is displayed -->
+        
+            
+        
+    
+</div>
+
+            </div>
+            <article class="article article-long component developer-article" data-component-id="1"
+                     data-component="articletemplate">
+                <div class="container takeaway-container">
+                    <div class="component-padding">
+                        <div class="row">
+                            <div class="left-side col-md-4 col-lg-3">
+
+                                <div class="article-actions-mobile d-block d-md-none"></div>
+
+                                <!-- duplicated from articlehero for vertical layout -->
+                                
+                                    
+                                        <div id="inpage-navigation" class="inpage-navigation"></div>
+                                    
+                                    
+                                
+
+                                <p class="author"></p>
+                                <!-- BUILT IN - ARTICLE INTRO COMPONENT -->
+                                <!-- duplicated from right column for mobile layout -->
+                                <div class="article-intro-first mobile row section d-block d-md-none"></div>
+                                <!-- END IN - ARTICLE INTRO COMPONENT -->
+
+                                <!-- BUILT IN - ARTICLE TAKEAWAY COMPONENT -->
+
+                                <div class="articletakeaway parbase">
+                                    <div class="articletakeaway parbase">
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+
+
+
+    
+</div>
+
+                                </div>
+
+                                <div class="article-intro-second">
+                                    <div class="articleintro1 articleintro">
+                                        <div>
+                                            <!--  BUILT IN - ARTICLE INTRO SECOND COMPONENT -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- only display this for authored pages and not salesforce pages-->
+                                <div class="authorcontainer">
+                                    <div>
+                                        <div class="no-author-img"></div>
+                                        <img class="author-img" src="" alt="author-image">
+                                    </div>
+                                    <div class="authordetails">
+                                        <div class="singleauthordetails">
+                                            <p id="singleauthorname" class="authorname"></p>
+                                            <p id="singleauthorbio" class="authorbio"></p>
+                                        </div>
+                                        <p id="coauthordetails"></p>
+                                        <p id="ldapauthordetails"><span>By</span></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="right-side col-md-8 col-lg-9">
+                                <div class="article-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- BEGIN NEW BUILD IN - Article Actions - DESKTOP -->
+                                            <div class="article-actions section d-none d-sm-block" role="toolbar">
+                                                <!-- NEW Download PDF link - migrated from .article-intro byline
+                                                    Hide this link if no PDF configured for this article
+                                                -->
+                                                <p class="articleDate"></p>
+
+                                                <button id="linkToPrintArticle"
+                                                        class="article-action linkToPrintArticle fa fa-print"
+                                                        data-bs-toogle="tooltip" data-bs-placement="bottom"
+                                                        title="Print"
+                                                        data-content-element="#primary-content-main"
+                                                        data-print-modal-name="PRINT"
+                                                        data-print-modal-style="height=400,width=800,scrollbars=yes"
+                                                        data-print-modal-title="Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable Processors"
+                                                        data-include-page-title="true"
+                                                        onclick="printArticle('#linkToPrintArticle');"
+                                                        aria-label="Print Article"></button>
+
+                                                <button id="linkToEmailArticle"
+                                                        class="article-action linkToEmailArticlefa fa-mail-1"
+                                                        data-bs-toogle="tooltip" data-bs-placement="bottom"
+                                                        title="Email"
+                                                        data-modal-title="Tuning Guide for AI on the 4th Generation Intel® Xeon® Scalable Processors"
+                                                        data-modal-subject="Link to the Intel Article"
+                                                        data-modal-body="Intel Article Link"
+                                                        onclick="emailArticle('#linkToEmailArticle');"
+                                                        aria-label="Email Article"></button>
+
+                                                <!--
+                                                    This will be for a future project
+                                                    <button id="linkBookMark" class="article-action fa fa-bookmark-empty" data-tooltip="tooltip" data-placement="top" data-container="body" title="BookMark"></button>
+                                                -->
+                                            </div>
+                                            <div class="article-intro-first section d-none d-sm-block">
+                                                <div class="articleintro">
+                                                    <div class="articleintro">
+
+
+
+
+
+
+
+        
+        
+
+
+
+
+
+
+
+<div class="container article-intro-first-child" id="articleintro" data-component="articleintro" data-component-id="1">
+
+    <div class="component-padding article-intro-padding">
+        <div class="article-intro byline">
+            
+            <div class="intropdf">
+                
+
+            </div>
+            
+            
+            
+
+            
+
+            
+                <div id="ldapauthorinfo" class="articleIntroAuthor">
+                    
+                        <a href="https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=EFrriaTtZjAiYW5peWk1om8sk78JuESS&iv=GDmsprGVXUMfdpTY">Huiyan Cao</a>,
+                    
+                    
+                
+                    
+                        <a href="https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=mhKA8fhW%2FKom3bcKh3uB2bnafcviu78t&iv=garKA1OcjWoobMkM">Jianyu Zhang</a>,
+                    
+                    
+                
+                    
+                    
+                        <a href="https://community.intel.com/cipcp26785/plugins/custom/intel/intel/custom.userprofile?id=4mty71EHk7%2BTSIgFkCKZ4VUbU2tlnX07&iv=%2FSvCIkYtSQ23oMJG">Vishnu Madhu</a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="articlebladepar intelparsys">
+<div class="articleParagraph parbase section">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            <div id="articleparagraph-1" class="component" data-component="articleparagraph"
+                 data-component-id="1">
+                <div >
+                    
+                    
+
+
+
+
+
+
+
+    
+    <div class="container">
+        <div class="component-padding">
+            <div class="row">
+                <div class="col-md-4 takeaway-placeholder">
+                </div>
+                <div class="col-md-8 paragraph-placeholder">
+                    <div class="article-content">
+                        <div class="row">
+                            <div class="col-12 articlepara">
+                                <div class="modal fade modal-image" id="image-expand-modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close icon" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span></span></button>
+                                            </div>
+                                            <div class="modal-body"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    
+                                    
+                                        <p><h2>Overview</h2>
+
+<p>This guide is for users who are familiar with Intel&reg; AI Analytics Toolkit and Intel&reg; Distribution of OpenVINO&trade; Toolkit. It provides recommendations for tuning the 4th Generation Intel&reg; Xeon&reg; Scalable Processor platform for Intel&reg; optimized AI Toolkits. These hardware and software configurations provide the best performance in most situations. However, please note that we rely on users to carefully consider these settings for their specific scenarios, since these tools can be deployed in multiple ways.</p>
+
+<p>The 4th Generation Intel&reg; Xeon&reg; Scalable Processor platform is an unique, scalable platform optimized for different workloads acceleration including HPC, AI, BigData, Networking etc. with higher performance and TCO efficiency:</p>
+
+<ul>
+	<li>More cores with up to 56 cores per socket and up to 448 cores in an 8-socket platform</li>
+	<li>New built-in AI acceleration engine, Intel&reg; Advanced Matrix Extensions (AMX), which accelerates a variety of AI Inference and Training workloads (NLP, recommendation systems, image recognition&hellip;) with BF16 and INT8 datatype support</li>
+	<li>Increased memory bandwidth and speed with DDR5 (vs.&nbsp;DDR4) and High Bandwidth Memory (HBM) for memory-bound workloads</li>
+	<li>Accelerate time to data analysis with new integrated In-Memory Database Accelerator (IAX)</li>
+	<li>High throughput for latency-sensitive workloads with up to 2x I/O bandwidth with PCIe 5.0</li>
+	<li>Increased overall system performance with Intel Dynamic Load Balancer (DLB) &ndash; efficient handling of network data</li>
+	<li>Up to 4x cryptography and data compression workloads acceleration with Integrated Intel QuickAssist Technology (QAT)</li>
+</ul>
+
+<h3>AI Stages</h3>
+
+<p>A typical deep learning application has following stages:</p>
+
+<p><img alt="" height="206" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig1.png" width="560"/></p>
+
+<p>Each stage requires the allocation of these resources:</p>
+
+<ul>
+	<li>Computational power</li>
+	<li>Memory</li>
+	<li>Storage for datasets</li>
+	<li>Communication link between compute nodes</li>
+	<li>Optimized software</li>
+</ul>
+
+<p>Choosing the right combination of resources greatly accelerates the efficiency of your AI services. All of the processes including dataset preparation, model training, model optimization, and model deployment, can be done on a 4th Generation Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure that supports machine learning/deep learning platforms for training and inference. A proposed infrastructure is shown in the figure below:</p>
+
+<p><img alt="" height="342" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig2.jpg" width="770"/></p>
+
+<h2>Introducing Advanced Matrix Extension (AMX)</h2>
+
+<p>Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) is a &ldquo;single instruction, multiple data&rdquo; (SIMD) instruction set based on x86 processors. It is used for executing multiple data operations with a single instruction. As the name implies, Intel&reg; AVX-512 has a register width of 512 bits, and it supports 16 32-bit single-precision floating-point numbers or 64 8-bit integers.</p>
+
+<p>Intel&reg; Xeon&reg; Scalable Processors support multiple types of workloads, including complex AI workloads. They improve AI computation performance with Intel&reg; Deep Learning Boost (Intel&reg; DL Boost). Intel Deep Learning Boost includes Intel&reg; AVX-512 VNNI (Vector Neural Network Instructions), AVX512 BF16 and AMX (Advanced Matrix Extension).</p>
+
+<p>AVX-512 VNNI can combine three instructions (vpmaddubsw, vpmaddwd, and vpaddd) into one (vpdpbusd) execution. This further unleashes the computing potential of next-generation Intel&reg; Xeon&reg; Scalable Processors and increases the inference performance of the INT8 model. 2nd Generation, 3rd Generation, and 4th Generation Intel&reg; Xeon&reg; Scalable Processors all support VNNI.</p>
+
+<p>The AVX-512_BF16 feature includes an instruction (VDPBF16PS) to compute dot product of BF16 pairs and to accumulate to single precision (FP32), as well as instructions (VCVTNE2PS2BF16, VCVTNEPS2BF16) to convert packed single precision data (FP32) to packed BF16 data.</p>
+
+<p>Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX) is a new 64-bit programming paradigm consisting of two components: a set of 2-dimensional registers (tiles) representing sub-arrays from a larger 2-dimensional memory image and an accelerator able to operate on tiles. The first implementation is called TMUL (tile matrix multiply unit).</p>
+
+<h3>Intel&reg; Deep Learning Boost</h3>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse">
+	<thead>
+		<tr>
+			<td>Processor</td>
+			<td>AVX-512 VNNI</td>
+			<td>AVX-512 BF16</td>
+			<td>AMX</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cascade Lake</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Cooper Lake</td>
+			<td>V</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Ice Lake</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Sapphire Rapids</td>
+			<td>V</td>
+			<td>V</td>
+			<td>V</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><img alt="" height="245" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig3.jpg" width="1190"/></p>
+
+<p style="text-align:center">Deep Learning VNNI</p>
+
+<p>Platforms not using VNNI require the&nbsp;vpmaddubsw, vpmaddwd&nbsp;and&nbsp;vpaddd&nbsp;instructions to complete the multiply-accumulate operations in INT8 convolution operation:</p>
+
+<p><img alt="" height="158" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig4.jpg" width="1326"/></p>
+
+<p style="text-align:center">Diagram showing INT8 described in text</p>
+
+<p>Platforms using VNNI require only one instruction, &ldquo;vpdpbusd&rdquo;, to complete the INT8 convolution operation:</p>
+
+<p><img alt="" height="156" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig5.jpg" width="587"/></p>
+
+<p style="text-align:center">Diagram showing INT8 described in text</p>
+
+<h4>AMX</h4>
+
+<p>AMX introduces a new matrix register file with eight rank-2 tensor registers called &ldquo;tiles&rdquo;. It also introduces the concept of accelerators that are capable of operating on those tiles. The matrix register file comprises eight tiles (named TMM0&hellip;TMM7), each having a maximum size of 16 rows by 64-byte columns for a total size of 1 KiB/register and 8 KiB for the entire register file. Load a tile representing a small section from a larger image in memory, operate on that tile, and repeat with the next tile that represents the next portion of the image. When done, store the resultant tile to memory. The Tile Matrix Multiply (TMUL) unit comprises a grid of fused multiply-add units capable of operating on tiles.</p>
+
+<p><img alt="" height="316" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig6.png" width="648"/></p>
+
+<h5>AMX sub-extensions and related instructions</h5>
+
+<p>The AMX extension comprises three sub-extensions: AMX-TILE, AMX-INT8, and AMX-BF16.</p>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse">
+	<thead>
+		<tr>
+			<td>Instruction</td>
+			<td>AMX-TILE</td>
+			<td>AMX-INT8</td>
+			<td>AMX-BF16</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>LDTILECFG</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>STTILECFG</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TILELOADD</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TILELOADDT1</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TILESTORED</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TILERELEASE</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TILEZERO</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TDPBSSD</td>
+			<td>&nbsp;</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TDPBSUD</td>
+			<td>&nbsp;</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TDPBUSD</td>
+			<td>&nbsp;</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TDPBUUD</td>
+			<td>&nbsp;</td>
+			<td>V</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>TDPBF16PS</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>V</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>Environment</h2>
+
+<p>This configuration is based on 4th Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to usage requirements. Hardware and software tested for this tuning guide include:</p>
+
+<h3>Hardware</h3>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse; width:50%">
+	<thead>
+		<tr>
+			<td>Hardware</td>
+			<td>Model</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Server Platform Name/Brand/Model</td>
+			<td>Intel&reg; Eagle Stream Server Platform</td>
+		</tr>
+		<tr>
+			<td>CPU</td>
+			<td>Intel&reg; Xeon&reg; PLATINUM 8480&nbsp;CPU @ 2.00GHz</td>
+		</tr>
+		<tr>
+			<td>Memory</td>
+			<td>
+			<p>8*32 GB DDR5, 4800 MT/s</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Software</h3>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse">
+	<thead>
+		<tr>
+			<td>Software</td>
+			<td>Version</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Operating System</td>
+			<td>Ubuntu 22.04.1 LTS</td>
+		</tr>
+		<tr>
+			<td>Kernel</td>
+			<td>5.17.6</td>
+		</tr>
+		<tr>
+			<td>Frequency Driver</td>
+			<td>intel_pstate</td>
+		</tr>
+		<tr>
+			<td>Frequency Governor</td>
+			<td>performance</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>BIOS Settings</h3>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse; width:100%">
+	<thead>
+		<tr>
+			<td><strong>Configuration item</strong></td>
+			<td><strong>Recommended value</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><strong>Processor Configuration</strong></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+			<p>(New BIOS) Enable LP</p>
+			</td>
+			<td>All LPs</td>
+		</tr>
+		<tr>
+			<td>
+			<p>(Old BIOS) Hyper-Threading [ALL]</p>
+			</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>Hardware Prefetcher</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>Adjacent Cache Prefetch</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>DCU Streamer Prefetcher</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>DCU IP Prefetcher</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>LLC Prefetch</td>
+			<td>Disabled</td>
+		</tr>
+		<tr>
+			<td>LLC Dead Line Allocation</td>
+			<td>Enabled</td>
+		</tr>
+		<tr>
+			<td>Homeless Prefetch</td>
+			<td>Auto</td>
+		</tr>
+		<tr>
+			<td><strong>Advanced Power Management Configuration</strong></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Intel&reg; Turbo Boost Technology</td>
+			<td>
+			<p>Enabled</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Memory</h3>
+
+<p>One important system configuration is balanced DIMM population, which is suggested to be set as balanced to get optimized performance.</p>
+
+<p>Populate as many channels per socket as possible prior to adding additional DIMMs to the channel. It might impact the memory bandwidth if two dimm share one channel.</p>
+
+<p>Please also refer to Chapter 4 in&nbsp;Eagle Stream Platform Performance &amp; Power Optimization Guide&nbsp;for more details.</p>
+
+<h3>CPU</h3>
+
+<p>The 4th Generation of Intel&reg; Xeon&reg; Scalable processor comes with the all new Intel&reg; AMX (Advanced Matrix Extensions) instruction set. Intel&reg; AMX provides acceleration for mixed precision deep learning training and inference workloads. The 4th Generation of Intel&reg; Xeon&reg; Scalable processor provides two instruction sets viz.&nbsp;AMX_BF16 and AMX_INT8 which provides acceleration for bfloat16 and int8 operations respectively</p>
+
+<p>Note: To confirm that AMX_BF16 and AMX_INT8 are supported by the CPU, enter the following command on the bash terminal and look for AMX in the &ldquo;flags&rdquo; section. In case AMX instructions are not getting listed, consider updating the Linux kernel to 5.17 and above</p>
+
+<pre>
+<code class="language-bash">$ cat /proc/cpuinfo</code></pre>
+
+<h3>Network</h3>
+
+<p>If cross-node training clusters are required, choose high-speed networks, such as 25G/100G, for better scalability.</p>
+
+<h3>Hard drive</h3>
+
+<p>For high I/O efficiency, use SSDs and drives with higher read and write speeds.</p>
+
+<h2>Linux Operating System Optimization</h2>
+
+<p>To speed up processing tune the Linux operating system for parallel programming.</p>
+
+<h3>OpenMP Parameter Settings</h3>
+
+<p>The <a href="https://www.openmp.org/" style="color:#4f81bd">OpenMP</a> is a specification for parallel programming. In case your application implements OpenMP based threading, experiment with the following environment variables and find the best fit values:</p>
+
+<ul>
+	<li>OMP_NUM_THREADS = &ldquo;number of cpu cores in container&rdquo;</li>
+	<li>KMP_BLOCKTIME = 1 or 0 (set according to actual type of model)</li>
+	<li>KMP_AFFINITY=granularity=fine, verbose, compact,1,0</li>
+</ul>
+
+<h3>Number of CPU cores</h3>
+
+<p>Consider the impact on inference performance based on the number of CPU cores being used, as follows:</p>
+
+<ul>
+	<li>When batchsize is small (in online services for instance) the increase in inference throughput gradually weakens as the number of CPU cores increases. In practice, 8-16 CPU cores is recommended for service deployment depending on the model used.</li>
+	<li>When batchsize is large (in offline services for instance) the inference throughput can increase linearly as the number of CPU cores increases. In practice, more than 20 CPU cores is recommended for service deployment.</li>
+</ul>
+
+<pre>
+<code class="language-bash"># taskset -C xxx-xxx –p pid (limits the number of CPU cores used in service)</code></pre>
+
+<h3>NUMA Configuration</h3>
+
+<p>For NUMA-based servers, a 5-10% increase in performance may be realized when configuring NUMA on the same node compared to using it on different nodes.</p>
+
+<pre>
+<code class="language-bash">#numactl -N NUMA_NODE -l command args ... (controls NUMA nodes running in service)</code></pre>
+
+<h3>Configuration of Linux Performance Governor</h3>
+
+<p>Efficiency is the key consideration. Set the CPU frequency to its peak for the best performance.</p>
+
+<pre>
+<code class="language-bash"># cpupower frequency-set -g performance</code></pre>
+
+<h3>CPU C-States Settings</h3>
+
+<p>There are several power modes available for each CPU which are collectively referred to as C-states or C-modes. To reduce power consumption when the CPU is idle, the CPU can be placed in the low-power mode. Disabling C-States can increase performance.</p>
+
+<pre>
+<code class="language-bash">#cpupower idle-set -d 2,3</code></pre>
+
+<h2>Using Intel&reg; Optimization for TensorFlow*</h2>
+
+<p>Starting with TensorFlow Version 2.9, the performance improvements delivered by the <a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onednn.html" style="color:#4f81bd">Intel&reg; oneAPI Deep Neural Network Library (oneDNN)</a> are turned on by default. While Intel&reg; Optimization for TensorFlow* adds optimizations for extra performance when running TensorFlow on Intel hardware. The intention is to deliver up-to-date features and optimizations for TensorFlow on Intel hardware. Examples include AVX-512 Vector Neural Network Instructions (AVX512 VNNI) and Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX).</p>
+
+<p>Intel&reg; Optimization for TensorFlow* has been released as an <a href="https://github.com/Intel-tensorflow/tensorflow">open&ndash;source project</a>.</p>
+
+<h3>Install Intel&reg; Optimization for TensorFlow*</h3>
+
+<p class="note"><strong>Note:&nbsp;</strong>Optimizations for 4th Generation Intel&reg; Xeon&reg; Scalable processors start from Intel&reg; Optimization for TensorFlow* 2.11, and dev <a href="https://pypi.org/project/intel-tensorflow/#history" style="color:#4f81bd">packages</a> are needed.</p>
+
+<pre>
+<code class="language-bash">conda create -n intel-tf python=3.8 -y
+conda activate intel-tf
+pip install intel-tensorflow==2.11.dev202242</code></pre>
+
+<h3>Optimization Recommendations for TensorFlow-based Deep Learning Models</h3>
+
+<p>To maximize deep learning performance on Intel&reg; platform, Intel&reg; Optimization for TensorFlow* takes advantage of following techniques:</p>
+
+<ul>
+	<li>NUMA Control: numactl specifies NUMA scheduling and memory placement policy</li>
+	<li>Multi-threads: utilize OpenMP to parallelize deep learning model execution among CPU cores</li>
+	<li>Thread Affinity: use KMP_AFFINITY to restrict execution of certain threads to a subset of the physical processing units in a multiprocessor computer</li>
+</ul>
+
+<p>Refer to <a href="https://www.intel.com/content/www/us/en/developer/articles/technical/maximize-tensorflow-performance-on-cpu-considerations-and-recommendations-for-inference.html" style="color:#4f81bd">Maximize TensorFlow* Performance on CPU</a> for more details.</p>
+
+<h3>Enabling BF16</h3>
+
+<p>Intel&reg; 4th Generation Intel&reg; Xeon&reg; Scalable Processors support accelerating AI inference by using low precision data types such as BF16 and INT8 based on the Intel&reg; Deep Learning Boost and Intel&reg; Advanced Matrix Extension(AMX). There are several instructions such as AMX_BF16, AMX_INT8, AVX512_BF16, AVX512_VNNI to accelerate AI models.</p>
+
+<h4>For Inference</h4>
+
+<p>For a pre-trained FP32 model (resnet50 from TensorFlow Hub as an example below):</p>
+
+<ol>
+	<li>Install tensorflow_hub for this sample in addition to Intel&reg; Optimization for TensorFlow*
+	<pre>
+<code class="language-python">pip install tensorflow_hub</code></pre>
+	</li>
+	<li>Run inference with export <span class="code-simple">ONEDNN_VERBOSE=1</span>, you should be able to see AVX512_BF16 and AMX_BF16 instructions are enabled.
+	<ul>
+		<li>Save below code as inference.py</li>
+	</ul>
+	</li>
+</ol>
+
+<pre>
+<code class="language-python">import os
+import tensorflow as tf
+import tensorflow_hub as tf_hub
+
+# Enable Auto Mixed Precision
+tf.config.optimizer.set_experimental_options({"auto_mixed_precision_onednn_bfloat16": True})
+
+os.environ["TFHUB_CACHE_DIR"] = 'tfhub_models'
+model = tf_hub.KerasLayer('https://tfhub.dev/google/imagenet/resnet_v1_50/classification/5')
+model(tf.random.uniform((1, 224, 224, 3)))</code></pre>
+
+<ul>
+	<li style="list-style-type:none">
+	<ul>
+		<li>Run inference script in terminal</li>
+	</ul>
+	</li>
+</ul>
+
+<pre>
+<code class="language-bash">export ONEDNN_VERBOSE=1
+python inference.py</code></pre>
+
+<ul>
+	<li style="list-style-type:none">
+	<ul>
+		<li>Check the result</li>
+	</ul>
+	</li>
+</ul>
+
+<pre>
+<code class="language-bash">dst_bf16::blocked:Adcb16a:f0,,,64x3x7x7,69.343
+onednn_verbose,exec,cpu,convolution,jit:avx512_core_amx_bf16,forward_training,src_bf16::blocked:acdb:f0 wei_bf16::blocked:Adcb16a:f0 bia_undef::undef::f0 dst_bf16::blocked:acdb:f0,attr-scratchpad:user attr-post-ops:binary_sub:f32:2+binary_mul:f32:2+binary_mul:f32:2+binary_add:f32:2+eltwise_relu ,alg:convolution_direct,mb1_ic3oc64_ih224oh112kh7sh2dh0ph3_iw224ow112kw7sw2dw0pw3,3.29614
+onednn_verbose,exec,cpu,pooling_v2,jit:avx512_core_bf16,forward_training,src_bf16::blocked:acdb:f0 dst_bf16::blocked:acdb:f0 ws_u8::blocked:acdb:f0,,alg:pooling_max,mb1ic64_ih112oh56kh3sh2dh0ph0_iw112ow56kw3sw2dw0pw0,5.21802</code></pre>
+
+<h4>For Training</h4>
+
+<p>You can also train a mixed precision model with bf16 using TensorFlow Keras API</p>
+
+<ul>
+	<li>Save below code as training.py</li>
+</ul>
+
+<pre>
+<code class="language-python">import tensorflow as tf
+from keras.utils import np_utils
+from tensorflow.keras import mixed_precision
+
+# Enable Auto Mixed Precision
+mixed_precision.set_global_policy('mixed_bfloat16')
+
+# load data
+cifar10 = tf.keras.datasets.cifar10
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+num_classes = 10
+
+# pre-process
+x_train, x_test = x_train/255.0, x_test/255.0
+y_train = np_utils.to_categorical(y_train, num_classes)
+y_test = np_utils.to_categorical(y_test, num_classes)
+
+# build model
+feature_extractor_layer = tf.keras.applications.ResNet50(include_top=False, weights='imagenet')
+feature_extractor_layer.trainable = False
+model = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(32, 32, 3)),
+    feature_extractor_layer,
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(1024, activation='relu'),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(num_classes, activation='softmax')
+])
+model.compile(
+  optimizer=tf.keras.optimizers.Adam(),
+  loss=tf.keras.losses.CategoricalCrossentropy(),
+  metrics=['acc'])
+
+# train model
+model.fit(x_train, y_train,
+    batch_size = 128,
+    validation_data=(x_test, y_test), 
+    epochs=1)
+
+model.save('resnet_bf16_model')</code></pre>
+
+<ul>
+	<li>Run training script in terminal</li>
+</ul>
+
+<pre>
+<code class="language-bash">export ONEDNN_VERBOSE=1
+python training.py</code></pre>
+
+<ul>
+	<li>Check the result</li>
+</ul>
+
+<pre>
+<code class="language-bash">dst_bf16::blocked:Adcb16a:f0,,,64x3x7x7,160.375
+onednn_verbose,exec,cpu,convolution,jit:avx512_core_amx_bf16,forward_training,src_bf16::blocked:acdb:f0 wei_bf16::blocked:Adcb16a:f0 bia_bf16::blocked:a:f0 dst_bf16::blocked:acdb:f0,attr-scratchpad:user ,alg:convolution_direct,mb128_ic3oc64_ih32oh16kh7sh2dh0ph3_iw32ow16kw7sw2dw0pw3,2.0481
+onednn_verbose,exec,cpu,batch_normalization,bnorm_jit:avx512_core_bf16,forward_inference,data_bf16::blocked:acdb:f0 diff_undef::undef::f0,,flags:GSR,mb128ic64ih16iw16,0.783203
+onednn_verbose,exec,cpu,pooling_v2,jit:avx512_core_bf16,forward_training,src_bf16::blocked:acdb:f0 dst_bf16::blocked:acdb:f0 ws_u8::blocked:acdb:f0,,alg:pooling_max,mb128ic64_ih18oh8kh3sh2dh0ph0_iw18ow8kw3sw2dw0pw0,0.908936</code></pre>
+
+<h3>Enabling INT8</h3>
+
+<p>Intel&reg; Optimized TensorFlow* co-works with <a href="https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html" style="color:#4f81bd">Intel&reg; Neural Compressor</a> to provide compatible TensorFlow INT8 quantization solution support with same user experience.</p>
+
+<h2>Using Intel&reg; Extension for Pytorch* for optimization and Performance boost</h2>
+
+<p>Intel&reg; Extension for PyTorch* adds optimizations for extra performance when running PyTorch on Intel hardware. Most of these optimizations will be included in stock PyTorch releases in the future. The intention of the extension is to deliver up-to-date features and optimizations for PyTorch on Intel hardware. Examples include AVX-512 Vector Neural Network Instructions (AVX512 VNNI) and Intel&reg; Advanced Matrix Extensions (Intel&reg; AMX).</p>
+
+<p>Intel&reg; Extension for PyTorch* has been released as an <a href="https://github.com/intel/intel-extension-for-pytorch">open&ndash;source project</a>.</p>
+
+<h3>Using PyTorch*, a Deep Learning Framework</h3>
+
+<p>Make sure PyTorch is installed so that the extension will work properly. For more information on installation refer to:&nbsp;<a href="https://intel.github.io/intel-extension-for-pytorch/latest/tutorials/installation.html">Installation</a></p>
+
+<h4>Deploying PyTorch</h4>
+
+<p><a href="https://intel.github.io/intel-extension-for-pytorch/latest/index.html">Reference</a></p>
+
+<p>Environment: Python 3.7 or above</p>
+
+<p>Step 1: Visit the <a href="https://pytorch.org/">official PyTorch website</a></p>
+
+<p>Step 2: Select CPU</p>
+
+<p>Currently, Intel oneDNN is integrated into the official version of PyTorch, so there is no need for an additional installation to achieve accelerated performance on the Intel&reg; Xeon&reg; Scalable Processor platform. Select &ldquo;CPU&rdquo; for Compute Platform. See the figure below for details.</p>
+
+<p><img alt="" height="499" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig7.png" width="1239"/></p>
+
+<p>Step 3: Installation</p>
+
+<pre>
+<code class="language-bash">pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu</code></pre>
+
+<h4>Intel&reg; Extension for PyTorch* Installation</h4>
+
+<p>You can use either of the following commands to install Intel&reg; Extension for PyTorch*:</p>
+
+<pre>
+<code class="language-bash">python -m pip install intel_extension_for_pytorch</code></pre>
+
+<pre>
+<code class="language-bash">python -m pip install intel_extension_for_pytorch -f https://software.intel.com/ipex-whl-stable</code></pre>
+
+<h3>Getting Started</h3>
+
+<p>Minor code changes are required for users to get started with Intel&reg; Extension for PyTorch*. Both PyTorch imperative mode and TorchScript mode are supported.</p>
+
+<p><span class="code-simple">For inference</span> applies the ipex.optimize function to the model object.</p>
+
+<p><span class="code-simple">For training</span> applies the ipex.optimize function to the model object, as well as an optimizer object.</p>
+
+<p>The following code snippet shows training code with BF16/FP32 data types. More examples for training and inference are available at <a href="https://intel.github.io/intel-extension-for-pytorch/latest/tutorials/examples.html" style="color:#4f81bd">Example Page</a></p>
+
+<pre>
+<code class="language-python">import torch
+import intel_extension_for_pytorch as ipex
+
+model = Model()
+model = model.to(memory_format=torch.channels_last)
+criterion = ...
+optimizer = ...
+model.train()
+
+# For FP32
+model, optimizer = ipex.optimize(model, optimizer=optimizer)
+
+# For BF16
+model, optimizer = ipex.optimize(model, optimizer=optimizer, dtype=torch.bfloat16)
+
+# Setting memory_format to torch.channels_last could improve performance with 4D input data. This is optional.
+data = data.to(memory_format=torch.channels_last)
+optimizer.zero_grad()
+output = model(data)</code></pre>
+
+<h4>Optimization Recommendations for Training and Inferencing PyTorch-based Deep Learning Models</h4>
+
+<p>Although default primitives of PyTorch and Intel&reg; Extension for PyTorch* are highly optimized, there are additional configuration options that can improve performance. Most can be applied by a launch script that automates setting configuration options, mainly for the following:</p>
+
+<ol>
+	<li>OpenMP library: [Intel OpenMP library (default) | GNU OpenMP library]</li>
+	<li>Memory allocator: [PyTorch default memory allocator | Jemalloc | TCMalloc (default)]</li>
+	<li>Number of instances: [Single instance (default) | Multiple instances]</li>
+</ol>
+
+<p>For more details refer to <a href="https://intel.github.io/intel-extension-for-pytorch/latest/tutorials/performance_tuning/launch_script.html" style="color:#4f81bd">Launch Script Usage Guide</a></p>
+
+<p>Apart from launch scripts there are other hardware settings that include configuring the structure of Intel CPUs, as well as Non-Uniform Memory Access (NUMA). Software configuration can be set to take advantage of Channels Last memory format, OpenMP, numactl to fully utilize CPU computation resources with Intel&reg; Extension for PyTorch* to boost performance. For more details refer to Performance Tuning Guide</p>
+
+<h4>Enabling BF16 Inference</h4>
+
+<p>Intel&reg; 4th Generation Intel&reg; Xeon&reg; Scalable Processors support accelerating AI inference by using low precision data types such as BF16 and INT8 based on the Intel&reg; Deep Learning Boost and Intel&reg; Advanced Matrix Extension(AMX). There are several instructions such as AMX_BF16, AMX_INT8, AVX512_BF16, AVX512_VNNI to accelerate AI models.</p>
+
+<h5>Auto Mixed Precision(AMP)</h5>
+
+<p><span class="code-simple">torch.cpu.amp</span> provides convenience for auto data type conversion at runtime. Deep learning workloads can benefit from lower-precision floating point data types such as torch.float16 or torch.bfloat16, because of its lighter calculation workload and smaller memory usage. The Auto Mixed Precision (AMP) feature automates the tuning of data type conversions over all operators.</p>
+
+<h5>Steps to enable AMX_BF16</h5>
+
+<p>To check whether given cpu machine supports AMX_BF16 instructions, use <span class="code-simple">lscpu</span> command.</p>
+
+<p><span class="code-simple">torch.cpu.amp.autocast</span> allows scopes of your script to run with mixed precision. In these scopes, operations run in a data type chosen by the autocast class to improve performance while maintaining accuracy. The following simple network should show a speedup with mixed precision:</p>
+
+<pre>
+<code class="language-python">class SimpleNet(torch.nn.Module):
+    def __init__(self):
+        super(SimpleNet, self).__init__()
+        self.conv = torch.nn.Conv2d(64, 128, (3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+
+    def forward(self, x):
+        return self.conv(x)</code></pre>
+
+<p><span class="code-simple">torch.cpu.amp.autocast</span> is designed to be a context manager that allow the scope of your script to run with mixed precision. AMX_BF16 are newer and have more advanced intrinsics than AVX512_BF16. They offer better performance to support AI applications. Therefore, for the data type BFloat16, AMX_BF16 has the highest execution priority. The AI frameworks optimized by Intel will choose AMX_BF16 first. If it is not available, then AVX512_BF16 will be chosen. For more details refer to <a href="https://intel.github.io/intel-extension-for-pytorch/latest/tutorials/features/amp.html?highlight=amp" style="color:#4f81bd">Auto Mixed Precision (AMP)</a></p>
+
+<pre>
+<code class="language-python">model = SimpleNet().eval()
+x = torch.rand(64, 64, 224, 224)
+with torch.cpu.amp.autocast():
+    y = model(x)</code></pre>
+
+<p>To Check whether AMX_BF16 is enabled, check for <span class="code-simple">avx512_core_amx_bf16</span> JIT Kernel usage. Review the setting <span class="code-simple">ONEDNN_VERBOSE=1</span></p>
+
+<p>The Github link to the Intel&reg; Extension for PyTorch* is: <a href="https://github.com/intel/intel-extension-for-pytorch" style="color:#4f81bd">Intel&reg; Extension for PyTorch*</a></p>
+
+<h2>AI Neural Network Model Low Precision Optimization</h2>
+
+<h3>Overview</h3>
+
+<p>Intel&reg; 4th Generation Intel&reg; Xeon&reg; Scalable Processors support accelerating AI inference by using low precision data types such as BF16 and INT8 based on the Intel&reg; Deep Learning Boost and Intel&reg; Advanced Matrix Extension.</p>
+
+<ol>
+	<li>Quantization</li>
+</ol>
+
+<p>Using the INT8 data type to optimize AI model is one type of quantization, the process of mapping continuous infinite values to a smaller set of discrete finite values.</p>
+
+<ol start="2">
+	<li>Mixed Precision</li>
+</ol>
+
+<p>Mixed Precision uses lower-precision data types such as BF16 to make models that run with 16-bit and 32-bit mixed floating-point types during training and inference. This runs faster with less memory consumption.</p>
+
+<h3>Instruction</h3>
+
+<p>Intel&reg; 4th Generation Intel&reg; Xeon&reg; Scalable Processors support several instructions to accelerate AI models:</p>
+
+<table cellspacing="0" class="Table" style="border-collapse:collapse">
+	<thead>
+		<tr>
+			<td>Intrinsics</td>
+			<td>AVX512_VNNI</td>
+			<td>AVX512_BF16</td>
+			<td>AMX_INT8</td>
+			<td>AMX_BF16</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Data type</td>
+			<td>INT8</td>
+			<td>BF16</td>
+			<td>INT8</td>
+			<td>BF16</td>
+		</tr>
+		<tr>
+			<td>Variable type</td>
+			<td>Vector</td>
+			<td>Vector</td>
+			<td>Matrix</td>
+			<td>Matrix</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>AMX_INT8/AMX_BF16 are newer and more advanced intrinsics than AVX512_VNNI/AVX512_BF16. They offer better performance to support AI applications. AMX_INT8 has the highest execution priority. The AI frameworks optimized by Intel will choose AMX_INT8 first. If it is not available, then AVX512_VNNI will be chosen.</p>
+
+<h3>Steps</h3>
+
+<ol>
+	<li>Convert FP32 model to INT8/BF16 model.</li>
+</ol>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Run quantization or the mixed precision process to get the INT8/BF16 model.</p>
+
+<ol start="2">
+	<li>Execute the INT8/BF16 model inference on Intel&reg; 4th Generation Intel&reg; Xeon&reg; Scalable Processors by the AI frameworks optimized for Intel Architecture.</li>
+</ol>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The AI framework will call highest level intrinsics supported by them in CPU to gain better performance.</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;For example: If AI framework calls AVX512_VNNI, instead of AMX_INT8, please check if the newer release supports AMX_INT8 and install right release.</p>
+
+<h3>AI Neural Network Quantization Process</h3>
+
+<p>Computations in neural networks are mainly concentrated in the convolution layer and the fully connected layer. The computations on these two layers can be expressed as: Y = X * Weights + Bias. Therefore, it is natural to focus on matrix multiplication to optimize performance. The way to begin neural network model quantization is by trading-off precision (limited) for performance improvement. By replacing 32-bit floating-point numbers with low-precision integers for matrix operations, it not only speeds up calculations, but also compresses the model, thus saving memory bandwidth.</p>
+
+<p>There are three approaches to the quantization of neural network models:</p>
+
+<ul>
+	<li>Post-Training Quantization (PTQ), which is supported by most AI frameworks. Quantize a trained FP32 model. It execute a calibration process (infer FP32 model with small dataset) and record the data range of every layer&rsquo;s input and output. Then quantize the model according to the data range info. It provides good quantization result.</li>
+	<li>Quantization-Aware-Training (QAT), which inserts the FakeQuantization node into the FP32 model when the training converges. It increases the quantization-induced noise. During the backpropagation stage of the training, the model weights fall into a finite interval which results in better quantization precision.</li>
+	<li>Dynamic Quantization (DQ) is very similar to PTQ. They are both quantization methods used on post-trained models. The difference lies in that the quantization factor in the activation layer is dynamically decided by the data range used when the neural network model is run, while for PTQ samples from a small-scale pre-processed dataset are used to obtain data distribution and range information in the activation layer, then records it permanently in the newly generated quantization model. Of the Intel&reg; Intel&reg; Neural Compressor which we will talk about later on, onnxruntime supports this method at the backend only.</li>
+</ul>
+
+<p>The basic procedure for the post-training quantization of neural network is as follows:</p>
+
+<ol>
+	<li>Fuse FP32 OP to INT8 OP. For example, MatMul, BiasAdd and ReLU can be fused into a single quantized OP at the fully connected layer, QuantizedMatMulWithBiasAndRelu. Different neural network frameworks support different fuse-able OPs. For Intel&reg; Intel&reg; Neural Compressor, which will be discussed later on, <a href="https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110">here</a> is a list of fuse-able OPs supported by TensorFlow. For fuse-able OPs supported by pyTorch, <a href="https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/pytorch_cpu.yaml#L251">please see</a>.</li>
+	<li>Quantize weights and save them in the quantized model.</li>
+	<li>Quantize the input/activation layer by sampling the calibration dataset to acquire the distribution and range information of the data in the activation layer, which is then recorded in the newly generated quantized model.</li>
+	<li>The Requantize operation is fused into its corresponding INT8 OP to generate the final quantized model.</li>
+</ol>
+
+<p>Using a simple model which includes two layers of MatMul as an example, we can observe the quantization process as follows:</p>
+
+<p><img alt="" height="768" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig8.jpg" width="912"/></p>
+
+<h3>AI Neural Network Mixed Precision Process</h3>
+
+<p>FP32 and BF16 have same data range and different decimal part. It&rsquo;s easy to convert FP32 to BF16. But use BF16 will impact the model accuracy due to the cutted decimal part. Some operations are numerically-safe for BF16, that means the operation based on BF16 has no obviously accuracy loss compared to FP32. Some operations are numerically-dangerous for BF16, that means the operation based on BF16 has obviously accuracy loss compared to FP32. The following procedure will be handled by the AI framework/tool automatically. You can tune it by configuring whether to allow or to deny numerically-dangerous operations.</p>
+
+<ol>
+	<li>According to the experiment, set the numerically-safe operations to allow or to deny numerically-dangerous operations</li>
+	<li>Convert the operations in allow set to BF16</li>
+	<li>Insert the &ldquo;Cast&rdquo; operation between FP32 and BF16 operations to convert data from FP32 to BF16 or revert</li>
+</ol>
+
+<h3>Intel&reg; Neural Compressor</h3>
+
+<p><a href="https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html" style="color:#4f81bd">Intel Neural Compressor</a> is one of the key AI software components in the Intel&reg; oneAPI AI Analytics Toolkit. It is an open-source Python library that runs on Intel CPUs and GPUs. This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model. It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.</p>
+
+<p><a href="https://github.com/intel/neural-compressor">Reference</a></p>
+
+<p><img alt="" height="356" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig9.png" width="700"/></p>
+
+<p>Intel&reg; Neural Compressor currently support the following Intel optimized deep learning frameworks:</p>
+
+<ul>
+	<li><a href="https://www.tensorflow.org/" style="color:#4f81bd">Tensorflow*</a></li>
+	<li><a href="https://pytorch.org/" style="color:#4f81bd">PyTorch*</a></li>
+	<li><a href="https://mxnet.apache.org/versions/1.9.1/" style="color:#4f81bd">Apache* MXNet</a></li>
+	<li><a href="https://onnx.ai/" style="color:#4f81bd">ONNX Runtime</a></li>
+</ul>
+
+<p>The frameworks and their versions that have already been verified are shown below:</p>
+
+<ul>
+	<li>OS version: CentOS 8.4, Ubuntu 20.04</li>
+	<li>Python version: 3.7, 3.8, 3.9, 3.10</li>
+</ul>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:max-content">
+	<tbody>
+		<tr>
+			<td><strong>Framework</strong></td>
+			<th style="text-align:center">TensorFlow</th>
+			<th style="text-align:center">Intel TensorFlow</th>
+			<th style="text-align:center">PyTorch</th>
+			<th style="text-align:center">IPEX</th>
+			<th style="text-align:center">ONNX Runtime</th>
+			<th style="text-align:center">MXNet</th>
+		</tr>
+		<tr>
+			<td><strong>Version</strong></td>
+			<td><a href="https://github.com/tensorflow/tensorflow/tree/v2.9.1">2.9.1</a><br />
+			<a href="https://github.com/tensorflow/tensorflow/tree/v2.8.2">2.8.2</a><br />
+			<a href="https://github.com/tensorflow/tensorflow/tree/v2.7.3">2.7.3</a></td>
+			<td><a href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.9.1">2.9.1</a><br />
+			<a href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.8.0">2.8.0</a><br />
+			<a href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.7.0">2.7.0</a></td>
+			<td><a href="https://download.pytorch.org/whl/torch_stable.html" rel="nofollow">1.12.0+cpu</a><br />
+			<a href="https://download.pytorch.org/whl/torch_stable.html" rel="nofollow">1.11.0+cpu</a><br />
+			<a href="https://download.pytorch.org/whl/torch_stable.html" rel="nofollow">1.10.0+cpu</a></td>
+			<td><a href="https://github.com/intel/intel-extension-for-pytorch/tree/v1.12.0">1.12.0</a><br />
+			<a href="https://github.com/intel/intel-extension-for-pytorch/tree/v1.10.0">1.11.0</a><br />
+			<a href="https://github.com/intel/intel-extension-for-pytorch/tree/v1.9.0">1.10.0</a></td>
+			<td><a href="https://github.com/microsoft/onnxruntime/tree/v1.11.0">1.11.0</a><br />
+			<a href="https://github.com/microsoft/onnxruntime/tree/v1.10.0">1.10.0</a><br />
+			<a href="https://github.com/microsoft/onnxruntime/tree/v1.9.0">1.9.0</a></td>
+			<td><a href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a><br />
+			<a href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a><br />
+			<a href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p class="note"><strong>Note:</strong> Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN optimizations if you are using TensorFlow from v2.6 to v2.8. oneDNN has been fully default from TensorFlow v2.9.</p>
+
+<p>The tuning strategies supported by Intel&reg; Neural Compressor include:</p>
+
+<ul>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#basic" style="color:#4f81bd">Basic</a></li>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#bayesian" style="color:#4f81bd">Bayesian</a></li>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#mse" style="color:#4f81bd">MSE</a></li>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#tpe" style="color:#4f81bd">TPE</a></li>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#exhaustive" style="color:#4f81bd">Exhaustive</a></li>
+	<li><a href="https://github.com/intel/neural-compressor/blob/master/docs/source/tuning_strategies.md#random" style="color:#4f81bd">Random</a></li>
+</ul>
+
+<p>The workflow for Intel&reg; Neural Compressor is shown below. The model quantization parameters matching the accuracy loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:</p>
+
+<p><img alt="" height="327" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig10.png" width="700"/></p>
+
+<h3>Installing Intel&reg; Neural Compressor</h3>
+
+<p>For details on installation, refer to:&nbsp;<a href="https://github.com/intel/neural-compressor#installation">Intel Neural Compressor Installation</a></p>
+
+<p>Step 1: Use Anaconda to create a Python3.x virtual environment with the name: env_inc. We are using Python 3.9 here as an example:</p>
+
+<pre>
+<code class="language-bash">conda create -n env_inc python=3.9
+conda activate env_inc</code></pre>
+
+<p>Step 2: Install Intel&reg; Neural Compressor with the binary file:</p>
+
+<pre>
+<code class="language-bash"># install stable basic version from pip
+pip install neural-compressor
+# install stable full version from pip (including GUI)
+pip install neural-compressor-full</code></pre>
+
+<p>or</p>
+
+<pre>
+<code class="language-bash"># install nightly basic version from pip
+pip install -i https://test.pypi.org/simple/ neural-compressor
+# install nightly full version from pip (including GUI)
+pip install -i https://test.pypi.org/simple/ neural-compressor-full</code></pre>
+
+<p>or</p>
+
+<pre>
+<code class="language-bash"># install stable basic version from from conda
+conda install neural-compressor -c conda-forge -c https://software.repos.intel.com/python/conda/
+# install stable full version from from conda (including GUI)
+conda install neural-compressor-full -c conda-forge -c https://software.repos.intel.com/python/conda/</code></pre>
+
+<p>Step 3: Install AI Framework</p>
+
+<p>Install Tensorflow, Pytorch, ONNX-RT, MXNet according to the model type to be handled. For example, to install intel-tensorflow</p>
+
+<pre>
+<code class="language-bash"># install intel-tensorflow from pip
+pip install intel-tensorflow</code></pre>
+
+<h3>Using Intel&reg; Neural Compressor</h3>
+
+<p>We are using ResNet50 v1.0 as an example to explain how to use this tool for quantization and mixed precision optimization.</p>
+
+<h3>Dataset preparation:</h3>
+
+<p>Step 1: Download and decompress the ImageNet validation dataset:</p>
+
+<p>To download the raw images, the user must create an account with&nbsp;<a href="https://image-net.org/">ImageNet</a>.</p>
+
+<pre>
+<code class="language-bash">mkdir –p img_raw/val
+cd img_raw
+wget http://www.image-net.org/challenges/LSVRC/2012/xxxxxxxx/ILSVRC2012_img_val.tar
+tar –xvf ILSVRC2012_img_val.tar -C val</code></pre>
+
+<p>Step 2: Move the image files to the child directories sorted by label:</p>
+
+<pre>
+<code class="language-bash">cd val
+wget -qO- https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh | bash</code></pre>
+
+<p>Step 3: Use the script, prepare_dataset.sh, to convert raw data to the TFrecord format with 128 shards:</p>
+
+<pre>
+<code class="language-bash">git clone https://github.com/intel/neural-compressor.git
+cd neural-compressor/
+git checkout 6663f7b
+cd examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq
+bash prepare_dataset.sh --output_dir=./data --raw_dir=/PATH/TO/img_raw/val/ --shards=128 --subset=validation</code></pre>
+
+<p>Reference</p>
+
+<h3>Pretrained FP32 Model preparation:</h3>
+
+<pre>
+<code class="language-bash">wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/resnet50_fp32_pretrained_model.pb</code></pre>
+
+<h3>Run Quantization:</h3>
+
+<p>Edit the file:</p>
+
+<p>Change all default dataset path (root: /path/to/evaluation/dataset) for quantization, evaluation to real local path to save the TFRecord format dataset generated previously during the data preparation stage.</p>
+
+<pre>
+<code class="language-bash">cd examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq
+bash run_tuning.sh --config=resnet50_v1.yaml \
+    --input_model=/PATH/TO/resnet50_fp32_pretrained_model.pb \
+    --output_model=./nc_resnet50_v1.pb</code></pre>
+
+<p>Reference</p>
+
+<h3>Run Mix Precision (BF16 + FP32):</h3>
+
+<p>Refer to <a href="https://github.com/intel/neural-compressor/blob/master/docs/source/mixed_precision.md" style="color:#4f81bd">Mixed Precision</a></p>
+
+<h4>Convert Without Tuning Accuracy</h4>
+
+<p>This method is sample and convert more nodes to BF16 as possible. The accuracy of model would be lossed as unexpected.</p>
+
+<pre>
+<code class="language-python">python convert_bf16_without_tuning.py
+
+from neural_compressor.experimental import MixedPrecision
+converter = MixedPrecision()
+converter.precisions = 'bf16'
+converter.model = '/PATH/TO/resnet50_fp32_pretrained_model.pb'
+optimized_model = converter()
+optimized_model.save('nc_resnet50_v1_bf16.pb')</code></pre>
+
+<h4>Convert With Tuning Accuracy</h4>
+
+<p>This method is accuracy driven and needs evaluation procedure. The accuracy of model would be lossed as expected, but less nodes are converted to BF16 compared with above method.</p>
+
+<ol>
+	<li>Edit resnet50_v1.yaml</li>
+</ol>
+
+<p>Add</p>
+
+<pre>
+<code class="language-yaml">mixed_precision:
+  precisions: 'bf16'</code></pre>
+
+<p>Like:</p>
+
+<pre>
+<code class="language-yaml">model:
+  name: resnet50_v1
+  framework: tensorflow
+
+mixed_precision:
+  precisions: 'bf16'
+
+evaluation:
+  accuracy:
+    dataloader:
+      ...
+    metric:
+      ...</code></pre>
+
+<ol start="2">
+	<li>Run Python</li>
+</ol>
+
+<pre>
+<code class="language-python">python convert_bf16_with_tuning.py
+
+from neural_compressor.experimental import MixedPrecision
+converter = MixedPrecision('resnet50_v1.yaml')
+converter.precisions = 'bf16'
+converter.model = '/PATH/TO/resnet50_fp32_pretrained_model.pb'
+optimized_model = converter()
+optimized_model.save('nc_resnet50_v1_bf16.pb')</code></pre>
+
+<h3>INT8 + BF16 + FP32</h3>
+
+<p>It&rsquo;s possible to mix INT8, BF16, FP32 in a model to optimize performance. In this example, we could apply mixed precision on the quantized model: nc_resnet50_v1.pb. So we could get INT8 + BF16 + FP32 model.</p>
+
+<pre>
+<code class="language-python">python convert_bf16_without_tuning.py
+
+from neural_compressor.experimental import MixedPrecision
+converter = MixedPrecision()
+converter.precisions = 'bf16'
+converter.model = '/PATH/TO/nc_resnet50_v1.pb'
+optimized_model = converter()
+optimized_model.save('nc_resnet50_v1_int8_bf16.pb')</code></pre>
+
+<p>In the log, we could see there is one operation: MatMul to be converted to BF16. That would improve the performance a little more. If the quantized model has more operations are FP32, mixed precision could convert more to BF16 and gain better performance.</p>
+
+<pre>
+<code class="language-bash">2022-08-04 19:50:01 [INFO] |**********Mixed Precision Statistics**********|
+2022-08-04 19:50:01 [INFO] +-------------+--------+-------+-------+-------+
+2022-08-04 19:50:01 [INFO] |   Op Type   | Total  |  INT8 |  BF16 |  FP32 |
+2022-08-04 19:50:01 [INFO] +-------------+--------+-------+-------+-------+
+2022-08-04 19:50:01 [INFO] |   MaxPool   |   1    |   1   |   0   |   0   |
+2022-08-04 19:50:01 [INFO] |   AvgPool   |   1    |   1   |   0   |   0   |
+2022-08-04 19:50:01 [INFO] |    Conv2D   |   53   |   53  |   0   |   0   |
+2022-08-04 19:50:01 [INFO] |    MatMul   |   1    |   0   |   1   |   0   |
+2022-08-04 19:50:01 [INFO] |  QuantizeV2 |   1    |   1   |   0   |   0   |
+2022-08-04 19:50:01 [INFO] |  Dequantize |   1    |   1   |   0   |   0   |
+2022-08-04 19:50:01 [INFO] |     Cast    |   2    |   0   |   1   |   1   |
+2022-08-04 19:50:01 [INFO] +-------------+--------+-------+-------+-------+</code></pre>
+
+<h3>Run Benchmark:</h3>
+
+<p>For performance:</p>
+
+<pre>
+<code class="language-bash">bash run_benchmark.sh --input_model=./xxx.pb --config=resnet50_v1.yaml --mode=performance</code></pre>
+
+<p>Performance mode benchmark result:</p>
+
+<pre>
+<code class="language-bash">Batch size = 1
+Latency: xxx
+Throughput: xxx</code></pre>
+
+<p>For accuracy:</p>
+
+<pre>
+<code class="language-bash">bash run_benchmark.sh --input_model=./xxx.pb --config=resnet50_v1.yaml --mode=accuracy</code></pre>
+
+<p>Accuracy mode benchmark result:</p>
+
+<pre>
+<code class="language-bash">Accuracy is x.xx
+Batch size = 32</code></pre>
+
+<h2>Using Intel&reg; Distribution of OpenVINO&trade; Toolkit for Inference Acceleration</h2>
+
+<h3>Intel&reg; Distribution of OpenVINO&trade; Toolkit</h3>
+
+<p>OpenVINO&trade; is an open-source toolkit for optimizing and deploying AI inference with the following features:</p>
+
+<ul>
+	<li>Boost deep learning performance in computer vision, automatic speech recognition, natural language processing and other common tasks</li>
+	<li>Use models trained with popular frameworks like TensorFlow, PyTorch, and more</li>
+	<li>Reduce resource demands and efficiently deploy on a range of Intel&reg; platforms from edge to cloud</li>
+</ul>
+
+<p><img alt="" height="458" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig11.png" width="700"/></p>
+
+<p>The scheme below illustrates the typical workflow for deploying a deep learning model that has been trained using OpenVINO&trade;:</p>
+
+<p><img alt="" height="351" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig12.png" width="700"/></p>
+
+<ul>
+	<li>Train your model with popular frameworks like TensorFlow* and PyTorch*, or pick a pre-trained model from open model zoo.</li>
+	<li>Run Model Optimizer to perform static model analysis and produce an optimized Intermediate Representation (IR) of the model that can be inferred with OpenVINO&trade; Runtime.</li>
+	<li>Use OpenVINO Runtime API to read an Intermediate Representation (IR), ONNX, or PaddlePaddle model and execute it on preferred devices.</li>
+	<li>Tune and optimize the whole pipeline to improve final model performance by applying special optimization methods like quantization, pruning, preprocessing optimization, etc.</li>
+	<li>Once everything is done, deploy your application with OpenVINO&trade;</li>
+</ul>
+
+<p>For more information, refer to OpenVINO&trade; online documentation.</p>
+
+<h3>Enable BF16/INT8 Inference with Intel&reg; Deep Learning Boost</h3>
+
+<p>The default floating-point precision of a CPU primitive is FP32. On platforms that natively support BF16 calculations with AVX512_BF16 or AMX_BF16 extensions, the BF16 type is automatically used instead of FP32. This will achieve better performance. See the <a href="/content/dam/develop/external/us/en/documents/bf16-hardware-numerics-definition-white-paper.pdf" style="color:#4f81bd">BFLOAT16 &ndash; Hardware Numerics Definition white paper</a> for more details about the BF16 format.</p>
+
+<p>Using BF16 precision provides the following performance benefits:</p>
+
+<ul>
+	<li>Faster multiplication of two BF16 numbers because of the shorter mantissa of the BF16 data.</li>
+	<li>Reduced memory consumption since BF16 data size is two times smaller than 32-bit float.</li>
+</ul>
+
+<p>To check whether a CPU device can support the BF16 data type, use the openvino.runtime.Core.get_property to query the ov::device::capabilities property. It should contain BF16 in the list of CPU capabilities as shown below:</p>
+
+<pre>
+<code class="language-python">core = Core()
+cpu_optimization_capabilities = core.get_property("CPU", "OPTIMIZATION_CAPABILITIES")</code></pre>
+
+<p>Use the benchmark_app to check whether BF16/INT8 is enabled when running inference:</p>
+
+<ul>
+	<li>Install OpenVINO&trade; Development Tools and Install OpenVINO&trade; Runtime</li>
+	<li>BF16
+	<ul>
+		<li>Download FP32 model from open model zoo (or pick your own FP32 model), download horizontal-text-detection-0001 here as an example:
+		<pre>
+<code class="language-bash">omz_downloader --name horizontal-text-detection-0001 --precisions FP32 -o .</code></pre>
+		</li>
+		<li>Run benchmark app with -pc
+		<pre>
+<code class="language-bash">benchmark_app -m ./intel/horizontal-text-detection-0001/FP32/horizontal-text-detection-0001.xml -pc</code></pre>
+		</li>
+		<li>We can see some kernels are running with BF16 precision with both avx512 and amx instructions.<br />
+		<img alt="" height="402" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig13.png" width="700"/></li>
+	</ul>
+	</li>
+	<li>INT8
+	<ul>
+		<li>Download INT8 model from open model zoo (or pick your own INT8 model), download horizontal-text-detection-0001 here as an example:
+		<pre>
+<code class="language-bash">omz_downloader --name horizontal-text-detection-0001 --precisions FP16-INT8 -o .</code></pre>
+		</li>
+		<li>Run benchmark app with -pc
+		<pre>
+<code class="language-bash">benchmark_app -m ./intel/horizontal-text-detection-0001/FP16-INT8/horizontal-text-detection-0001.xml -pc</code></pre>
+		</li>
+		<li>We can see some kernels are running with INT8 precison with both avx512 and amx instructions.<br />
+		<img alt="" height="503" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig14.png" width="700"/></li>
+	</ul>
+	</li>
+</ul>
+
+<p><strong>Notes</strong></p>
+
+<p>Due to the reduced mantissa size of the BF16 data type, the resulting BF16 inference accuracy may differ from the FP32 inference, especially for models that were not trained using the BF16 data type. If the BF16 inference accuracy is not acceptable, switch to the FP32 precision.</p>
+
+<p>C++:</p>
+
+<pre>
+<code class="language-cpp">ov::Core core;
+core.set_property("CPU", ov::hint::inference_precision(ov::element::f32));</code></pre>
+
+<p>Python:</p>
+
+<pre>
+<code class="language-python">core = Core()
+core.set_property("CPU", {"INFERENCE_PRECISION_HINT": "f32"})</code></pre>
+
+<p>If you use the benchmark_app, set -infer_precision to f32, for example:</p>
+
+<pre>
+<code class="language-bash">benchmark_app -m ./intel/horizontal-text-detection-0001/FP32/horizontal-text-detection-0001.xml -pc -infer_precision f32</code></pre>
+
+<h2>Data Analytics and Machine Learning Acceleration</h2>
+
+<p>As a branch of artificial intelligence, machine learning is currently attracting much attention. Machine learning-based analytics are also becoming increasingly popular. When compared to other analytics, machine learning can help IT staff, data scientists, and business teams in many types of organizations to quickly unleash the power of AI. Furthermore, machine learning offers many new commercial and open-source solutions, providing a vast ecosystem for developers. Developers can choose from a variety of open-source machine learning libraries such as Scikit-learn<em>, Cloudera</em> and Spark* MLlib.</p>
+
+<h3>Intel&reg; Distribution for Python*</h3>
+
+<p>Intel&reg; Distribution for Python* is a Python development toolkit for artificial intelligence software developers. It can be used to accelerate the computational speed of Python on the Intel&reg; Xeon&reg; Scalable Processor platform. It is available with Anaconda* and it can also be installed and used with Conda<em>, </em>PIP, APT GET, YUM, Docker*, and others.</p>
+
+<p>Intel&reg; Distribution for Python* features:</p>
+
+<ul>
+	<li>Take advantage of the most popular and fastest growing programming language with underlying instruction sets optimized for Intel&reg; architectures.</li>
+	<li>Achieve near-native performance through acceleration of core Python numerical and scientific packages that are built using Intel&reg; Performance Libraries.</li>
+	<li>Achieve highly efficient multithreading, vectorization, and memory management, and scale scientific computations efficiently across a cluster.</li>
+	<li>Core packages include Numba, NumPy, SciPy, and more.</li>
+</ul>
+
+<p><a href="/content/www/us/en/developer/tools/oneapi/distribution-for-python.html">Reference and download site</a></p>
+
+<h3>Intel&reg; Distribution of Modin*</h3>
+
+<p>Modin* is a drop-in replacement for pandas, enabling data scientists to scale to distributed DataFrame processing without having to change API code. Intel&reg; Distribution of Modin* adds optimizations to further accelerate processing on Intel&reg; hardware.</p>
+
+<p>Using this library, you can:</p>
+
+<ul>
+	<li>Process terabytes of data on a single workstation</li>
+	<li>Scale from a single workstation to the cloud using the same code</li>
+</ul>
+
+<p>Focus more on data analysis and less on learning new APIs</p>
+
+<p><img alt="" height="394" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig15.png" width="700"/></p>
+
+<p>Intel&reg; Distribution of Modin* Features:</p>
+
+<ul>
+	<li>Accelerated DataFrame Processing
+	<ul>
+		<li>Speed up the extract, transform, and load (ETL) process for large DataFrames</li>
+		<li>Automatically use all of the processing cores available on your machine</li>
+	</ul>
+	</li>
+	<li>Optimized for Intel Hardware
+	<ul>
+		<li>Scale to terabytes of data using Intel&reg; Optane&trade; Persistent Memory on a single <a href="https://www.intel.com/content/www/us/en/products/systems-devices/workstations/data-science-workstations.html" style="color:#4f81bd">data science workstation</a></li>
+		<li>Analyze large datasets (over one billion rows) using HEAVY.AI* analytics</li>
+	</ul>
+	</li>
+	<li>Compatible with Existing APIs and Engines
+	<ul>
+		<li>Change one line of code to use your existing pandas API calls, no matter the scale. Instead of importing pandas as pd, simply import modin.pandas as pd by using this command: <span class="code-simple">import modin.pandas as pd</span></li>
+	</ul>
+
+	<pre>
+<code class="language-python"># import pandas as pd
+import modin.pandas as pd 
+df = pd.read_csv("my_dataset.csv")</code></pre>
+	</li>
+</ul>
+
+<ul>
+	<li style="list-style-type:none">
+	<ul>
+		<li>Use Dask*, Ray, or HEAVY.AI compute engines to distribute data without having to write code</li>
+		<li>Continue to use the rest of your Python ecosystem code, such as NumPy, XGBoost, and scikit-learn*</li>
+		<li>Use the same notebook to scale from your local machine to the cloud</li>
+	</ul>
+	</li>
+</ul>
+
+<p><a href="/content/www/us/en/developer/tools/oneapi/distribution-of-modin.html">Reference and download site</a></p>
+
+<h3>Intel&reg; Extension for Scikit-learn*</h3>
+
+<p>Intel&reg; Extension for Scikit-learn* can seamlessly speed up your scikit-learn applications for Intel&reg; CPUs and GPUs across single and multi-node configurations. This extension package dynamically patches scikit-learn estimators while improving performance for your machine learning algorithms.</p>
+
+<p>The top benefits are:</p>
+
+<ul>
+	<li>No up-front cost for learning a new API</li>
+	<li>Integration with the Python* ecosystem</li>
+	<li>Up to 100x better performance and accuracy than the standard scikit-learn</li>
+</ul>
+
+<p><img alt="" height="429" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig16.png" width="530"/></p>
+
+<p><a href="/content/www/us/en/developer/tools/oneapi/scikit-learn.html">Reference and download site</a></p>
+
+<h3>XGBoost* Optimized for Intel&reg; Architecture</h3>
+
+<p>Starting with XGBoost* Version 0.81 and later, Intel&reg; has been directly adding many optimizations to provide superior performance on Intel&reg; CPUs. This well-known, machine-learning package for gradient-boosted decision trees now includes drop-in acceleration for Intel&reg; architectures to significantly speed up model training and improve accuracy for better predictions.</p>
+
+<p><a href="/content/www/us/en/developer/articles/technical/xgboost-optimized-architecture-getting-started.html">Reference and download site</a></p>
+
+<h3>Intel&reg; oneAPI Data Analytics Library (oneDAL)</h3>
+
+<p>Intel&reg; oneAPI Data Analytics Library (oneDAL) is a library that helps speed up big data analysis by providing highly optimized algorithmic building blocks for all stages of data analytics (preprocessing, transformation, analysis, modeling, validation, and decision making) in batch, online, and distributed processing modes.</p>
+
+<p>The library optimizes data ingestion along with algorithmic computation to increase throughput and scalability. It includes C++ and Java* APIs and connectors to popular data sources such as Spark* and Hadoop<em>. Python</em> wrappers for oneDAL are part of Intel Distribution for Python.</p>
+
+<p>In addition to classic features, oneDAL provides DPC++ SYCL API extensions to the traditional C++ interface and enables GPU usage for some algorithms.</p>
+
+<p>The library is particularly useful for distributed computation. It provides a full set of building blocks for distributed algorithms that are independent from any communication layer. This allows users to construct fast and scalable distributed applications using user-preferable communication means.</p>
+
+<p><img alt="" height="358" src="/content/dam/developer/articles/technical/tuning-guide-for-ai-on-the-4th-generation/tuning-guide-for-ai-4th-generation-fig17.png" width="700"/></p>
+
+<p><a href="/content/www/us/en/developer/tools/oneapi/onedal.html">Reference and download site</a></p>
+
+<h2>Performance Data</h2>
+
+<p>Find the <a href="/content/www/us/en/developer/topic-technology/artificial-intelligence/performance-5th-gen-56cores.html">latest performance data</a> for 4th gen Intel&reg; Xeon&reg; Scalable processors and 3rd gen Intel&reg; Xeon&reg; processors, including detailed hardware and software configurations.</p>
+
+<h2>References</h2>
+
+<p><a href="https://colfaxresearch.com/skl-avx512/">Intel&reg; AVX-512</a></p>
+
+<p><a href="/content/www/us/en/developer/topic-technology/artificial-intelligence/frameworks-tools.html">Intel&reg; Optimized AI Frameworks</a></p>
+
+<p>&nbsp;</p>
+</p>
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+
+
+
+                </div>
+            </div>
+        
+    
+</div>
+</div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="article-tags-first section d-none d-sm-block">
+                                    <div class="article-tags-component">
+                                        <div class="articletags parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                    <div class="d-none">
+                        
+                        <sup>1</sup>
+                    </div>
+                
+
+                <div class="big-parser">
+                    <!-- BEGIN NEW BUILT IN - ARTICLE BLADE PARSYS4 - DRAG COMPONENTS HERE - 2 Column -->
+                    <div class="automatedbladepar4">
+                        <div class="container">
+                            <div class="row">
+                                <div class="left-side col-sm-8 col-md-6">
+                                    <div class="relatedArticles">
+                                        <div class="articlebladepar4 detailText">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        <div id="detailtext-1" class="l3-detail-text-component intel-brand-ux has-rte-buttons" role="region" aria-label="Detail Text 1" data-component="detailtext" data-component-id="1">
+            
+            
+            
+            
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-10 col-xl-8 detail-blockquote">
+                            
+                    </div>
+                </div>
+            </div>
+            </div>
+    
+
+</div>
+
+                                    </div>
+                                </div>
+                                <div class="left-side col-sm-8 col-md-6">
+                                    <div class="recentlyViewedPages">
+                                        <div class="articlebladepar5 intelparsys">
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="big-parser">
+                    <div class="articlebladepar1 intelparsys">
+</div>
+
+
+                    
+
+                    
+                    <div class="articlebladepar3 intelparsys">
+</div>
+
+                    <div class="contactUs contact">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preload" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.css" as="style">
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/contact-us.min.js" defer></script>
+
+
+</div>
+
+                </div>
+                
+                
+                    
+                        <div id="contextualFooter-PlaceHolder" class="contextualFooter"></div>
+                    
+                
+
+            </article>
+        </main>
+    
+    
+
+
+
+
+
+    <div class="disclaimer parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+        
+        
+            <div class="disclaimer-component intel-ws link-default theme-light-default">
+                <div class="container disclaimer-container ws-comp-standard-padding">
+                    <h4 class="h6">Product and Performance Information</h4>
+                    
+                    
+                    
+                        
+                            <div class="disclaimer"><sup>1</sup><p>Performance varies by use, configuration and other factors. Learn more at&nbsp;<a href="http://www.intel.com/PerformanceIndex" title="Follow link">www.Intel.com/PerformanceIndex</a>.</p>
+</div>
+                        
+                    
+                    
+                    
+                </div>
+            </div>
+        
+    
+
+<div class="translationDisclaimer parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+</div>
+
+</div>
+
+
+
+
+    <div class="helpModule getHelpComponent parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+            
+            <div id="getHelpComponent-1" class="component get-help-module" data-component="getHelpComponent"
+                 data-component-id="1">
+                <aside id="gethelp" class="right d-none" role="dialog" data-help-config-url = "/libs/intel/get-help.us_en.default">
+                    <div class="wrapper">
+                        
+                        <div class="navbar-gh" aria-label="Get Help Dialog Header">
+                            <a name="gethelp_button" id="gethelp_button"></a>
+                            
+                            <button class="navbar-toggler btn btn-primary collapsed justify-content-between"
+                                    type="button" data-bs-toggle="collapse" data-target="#gethelp-accordion"
+                                    aria-controls="gethelp-accordion" aria-expanded="false"
+                                    aria-label="Get Help Dialog" data-btn-ref="get-help" data-wap="" data-wap_ref="get-help-collapsed">
+                <span class="navbar-toggler-icon-gethelp  chat-icon icon align-icons fa-user-headset" aria-hidden="true"
+                      title=""></span>
+                                <span id="gethelp-heading" class="navbar-toggler-title" aria-hidden="true">Get Help</span>
+                                
+                                <span class="navbar-toggler-icon-close icon align-icons fa-cancel-thin" aria-hidden="true"
+                                      title="Close Get Help Dialog"></span>
+                            </button>
+                        </div>
+
+                        <ul id="gethelp-accordion" class="accordion panel-group collapse" data-allow-toggle=""
+                            aria-label="Accordion">
+                        </ul>
+
+                    </div>
+
+                </aside>
+            </div>
+            <textarea id="get-help-stylesheet-path" title="" style="display:none;">
+                
+                <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/get-help.min.css" type="text/css">
+            </textarea>
+            <script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/get-help.min.js" defer></script>
+        
+    
+
+</div>
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="global blade solid brand-lighter-gray theme-light-2 component" data-component-id="1"
+        data-component="footer" role="contentinfo" data-wap_type="wa_skip_track" id="skip-footer">
+    <div class="container">
+        <div class="content-footer">
+            <div class="content">
+                
+                    
+                        
+                            <ul class="footer-links">
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/company-overview/company-overview.html">Company Overview</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/support/contact-us.html">Contact Intel</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/newsroom/home.html">News</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.intc.com/">Investors</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/jobs/life-at-intel.html">Careers</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/corporate-responsibility/corporate-responsibility.html">Corporate Responsibility</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/inclusion/inclusion-at-intel.html">Inclusion</a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="/content/www/us/en/company-overview/public-policy.html">Public Policy</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <ul class="footer-links social">
+                                
+                                    <li>
+                                        <a href="https://www.facebook.com/Intel" target="" aria-label="Intel on Facebook" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://twitter.com/intel" target="" aria-label="Intel on Twitter" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.linkedin.com/company/intel-corporation" target="" aria-label="Intel on LinkedIn" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.youtube.com/user/channelintel?sub_confirmation=1" target="" aria-label="Intel on YouTube" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-youtube"></i>
+                                        </a>
+                                    </li>
+                                
+                                    <li>
+                                        <a href="https://www.instagram.com/intel/" target="" aria-label="Intel on Instagram" data-wap="{&quot;linktype&quot;:&quot;footersocial&quot;}">
+                                            <i aria-hidden="true" class="fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                
+                            </ul>
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                        
+                            <ul class="footer-links secondary-links" id="footerSecondaryLinks">
+                                
+                                    <li>
+                                        
+                                            
+                                            
+                                                <small>© Intel Corporation</small>
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/legal/terms-of-use.html">
+                                                            <small>Terms of Use</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/legal/trademarks.html">
+                                                            <small>*Trademarks</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/content/www/us/en/privacy/intel-cookie-notice.html" data-cookie-notice="true">
+                                                                    <small>Cookies</small>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/privacy/intel-privacy-notice.html">
+                                                            <small>Privacy</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/corporate-responsibility/statement-combating-modern-slavery.html">
+                                                            <small>Supply Chain Transparency </small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/siteindex.html">
+                                                            <small>Site Map</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                    
+                                                        <a href="/content/www/us/en/support/articles/000098122/services.html">
+                                                            <small>Recycling</small>
+                                                        </a>
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/#" data-wap_ref="dns" id="wap_dns">
+                                                                    <small>Your Privacy Choices</small>
+                                                                    
+                                                                        <span style="height:10px;width:28px;display:inline-block;position:relative;"><svg style="position:absolute;width:28px;bottom:-2px;" version="1.1" id="Layer_1" xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink x="0px" y="0px" viewBox="0 0 30 14" xml:space="preserve"><title>California Consumer Privacy Act (CCPA) Opt-Out Icon</title><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#0066FF;}.st2{fill:#FFFFFF;}.st3{fill:#0066FF;}</style><g><g id="final---dec.11-2020_1_"><g id="_x30_208-our-toggle_2_" transform="translate(-1275.000000, -200.000000)"><g id="Final-Copy-2_2_" transform="translate(1275.000000, 200.000000)"><path class="st0" d="M7.4,12.8h6.8l3.1-11.6H7.4C4.2,1.2,1.6,3.8,1.6,7S4.2,12.8,7.4,12.8z"></path></g></g></g><g id="final---dec.11-2020"><g id="_x30_208-our-toggle" transform="translate(-1275.000000, -200.000000)"><g id="Final-Copy-2" transform="translate(1275.000000, 200.000000)"><path class="st1" d="M22.6,0H7.4c-3.9,0-7,3.1-7,7s3.1,7,7,7h15.2c3.9,0,7-3.1,7-7S26.4,0,22.6,0z M1.6,7c0-3.2,2.6-5.8,5.8-5.8 h9.9l-3.1,11.6H7.4C4.2,12.8,1.6,10.2,1.6,7z"></path><path id="x" class="st2" d="M24.6,4c0.2,0.2,0.2,0.6,0,0.8l0,0L22.5,7l2.2,2.2c0.2,0.2,0.2,0.6,0,0.8c-0.2,0.2-0.6,0.2-0.8,0 l0,0l-2.2-2.2L19.5,10c-0.2,0.2-0.6,0.2-0.8,0c-0.2-0.2-0.2-0.6,0-0.8l0,0L20.8,7l-2.2-2.2c-0.2-0.2-0.2-0.6,0-0.8 c0.2-0.2,0.6-0.2,0.8,0l0,0l2.2,2.2L23.8,4C24,3.8,24.4,3.8,24.6,4z"></path><path id="y" class="st3" d="M12.7,4.1c0.2,0.2,0.3,0.6,0.1,0.8l0,0L8.6,9.8C8.5,9.9,8.4,10,8.3,10c-0.2,0.1-0.5,0.1-0.7-0.1l0,0 L5.4,7.7c-0.2-0.2-0.2-0.6,0-0.8c0.2-0.2,0.6-0.2,0.8,0l0,0L8,8.6l3.8-4.5C12,3.9,12.4,3.9,12.7,4.1z"></path></g></g></g></g></svg></span>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            
+                                                
+                                                    
+                                                        <a href="/content/www/us/en/privacy/privacy-residents-certain-states.html" data-wap_ref="nac" id="wap_nac">
+                                                                    <small>Notice at Collection</small>
+                                                                    
+                                                                
+                                                        </a>
+                                                    
+                                                    
+                                                
+                                            
+                                            
+                                        
+                                    </li>
+                                
+                            </ul>
+                        
+                    
+                
+                
+                    <div class="footer-disclaimer">
+                            <p>Intel technologies may require enabled hardware, software or service activation. // No product or component can be absolutely secure. // Your costs and results may vary. // Performance varies by use, configuration, and other factors. Learn more at <a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/"><u>intel.com/performanceindex</u></a>. // See our complete legal <u><a href="https://edc.intel.com/content/www/us/en/products/performance/benchmarks/overview/#GUID-26B0C71C-25E9-477D-9007-52FCA56EE18C">Notices and Disclaimers</a></u>. // Intel is committed to respecting human rights and avoiding causing or contributing to adverse impacts on human rights. See Intel’s <u><a href="/content/www/us/en/policy/policy-human-rights.html">Global Human Rights Principles</a></u>. Intel’s products and software are intended only to be used in applications that do not cause or contribute to adverse impacts on human rights.</p>
+
+                    </div>
+                
+            </div>
+            <div class="logo-container">
+                <a href="/content/www/us/en/homepage.html" class="footer-logo-rebrand" aria-label="Intel Footer Logo" title="Intel Footer Logo">
+                    <img src="/content/dam/logos/intel-footer-logo.svg" height="300" width="118" class="footer-logo-rebrand" alt="Intel Footer Logo" title="Intel Footer Logo">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    <textarea id="defers" title="" style="display:none;">
+    <link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/commons-page.min.css" type="text/css"><script src="/etc.clientlibs/settings/wcm/designs/ver/260203/intel/clientlibs/pages/commons-page.min.js" defer></script>
+
+
+<script>!function(){var e=setInterval(function(){"undefined"!=typeof $CQ&&($CQ(function(){CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation"),CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/intel",window.location.pathname.substr(0,window.location.pathname.indexOf(".")))}),clearInterval(e))},100)}();</script>
+
+
+
+
+
+
+
+
+
+
+</textarea>
+
+
+</body>
+
+</html>
+
+

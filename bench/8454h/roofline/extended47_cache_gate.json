@@ -1,0 +1,442 @@
+{
+  "status": "pass",
+  "started_utc": "2026-10-13T18:34:16Z",
+  "completed_utc": "2026-10-13T18:34:19Z",
+  "library_path": "/tmp/ozamx-roofline-production/libozamx.a",
+  "library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "source_path": "/home/caiweili/ozAMX/tests/extended_validation.cpp",
+  "source_sha256": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+  "runner_sha256": "1e6c2fca91210e18cf85ffa955c516cc1a72e26d8bd857feaab5772588bc14d8",
+  "build_command": [
+    "g++",
+    "-std=c++17",
+    "-O2",
+    "-march=sapphirerapids",
+    "-ffp-contract=off",
+    "-mamx-tile",
+    "-mamx-bf16",
+    "-fopenmp",
+    "-I/home/caiweili/ozAMX/bench/8454h/versions/v2/include",
+    "/home/caiweili/ozAMX/tests/extended_validation.cpp",
+    "/tmp/ozamx-roofline-production/libozamx.a",
+    "-o",
+    "/tmp/ozamx-extended47-l6f8hleo/extended47"
+  ],
+  "build_log": "/home/caiweili/ozAMX/bench/8454h/roofline/extended47_cache_gate_logs/build.log",
+  "build_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "run_conditions": {
+    "threads": 1,
+    "openmp_dynamic": false,
+    "cache_bytes": [
+      2147483648,
+      0
+    ],
+    "processes_sequential": true,
+    "pinning": {
+      "2g": "CPU0",
+      "cache0": "CPU1"
+    },
+    "stdout": "JSON lines consumed directly from pipes; no JSONL/output files retained"
+  },
+  "shapes": [
+    [
+      1,
+      17,
+      31
+    ],
+    [
+      7,
+      33,
+      33
+    ],
+    [
+      17,
+      65,
+      257
+    ],
+    [
+      65,
+      129,
+      65
+    ],
+    [
+      256,
+      256,
+      256
+    ],
+    [
+      512,
+      512,
+      512
+    ],
+    [
+      256,
+      512,
+      256
+    ],
+    [
+      512,
+      256,
+      512
+    ],
+    [
+      1024,
+      1024,
+      1024
+    ]
+  ],
+  "precisions": [
+    "fp32",
+    "fp64-p6",
+    "fp64-p10",
+    "fp64-p15",
+    "fp64-p21"
+  ],
+  "process_exit_codes": {
+    "cache_2g": 0,
+    "cache_0": 0
+  },
+  "stderr_logs": {
+    "cache_2g": "/home/caiweili/ozAMX/bench/8454h/roofline/extended47_cache_gate_logs/cache_2g.stderr.log",
+    "cache_0": "/home/caiweili/ozAMX/bench/8454h/roofline/extended47_cache_gate_logs/cache_0.stderr.log"
+  },
+  "checks": {
+    "cases": 47,
+    "compared_output_slots": 8333440,
+    "full_bit_vector_cases": 20,
+    "digest_or_transaction_cases": 27,
+    "bitwise_mismatches": 0,
+    "case_results": [
+      {
+        "case": "f32_1x17x31_p6",
+        "output_slots": 24,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1x17x31_p6",
+        "output_slots": 24,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1x17x31_p10",
+        "output_slots": 24,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1x17x31_p15",
+        "output_slots": 24,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1x17x31_p21",
+        "output_slots": 24,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_7x33x33_p6",
+        "output_slots": 280,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_7x33x33_p6",
+        "output_slots": 280,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_7x33x33_p10",
+        "output_slots": 280,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_7x33x33_p15",
+        "output_slots": 280,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_7x33x33_p21",
+        "output_slots": 280,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_17x65x257_p6",
+        "output_slots": 1224,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_17x65x257_p6",
+        "output_slots": 1224,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_17x65x257_p10",
+        "output_slots": 1224,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_17x65x257_p15",
+        "output_slots": 1224,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_17x65x257_p21",
+        "output_slots": 1224,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_65x129x65_p6",
+        "output_slots": 8840,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_65x129x65_p6",
+        "output_slots": 8840,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_65x129x65_p10",
+        "output_slots": 8840,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_65x129x65_p15",
+        "output_slots": 8840,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_65x129x65_p21",
+        "output_slots": 8840,
+        "method": "full_bit_vector",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_256x256x256_p6",
+        "output_slots": 67328,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x256x256_p6",
+        "output_slots": 67328,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x256x256_p10",
+        "output_slots": 67328,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x256x256_p15",
+        "output_slots": 67328,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x256x256_p21",
+        "output_slots": 67328,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_512x512x512_p6",
+        "output_slots": 265728,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x512x512_p6",
+        "output_slots": 265728,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x512x512_p10",
+        "output_slots": 265728,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x512x512_p15",
+        "output_slots": 265728,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x512x512_p21",
+        "output_slots": 265728,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_256x512x256_p6",
+        "output_slots": 132864,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x512x256_p6",
+        "output_slots": 132864,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x512x256_p10",
+        "output_slots": 132864,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x512x256_p15",
+        "output_slots": 132864,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_256x512x256_p21",
+        "output_slots": 132864,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_512x256x512_p6",
+        "output_slots": 134656,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x256x512_p6",
+        "output_slots": 134656,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x256x512_p10",
+        "output_slots": 134656,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x256x512_p15",
+        "output_slots": 134656,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_512x256x512_p21",
+        "output_slots": 134656,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f32_1024x1024x1024_p6",
+        "output_slots": 1055744,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1024x1024x1024_p6",
+        "output_slots": 1055744,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1024x1024x1024_p10",
+        "output_slots": 1055744,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1024x1024x1024_p15",
+        "output_slots": 1055744,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "f64_1024x1024x1024_p21",
+        "output_slots": 1055744,
+        "method": "128_bit_full_output_digest",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "fp32_overflow_transaction",
+        "output_slots": 0,
+        "method": "transactional_exception",
+        "exact_match": true,
+        "guards_ok": true
+      },
+      {
+        "case": "fp64_invalid_transaction",
+        "output_slots": 0,
+        "method": "transactional_exception",
+        "exact_match": true,
+        "guards_ok": true
+      }
+    ]
+  }
+}

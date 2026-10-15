@@ -1,0 +1,9 @@
+{
+  "source_url": "https://docs.kernel.org/admin-guide/mm/transhuge.html",
+  "retrieved_utc": "2026-10-14T12:15:37Z",
+  "path": "third_party/manuals/linux-transhuge.html",
+  "sha256": "9210d85532f46083a1d410b574cbc02ac63f1228479ea1cba7e8792bd3b91a25",
+  "content_type": "text/html",
+  "retrieval_method": "curl -L --fail",
+  "note": "Saved for this experiment; contents describe Linux THP/madvise behavior. No system settings were modified."
+}

@@ -1,0 +1,1 @@
+Cancelled before lock acquisition after confirming the disassembly parser still had an over-escaped whitespace pattern; no configure/build/benchmark step began. Exec session exited 130 on Ctrl-C.

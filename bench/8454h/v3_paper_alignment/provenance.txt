@@ -1,0 +1,9 @@
+source_id=v3-paper-alignment-20261014
+archive_sha256=73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c
+mkl_rt_sha256=b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f
+main_source_sha256=acf8b0ba205314205ab1bb3562258c77c198a0c2a7b9bf214c936cd652bb33a6
+raw_source_sha256=83616f51bd2ead1a04fa0af08972f5e689a6c14164f8a26548cc94aaae3a837f
+compile_main=g++ -O3 -march=native -std=c++17 -fopenmp [root include] [oneMKL 2026.1 include] benchmark snapshot frozen libozamx.a libmkl_rt.so.3 -ldl
+compile_raw=g++ -O3 -march=native -std=c++17 -fopenmp [oneMKL 2026.1 include] raw snapshot libmkl_rt.so.3 -ldl
+protocol=uniform[-1,1], base_seed=260904 (paper does not specify RNG/seed), warmup=1, timed_repetitions=10, report=arithmetic_mean_and_population_sd_no_outlier_removal
+platform_difference=Intel Xeon Platinum 8454H Ubuntu; GCC 11.4 GNU OpenMP; oneMKL 2026.1 GNU threading; paper uses 8462Y+ Rocky Linux 9.3 Intel compiler/OpenMP

@@ -1,0 +1,97 @@
+{
+  "schema": "ozamx-v4-adopted-current-main-package-build-check-1",
+  "status": "pass",
+  "started_utc": "2026-10-14T13:14:41Z",
+  "lock_acquired_utc": "2026-10-14T13:14:41Z",
+  "source_snapshot": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adopted_current_main/source",
+  "source_hashes": {
+    "CMakeLists.txt": "e692c6066ef66229c6ebc1e857d94db704770598fa602e308bfa29c2602356de",
+    "src/gemm.cpp": "498fe70a1c7d343c67b19b495409fe0bbfb4440746fca4d03e7a02ce282c3eba",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5"
+  },
+  "source_identity_sha256": "197e397e93da894879081cd4506ead9738e6b5639b629aae0b70083145462c0b",
+  "package_manifest_sha256_before_check": "ba4c961bdd59d2122360acdb97fd66573e7efcdd9818ce4d391ff085030c0158",
+  "configure_options": [
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DBUILD_TESTING=ON",
+    "-DOZAMX_BUILD_PROBE=OFF",
+    "-DOZAMX_ENABLE_OPENMP=ON",
+    "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+    "-DOZAMX_CACHE_BLOCK=128",
+    "-DOZAMX_PREP_GRAIN=16384",
+    "-DOZAMX_MIN_COMPUTE_WORK=8",
+    "-DOZAMX_TILELOAD_HINT=1",
+    "-DOZAMX_LOAD_SCHEDULE=0",
+    "-DOZAMX_LOOP_ORDER=0",
+    "-DOZAMX_MN_ORDER=0",
+    "-DOZAMX_ONEMKL_ROOT=/tmp/ozamx_v4_archive_pkgcheck_no_onemkl"
+  ],
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adopted_current_main/source",
+        "-B",
+        "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_TESTING=ON",
+        "-DOZAMX_BUILD_PROBE=OFF",
+        "-DOZAMX_ENABLE_OPENMP=ON",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DOZAMX_CACHE_BLOCK=128",
+        "-DOZAMX_PREP_GRAIN=16384",
+        "-DOZAMX_MIN_COMPUTE_WORK=8",
+        "-DOZAMX_TILELOAD_HINT=1",
+        "-DOZAMX_LOAD_SCHEDULE=0",
+        "-DOZAMX_LOOP_ORDER=0",
+        "-DOZAMX_MN_ORDER=0",
+        "-DOZAMX_ONEMKL_ROOT=/tmp/ozamx_v4_archive_pkgcheck_no_onemkl"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/logs/configure.log",
+      "package_log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adopted_current_main/validation/package_build_check/configure.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/build",
+        "--parallel",
+        "4"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/logs/build.log",
+      "package_log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adopted_current_main/validation/package_build_check/build.log"
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/build",
+        "--output-on-failure",
+        "--parallel",
+        "1"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/logs/ctest.log",
+      "package_log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/adopted_current_main/validation/package_build_check/ctest.log"
+    }
+  ],
+  "ctest_expected_tests": 3,
+  "ctest_passed_tests": 3,
+  "ctest_summary": "100% tests passed, 0 tests failed out of 3",
+  "build_library_path_in_tmp": "/tmp/ozamx_v4_archive_pkgcheck_20261014T132000Z/build/libozamx.a",
+  "build_library_sha256": "7adcc98996d5a88aa21f74038a42710a28496cf601f2127c016b8e8687801b68",
+  "packaged_openmp_library_sha256": "7adcc98996d5a88aa21f74038a42710a28496cf601f2127c016b8e8687801b68",
+  "rebuilt_library_matches_packaged": true,
+  "optional_onemkl_available_in_standalone_source": false,
+  "build_tree_not_copied": true,
+  "logs_and_compile_metadata_directory": "validation/package_build_check",
+  "completed_utc": "2026-10-14T13:14:49Z"
+}

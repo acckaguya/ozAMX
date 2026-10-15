@@ -1,0 +1,191 @@
+{
+  "schema": "ozamx-v4-kernel-schedule-source-identity-1",
+  "created_utc": "2026-10-14T12:43:23Z",
+  "candidate_id": "kernel_schedule_v1",
+  "base_release": "bench/8454h/versions/v3_release",
+  "base_manifest_sha256": "bba4aca69c821426d61d529175f7af0738d425446f7ca38c576042b4ce697fcd",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "v3_files_copied": 23,
+  "copied_file_hashes": [
+    {
+      "path": "CMakeLists.txt",
+      "v3_sha256": "83cc30f33c86fcfe6a3878a80eb8808d0e074518ac69801e209f13fc1146e5ad",
+      "candidate_sha256": "09321bc58f109a2f270f538f7e80133b79e15b8dc6189567bad6a8393cb83108",
+      "matches_v3": false
+    },
+    {
+      "path": "README.md",
+      "v3_sha256": "dc59b71c44c58c9adce4aaef00ae7ada05134f765042e737534e1d92fd50a5ed",
+      "candidate_sha256": "dc59b71c44c58c9adce4aaef00ae7ada05134f765042e737534e1d92fd50a5ed",
+      "matches_v3": true
+    },
+    {
+      "path": "bench/benchmark.cpp",
+      "v3_sha256": "1ff045bd32a5f77686ce27e5d8bb1406b5887b43ed1158c25653dcf13c80a5c6",
+      "candidate_sha256": "1ff045bd32a5f77686ce27e5d8bb1406b5887b43ed1158c25653dcf13c80a5c6",
+      "matches_v3": true
+    },
+    {
+      "path": "bench/optimization_benchmark.cpp",
+      "v3_sha256": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+      "candidate_sha256": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+      "matches_v3": true
+    },
+    {
+      "path": "include/ozamx/gemm.hpp",
+      "v3_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+      "candidate_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+      "matches_v3": true
+    },
+    {
+      "path": "src/gemm.cpp",
+      "v3_sha256": "7a4d0311dd12ee9a8a0ef6a3dca42bec6dca8a36ec34782da603b84c2419a164",
+      "candidate_sha256": "7a4d0311dd12ee9a8a0ef6a3dca42bec6dca8a36ec34782da603b84c2419a164",
+      "matches_v3": true
+    },
+    {
+      "path": "src/kernels.S",
+      "v3_sha256": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+      "candidate_sha256": "f3e2fe0e0c7f058923b675d3ab16fdc27a46c125da00539863832b5e46f01e0b",
+      "matches_v3": false
+    },
+    {
+      "path": "src/main.cpp",
+      "v3_sha256": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+      "candidate_sha256": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+      "matches_v3": true
+    },
+    {
+      "path": "src/preprocess.hpp",
+      "v3_sha256": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+      "candidate_sha256": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+      "matches_v3": true
+    },
+    {
+      "path": "src/runtime.cpp",
+      "v3_sha256": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+      "candidate_sha256": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+      "matches_v3": true
+    },
+    {
+      "path": "src/tuning.hpp",
+      "v3_sha256": "2dc89e5f8a0986da508eca9931e94130be96a0b098c9f0ab8d35a6217ecb4798",
+      "candidate_sha256": "2dc89e5f8a0986da508eca9931e94130be96a0b098c9f0ab8d35a6217ecb4798",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/bounded_commit_alias_probe.cpp",
+      "v3_sha256": "c29f55845e4a7b755635e86932f587a5106220afd1a681997d254bf4c63eaf09",
+      "candidate_sha256": "c29f55845e4a7b755635e86932f587a5106220afd1a681997d254bf4c63eaf09",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/bounded_commit_overflow_probe.cpp",
+      "v3_sha256": "8c70309dd95e87908a064521cf56d935b34bebc81858cf2b1519bb0993410a84",
+      "candidate_sha256": "8c70309dd95e87908a064521cf56d935b34bebc81858cf2b1519bb0993410a84",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/extended_validation.cpp",
+      "v3_sha256": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+      "candidate_sha256": "34e820efcf1d84a790047695b9b9e11fff371305ae23c83488ce3c53e8e2245c",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/final_late_path_probe.cpp",
+      "v3_sha256": "ca73c8372bb39fc8c5ab0f6dfc51bf10034c0d61ee24fb05248d00533f8d9a53",
+      "candidate_sha256": "ca73c8372bb39fc8c5ab0f6dfc51bf10034c0d61ee24fb05248d00533f8d9a53",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/fp32_packed_panel_audit.cpp",
+      "v3_sha256": "855609e1aae13fc48edce62f1f2aa758dab7571c6cdebea769f74a43392f111c",
+      "candidate_sha256": "855609e1aae13fc48edce62f1f2aa758dab7571c6cdebea769f74a43392f111c",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/packed_panel_audit.cpp",
+      "v3_sha256": "29ddf9218c20c86f0be857361e209f2c91a3ea5e375f7fbc5ccc60ffac6419f2",
+      "candidate_sha256": "29ddf9218c20c86f0be857361e209f2c91a3ea5e375f7fbc5ccc60ffac6419f2",
+      "matches_v3": true
+    },
+    {
+      "path": "tests/validation.cpp",
+      "v3_sha256": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264",
+      "candidate_sha256": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264",
+      "matches_v3": true
+    },
+    {
+      "path": "tools/amx_probe.c",
+      "v3_sha256": "9db413f970915067d83fe71183b583af08d3a75ecc13fff4c11b92206e648c5d",
+      "candidate_sha256": "9db413f970915067d83fe71183b583af08d3a75ecc13fff4c11b92206e648c5d",
+      "matches_v3": true
+    },
+    {
+      "path": "tools/native_alternative_accuracy.cpp",
+      "v3_sha256": "1522208e7556dc021b24b79c3bb1403254ae3251a47fb6a02358ba224b53c26a",
+      "candidate_sha256": "1522208e7556dc021b24b79c3bb1403254ae3251a47fb6a02358ba224b53c26a",
+      "matches_v3": true
+    },
+    {
+      "path": "tools/native_kernel_audit.cpp",
+      "v3_sha256": "8c3e66d56b6b81b65f067bee7380d5b41ca0eeca9529b94dfc6f92c262775178",
+      "candidate_sha256": "8c3e66d56b6b81b65f067bee7380d5b41ca0eeca9529b94dfc6f92c262775178",
+      "matches_v3": true
+    },
+    {
+      "path": "tools/native_signed_shift_accuracy.cpp",
+      "v3_sha256": "31fed4d3f6ea6a9bea93e23a6e78c882e54be67bd7013efbca5ef404381882b8",
+      "candidate_sha256": "31fed4d3f6ea6a9bea93e23a6e78c882e54be67bd7013efbca5ef404381882b8",
+      "matches_v3": true
+    },
+    {
+      "path": "tools/platform_baseline.cpp",
+      "v3_sha256": "25444b17c9df70fbc743fb621f60256ff2785395a2b41277fa9861303af67b4e",
+      "candidate_sha256": "25444b17c9df70fbc743fb621f60256ff2785395a2b41277fa9861303af67b4e",
+      "matches_v3": true
+    }
+  ],
+  "copied_files_differing_from_v3": [
+    {
+      "path": "CMakeLists.txt",
+      "v3_sha256": "83cc30f33c86fcfe6a3878a80eb8808d0e074518ac69801e209f13fc1146e5ad",
+      "candidate_sha256": "09321bc58f109a2f270f538f7e80133b79e15b8dc6189567bad6a8393cb83108",
+      "matches_v3": false
+    },
+    {
+      "path": "src/kernels.S",
+      "v3_sha256": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+      "candidate_sha256": "f3e2fe0e0c7f058923b675d3ab16fdc27a46c125da00539863832b5e46f01e0b",
+      "matches_v3": false
+    }
+  ],
+  "experiment_additions": {
+    "CMakeLists.txt": "OZV4_LOAD_GROUP=0|1|2 selector; OZAMX_LOAD_SCHEDULE remains unchanged",
+    "gate_sources": [
+      {
+        "path": "tools/run_binary_gate_v4.py",
+        "source": "bench/8454h/roofline_v4/recon_ilp_src/tools/run_binary_gate_v4.py",
+        "sha256": "502001b001a759a9e01eb992c8da10030b14e8112c44da660a224628bad56be3"
+      },
+      {
+        "path": "tools/roofline_binary_gate_v4.cpp",
+        "source": "bench/8454h/roofline_v4/recon_ilp_src/tools/roofline_binary_gate_v4.cpp",
+        "sha256": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad"
+      }
+    ]
+  },
+  "kernel_schedule_variants": {
+    "0": "frozen V3 scheduling branch",
+    "1": "column-group load scheduling; assembly core pending root-authored change",
+    "2": "row-group load scheduling; assembly core pending root-authored change"
+  },
+  "runtime_and_public_api_changes": false,
+  "build_or_benchmark_in_source_tree": false,
+  "root_authored_changes": {
+    "file": "src/kernels.S",
+    "sha256": "f3e2fe0e0c7f058923b675d3ab16fdc27a46c125da00539863832b5e46f01e0b",
+    "source_differs_from_v3": true,
+    "description": "OZV4_LOAD_GROUP=1 column-group schedule; =2 row-group schedule; default 0 preserves baseline; no FP32 load or arithmetic changes"
+  }
+}

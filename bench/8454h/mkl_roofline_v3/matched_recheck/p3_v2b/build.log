@@ -1,0 +1,18 @@
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp: In function ‘std::vector<long unsigned int> {anonymous}::parse_sizes(const string&)’:
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp:35:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   35 |     if(v.empty()) throw std::runtime_error("empty --sizes"); return v;
+      |     ^~
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp:35:62: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   35 |     if(v.empty()) throw std::runtime_error("empty --sizes"); return v;
+      |                                                              ^~~~~~
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp: In function ‘std::vector<int> {anonymous}::parse_budgets(const string&)’:
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp:40:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   40 |     if(v.empty())throw std::runtime_error("empty --budgets");return v;
+      |     ^~
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp:40:62: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   40 |     if(v.empty())throw std::runtime_error("empty --budgets");return v;
+      |                                                              ^~~~~~
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp: At global scope:
+/home/caiweili/ozAMX/bench/8454h/mkl_roofline_v3/matched_recheck/p3_v2b/benchmark_matched_recheck.cpp:103:6: warning: ‘bool {anonymous}::json_bool(const string&, const string&)’ defined but not used [-Wunused-function]
+  103 | bool json_bool(const std::string&s,const std::string&key){const auto p=s.find("\""+key+"\":");return p!=std::string::npos&&s.compare(p+key.size()+3,4,"true")==0;}
+      |      ^~~~~~~~~

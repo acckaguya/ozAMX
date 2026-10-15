@@ -1,0 +1,9 @@
+# Treat ordinary source and documentation as text.
+* text=auto
+*.md whitespace=-blank-at-eol
+
+# Raw research evidence and downloaded references keep their exact bytes.
+# Their whitespace is part of the recorded artifact, not a source-style check.
+/bench/8454h/** -text -whitespace
+/third_party/** -text -whitespace
+/docs/figures/** -text -whitespace

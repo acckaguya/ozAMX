@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "shape": {
+    "m": 4096,
+    "n": 4096,
+    "k": 1,
+    "precision": "fp64",
+    "budget": 6,
+    "threads": 64,
+    "alias": "A=B=C"
+  },
+  "macro_off": {
+    "digest": "bc847a42793d0383:e34fd781c6a2fdeb",
+    "replicate_b_seconds": 0,
+    "pack_seconds": 0.00588659,
+    "node0_workers": 0,
+    "node1_workers": 0,
+    "fallback_workers": 0
+  },
+  "macro_on": {
+    "digest": "bc847a42793d0383:e34fd781c6a2fdeb",
+    "replicate_b_seconds": 0.0045066,
+    "pack_seconds": 0.0112208,
+    "node0_workers": 31,
+    "node1_workers": 33,
+    "fallback_workers": 0
+  },
+  "bitwise_digest_equal": true
+}

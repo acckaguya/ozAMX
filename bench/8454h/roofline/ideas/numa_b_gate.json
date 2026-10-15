@@ -1,0 +1,41 @@
+{
+  "checks": {
+    "equivalence_100_t1": {
+      "mismatches": 0,
+      "rows": 100
+    },
+    "equivalence_100_t4": {
+      "mismatches": 0,
+      "rows": 100
+    },
+    "equivalence_100_t64": {
+      "mismatches": 0,
+      "rows": 100
+    },
+    "extended47_t1_cache0": {
+      "mismatches": 0,
+      "rows": 47
+    },
+    "extended47_t1_cache1073741824": {
+      "mismatches": 0,
+      "rows": 47
+    },
+    "extended47_t4_cache0": {
+      "mismatches": 0,
+      "rows": 47
+    },
+    "extended47_t4_cache1073741824": {
+      "mismatches": 0,
+      "rows": 47
+    },
+    "extended47_t64_cache0": {
+      "mismatches": 0,
+      "rows": 47
+    },
+    "extended47_t64_cache1073741824": {
+      "mismatches": 0,
+      "rows": 47
+    }
+  },
+  "status": "pass"
+}

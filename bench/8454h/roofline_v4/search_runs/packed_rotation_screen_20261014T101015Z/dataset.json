@@ -1,0 +1,141 @@
+{
+  "schema": "ozamx-v4-packed-layout-dataset-1",
+  "phase": "scan",
+  "queued_utc": "2026-10-14T10:10:30Z",
+  "lock_acquired_utc": "2026-10-14T10:11:57Z",
+  "started_utc": "2026-10-14T10:11:57Z",
+  "freeze_marker_sha256": "06a934916fecd37bc297eefd48177b3802a30aa04113cffb546939c36c6ede42",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "source_sha256": {
+    "CMakeLists.txt": "47c7bec8941854bc7d19d6996f0ea4dd772327435e0d8b78f059b96323b00135",
+    "README.md": "f73ffec66ce810483d8a6ec2b9b6dd590e253402ec6375ace3a58518913212d1",
+    "SOURCE_ORIGIN.json": "8b902e48986b4ae68c1c4e61864d91c6a32690e89002d914093d1e7a3fddf076",
+    "bench/benchmark.cpp": "e8244bb93d00db2ff9c9a455a979cd02d5ceff4e17c461ccca3ff160138fa48c",
+    "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+    "cache-index-analysis.md": "4610ffa141c4fe2178d57ca6e1db5cda3c68802bb5028520fe1239bc3ed104a6",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "src/gemm.cpp": "1def372a30261e54851d84567cb7606389623c26a02155c17631aaefbc99918c",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "src/main.cpp": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+    "src/preprocess.hpp": "2d0303fe1f399b7e0e03d28d718274b782709594d6327053b7e3b71590a5a8ec",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/tuning.hpp": "2dc89e5f8a0986da508eca9931e94130be96a0b098c9f0ab8d35a6217ecb4798",
+    "tests/bounded_commit_alias_probe.cpp": "c29f55845e4a7b755635e86932f587a5106220afd1a681997d254bf4c63eaf09",
+    "tests/final_late_path_probe.cpp": "ca73c8372bb39fc8c5ab0f6dfc51bf10034c0d61ee24fb05248d00533f8d9a53",
+    "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264",
+    "tools/__pycache__/packed_layout_search.cpython-310.pyc": "a32da4ff17cbdee5de437c8fdcd1eddfc70f9f737db1d33644c390f98ed701d0",
+    "tools/packed_layout_search.py": "481fa3e36b44b4983851224b739a30dd677a1d1da38ce1f16a2a3d933a1bbfc7",
+    "tools/roofline_binary_gate_v4.cpp": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad",
+    "tools/run_binary_gate_v4.py": "65c27a75da7522414602c6bd0b51b4d4ef32efdcf4a6a5922ec3f7f4cf8a5d7e",
+    "tools/search.py": "13c3a2843e1348d2f185e6e8a3b6edfde5021fedee5807112e3d612608403a82"
+  },
+  "candidates": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      64,
+      64,
+      0,
+      0
+    ],
+    [
+      4096,
+      4096,
+      0,
+      0
+    ],
+    [
+      8192,
+      8192,
+      0,
+      0
+    ],
+    [
+      16384,
+      16384,
+      0,
+      0
+    ],
+    [
+      32768,
+      32768,
+      0,
+      0
+    ],
+    [
+      65536,
+      65536,
+      0,
+      0
+    ],
+    [
+      64,
+      4096,
+      0,
+      0
+    ],
+    [
+      4096,
+      64,
+      0,
+      0
+    ],
+    [
+      8192,
+      16384,
+      0,
+      0
+    ],
+    [
+      16384,
+      8192,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      3
+    ],
+    [
+      0,
+      0,
+      3,
+      1
+    ]
+  ],
+  "threads": 64,
+  "cpuset": "0-63",
+  "seed": 260904,
+  "outlier_removal": false,
+  "execution_failure": {
+    "stage": "after all four N256 preflight modes validated, before initial V3 control and before any candidate full-size timings",
+    "cause": "TypeError from passing frozen_v3_initial tag and mode arguments to run_bench in the wrong positions",
+    "retained_log": "launch_failure.log",
+    "cpu_candidate_timings_started": false
+  }
+}

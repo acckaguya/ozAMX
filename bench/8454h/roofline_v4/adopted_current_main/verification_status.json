@@ -1,0 +1,44 @@
+{
+  "schema": "ozamx-v4-adopted-current-main-validation-1",
+  "validated_utc": "2026-10-14T12:59:43Z",
+  "openmp": {
+    "library_sha256": "7adcc98996d5a88aa21f74038a42710a28496cf601f2127c016b8e8687801b68",
+    "library_path": "artifacts/libozamx_main_openmp.a",
+    "ctest": {
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/production_validation_runs/main_current_20261014/logs/ctest.log",
+      "passed": true,
+      "tests": 3
+    },
+    "gate": {
+      "status": "pass",
+      "cases": 23,
+      "all_pass": true
+    }
+  },
+  "no_openmp": {
+    "library_sha256": "c3baf4364d7dbf7b22e12a7f2662b7c03bc9ebd2696f86564e84f1cc800abe27",
+    "library_path": "artifacts/libozamx_main_noomp.a",
+    "ctest_status": "complete",
+    "ctest_steps": [
+      {
+        "name": "ctest_noomp",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "/home/caiweili/ozAMX/bench/8454h/roofline_v4/production_validation_runs/main_current_20261014/build_noomp",
+          "--output-on-failure",
+          "--parallel",
+          "1"
+        ],
+        "returncode": 0,
+        "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/production_validation_runs/main_current_20261014/logs/ctest_noomp.log"
+      }
+    ],
+    "eligible_full_output_gate_status": "pass",
+    "eligible_full_output_gate_cases": 1
+  },
+  "frozen_v3_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "full_original_run_path": "bench/8454h/roofline_v4/production_validation_runs/main_current_20261014",
+  "full_run_status": "pass",
+  "includes_timing_claim": false
+}

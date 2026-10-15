@@ -1,0 +1,63 @@
+{
+  "started_utc": "2026-10-13T18:14:05Z",
+  "platform": "Linux-5.15.0-161-generic-x86_64-with-glibc2.35",
+  "candidate_clone": "/tmp/ozamx-roof-numa-half",
+  "frozen_binary": "/tmp/ozamx-production-final/ozamx_optimization_benchmark",
+  "cpu_allowed_list": "Cpus_allowed_list:\t0-127",
+  "affinity": "taskset -c 0-63",
+  "openmp": {
+    "threads": 64,
+    "places": "cores",
+    "proc_bind": "close",
+    "dynamic": false
+  },
+  "workspace_cache_bytes": 2147483648,
+  "cli": {
+    "sizes": [
+      4096,
+      8192
+    ],
+    "precision": "all",
+    "fp64_budgets": [
+      6,
+      21
+    ],
+    "warmups": 1,
+    "repetitions": 5
+  },
+  "run_order": [
+    "frozen_2g_a",
+    "control0_2g",
+    "numa_half_2g_a",
+    "frozen_2g_b",
+    "numa_half_2g_b",
+    "frozen_2g_c"
+  ],
+  "driver_compile": {
+    "compiler": "/usr/bin/g++",
+    "flags": "-std=c++17 -O3 -march=sapphirerapids -ffp-contract=off -fopenmp",
+    "header_abi": "clone/include for both half-control and half-candidate"
+  },
+  "partial_replica": "two NUMA buffers per packed B slice, each size=size/2; node0 contains second half and node1 first half; per-actual-offset selection avoids invalid base pointers",
+  "sha256": {
+    "frozen_binary": "eece364647b16906862dd0820a46f08ad62b53a0275dde29a9e1fae097d59893",
+    "frozen_library": "ddfe885c2ba58089accd4e747aecb53a18422554e06fc409965e2f47b7d92251",
+    "candidate_library": "b63d0ef4a4832bc16ca4d7e2e095409616c40dfc4de8f529d73da73086f11217",
+    "control_library": "41fa59f15836ccb0f0c3abf4a086b2f0d286bdfa90ad7cd6354ab371bc5d7c99",
+    "candidate_driver": "44b17c90d5187747c3c424cc0c4648c63e2d91f0552697561a8ce6a656fe3e4e",
+    "control_driver": "efb3ad6e85a5e850f109f24c0c9e5fdc60f4ab1c7179fd686950b0ca05528814",
+    "source_files": {
+      "include/ozamx/gemm.hpp": "1ce3a122b0bfe61901fe77d5a5399c2215ca93461a7324be786b5ccafabe4c20",
+      "src/gemm.cpp": "5e1b76d0c59c1c4ccfd58118816d4edbc1a7bc2161dae61ed688949fa0f90100",
+      "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+      "src/main.cpp": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+      "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+      "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+      "src/tuning.hpp": "2f08ed0cce0607853f63656819176fbb887101462d46f629c6c3b09d858b6511",
+      "bench/optimization_benchmark.cpp": "ee59828d0a9a17d8136ff751766bddc10519d66e6ba74630b4c826cccdcf6398",
+      "CMakeLists.txt": "ab6279ffa3da596dc3234da37a40a9b56ebf055d77f0dac9c81ff1eaf33af5f3"
+    },
+    "candidate_flags": "c313d5171ba63fb520b2eb3ad48b9a672a2a7b2462fa7d36a6fa9badf77cf3fa",
+    "control_flags": "96a51cead96e4b60aabfe081fe498f7b27949e0370d24eed181c34f946f52906"
+  }
+}

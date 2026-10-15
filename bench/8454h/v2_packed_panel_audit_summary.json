@@ -1,0 +1,84 @@
+{
+  "status": "pass",
+  "audits": [
+    {
+      "precision": "fp64",
+      "source_dir": "/tmp/ozamx-v2-candidate/src",
+      "header_sha256": "74f8a0f2c650b52282ed6af4461e641cc0c3735a600a076fd87fcfedf1b803e5",
+      "cases": 64,
+      "both_rejected": 16,
+      "inputs": [
+        "exponent_edges",
+        "max_bf16_boundary",
+        "random",
+        "zero"
+      ],
+      "depths": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "shapes": [
+        [
+          256,
+          256,
+          256
+        ],
+        [
+          256,
+          512,
+          256
+        ],
+        [
+          512,
+          256,
+          512
+        ],
+        [
+          512,
+          512,
+          512
+        ]
+      ],
+      "result_sha256": "825c0832ec611b7cbae01c7013201058b9b2fc216f74a3e9a9b8b88acbf0c56a"
+    },
+    {
+      "precision": "fp32",
+      "source_dir": "/tmp/ozamx-v2-candidate/src",
+      "header_sha256": "74f8a0f2c650b52282ed6af4461e641cc0c3735a600a076fd87fcfedf1b803e5",
+      "cases": 9,
+      "both_rejected": 0,
+      "inputs": [
+        "exponent_edges",
+        "random",
+        "zero"
+      ],
+      "depths": [
+        3
+      ],
+      "shapes": [
+        [
+          256,
+          256,
+          256
+        ],
+        [
+          256,
+          512,
+          256
+        ],
+        [
+          512,
+          256,
+          512
+        ]
+      ],
+      "result_sha256": "edd5769f47343beb1ff0ae8a2a9146df7e0f7ca7b71b602c21ef3148d9f25095"
+    }
+  ],
+  "driver_sha256": "29ddf9218c20c86f0be857361e209f2c91a3ea5e375f7fbc5ccc60ffac6419f2",
+  "fp32_driver_sha256": "855609e1aae13fc48edce62f1f2aa758dab7571c6cdebea769f74a43392f111c",
+  "runner_sha256": "9e07f723c4a35bf8f1ac4b413a3e08bf3bb94c786f096b63c4bf343ea4a5f055",
+  "comparison": "Every uint16 element in each legacy pack_slices A/B panel was compared with split_pack_direct64 output for depths 3/4/5/6; input accept/reject behavior is also compared."
+}

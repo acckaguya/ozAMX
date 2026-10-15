@@ -1,0 +1,54 @@
+{
+  "status": "pass",
+  "source_journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/runtime_recheck_b2_m256_n256_fp64_p6_20261014/matched_calls.json",
+  "configuration_stats": {
+    "fp64_n4096_b6": {
+      "N": 4096,
+      "raw_candidate_over_control": [
+        1.1977319403982218,
+        0.7907701219552135,
+        0.9823449437879404,
+        0.9694876280603282,
+        0.9212862142206688,
+        0.940252635754413,
+        0.5268091771152362,
+        0.5531388719918762,
+        1.5419632823742229,
+        1.330502971949667,
+        0.9002361423695923
+      ],
+      "median_paired_ratio": 0.940252635754413,
+      "mean_paired_ratio": 0.9685930845433982,
+      "ratio_of_mean_api_times": 0.9212235580441068,
+      "byte_exact_match": true,
+      "output_sha256": {
+        "candidate": "e450842a780a8d67a0cbe60418cbace30c0a97d150a4bbb5ddde394734d0e705",
+        "control": "e450842a780a8d67a0cbe60418cbace30c0a97d150a4bbb5ddde394734d0e705"
+      }
+    },
+    "fp64_n8192_b6": {
+      "N": 8192,
+      "raw_candidate_over_control": [
+        0.974021693216362,
+        0.6974476246620217,
+        1.032501493339305,
+        1.0570829865141411,
+        0.8060979856553275,
+        1.21299420150437,
+        0.9697051544364897,
+        0.9168871923719201,
+        0.8794949306133998,
+        0.8654831101225924,
+        1.3215808056141218
+      ],
+      "median_paired_ratio": 0.9697051544364897,
+      "mean_paired_ratio": 0.975754288913641,
+      "ratio_of_mean_api_times": 0.9745473967361247,
+      "byte_exact_match": true,
+      "output_sha256": {
+        "candidate": "535d46ea8ca82d67a8f3e26bfa7e6d770d324ccb51004eabd6b10369911a0856",
+        "control": "535d46ea8ca82d67a8f3e26bfa7e6d770d324ccb51004eabd6b10369911a0856"
+      }
+    }
+  }
+}

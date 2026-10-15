@@ -1,0 +1,22 @@
+# Build and full run each take the shared CPU/performance lock. The static library
+# is the already CMake-built isolated selected candidate; only the benchmark
+# driver is compiled here. This is a fresh v2 source_id/checkpoint namespace.
+flock -x /tmp/ozamx-perf.lock bash -c '
+  mkdir -p /tmp/ozamx-mkl-v2-build
+  g++ -O3 -std=c++17 -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16 -fopenmp \
+    -I/tmp/ozamx-v2-candidate/include -I/home/caiweili/ozAMX/third_party/code/mkl-current/include \
+    /home/caiweili/ozAMX/bench/8454h/mkl_v2/benchmark_v2.cpp /tmp/ozamx-v2-candidate/build/libozamx.a \
+    -L/home/caiweili/ozAMX/third_party/code/mkl-current/lib \
+    -Wl,-rpath,/home/caiweili/ozAMX/third_party/code/mkl-current/lib \
+    -Wl,--no-as-needed -l:libmkl_rt.so.3 -ldl \
+    -o /tmp/ozamx-mkl-v2-build/ozamx_benchmark && \
+  LD_LIBRARY_PATH=/home/caiweili/ozAMX/third_party/code/mkl-current/lib \
+  OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE \
+  MKL_NUM_THREADS=64 MKL_DYNAMIC=FALSE MKL_THREADING_LAYER=GNU MKL_INTERFACE_LAYER=LP64 \
+  OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 \
+    /tmp/ozamx-mkl-v2-build/ozamx_benchmark \
+    --sizes 256,1024,4096,8192 --threads 64 --reps 5 --precision all \
+    --budgets 6,10,15,21 --seed 260904 --distribution uniform \
+    --checkpoint /home/caiweili/ozAMX/bench/8454h/mkl_v2/checkpoint_v2_candidate \
+    --output /home/caiweili/ozAMX/bench/8454h/mkl_v2/full_candidate.csv
+'

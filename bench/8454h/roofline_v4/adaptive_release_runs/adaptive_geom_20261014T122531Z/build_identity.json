@@ -1,0 +1,13 @@
+{
+  "candidate_id": "adaptive_geom_v1",
+  "build_type": "Release",
+  "compiler_id": "GNU expected",
+  "frozen_base_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "candidate_library_sha256": "2a3e5533fbd5397df2c44284a7a7da54b0463558e36f8f9f284b210831c80695",
+  "candidate_source_sha256": "b187759764ca9e222e5b1020e485c240a5cbd4731a16d86d4dd0483acd99abd9",
+  "public_header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "cmake_cache": "build/CMakeCache.txt",
+  "validation_gate_sha256": "c36675c60dc6be8f48f1ebe37902f25387f6b8205b8a9b2d446297dc6d11a361",
+  "ctest_log": "logs/ctest.log"
+}

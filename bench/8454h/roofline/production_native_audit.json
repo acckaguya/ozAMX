@@ -1,0 +1,1 @@
+{"component_bk_fp32_stores":147456,"bitwise_equal_to_long_double_rounded_fp32":147456,"not_bitwise_equal":0,"max_ulp":0,"max_abs_error":0,"max_rel_error":0,"packing_mismatches":0,"padding_nonzero_or_mismatch":0,"reconstructed_outputs":730,"reconstruction_bitwise_mismatches":0}

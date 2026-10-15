@@ -1,0 +1,39 @@
+{
+  "completed_utc": "2026-10-13T17:56:46Z",
+  "raw_csv": {
+    "control0_4g.csv": {
+      "sha256": "9d01006ec2f57bef77636f61b2519137c784b21de9b59b5386afcaba152cb4ba",
+      "bytes": 11690,
+      "lines": 73
+    },
+    "frozen_4g_a.csv": {
+      "sha256": "9fc117134a95ec8a3faced5392b0e625c1f6f51d60a42c7044013a4121811d31",
+      "bytes": 10796,
+      "lines": 67
+    },
+    "frozen_4g_b.csv": {
+      "sha256": "505af36b1e1dc4be14c5775108c87fa1dbe6e9b0f90168f6158ce3297d883386",
+      "bytes": 10848,
+      "lines": 67
+    },
+    "frozen_4g_c.csv": {
+      "sha256": "b675a15817cbd1f837ee572633aec9fbdb2a4f18bfdf995cdd73cd2e41eca207",
+      "bytes": 10879,
+      "lines": 67
+    },
+    "numa1_4g_a.csv": {
+      "sha256": "b58a6ef4b003175b68e50e330ab1a6b43b933be8d0a8dd4fa22f5e02bad12118",
+      "bytes": 12649,
+      "lines": 73
+    },
+    "numa1_4g_b.csv": {
+      "sha256": "5529b3fe77c7249cc1ca9a08d6a35d975845c323b7c3bb06a2b0bd3940b53201",
+      "bytes": 12531,
+      "lines": 73
+    }
+  },
+  "comparison_sha256": "413b420ad3a506ed16777d621e1776b06c21ce241bc5965579b1b0183b90122d",
+  "runner_sha256": "27c502b9fc920dad40a9f45040b457b3b6fc7dc355535a9b4b9872894c0fdc73",
+  "analyzer_sha256": "d5990554ba4f530461e98e2d3fdaf016a24c5e1b78376e108d82d48506eb1e23",
+  "results_note_sha256": "5f4788c56c1bac5f11604dca8b4f7619487014185f6dbfc26fd0f424edc7c036"
+}

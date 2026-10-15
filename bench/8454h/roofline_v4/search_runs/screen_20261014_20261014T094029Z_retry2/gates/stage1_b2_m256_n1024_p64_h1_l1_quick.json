@@ -1,0 +1,57 @@
+{
+  "status": "failed",
+  "started_utc": "2026-10-14T10:11:56Z",
+  "reference": "immutable V3 release artifact; full C allocation streamed and compared byte-for-byte",
+  "frozen_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "candidate_library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_13_b2_m256_n1024_p64_h1_l1__mode3_b2_m256_n1024_p64_h1_l1/libozamx.a",
+  "candidate_library_sha256": "5916159069d3bfa8f65596dc51664cdec27d5b636befd29cbf89bd268a6d909f",
+  "driver_sha256": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad",
+  "header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+  "runner_sha256": "65c27a75da7522414602c6bd0b51b4d4ef32efdcf4a6a5922ec3f7f4cf8a5d7e",
+  "build_commands": [
+    {
+      "binary": "v3",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/versions/v3_release/repo/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_bin/v3"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_logs/build_v3.log"
+    },
+    {
+      "binary": "candidate",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-march=sapphirerapids",
+        "-ffp-contract=off",
+        "-fno-fast-math",
+        "-fopenmp",
+        "-I/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/include",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/tools/roofline_binary_gate_v4.cpp",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_13_b2_m256_n1024_p64_h1_l1__mode3_b2_m256_n1024_p64_h1_l1/libozamx.a",
+        "-o",
+        "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_bin/candidate"
+      ],
+      "exit_code": 0,
+      "log": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_logs/build_candidate.log"
+    }
+  ],
+  "case_order": "V3 then candidate, isolated processes",
+  "cases": [],
+  "failure": {
+    "case": "f64_alias_a_equals_c_p6",
+    "reason": "RuntimeError('candidate child emitted no result header; see /home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_logs/candidate_11.stderr.log')"
+  }
+}

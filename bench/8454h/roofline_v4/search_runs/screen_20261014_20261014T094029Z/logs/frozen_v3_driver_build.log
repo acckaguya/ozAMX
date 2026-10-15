@@ -1,0 +1,25 @@
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp: In function ‘std::vector<long unsigned int> {anonymous}::parse_sizes(const string&)’:
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:61:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   61 |     if(v.empty()) throw std::runtime_error("empty --sizes"); return v;
+      |     ^~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:61:62: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   61 |     if(v.empty()) throw std::runtime_error("empty --sizes"); return v;
+      |                                                              ^~~~~~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp: In function ‘std::vector<int> {anonymous}::parse_budgets(const string&)’:
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:66:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   66 |     if(v.empty())throw std::runtime_error("empty --budgets");return v;
+      |     ^~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:66:62: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   66 |     if(v.empty())throw std::runtime_error("empty --budgets");return v;
+      |                                                              ^~~~~~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp: In function ‘void {anonymous}::run(std::ostream&, const string&, std::size_t, const {anonymous}::Opts&, uint64_t, ozamx::ProductBudget)’:
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:208:813: error: invalid initialization of reference of type ‘const std::vector<double>&’ from expression of type ‘bool’
+  208 |     out<<mean(wall)<<','<<stddev(wall)<<",\""<<raw(sp)<<"\",\""<<raw(pp)<<"\",\""<<raw(cp)<<"\",\""<<raw(tp)<<"\",\""<<raw(wall)<<"\",\""<<order<<"\",\"ozamx phase total is profile data; API wall encloses complete profiled call including dispatch and teardown; MKL timing encloses GEMM only\",\""<<mkl_version()<<"\",\""<<mkl_runtime_path()<<"\",\""<<mkl_threading_layer()<<"\",\""<<kModeTag<<"\",\""<<(OZV4_MODE==2?"diagnostic_no_reconstruction_non_numeric":(OZV4_MODE==3?"numeric_gate_pending":(OZV4_MODE==1?"diagnostic_only_accuracy_unvalidated_finite_inputs":"production_semantics")))<<"\",\""<<(OZV4_MODE==2?"diagnostic_no_reconstruction_non_numeric":(OZV4_MODE==1?"diagnostic_only_accuracy_unvalidated":"ok"))<<"\",\""<<kBuildIdentity<<"\"\n";out.flush();checkpoint(o,precision,n,seed,budget,sp,pp,tp,wall,true);
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^~~~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:166:101: note: in passing argument 10 of ‘void {anonymous}::checkpoint(const {anonymous}::Opts&, const string&, std::size_t, uint64_t, ozamx::ProductBudget, const std::vector<double>&, const std::vector<double>&, const std::vector<double>&, const std::vector<double>&, const std::vector<double>&, bool)’
+  166 |                 const std::vector<double>&cp,const std::vector<double>&tp,const std::vector<double>&wall,bool complete){
+      |                                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp: At global scope:
+/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_src/bench/benchmark.cpp:148:6: warning: ‘bool {anonymous}::json_bool(const string&, const string&)’ defined but not used [-Wunused-function]
+  148 | bool json_bool(const std::string&s,const std::string&key){const auto p=s.find("\""+key+"\":");return p!=std::string::npos&&s.compare(p+key.size()+3,4,"true")==0;}
+      |      ^~~~~~~~~

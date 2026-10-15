@@ -1,0 +1,1 @@
+$ g++ -O3 -std=c++17 -mamx-tile -mamx-bf16 -fopenmp -I/home/caiweili/ozAMX/bench/8454h/before/include /home/caiweili/ozAMX/bench/8454h/before/src/gemm.cpp /home/caiweili/ozAMX/bench/8454h/before/src/runtime.cpp /home/caiweili/ozAMX/bench/8454h/equivalence_driver.cpp -o /tmp/ozamx-search/v2/c0eafaa4c07f9445/frozen_baseline_equivalence

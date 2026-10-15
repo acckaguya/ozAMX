@@ -1,0 +1,104 @@
+{
+  "center": {
+    "OZAMX_CACHE_BLOCK": 128,
+    "OZAMX_LOAD_SCHEDULE": 0,
+    "OZAMX_LOOP_ORDER": 0,
+    "OZAMX_MIN_COMPUTE_WORK": 8,
+    "OZAMX_MN_ORDER": 0,
+    "OZAMX_PREP_GRAIN": 16384,
+    "OZAMX_TILELOAD_HINT": 0
+  },
+  "center_variant": "prep16k",
+  "variants": [
+    {
+      "definitions": {},
+      "name": "default"
+    },
+    {
+      "definitions": {
+        "OZAMX_PREP_GRAIN": 65536
+      },
+      "name": "refine_01"
+    },
+    {
+      "definitions": {
+        "OZAMX_CACHE_BLOCK": 256,
+        "OZAMX_PREP_GRAIN": 16384
+      },
+      "name": "refine_02"
+    },
+    {
+      "definitions": {
+        "OZAMX_MIN_COMPUTE_WORK": 1,
+        "OZAMX_PREP_GRAIN": 16384
+      },
+      "name": "refine_03"
+    },
+    {
+      "definitions": {
+        "OZAMX_PREP_GRAIN": 16384,
+        "OZAMX_TILELOAD_HINT": 1
+      },
+      "name": "refine_04"
+    },
+    {
+      "definitions": {
+        "OZAMX_LOOP_ORDER": 1,
+        "OZAMX_PREP_GRAIN": 16384
+      },
+      "name": "refine_05"
+    },
+    {
+      "definitions": {
+        "OZAMX_LOAD_SCHEDULE": 1,
+        "OZAMX_PREP_GRAIN": 16384
+      },
+      "name": "refine_06"
+    },
+    {
+      "definitions": {
+        "OZAMX_CACHE_BLOCK": 256,
+        "OZAMX_PREP_GRAIN": 65536
+      },
+      "name": "refine_07"
+    },
+    {
+      "definitions": {
+        "OZAMX_MIN_COMPUTE_WORK": 1,
+        "OZAMX_PREP_GRAIN": 65536
+      },
+      "name": "refine_08"
+    },
+    {
+      "definitions": {
+        "OZAMX_PREP_GRAIN": 65536,
+        "OZAMX_TILELOAD_HINT": 1
+      },
+      "name": "refine_09"
+    },
+    {
+      "definitions": {
+        "OZAMX_CACHE_BLOCK": 256,
+        "OZAMX_MIN_COMPUTE_WORK": 1,
+        "OZAMX_PREP_GRAIN": 16384
+      },
+      "name": "refine_10"
+    },
+    {
+      "definitions": {
+        "OZAMX_CACHE_BLOCK": 256,
+        "OZAMX_PREP_GRAIN": 16384,
+        "OZAMX_TILELOAD_HINT": 1
+      },
+      "name": "refine_11"
+    },
+    {
+      "definitions": {
+        "OZAMX_MIN_COMPUTE_WORK": 1,
+        "OZAMX_PREP_GRAIN": 16384,
+        "OZAMX_TILELOAD_HINT": 1
+      },
+      "name": "refine_12"
+    }
+  ]
+}

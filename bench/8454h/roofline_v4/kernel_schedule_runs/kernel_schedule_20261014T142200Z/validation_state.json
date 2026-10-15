@@ -1,0 +1,17 @@
+{
+  "schema": "ozamx-v4-kernel-schedule-validation-1",
+  "started_utc": "2026-10-14T12:45:01Z",
+  "source_tree": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_src",
+  "source_identity_sha256": "266f712f1cba34bddedfbbeb8899397977b9e7ed0d9356b75de2964286acf70b",
+  "kernel_asm_sha256": "f3e2fe0e0c7f058923b675d3ab16fdc27a46c125da00539863832b5e46f01e0b",
+  "frozen_v3_library": "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+  "frozen_v3_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "mkl_runtime": "/home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "status": "cancelled_prelock",
+  "steps": [],
+  "variants": {},
+  "matched": [],
+  "completed_utc": "2026-10-14T12:53:44Z",
+  "failure_note": "Cancelled before lock acquisition after confirming the disassembly parser still had an over-escaped whitespace pattern; no configure/build/benchmark step began. Exec session exited 130 on Ctrl-C."
+}

@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "small_bytes": 1048593,
+  "small_alignment_mod64": 0,
+  "large_bytes": 8388731,
+  "large_alignment": 2097152,
+  "large_alignment_mod": 0,
+  "hint_enabled": 1,
+  "hint_attempts": 1,
+  "hint_successes": 1,
+  "hint_failures": 0,
+  "hint_last_errno": 0,
+  "anon_huge_kb_in_mapping": 8192,
+  "smaps_scope": "VMA containing large allocation pointer; may include allocator mapping overhead"
+}

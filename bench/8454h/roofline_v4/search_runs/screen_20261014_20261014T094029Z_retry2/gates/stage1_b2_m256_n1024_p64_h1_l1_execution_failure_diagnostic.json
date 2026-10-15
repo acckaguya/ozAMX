@@ -1,0 +1,46 @@
+{
+  "schema": "ozamx-v4-candidate-execution-diagnostic-1",
+  "candidate_id": "b2_m256_n1024_p64_h1_l1",
+  "knobs": {
+    "fp64_batch": 2,
+    "wide_cbm": 256,
+    "wide_cbn": 1024,
+    "wide_pad_bytes": 64,
+    "tileload_hint": 1,
+    "fp32_late32": 1,
+    "bk": 256
+  },
+  "candidate_library_sha256": "5916159069d3bfa8f65596dc51664cdec27d5b636befd29cbf89bd268a6d909f",
+  "candidate_gate_binary_sha256": "b9e4f2ebb4e5cc37d7f01840ab37125e605ec11a8afa230d02bf1575db4fc442",
+  "gate_runner_sha256": "65c27a75da7522414602c6bd0b51b4d4ef32efdcf4a6a5922ec3f7f4cf8a5d7e",
+  "gate_source_sha256": "331f27ec60e88b6d60d95b9e246ee1d910f49ee7bfec3a5350555e22e12fe6ad",
+  "official_gate_record": "gates/stage1_b2_m256_n1024_p64_h1_l1_quick.json",
+  "official_gate_sha256": "2cbfffb4ee1baa0249255ed316ad2fd8675209fdb7ed0a069a9d9b1bcc1dd35a",
+  "official_failure": {
+    "case": "f64_alias_a_equals_c_p6",
+    "reason": "RuntimeError('candidate child emitted no result header; see /home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/gates/stage1_b2_m256_n1024_p64_h1_l1_quick_logs/candidate_11.stderr.log')"
+  },
+  "official_protocol_environment": {
+    "threads": 64,
+    "cpuset": "0-63",
+    "OMP_STACKSIZE": "unset/inherited; runner does not set it"
+  },
+  "official_child_reproduction": {
+    "case_id": 11,
+    "case": "f64_alias_a_equals_c_p6",
+    "returncode": -11,
+    "signal": "SIGSEGV",
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  "diagnostic_only_reproduction": {
+    "OMP_STACKSIZE": "8M",
+    "same_candidate_binary_sha256": "b9e4f2ebb4e5cc37d7f01840ab37125e605ec11a8afa230d02bf1575db4fc442",
+    "case_id": 11,
+    "returncode": 0,
+    "stdout_bytes": 134250608,
+    "stderr_bytes": 0,
+    "interpretation": "The isolated alias case completes with a larger OpenMP worker stack. This changed-environment diagnostic is not an official gate pass and contributes no timing result."
+  },
+  "classification": "execution_failed_default_stack; excluded from timing/ranking; no numerical mismatch recorded because candidate emitted no result header."
+}

@@ -1,0 +1,228 @@
+{
+  "candidates": {
+    "a2m_hint1": {
+      "library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/page_layout_20261014T121831Z/builds/a2m_hint1/libozamx.a",
+      "library_sha256": "91ce6bdf48976cc5f9a60db6b15f7861547099060341fc9a57bc6652aa9fbfd4",
+      "prior_gate": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/page_layout_20261014T121831Z/gates/a2m_hint1_full.json",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ]
+    },
+    "a4k_hint1": {
+      "library": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/page_layout_20261014T121831Z/builds/a4k_hint1/libozamx.a",
+      "library_sha256": "dbec090534a1c920ebc533e4a5394c1a0a7b83582526ea1d7362f9f43face1af",
+      "prior_gate": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/page_layout_20261014T121831Z/gates/a4k_hint1_full.json",
+      "sizes": [
+        8192
+      ]
+    }
+  },
+  "completed_utc": "2026-10-14T12:39:21Z",
+  "control_library": "/home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a",
+  "control_library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "created_utc": "2026-10-14T12:35:36Z",
+  "lock_acquired_utc": "2026-10-14T12:35:36Z",
+  "lock_path": "/tmp/ozamx-perf.lock",
+  "lock_wait_seconds": 5.0067901611328125e-06,
+  "lock_wait_started_utc": "2026-10-14T12:35:36Z",
+  "protocol": {
+    "cpuset": "0-63",
+    "driver": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/driver.cpp",
+    "driver_sha256": "5cd6bfb93d4c42ef6865c8fbf890927388430c1a231aae08a1a9ce31261ddfac",
+    "omp_places": "cores",
+    "omp_proc_bind": "close",
+    "parent_inter_call_pause_seconds": 0.02,
+    "precision_budget_workloads": [
+      {
+        "budget": 6,
+        "precision": "fp32"
+      },
+      {
+        "budget": 6,
+        "precision": "fp64"
+      },
+      {
+        "budget": 10,
+        "precision": "fp64"
+      },
+      {
+        "budget": 15,
+        "precision": "fp64"
+      },
+      {
+        "budget": 21,
+        "precision": "fp64"
+      }
+    ],
+    "repeated_gate": false,
+    "repetitions": 11,
+    "runner": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/run_matched_runtime.py",
+    "runner_sha256": "981787dba57cf8e5d8f6c15b08381c14f0d38c9f289b734bd53ed564d87b1317",
+    "thread_count": 64,
+    "validation": "same deterministic full input FNVs each paired call; dump entire output C and compare SHA-256; verify exactly 64 workers occupy CPUs 0-63",
+    "wait_policy": "GNU runtime defaults; OMP_WAIT_POLICY and GOMP_SPINCOUNT unset",
+    "warmups": 1,
+    "workspace_cache_bytes": 2147483648
+  },
+  "runs": [
+    {
+      "budget": 6,
+      "candidate": "a2m_hint1",
+      "finished_utc": "2026-10-14T12:35:51Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a2m_hint1_fp32_p6_n1024_4096_8192_r11/matched_calls.json",
+      "precision": "fp32",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a2m_hint1_fp32_p6_n1024_4096_8192_r11",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 6,
+      "candidate": "a2m_hint1",
+      "finished_utc": "2026-10-14T12:36:14Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a2m_hint1_fp64_p6_n1024_4096_8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a2m_hint1_fp64_p6_n1024_4096_8192_r11",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 10,
+      "candidate": "a2m_hint1",
+      "finished_utc": "2026-10-14T12:36:41Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a2m_hint1_fp64_p10_n1024_4096_8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a2m_hint1_fp64_p10_n1024_4096_8192_r11",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 15,
+      "candidate": "a2m_hint1",
+      "finished_utc": "2026-10-14T12:37:10Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a2m_hint1_fp64_p15_n1024_4096_8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a2m_hint1_fp64_p15_n1024_4096_8192_r11",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 21,
+      "candidate": "a2m_hint1",
+      "finished_utc": "2026-10-14T12:37:43Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a2m_hint1_fp64_p21_n1024_4096_8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a2m_hint1_fp64_p21_n1024_4096_8192_r11",
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 6,
+      "candidate": "a4k_hint1",
+      "finished_utc": "2026-10-14T12:37:54Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a4k_hint1_fp32_p6_n8192_r11/matched_calls.json",
+      "precision": "fp32",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a4k_hint1_fp32_p6_n8192_r11",
+      "sizes": [
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 6,
+      "candidate": "a4k_hint1",
+      "finished_utc": "2026-10-14T12:38:11Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a4k_hint1_fp64_p6_n8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a4k_hint1_fp64_p6_n8192_r11",
+      "sizes": [
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 10,
+      "candidate": "a4k_hint1",
+      "finished_utc": "2026-10-14T12:38:31Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a4k_hint1_fp64_p10_n8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a4k_hint1_fp64_p10_n8192_r11",
+      "sizes": [
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 15,
+      "candidate": "a4k_hint1",
+      "finished_utc": "2026-10-14T12:38:54Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a4k_hint1_fp64_p15_n8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a4k_hint1_fp64_p15_n8192_r11",
+      "sizes": [
+        8192
+      ],
+      "status": "complete"
+    },
+    {
+      "budget": 21,
+      "candidate": "a4k_hint1",
+      "finished_utc": "2026-10-14T12:39:21Z",
+      "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_matched_runs/page_matched_runtime_20261014T123536Z/a4k_hint1_fp64_p21_n8192_r11/matched_calls.json",
+      "precision": "fp64",
+      "repetitions": 11,
+      "returncode": 0,
+      "runid": "a4k_hint1_fp64_p21_n8192_r11",
+      "sizes": [
+        8192
+      ],
+      "status": "complete"
+    }
+  ],
+  "schema": "ozamx-page-layout-matched-campaign-1",
+  "source_hashes_at_completion": {
+    "driver": "5cd6bfb93d4c42ef6865c8fbf890927388430c1a231aae08a1a9ce31261ddfac",
+    "runner": "981787dba57cf8e5d8f6c15b08381c14f0d38c9f289b734bd53ed564d87b1317"
+  },
+  "status": "complete",
+  "updated_utc": "2026-10-14T12:39:21Z"
+}

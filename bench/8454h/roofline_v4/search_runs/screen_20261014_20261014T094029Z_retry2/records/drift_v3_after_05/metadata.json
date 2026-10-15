@@ -1,0 +1,25 @@
+{
+  "label": "drift_v3_after_05",
+  "mode": 0,
+  "candidate_id": "frozen_v3",
+  "library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+  "source_sha256": "a89c6cc49c41f242a1d7945a870ab5f7d789caca927b7f712dd7e987e3af5b74",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "seed_base": 260904,
+  "sizes": [
+    8192
+  ],
+  "repetitions": 3,
+  "threads": 64,
+  "cpuset": "0-63",
+  "timing_scope": "V3 benchmark API wall; oneMKL comparison field is GEMM-only",
+  "expected_rows": 5,
+  "validated_rows": 5,
+  "build_identity": {
+    "reference": "immutable V3 release",
+    "library_sha256": "73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c",
+    "driver_sha256": "0927c416dbbc1339302e7cbae68af4cc15e1c3748b88d2e03132034863a0617d",
+    "driver_source_sha256": "d21651a4ef7905a4bad3cd03edd936a886ee10fe1ec6c212256e13a0cf2ece95",
+    "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f"
+  }
+}

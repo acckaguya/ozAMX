@@ -1,0 +1,38 @@
+freeze_marker=/home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/FROZEN_COMPLETE
+frozen_archive=/home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release
+freeze_marker_sha256=06a934916fecd37bc297eefd48177b3802a30aa04113cffb546939c36c6ede42
+v3_manifest_sha256=cc0e6bab8b5f0d7785988e551d3de2a38ac056e366530b749c06d6394772e0d1
+v3_library_sha256=73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c
+06a934916fecd37bc297eefd48177b3802a30aa04113cffb546939c36c6ede42  /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/FROZEN_COMPLETE
+ba87543ecd49d7a34ce2cafd3934694937da091563745206c7347cd26c5d544f  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/CMakeLists.txt
+98d6be17adba45ed0ec63081ac522378a0f493356528bd3e1f40d2bf55c0c62b  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/int8.cpp
+bd1a45432883df9d2f7fc98dc86979f9fa91003ac3f6d7237bf24111e515861b  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/int8.hpp
+f3e38c5ffd54cd966974ea769b599c1e73b422940ae268c8b31a374bd776ad17  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/kernels.S
+add48624e45988c2966dc78cae9af28b4e1381856dc4f4a40e53e54bbab0f8be  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/quality_gate.cpp
+e3179258bddcec1486afd4ce596c9c2effadf67a80a94885c3a8495cfd50b7a1  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/benchmark_driver.cpp
+b05b4f004c6546cd045e41685902104f3d3c646056a04b6a6710e7aed2eda49b  /home/caiweili/ozAMX/bench/8454h/roofline_v4/int8_proto/run_after_freeze.sh
+73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c  /home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release/v3_release/artifacts/libozamx_v3.a
+fa1187760865f62a5fa44531fcd3ae0e185d01265567c9881c1212be60fcfc91  /tmp/ozamx-int8-36-build/libozamx_int8_36.a
+f38ddf508e777aebfe38d4edc5b481891c282855cfbe04852e1e8ce0e3667025  /tmp/ozamx-int8-36-build/int8_quality_gate
+72124591cd858410d9ca1f49ae611250ef2a5d6bf6e6418dd631d263fd8fb531  /tmp/ozamx-int8-36-build/int8_benchmark_driver
+b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f  /home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3
+b4f086651ee5a8471140d53fedfdbbaba606287784763b0739f282872c31aa9b  /home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_core.so.3
+--- linked runtime paths ---
+	linux-vdso.so.1 (0x00007ffde9fee000)
+	libmkl_rt.so.3 => /home/caiweili/ozAMX/third_party/code/mkl-current/lib/libmkl_rt.so.3 (0x000014d79d504000)
+	libgomp.so.1 => /lib/x86_64-linux-gnu/libgomp.so.1 (0x000014d79d4ae000)
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x000014d79d282000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000014d79d19b000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000014d79d17b000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000014d79cf50000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x000014d79cf4b000)
+	/lib64/ld-linux-x86-64.so.2 (0x000014d79dfe3000)
+--- linked runtime SHA-256 ---
+--- build identity ---
+CMAKE_BUILD_TYPE:STRING=Release
+OZAMX_I8_BK:STRING=256
+OZAMX_I8_BM:STRING=128
+OZAMX_I8_BN:STRING=128
+OZAMX_I8_TILELOAD_HINT:BOOL=ON
+OZAMX_MKL_ROOT:PATH=/home/caiweili/ozAMX/third_party/code/mkl-current
+OZAMX_V3_LIBRARY:FILEPATH=/home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release/v3_release/artifacts/libozamx_v3.a

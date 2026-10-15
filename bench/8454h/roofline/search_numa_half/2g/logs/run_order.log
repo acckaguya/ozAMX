@@ -1,0 +1,6 @@
+RUN frozen_2g_a
+RUN control0_2g
+RUN numa_half_2g_a
+RUN frozen_2g_b
+RUN numa_half_2g_b
+RUN frozen_2g_c

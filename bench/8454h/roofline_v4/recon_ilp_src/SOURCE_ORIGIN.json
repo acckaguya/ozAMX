@@ -1,0 +1,15 @@
+{
+  "schema": "reconstruction-ilp4-origin-v1",
+  "parent": "bench/8454h/roofline_v4/search_src",
+  "status": "uncompiled_ungated",
+  "hypothesis": "eight independent FP64 add chains, exact per-output order",
+  "source_sha256": {
+    "CMakeLists.txt": "8b1f9dbf252e61c50779869dfdf4a98a0752726ee27fcc293ccdb4c53f9a5476",
+    "src/gemm.cpp": "0504ec4314b99ed7d6c840bb36ade69407b8b203f6bcda76640f4ebb1ee99738",
+    "src/reconstruct_ilp4.S": "4af3698492a1b33d5ccd702fa628f1ba13ef866104333f2da0f07b6535782fde",
+    "src/kernels.S": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "src/preprocess.hpp": "df36a028fbbeec62bcacc5a0a50194f917285d20fd9cf231abd4c28d4013ee31",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "bench/benchmark.cpp": "d21651a4ef7905a4bad3cd03edd936a886ee10fe1ec6c212256e13a0cf2ece95"
+  }
+}

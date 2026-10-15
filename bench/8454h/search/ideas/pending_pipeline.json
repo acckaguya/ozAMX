@@ -1,0 +1,36 @@
+{
+  "candidate": "pending_pipeline",
+  "status": "correctness_passed_performance_under_review",
+  "patch": "pending_pipeline.patch",
+  "patch_sha256": "126cd15cb13445fd161e5c04600208769d95645a73fe11a51b87f65acc79f3ab",
+  "base_study_fingerprint": "c0eafaa4c07f9445406dea2d62abc81d982da40aeae5b34f26c2ea1f4dbc0663",
+  "source_sha256": {
+    "src/gemm.cpp": "42b1d55fb20a6dce979704ac6b700a597c7322c693003b6a2df5096a64a7a825",
+    "src/kernels.S": "c556a00169bbb5632fe30fb64b89b09287d3cccf6d418344a760e95e9558911b",
+    "src/main.cpp": "7ed7f5c2eb5bd9ef2b8572aadc7a3f3f116e8a8a62370197bd606f3b4035bcde",
+    "src/preprocess.hpp": "c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071"
+  },
+  "executable_sha256": "c87913cf04410dfad536def29e3e2791cc8c9eac9d319c65ee1ca2354716e6f1",
+  "reference_binary_sha256": "68b159548100db5bb8dac609695d33493bb8f3802c3919d3af71f2294829d558",
+  "validation": {
+    "ctest": "passed",
+    "native_component_stores_bitwise": 147456,
+    "native_reconstruction_outputs_bitwise": 730,
+    "frozen_v1_cases_bitwise": 100,
+    "frozen_v1_c_slots_bitwise": 2322780,
+    "overflow_rejection_C_unchanged": 4
+  },
+  "performance_environment": {
+    "cpu_set": "0-63",
+    "threads": 64,
+    "OMP_PLACES": "cores",
+    "OMP_PROC_BIND": "close",
+    "OMP_DYNAMIC": "FALSE",
+    "OZAMX_WORKSPACE_CACHE_BYTES": 1073741824
+  },
+  "build": "cmake -S SOURCE -B BUILD -DCMAKE_BUILD_TYPE=Release; cmake --build BUILD -j 8",
+  "mathematics": "preserves per-output component order, BK order and each BF16 tile dot product",
+  "timing_objective": "whole API call wall; raw phase timing also saved"
+}

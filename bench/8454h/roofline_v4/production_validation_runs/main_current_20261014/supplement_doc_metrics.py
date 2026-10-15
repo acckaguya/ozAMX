@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Offline audit of existing main/matched and oneMKL data; performs no benchmark."""
+import csv,hashlib,json,math,pathlib,statistics,time
+ROOT=pathlib.Path(__file__).resolve().parents[5];OUT=pathlib.Path(__file__).resolve().parent;DOC=ROOT/'docs/8454H_V4_CURRENT_MAIN_VALIDATION.md'
+FROZEN=ROOT/'bench/8454h/versions/v3_release/repo'
+FILES=['CMakeLists.txt','src/gemm.cpp','src/runtime.cpp','src/kernels.S','include/ozamx/gemm.hpp','bench/benchmark.cpp','src/preprocess.hpp','src/tuning.hpp']
+def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+ident={'created_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'baseline_source_tree':str(FROZEN),'files':{}}
+for f in FILES:
+ current=ROOT/f;baseline=FROZEN/f
+ a=sha(current);b=sha(baseline);ident['files'][f]={'current_sha256':a,'frozen_v3_sha256':b,'status':'same' if a==b else 'modified'}
+ident['modified_files']=[f for f,v in ident['files'].items() if v['status']=='modified'];ident['unchanged_files']=[f for f,v in ident['files'].items() if v['status']=='same']
+ident['main_library']={'path':str((OUT/'build/libozamx.a').resolve()),'sha256':sha(OUT/'build/libozamx.a')}
+ident['frozen_v3_library']={'path':str((ROOT/'bench/8454h/versions/v3_release/artifacts/libozamx_v3.a').resolve()),'sha256':sha(ROOT/'bench/8454h/versions/v3_release/artifacts/libozamx_v3.a')}
+ident['onemkl_benchmark_source_sha256']=sha(ROOT/'bench/benchmark.cpp');ident['onemkl_csv']={'path':str((OUT/'onemkl_separate.csv').resolve()),'sha256':sha(OUT/'onemkl_separate.csv')}
+(OUT/'main_source_identity.json').write_text(json.dumps(ident,indent=2,sort_keys=True)+'\n')
+assert ident['modified_files']==['CMakeLists.txt','src/gemm.cpp']
+with open(OUT/'onemkl_separate.csv',newline='') as f:rawrows=list(csv.DictReader(f))
+main_rows=[]
+for r in rawrows:
+ api_raw=[float(x) for x in r['raw_api_call_wall_s'].split(';')]
+ assert len(api_raw)==3 and int(r['repetitions'])==3
+ api_mean=statistics.fmean(api_raw);stored=float(r['api_call_wall_s_mean'])
+ assert math.isclose(api_mean,stored,rel_tol=2e-10,abs_tol=1e-12),(r['precision'],r['budget'],r['N'],api_mean,stored)
+ n=int(r['N']);useful=2*n**3; mkl=float(r['mkl_gemm_s'])
+ main_rows.append({'precision':r['precision'],'budget':int(r['budget']),'N':n,'repetitions':3,'api_call_wall_s_raw':api_raw,'api_mean_seconds_recomputed':api_mean,'api_mean_seconds_csv':stored,'api_mean_ms':api_mean*1000,'useful_standard_gemm_ops':useful,'useful_2n3_api_GFLOP_s':useful/api_mean/1e9,'mkl_gemm_mean_s':mkl,'mkl_gemm_mean_ms':mkl*1000,'full_API_over_MKL_GEMM_time_ratio':mkl/api_mean,'mkl_mean_source_field':'mkl_gemm_s','mkl_raw_samples_in_csv':False,'mkl_version':r['mkl_version'],'mkl_threading_layer':r['mkl_threading_layer'],'checksum':r['checksum']})
+matched=json.load(open(OUT/'summary.json'))['matched_configurations'];matched_tables=[]
+for c in matched:
+ n=c['N'];p=6 if c['precision']=='fp32' else c['budget'];w=2*n**3*p
+ entry={'run_id':c['run_id'],'precision':c['precision'],'budget':c['budget'],'N':n,'weighted_operation_count_2n3p':w,'control_api_mean_ms':c['metrics']['api_wall_seconds']['control_stats']['mean']*1000,'candidate_api_mean_ms':c['metrics']['api_wall_seconds']['candidate_stats']['mean']*1000,'api_mean_time_ratio_candidate_over_control':c['metrics']['api_wall_seconds']['ratio_of_arithmetic_mean_times'],'control_compute_reconstruct_mean_ms':c['metrics']['compute_reconstruct_seconds']['control_stats']['mean']*1000,'candidate_compute_reconstruct_mean_ms':c['metrics']['compute_reconstruct_seconds']['candidate_stats']['mean']*1000,'control_weighted_operation_equivalent_Top_s':w/c['metrics']['compute_reconstruct_seconds']['control_stats']['mean']/1e12,'candidate_weighted_operation_equivalent_Top_s':w/c['metrics']['compute_reconstruct_seconds']['candidate_stats']['mean']/1e12,'note':'2*N^3*p operation-equivalent rate; not useful FLOP/s, not independently measured AMX instruction throughput'}
+ matched_tables.append(entry)
+metrics={'created_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'source_identity_path':str((OUT/'main_source_identity.json').resolve()),'source_identity':ident,'onemkl_csv_mean_validation':{'csv_sha256':ident['onemkl_csv']['sha256'],'rows':len(main_rows),'expected_rows':10,'api_mean_recomputed_from_raw':True,'api_wall_raw_sample_count_per_row':3,'api_wall_columns_validated':True,'mkl_mean_field':'mkl_gemm_s','mkl_individual_raw_samples_available':False},'oneMKL_api_results':main_rows,'matched_main_phase_results':matched_tables,'calibration_context_TFLOP_s':{'fp32_single_precision_regular':161.018,'fp32_mixed':151.738,'fp64_p6_mixed':84.423},'calibration_context_warning':'Precision/work weighting and phase scopes differ; do not pool, attribute gaps to software throttling, or treat operation-equivalent rates as hardware guarantees.'}
+(OUT/'api_metrics_supplement.json').write_text(json.dumps(metrics,indent=2,sort_keys=True)+'\n')
+lines=['', '## API-wall performance, matched phases, and source identity','', 'The earlier oneMKL table uses profile-interval GFLOP/s. The table below adds the primary full-API measure from the same existing ten-row, three-repetition CSV: API arithmetic-mean milliseconds, conventional useful `2N³` divided by full API wall in GFLOP/s, oneMKL GEMM mean milliseconds, and the ratio `MKL GEMM mean / full ozAMX API mean`. The CSV’s raw API-wall samples were re-averaged and checked against `api_call_wall_s_mean` for every row. It contains no individual MKL GEMM samples: `mkl_gemm_s` is the driver’s three-call arithmetic mean, so the per-call MKL distribution cannot be independently reconstructed.','', '| Workload | N | ozAMX API mean (ms) | Useful 2N³ / API (GFLOP/s) | oneMKL GEMM mean (ms) | MKL GEMM mean / full API mean |','|---|---:|---:|---:|---:|---:|']
+for r in main_rows:lines.append(f"| {r['precision']} p{r['budget']} | {r['N']} | {r['api_mean_ms']:.4f} | {r['useful_2n3_api_GFLOP_s']:.1f} | {r['mkl_gemm_mean_ms']:.4f} | {r['full_API_over_MKL_GEMM_time_ratio']:.3f} |")
+lines += ['', 'For the main-versus-frozen-V3 matched calls, the following table records arithmetic means, not medians: full API wall and compute/reconstruction profile phase for each child. The operation-equivalent column uses `2N³p` with p=6 for FP32 and p equal to each FP64 product budget. It is deliberately labeled operation-equivalent: it is not conventional useful FLOP/s and the measured phase includes reconstruction, so it does not prove AMX issue throughput.','', '| Workload | N | Control API mean (ms) | Main API mean (ms) | Control compute/recon mean (ms) | Main compute/recon mean (ms) | Control 2N³p equivalent (TOP/s) | Main 2N³p equivalent (TOP/s) |','|---|---:|---:|---:|---:|---:|---:|---:|']
+for r in matched_tables:lines.append(f"| {r['precision']} p{r['budget']} | {r['N']} | {r['control_api_mean_ms']:.4f} | {r['candidate_api_mean_ms']:.4f} | {r['control_compute_reconstruct_mean_ms']:.4f} | {r['candidate_compute_reconstruct_mean_ms']:.4f} | {r['control_weighted_operation_equivalent_Top_s']:.3f} | {r['candidate_weighted_operation_equivalent_Top_s']:.3f} |")
+lines += ['', 'Calibration contexts are shown only as separate references: 161.018 TFLOP/s FP32 regular, 151.738 TFLOP/s mixed FP32, and 84.423 TFLOP/s mixed FP64 p6. Their useful-work conventions and phase scopes differ; do not pool them, infer software throttling from their gaps, or present the operation-equivalent phase rate as hardware throughput.','', 'The eight-file identity record is `main_source_identity.json`: only `CMakeLists.txt` and `src/gemm.cpp` differ from the frozen V3 source tree; `src/runtime.cpp`, `src/kernels.S`, the public GEMM header, benchmark driver, preprocessing header, and tuning header are byte-identical. The main archive SHA-256 is recorded there and remains `7adcc98996d5a88aa21f74038a42710a28496cf601f2127c016b8e8687801b68`. Full numerical results and raw timing samples are in `api_metrics_supplement.json`.','']
+with DOC.open('a') as f:f.write('\n'.join(lines))
+# Extend canonical summary with offline audited metrics without replacing samples.
+s=OUT/'summary.json';sj=json.load(open(sj_path:=s));sj['offline_api_metrics_supplement']=metrics;s.write_text(json.dumps(sj,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'source_identity':str(OUT/'main_source_identity.json'),'metrics':str(OUT/'api_metrics_supplement.json'),'documentation':str(DOC),'onemkl_rows':len(main_rows),'matched_rows':len(matched_tables),'modified_files':ident['modified_files']},indent=2))

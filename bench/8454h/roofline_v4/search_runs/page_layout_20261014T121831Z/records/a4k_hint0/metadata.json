@@ -1,0 +1,160 @@
+{
+  "label": "a4k_hint0",
+  "library_path": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/page_layout_20261014T121831Z/builds/a4k_hint0/libozamx.a",
+  "library_sha256": "71749f8581951a37354584b895f62fa2a2ad0d728c6d7f9f0a5adbac9fd7dc0d",
+  "binary_sha256": "c5abdcfc849cbd591fc0bb32db58e99043f1466c5ac613bb91a85e0cb76fc21e",
+  "benchmark_source_sha256": "97b597f1afd80fc7c2fea2e33adff64ab9018df8a7d42ba5824ce1c73b228d98",
+  "source_gemm_sha256": "1da049687a7517f00a934d632df70efdf74a81af7bea0a182667ece782b4214b",
+  "source_preprocess_sha256": "69bd097e8130a0f60014bd11b668dc818fc169b54e3126a79be9a71252ee80bf",
+  "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+  "seed_base": 260904,
+  "seed_for_N8192": 269096,
+  "N": 8192,
+  "repetitions": 3,
+  "threads": 64,
+  "cpuset": "0-63",
+  "distribution": "uniform",
+  "workspace_cache_bytes": 2147483648,
+  "env": {
+    "OMP_PLACES": "cores",
+    "OMP_PROC_BIND": "close",
+    "OMP_DYNAMIC": "FALSE",
+    "MKL_THREADING_LAYER": "GNU"
+  },
+  "rows": 5,
+  "csv_sha256": "ea736488089dbc0ed4402f0338c91dabc17ce203b45579a88e355cef2fd84259",
+  "checkpoints_sha256": {
+    "checkpoint.fp32.8192.6.json": "e92c790d66a5ca7e1f0aab1bd0c1b802591babbc6b5efe91371ac27b7b305b7e",
+    "checkpoint.fp64.8192.10.json": "46cb12d8716db119af31f5654131dc022bd2a755a8e731753d0a815f6e95af68",
+    "checkpoint.fp64.8192.15.json": "11e9d27f9ba170634c702ef04efd4e0f0a77c11eda4eb17e6bf768456fc62c36",
+    "checkpoint.fp64.8192.21.json": "03199fc12b7dd0b2013565431f198b34157d906c3e6cef3cea137f8c1631e42f",
+    "checkpoint.fp64.8192.6.json": "a1915b679027155826846faf90218d7d9468b88725e751a404a2564750515590"
+  },
+  "smaps_sha256": "96cc9ac7fbce561e74a1c080695f2f67e660ecfb860566fe2fc14763ea29b85a",
+  "smaps": {
+    "schema": "ozamx-page-layout-smaps-1",
+    "pid": 2399,
+    "hint_attempts": 0,
+    "hint_successes": 0,
+    "hint_failures": 0,
+    "hint_last_errno": 0,
+    "buffers": [
+      {
+        "address": 22402835730432,
+        "logical_bytes": 536870912,
+        "vma_start": 22402835726336,
+        "vma_end": 22403372605440,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22402266124288,
+        "logical_bytes": 134217728,
+        "vma_start": 22402266120192,
+        "vma_end": 22402826670080,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22402400350208,
+        "logical_bytes": 134217728,
+        "vma_start": 22402266120192,
+        "vma_end": 22402826670080,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22402534576128,
+        "logical_bytes": 134217728,
+        "vma_start": 22402266120192,
+        "vma_end": 22402826670080,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22402668802048,
+        "logical_bytes": 134217728,
+        "vma_start": 22402266120192,
+        "vma_end": 22402826670080,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22404809039872,
+        "logical_bytes": 134217728,
+        "vma_start": 22404809035776,
+        "vma_end": 22404943261696,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22406283661312,
+        "logical_bytes": 134217728,
+        "vma_start": 22406283657216,
+        "vma_end": 22406417883136,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22405211709440,
+        "logical_bytes": 134217728,
+        "vma_start": 22405211705344,
+        "vma_end": 22405614383104,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22405345935360,
+        "logical_bytes": 134217728,
+        "vma_start": 22405211705344,
+        "vma_end": 22405614383104,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22405480161280,
+        "logical_bytes": 134217728,
+        "vma_start": 22405211705344,
+        "vma_end": 22405614383104,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22405746765824,
+        "logical_bytes": 134217728,
+        "vma_start": 22405744664576,
+        "vma_end": 22406149439488,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22405880991744,
+        "logical_bytes": 134217728,
+        "vma_start": 22405744664576,
+        "vma_end": 22406149439488,
+        "anon_huge_kb_in_vma": 0
+      },
+      {
+        "address": 22406015217664,
+        "logical_bytes": 134217728,
+        "vma_start": 22405744664576,
+        "vma_end": 22406149439488,
+        "anon_huge_kb_in_vma": 0
+      }
+    ]
+  },
+  "build_identity": {
+    "mode": 0,
+    "build_type": "Release",
+    "compiler_id": "GNU",
+    "compiler_version": "11.4.0",
+    "fp64_batch": 2,
+    "wide_cbm": 128,
+    "wide_cbn": 0,
+    "wide_pad_bytes": 64,
+    "fp32_late32": 0,
+    "tileload_hint": 1,
+    "page_alignment_bytes": 4096,
+    "madv_hugepage": 0,
+    "bk": 256,
+    "gemm_source_sha256": "1da049687a7517f00a934d632df70efdf74a81af7bea0a182667ece782b4214b",
+    "kernels_source_sha256": "94af3cf4345b2383100e4d8d883be57b084ec68d12e056f80c4a8bb77bc9bd68",
+    "preprocess_source_sha256": "69bd097e8130a0f60014bd11b668dc818fc169b54e3126a79be9a71252ee80bf",
+    "public_header_sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "benchmark_driver_sha256": "97b597f1afd80fc7c2fea2e33adff64ab9018df8a7d42ba5824ce1c73b228d98",
+    "mkl_runtime_sha256": "b2ff0e31d7cd18c91813d8f6500f37665597d89de22649d90687aa6bf7bd2c0f",
+    "source_tree": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/page_layout_src",
+    "library_sha256": "71749f8581951a37354584b895f62fa2a2ad0d728c6d7f9f0a5adbac9fd7dc0d",
+    "benchmark_binary_sha256": "c5abdcfc849cbd591fc0bb32db58e99043f1466c5ac613bb91a85e0cb76fc21e",
+    "page_probe_binary_sha256": "c34f275c890acb07a8e17c017e9f241e2faa8b00c79f1c3d3f6b5f39dffe1eb8"
+  }
+}

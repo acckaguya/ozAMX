@@ -1,0 +1,84 @@
+{
+  "matrix": [
+    {
+      "runid": "rc1_geom256_fp32_p6_n4096_r11",
+      "returncode": 0,
+      "finished_unix": 1791981237.319338
+    },
+    {
+      "runid": "rc1_geom256_fp32_p6_n8192_r11",
+      "returncode": 0,
+      "finished_unix": 1791981249.1700313
+    },
+    {
+      "runid": "rc2_geom512_fp32_p6_n4096_r11",
+      "returncode": 0,
+      "finished_unix": 1791981253.8107195
+    },
+    {
+      "runid": "rc2_geom512_fp32_p6_n8192_r11",
+      "returncode": 0,
+      "finished_unix": 1791981264.9322999
+    },
+    {
+      "runid": "rc1_geom256_fp64_p6_n4096_r11",
+      "returncode": 0,
+      "finished_unix": 1791981271.1222417
+    },
+    {
+      "runid": "rc1_geom256_fp64_p6_n8192_r11",
+      "returncode": 0,
+      "finished_unix": 1791981288.249164
+    },
+    {
+      "runid": "rc1_geom256_fp32_p6_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981290.8255763
+    },
+    {
+      "runid": "rc1_geom256_fp64_p6_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981293.758643
+    },
+    {
+      "runid": "rc1_geom256_fp64_p10_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981296.5382545
+    },
+    {
+      "runid": "rc1_geom256_fp64_p15_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981299.3302991
+    },
+    {
+      "runid": "rc1_geom256_fp64_p21_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981302.2634714
+    },
+    {
+      "runid": "rc2_geom512_fp32_p6_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981305.0510404
+    },
+    {
+      "runid": "rc2_geom512_fp64_p6_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981307.87398
+    },
+    {
+      "runid": "rc2_geom512_fp64_p10_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981310.8640761
+    },
+    {
+      "runid": "rc2_geom512_fp64_p15_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981314.0977488
+    },
+    {
+      "runid": "rc2_geom512_fp64_p21_n1024_r7",
+      "returncode": 0,
+      "finished_unix": 1791981317.0079715
+    }
+  ]
+}

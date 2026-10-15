@@ -1,0 +1,207 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,9 +10,10 @@
+ set(OZAMX_LOAD_SCHEDULE 0 CACHE STRING "FP64 load schedule")
+ set(OZAMX_LOOP_ORDER 0 CACHE STRING "Compute loop order")
+ set(OZAMX_MN_ORDER 0 CACHE STRING "Output task order")
++set(OZAMX_NUMA_REPLICATE_B 0 CACHE STRING "Replicate packed B by NUMA node for large teams")
+ 
+ set(OZAMX_TUNING_DEFINITIONS)
+-foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER)
++foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER NUMA_REPLICATE_B)
+   if(NOT "${OZAMX_${knob}}" MATCHES "^[0-9]+$")
+     message(FATAL_ERROR "OZAMX_${knob} must be a nonnegative integer")
+   endif()
+
+--- a/include/ozamx/gemm.hpp
++++ b/include/ozamx/gemm.hpp
+@@ -27,6 +27,12 @@
+     // FP64 component GEMM store, widen, and ordered FP64 addition are grouped
+     // here with the product kernel; the paper makes them one ordered workflow.
+     double compute_and_reconstruct_seconds = 0.0;
++    // NUMA B-replication copy is included in pack_seconds; these fields expose
++    // its isolated cost and the placement observed by the copy team.
++    double replicate_b_seconds = 0.0;
++    int replicate_node0_workers = 0;
++    int replicate_node1_workers = 0;
++    int replicate_fallback_workers = 0;
+     double total_seconds = 0.0;
+ };
+ 
+
+--- a/src/gemm.cpp
++++ b/src/gemm.cpp
+@@ -8,6 +8,10 @@
+ #include <cstring>
+ #include <limits>
+ #include <vector>
++#if defined(__linux__)
++#include <sys/syscall.h>
++#include <unistd.h>
++#endif
+ #include <immintrin.h>
+ #ifdef _OPENMP
+ #include <omp.h>
+@@ -50,16 +54,69 @@
+     return (kb*nblocks+nb)*BK*BN+(nj/TN)*TN*BK+(kp/(TK/2))*TN*TK+
+            ((nj%TN)/16)*512+(kp%(TK/2))*32+(nj%16)*2;
+ }
++using BReplicas=std::array<std::array<detail::AlignedBuffer<std::uint16_t>,6>,2>;
++int current_numa_node() noexcept {
++#if defined(__linux__) && defined(SYS_getcpu)
++    unsigned cpu=0,node=0;
++    if(::syscall(SYS_getcpu,&cpu,&node,nullptr)==0)return static_cast<int>(node);
++#endif
++    return -1;
++}
++void replicate_packed_b(const Packed32& p,BReplicas& replicas,int nt,GemmTimings& timing){
++    for(int node=0;node<2;++node)for(int s=0;s<p.slices;++s)
++        replicas[node][s]=detail::AlignedBuffer<std::uint16_t>(p.b[s].size());
++    std::vector<int> nodes(std::size_t(nt),-1),ranks(std::size_t(nt),-1);
++    int counts[2]={0,0},fallback=0;
++    const auto begin=Clock::now();
++#pragma omp parallel num_threads(nt) if(nt>1) shared(nodes,ranks,counts,fallback)
++    {
++        int tid=0,team=1;
++#ifdef _OPENMP
++        tid=omp_get_thread_num();team=omp_get_num_threads();
++#endif
++        nodes[std::size_t(tid)]=current_numa_node();
++#pragma omp barrier
++#pragma omp single
++        {
++            for(int q=0;q<team;++q){const int node=nodes[std::size_t(q)];
++                if(node==0||node==1)ranks[std::size_t(q)]=counts[node]++;
++                else ++fallback;
++            }
++        }
++#pragma omp barrier
++        for(int node=0;node<2;++node){
++            const bool no_local_workers=counts[node]==0;
++            if(no_local_workers||nodes[std::size_t(tid)]==node){
++                const std::size_t workers=no_local_workers?std::size_t(team):std::size_t(counts[node]);
++                const std::size_t rank=no_local_workers?std::size_t(tid):std::size_t(ranks[std::size_t(tid)]);
++                for(int s=0;s<p.slices;++s){
++                    const std::size_t size=p.b[s].size(),lines=detail::divup(size,std::size_t(32));
++                    const std::size_t per=detail::divup(lines,workers),first=std::min(lines,rank*per),last=std::min(lines,first+per);
++                    const auto* src=p.b[s].data();auto* dst=replicas[node][s].data();
++                    std::size_t i=first*32,end=std::min(size,last*32);
++                    for(;i+32<=end;i+=32){const auto v=_mm512_load_si512(src+i);_mm512_store_si512(dst+i,v);}
++                    for(;i<end;++i)dst[i]=src[i];
++                }
++            }
++#pragma omp barrier
++        }
++    }
++    timing.replicate_b_seconds=elapsed(begin,Clock::now());
++    timing.replicate_node0_workers=counts[0];timing.replicate_node1_workers=counts[1];
++    timing.replicate_fallback_workers=fallback;
++}
+ template<std::size_t NS>
+-void run_fp32_micro(const Packed32& p,std::size_t mb,std::size_t nb,std::size_t kb,std::size_t mi,std::size_t nj,float* out,unsigned steps=BK/TK){
++void run_fp32_micro(const Packed32& p,std::size_t mb,std::size_t nb,std::size_t kb,std::size_t mi,std::size_t nj,float* out,unsigned steps=BK/TK,const std::array<const std::uint16_t*,6>* bbase=nullptr){
+     (void)NS;const auto ai=apanel_index<0>(mb,kb,mi,0,p.kblocks),bi=bpanel_index(kb,nb,0,nj,p.nblocks);
+     const std::uint16_t* aa[3]={p.a[0].data()+ai,p.a[1].data()+ai,p.a[2].data()+ai};
+-    const std::uint16_t* bb[3]={p.b[0].data()+bi,p.b[1].data()+bi,p.b[2].data()+bi};
++    const std::uint16_t* bb[3]={ (bbase?(*bbase)[0]:p.b[0].data())+bi,
++                                  (bbase?(*bbase)[1]:p.b[1].data())+bi,
++                                  (bbase?(*bbase)[2]:p.b[2].data())+bi};
+     ozamx_bf16_six(aa,bb,out,steps);
+ }
+ template<std::size_t NS>
+-void run_fp64_product(const Packed64& p,int ai,int bi,std::size_t mb,std::size_t nb,std::size_t kb,std::size_t mi,std::size_t nj,float* out,unsigned steps=BK/TK){
+-    (void)NS;ozamx_bf16_product(p.a[ai].data()+apanel_index<0>(mb,kb,mi,0,p.kblocks),p.b[bi].data()+bpanel_index(kb,nb,0,nj,p.nblocks),out,steps);
++void run_fp64_product(const Packed64& p,int ai,int bi,std::size_t mb,std::size_t nb,std::size_t kb,std::size_t mi,std::size_t nj,float* out,unsigned steps=BK/TK,const std::array<const std::uint16_t*,6>* bbase=nullptr){
++    (void)NS;ozamx_bf16_product(p.a[ai].data()+apanel_index<0>(mb,kb,mi,0,p.kblocks),(bbase?(*bbase)[bi]:p.b[bi].data())+bpanel_index(kb,nb,0,nj,p.nblocks),out,steps);
+ }
+ // Independent diagnostics retain their existing private split/pack API.
+ // Production uses aligned slices directly and does not take these copy paths.
+@@ -120,13 +177,22 @@
+         else{sa=detail::split_fp64(a,m,k,lda,prep,depth);sb=detail::split_fp64(b,k,n,ldb,prep,depth);}
+     }
+     const auto t1=Clock::now();t.split_seconds=elapsed(t0,t1);if(!direct)p=detail::pack_slices(sa,sb,m,n,k,depth,prep);sa={};sb={};
++    const std::size_t cb=std::min(m,n)<1024?32:CACHE_BLOCK,nr=ceil_div(m,cb),nc=ceil_div(n,cb),work=checked_mul(nr,nc);
++    const auto granularity=std::min(m,n)<1024?tuning::min_compute_work:1;const int nt=detail::team_size(requested_threads(),std::max<std::size_t>(1,ceil_div(work,granularity)));
++    BReplicas b_replicas;bool replicas_active=false;
++    if constexpr(tuning::numa_replicate_b){
++        if(nt>32&&std::min(m,n)>=4096){replicate_packed_b(p,b_replicas,nt,t);replicas_active=true;}
++    }
+     const auto t2=Clock::now();t.pack_seconds=elapsed(t1,t2);detail::AlignedBuffer<T> result(checked_mul(m,n));
+-    const std::size_t cb=std::min(m,n)<1024?32:CACHE_BLOCK,nr=ceil_div(m,cb),nc=ceil_div(n,cb),work=checked_mul(nr,nc);
+-    const auto granularity=std::min(m,n)<1024?tuning::min_compute_work:1;const int nt=detail::team_size(requested_threads(),std::max<std::size_t>(1,ceil_div(work,granularity)));int bad=0;
++    int bad=0;
+ #pragma omp parallel num_threads(nt) if(nt>1) reduction(|:bad)
+     {
+         // Process permission was granted before entry; each task configures its tile state.
+-        load_config();alignas(64) T block[CACHE_BLOCK*CACHE_BLOCK];alignas(64) float micro[TM*TN];
++        load_config();
++        const int node=replicas_active?current_numa_node():-1;
++        std::array<const std::uint16_t*,6> bbase{};
++        for(int s=0;s<p.slices;++s)bbase[s]=(replicas_active&&(node==0||node==1))?b_replicas[node][s].data():p.b[s].data();
++        alignas(64) T block[CACHE_BLOCK*CACHE_BLOCK];alignas(64) float micro[TM*TN];
+ #pragma omp for schedule(static)
+         for(std::size_t w=0;w<work;++w){
+             const auto row=(tuning::mn_order?w%nr:w/nc)*cb;
+@@ -135,8 +201,8 @@
+             const auto compute_at=[&](std::size_t kb,std::size_t i,std::size_t j){
+                     const unsigned steps=unsigned(ceil_div(std::min(BK,k-kb*BK),TK));
+                     const auto mb=(row+i)/BM,nb=(col+j)/BN,mi=(row+i)%BM,nj=(col+j)%BN;
+-                    if constexpr(std::is_same_v<T,float>){run_fp32_micro<3>(p,mb,nb,kb,mi,nj,micro,steps);accumulate32(block+i*cb+j,micro,cb,bad);}else{
+-                        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,micro,steps);accumulate64<Late64>(block+i*cb+j,micro,cb,bad);}
++                    if constexpr(std::is_same_v<T,float>){run_fp32_micro<3>(p,mb,nb,kb,mi,nj,micro,steps,&bbase);accumulate32(block+i*cb+j,micro,cb,bad);}else{
++                        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,micro,steps,&bbase);accumulate64<Late64>(block+i*cb+j,micro,cb,bad);}
+                     }
+             };
+             if constexpr(tuning::loop_order==0){
+
+--- a/src/tuning.hpp
++++ b/src/tuning.hpp
+@@ -17,13 +17,18 @@
+ #ifndef OZAMX_MN_ORDER
+ #define OZAMX_MN_ORDER 0
+ #endif
++#ifndef OZAMX_NUMA_REPLICATE_B
++#define OZAMX_NUMA_REPLICATE_B 0
++#endif
+ namespace ozamx::tuning {
+ inline constexpr unsigned cache_block=OZAMX_CACHE_BLOCK;
+ inline constexpr unsigned prep_grain=OZAMX_PREP_GRAIN;
+ inline constexpr unsigned min_compute_work=OZAMX_MIN_COMPUTE_WORK;
+ inline constexpr unsigned loop_order=OZAMX_LOOP_ORDER;
+ inline constexpr unsigned mn_order=OZAMX_MN_ORDER;
++inline constexpr unsigned numa_replicate_b=OZAMX_NUMA_REPLICATE_B;
+ static_assert(cache_block>=32 && cache_block<=256 && 256%cache_block==0);
+ static_assert(prep_grain>0 && min_compute_work>0);
+ static_assert(loop_order<=1 && mn_order<=1);
++static_assert(numa_replicate_b<=1);
+ }
+
+--- /dev/null
++++ b/tests/numa_replication_probe.cpp
+@@ -0,0 +1,25 @@
++#include "ozamx/gemm.hpp"
++
++#include <cstdint>
++#include <cstring>
++#include <iostream>
++#include <vector>
++
++static std::uint64_t bits(double x) { std::uint64_t u; std::memcpy(&u,&x,sizeof(u)); return u; }
++
++int main() {
++    constexpr std::size_t n=4096;
++    // A and B deliberately alias the leading part of C. The implementation
++    // must finish all reads and private reconstruction before committing C.
++    std::vector<double> c(n*n);
++    for(std::size_t i=0;i<c.size();++i) c[i]=double(int((i*17+31)%997)-498)/997.0;
++    const auto t=ozamx::gemm_fp64_profiled(n,n,1,c.data(),1,c.data(),n,c.data(),n,ozamx::ProductBudget::p6);
++    std::uint64_t h1=1469598103934665603ULL,h2=0x9e3779b97f4a7c15ULL;
++    for(double x:c) { const auto v=bits(x); h1=(h1^v)*1099511628211ULL; h2^=v+0x9e3779b97f4a7c15ULL+(h2<<6)+(h2>>2); }
++    std::cout<<"{\"digest\":\""<<std::hex<<h1<<":"<<h2<<std::dec
++             <<"\",\"replicate_b_seconds\":"<<t.replicate_b_seconds
++             <<",\"pack_seconds\":"<<t.pack_seconds
++             <<",\"node0_workers\":"<<t.replicate_node0_workers
++             <<",\"node1_workers\":"<<t.replicate_node1_workers
++             <<",\"fallback_workers\":"<<t.replicate_fallback_workers<<"}\n";
++}
+

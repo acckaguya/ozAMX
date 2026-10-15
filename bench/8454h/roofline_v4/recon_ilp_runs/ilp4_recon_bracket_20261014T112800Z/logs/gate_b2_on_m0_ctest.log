@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_runs/ilp4_recon_bracket_20261014T112800Z/builds/candidate_b2_on_m0
+Test project /home/caiweili/ozAMX/bench/8454h/roofline_v4/recon_ilp_runs/ilp4_recon_bracket_20261014T112800Z/builds/candidate_b2_on_m0
+    Start 1: ozamx_validation
+1/4 Test #1: ozamx_validation .................   Passed    0.04 sec
+    Start 2: ozamx_late_path_probe
+2/4 Test #2: ozamx_late_path_probe ............   Passed    0.02 sec
+    Start 3: ozamx_alias_output_probe
+3/4 Test #3: ozamx_alias_output_probe .........   Passed    0.06 sec
+    Start 4: ozamx_reconstruct_ilp4_probe
+4/4 Test #4: ozamx_reconstruct_ilp4_probe .....   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   0.13 sec

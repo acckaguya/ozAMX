@@ -1,0 +1,117 @@
+{
+  "excluded": [
+    "build directories",
+    "compiled libraries/binaries",
+    "vendor/third-party sources",
+    "unlisted repository files"
+  ],
+  "forward_candidate_replay": {
+    "matched_tree": "/tmp/ozamx-v2-candidate",
+    "patch_path": "bench/8454h/search/ideas/v2_candidate.patch",
+    "result_hashes": {
+      "src/gemm.cpp": "6c1e2635725914a52d010ea91eabeaff516c3f3311190f2e7d5dc7ab0dc6520d",
+      "src/preprocess.hpp": "74f8a0f2c650b52282ed6af4461e641cc0c3735a600a076fd87fcfedf1b803e5"
+    },
+    "verified": true
+  },
+  "included_files": {
+    "CMakeLists.txt": {
+      "bytes": 5849,
+      "sha256": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388"
+    },
+    "bench/8454h/before/include/ozamx/gemm.hpp": {
+      "bytes": 2372,
+      "sha256": "0a7143bb72a3450e955bcdbb7302068cb10ca45ec5c9b519917a12315d2f499a"
+    },
+    "bench/8454h/before/src/gemm.cpp": {
+      "bytes": 23004,
+      "sha256": "97257f881d9cccda88cc1918bf874b8c124fbd1c4e7e119ccb12b1849ca51ad0"
+    },
+    "bench/8454h/before/src/runtime.cpp": {
+      "bytes": 1488,
+      "sha256": "be1d2bfc44f179febfbea54bcf5807bbee8aaea7c7539a51e7038a8cc3854474"
+    },
+    "bench/8454h/equivalence_driver.cpp": {
+      "bytes": 3067,
+      "sha256": "5862298e4001805452e039e5d4b46d2985874f3d8318b841ed6d9d105dbd21af"
+    },
+    "bench/8454h/run_equivalence.sh": {
+      "bytes": 3851,
+      "sha256": "cb85f10f02e97d76891bd2def5847d276511e100630015d4df9f17e3e6140df9"
+    },
+    "bench/8454h/search/run_search.py": {
+      "bytes": 30173,
+      "sha256": "d18bb1bbc6d5cbd861d775c76b27126a2524f7fef825950a9fe3a99ebb1fea61"
+    },
+    "bench/8454h/search/run_variant_gate.sh": {
+      "bytes": 576,
+      "sha256": "c917a61992515917c72fe74cb907414304de214c03dbf64124c92898bd0e3bbd"
+    },
+    "bench/8454h/search/variants.json": {
+      "bytes": 1437,
+      "sha256": "bc2db86d1ae2dab7e5a9b2ccade6e8d06bf8539e2e78841a9f069992fc58923a"
+    },
+    "bench/optimization_benchmark.cpp": {
+      "bytes": 11423,
+      "sha256": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05"
+    },
+    "include/ozamx/gemm.hpp": {
+      "bytes": 2527,
+      "sha256": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5"
+    },
+    "src/gemm.cpp": {
+      "bytes": 11976,
+      "sha256": "ab67c18a25d529cb29f685c80c864fbb3bbe5811b6738cb157094246c9fcb802"
+    },
+    "src/kernels.S": {
+      "bytes": 3848,
+      "sha256": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62"
+    },
+    "src/preprocess.hpp": {
+      "bytes": 18820,
+      "sha256": "c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94"
+    },
+    "src/runtime.cpp": {
+      "bytes": 5745,
+      "sha256": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774"
+    },
+    "src/tuning.hpp": {
+      "bytes": 969,
+      "sha256": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071"
+    },
+    "tests/validation.cpp": {
+      "bytes": 16288,
+      "sha256": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+    }
+  },
+  "lineage_source_files": {
+    "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+    "bench/8454h/before/include/ozamx/gemm.hpp": "0a7143bb72a3450e955bcdbb7302068cb10ca45ec5c9b519917a12315d2f499a",
+    "bench/8454h/before/src/gemm.cpp": "97257f881d9cccda88cc1918bf874b8c124fbd1c4e7e119ccb12b1849ca51ad0",
+    "bench/8454h/before/src/runtime.cpp": "be1d2bfc44f179febfbea54bcf5807bbee8aaea7c7539a51e7038a8cc3854474",
+    "bench/8454h/equivalence_driver.cpp": "5862298e4001805452e039e5d4b46d2985874f3d8318b841ed6d9d105dbd21af",
+    "bench/8454h/run_equivalence.sh": "cb85f10f02e97d76891bd2def5847d276511e100630015d4df9f17e3e6140df9",
+    "bench/8454h/search/run_search.py": "d18bb1bbc6d5cbd861d775c76b27126a2524f7fef825950a9fe3a99ebb1fea61",
+    "bench/8454h/search/run_variant_gate.sh": "c917a61992515917c72fe74cb907414304de214c03dbf64124c92898bd0e3bbd",
+    "bench/8454h/search/variants.json": "bc2db86d1ae2dab7e5a9b2ccade6e8d06bf8539e2e78841a9f069992fc58923a",
+    "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+    "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+    "src/gemm.cpp": "ab67c18a25d529cb29f685c80c864fbb3bbe5811b6738cb157094246c9fcb802",
+    "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+    "src/preprocess.hpp": "c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94",
+    "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+    "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+    "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+  },
+  "patch_replay_validation": "git apply --check succeeded for each patch in bench/8454h/search/ideas/*.patch against a fresh-equivalent source_base tree; no builds or CPU measurements were run during archival.",
+  "reverse_patch": {
+    "path": "bench/8454h/search/ideas/v2_candidate.patch",
+    "reverse_applied_to_snapshot_only": true,
+    "sha256": "07175e47219c4c799f4845a86721c12df1bdbb4012419da55c46164a5688a32f"
+  },
+  "schema": "ozamx-source-snapshot-v1",
+  "snapshot_method": "Copied matching files from /tmp/ozamx-v2-candidate and current benchmark/gate paths; reverse-applied ideas/v2_candidate.patch inside this snapshot only; checked every fingerprint-listed file against original runner lineage.",
+  "source_fingerprint": "d53e356393fd464727e12d7863c64b63098f5108e1b7f18410ecb45c57ad9c66",
+  "study_fingerprint": "c0eafaa4c07f9445406dea2d62abc81d982da40aeae5b34f26c2ea1f4dbc0663",
+  "verified_file_count": 17
+}

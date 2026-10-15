@@ -1,0 +1,298 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,18 +1,21 @@
+ cmake_minimum_required(VERSION 3.16)
+-project(ozamx VERSION 0.2.0 LANGUAGES C CXX ASM)
++project(ozamx_8454h_v2 LANGUAGES C CXX ASM)
+ 
+-option(OZAMX_ENABLE_OPENMP "Enable OpenMP parallel execution" ON)
+-option(OZAMX_BUILD_PROBE "Build the standalone AMX instruction probe" ON)
+-
+-set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
++option(OZAMX_ENABLE_OPENMP "Enable OpenMP execution" ON)
++option(OZAMX_BUILD_DIAGNOSTICS "Build native diagnostics" ON)
++set(OZAMX_BLOCK_PAD_LINES 0 CACHE STRING "Output block row padding in cache lines")
++set(OZAMX_CACHE_COLUMNS 128 CACHE STRING "Output macroblock columns")
++set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block")
+ set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")
+ set(OZAMX_MIN_COMPUTE_WORK 8 CACHE STRING "Small-shape output tasks per worker")
+-set(OZAMX_TILELOAD_HINT 1 CACHE STRING "AMX input loads: 0=TILELOADD, 1=TILELOADDT1")
+-set(OZAMX_LOAD_SCHEDULE 0 CACHE STRING "FP64 loads: 0=interleaved, 1=all before TDP")
+-set(OZAMX_LOOP_ORDER 0 CACHE STRING "Compute loops: 0=BK outer, 1=microtile outer")
+-set(OZAMX_MN_ORDER 0 CACHE STRING "Output task order: 0=row major, 1=column major")
++set(OZAMX_TILELOAD_HINT 1 CACHE STRING "AMX load hint: 0=TILELOADD, 1=TILELOADDT1")
++set(OZAMX_LOAD_SCHEDULE 0 CACHE STRING "FP64 load schedule")
++set(OZAMX_LOOP_ORDER 0 CACHE STRING "Compute loop order")
++set(OZAMX_MN_ORDER 0 CACHE STRING "Output task order")
++set(OZAMX_RECON_BATCH64 1 CACHE STRING "FP64 products accumulated before writing double block")
++
+ set(OZAMX_TUNING_DEFINITIONS)
+-foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER)
++foreach(knob CACHE_COLUMNS BLOCK_PAD_LINES CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER RECON_BATCH64)
+   if(NOT "${OZAMX_${knob}}" MATCHES "^[0-9]+$")
+     message(FATAL_ERROR "OZAMX_${knob} must be a nonnegative integer")
+   endif()
+@@ -21,12 +24,11 @@
+ 
+ add_library(ozamx STATIC src/runtime.cpp src/gemm.cpp src/kernels.S)
+ target_include_directories(ozamx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
++target_compile_features(ozamx PUBLIC cxx_std_17)
+ target_compile_definitions(ozamx PRIVATE ${OZAMX_TUNING_DEFINITIONS})
+-target_compile_features(ozamx PUBLIC cxx_std_17)
+-target_compile_options(ozamx PRIVATE -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16)
+-target_compile_options(ozamx PRIVATE $<$<CONFIG:Release>:-O3>)
++target_compile_options(ozamx PRIVATE -Wall -Wextra -Wpedantic -mamx-tile -mamx-bf16
++  $<$<CONFIG:Release>:-O3>)
+ set_source_files_properties(src/gemm.cpp PROPERTIES COMPILE_OPTIONS "-march=sapphirerapids;-ffp-contract=off")
+-
+ if(OZAMX_ENABLE_OPENMP)
+   find_package(OpenMP REQUIRED COMPONENTS CXX)
+   target_link_libraries(ozamx PUBLIC OpenMP::OpenMP_CXX)
+@@ -35,67 +37,37 @@
+ add_executable(ozamx_cli src/main.cpp)
+ target_link_libraries(ozamx_cli PRIVATE ozamx)
+ 
+-if(OZAMX_BUILD_PROBE)
+-  add_executable(ozamx_amx_probe tools/amx_probe.c)
+-  target_compile_options(ozamx_amx_probe PRIVATE -Wall -Wextra -mamx-tile -mamx-bf16)
+-endif()
+-
+-# Optional link interface for local Intel oneMKL reference programs/benchmarks.
+-set(OZAMX_ONEMKL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/third_party/code/mkl-current" CACHE PATH "Local oneMKL files")
+-find_file(OZAMX_ONEMKL_RUNTIME NAMES libmkl_rt.so.3 libmkl_rt.so.2 libmkl_rt.so
+-  PATHS "${OZAMX_ONEMKL_ROOT}/lib" NO_DEFAULT_PATH)
+-if(OZAMX_ONEMKL_RUNTIME)
+-  add_library(ozamx_onemkl_runtime SHARED IMPORTED GLOBAL)
+-  set_target_properties(ozamx_onemkl_runtime PROPERTIES IMPORTED_LOCATION "${OZAMX_ONEMKL_RUNTIME}")
+-  add_library(ozamx_onemkl INTERFACE)
+-  target_include_directories(ozamx_onemkl INTERFACE "${OZAMX_ONEMKL_ROOT}/include")
+-  target_link_libraries(ozamx_onemkl INTERFACE ozamx_onemkl_runtime)
+-endif()
+-
+-if(OZAMX_ONEMKL_RUNTIME AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/bench/benchmark.cpp")
+-  add_executable(ozamx_benchmark bench/benchmark.cpp)
+-  target_link_libraries(ozamx_benchmark PRIVATE ozamx ozamx_onemkl)
+-  target_compile_options(ozamx_benchmark PRIVATE -mamx-tile -mamx-bf16)
+-endif()
+-
+ include(CTest)
+-add_executable(ozamx_optimization_benchmark bench/optimization_benchmark.cpp)
+-target_link_libraries(ozamx_optimization_benchmark PRIVATE ozamx)
+-add_executable(ozamx_platform_baseline tools/platform_baseline.cpp)
+-target_compile_features(ozamx_platform_baseline PRIVATE cxx_std_17)
+-target_compile_options(ozamx_platform_baseline PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
+-if(NOT OZAMX_ENABLE_OPENMP)
+-  set_target_properties(ozamx_platform_baseline PROPERTIES EXCLUDE_FROM_ALL TRUE)
+-endif()
+-add_executable(ozamx_native_kernel_audit tools/native_kernel_audit.cpp src/runtime.cpp src/kernels.S)
+-target_compile_definitions(ozamx_native_kernel_audit PRIVATE ${OZAMX_TUNING_DEFINITIONS})
+-target_include_directories(ozamx_native_kernel_audit PRIVATE include)
+-target_compile_features(ozamx_native_kernel_audit PRIVATE cxx_std_17)
+-target_compile_options(ozamx_native_kernel_audit PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
+-add_executable(ozamx_native_alternative_accuracy tools/native_alternative_accuracy.cpp src/runtime.cpp src/kernels.S)
+-target_compile_definitions(ozamx_native_alternative_accuracy PRIVATE ${OZAMX_TUNING_DEFINITIONS})
+-target_include_directories(ozamx_native_alternative_accuracy PRIVATE include)
+-target_compile_features(ozamx_native_alternative_accuracy PRIVATE cxx_std_17)
+-target_compile_options(ozamx_native_alternative_accuracy PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
+-if(OZAMX_ENABLE_OPENMP)
+-  target_link_libraries(ozamx_platform_baseline PRIVATE OpenMP::OpenMP_CXX)
+-  target_link_libraries(ozamx_native_kernel_audit PRIVATE OpenMP::OpenMP_CXX)
+-  target_link_libraries(ozamx_native_alternative_accuracy PRIVATE OpenMP::OpenMP_CXX)
+-endif()
+-if(OZAMX_ONEMKL_RUNTIME)
+-  add_executable(ozamx_native_signed_shift_accuracy tools/native_signed_shift_accuracy.cpp src/runtime.cpp src/kernels.S)
+-  target_compile_definitions(ozamx_native_signed_shift_accuracy PRIVATE ${OZAMX_TUNING_DEFINITIONS})
+-  target_include_directories(ozamx_native_signed_shift_accuracy PRIVATE include)
+-  target_compile_features(ozamx_native_signed_shift_accuracy PRIVATE cxx_std_17)
+-  target_compile_options(ozamx_native_signed_shift_accuracy PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
+-  target_link_libraries(ozamx_native_signed_shift_accuracy PRIVATE ozamx_onemkl)
+-  if(OZAMX_ENABLE_OPENMP)
+-    target_link_libraries(ozamx_native_signed_shift_accuracy PRIVATE OpenMP::OpenMP_CXX)
+-  endif()
+-endif()
+-if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/validation.cpp")
++if(BUILD_TESTING)
+   add_executable(ozamx_validation tests/validation.cpp)
+   target_link_libraries(ozamx_validation PRIVATE ozamx)
+   target_compile_options(ozamx_validation PRIVATE -mamx-tile -mamx-bf16)
+   add_test(NAME ozamx_validation COMMAND ozamx_validation)
++  add_executable(ozamx_late_path_probe tests/final_late_path_probe.cpp)
++  target_link_libraries(ozamx_late_path_probe PRIVATE ozamx)
++  target_compile_options(ozamx_late_path_probe PRIVATE -march=sapphirerapids -ffp-contract=off)
++  add_test(NAME ozamx_late_path_probe COMMAND ozamx_late_path_probe)
++  add_executable(ozamx_alias_output_probe tests/bounded_commit_alias_probe.cpp)
++  target_link_libraries(ozamx_alias_output_probe PRIVATE ozamx)
++  target_compile_options(ozamx_alias_output_probe PRIVATE -march=sapphirerapids -ffp-contract=off)
++  add_test(NAME ozamx_alias_output_probe COMMAND ozamx_alias_output_probe)
+ endif()
++
++if(OZAMX_BUILD_DIAGNOSTICS)
++  add_executable(ozamx_native_kernel_audit tools/native_kernel_audit.cpp src/runtime.cpp src/kernels.S)
++  target_include_directories(ozamx_native_kernel_audit PRIVATE include)
++  target_compile_features(ozamx_native_kernel_audit PRIVATE cxx_std_17)
++  target_compile_definitions(ozamx_native_kernel_audit PRIVATE ${OZAMX_TUNING_DEFINITIONS})
++  target_compile_options(ozamx_native_kernel_audit PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
++  if(OZAMX_ENABLE_OPENMP)
++    target_link_libraries(ozamx_native_kernel_audit PRIVATE OpenMP::OpenMP_CXX)
++  endif()
++  add_executable(ozamx_platform_baseline tools/platform_baseline.cpp)
++  target_compile_features(ozamx_platform_baseline PRIVATE cxx_std_17)
++  target_compile_options(ozamx_platform_baseline PRIVATE -O3 -march=sapphirerapids -ffp-contract=off)
++  if(OZAMX_ENABLE_OPENMP)
++    target_link_libraries(ozamx_platform_baseline PRIVATE OpenMP::OpenMP_CXX)
++  endif()
++  add_executable(ozamx_optimization_benchmark bench/optimization_benchmark.cpp)
++  target_link_libraries(ozamx_optimization_benchmark PRIVATE ozamx)
++endif()
+--- a/src/tuning.hpp
++++ b/src/tuning.hpp
+@@ -1,4 +1,12 @@
+ #pragma once
++#ifndef OZAMX_CACHE_COLUMNS
++#define OZAMX_CACHE_COLUMNS 128
++#endif
++static_assert(OZAMX_CACHE_COLUMNS>=32 && OZAMX_CACHE_COLUMNS<=512 && OZAMX_CACHE_COLUMNS%32==0);
++#ifndef OZAMX_BLOCK_PAD_LINES
++#define OZAMX_BLOCK_PAD_LINES 0
++#endif
++static_assert(OZAMX_BLOCK_PAD_LINES<=3);
+ 
+ // Numerically equivalent tuning space. BK and each output's product order stay
+ // fixed; these parameters only change independent work scheduling and locality.
+@@ -17,13 +25,18 @@
+ #ifndef OZAMX_MN_ORDER
+ #define OZAMX_MN_ORDER 0
+ #endif
++#ifndef OZAMX_RECON_BATCH64
++#define OZAMX_RECON_BATCH64 1
++#endif
+ namespace ozamx::tuning {
+ inline constexpr unsigned cache_block=OZAMX_CACHE_BLOCK;
+ inline constexpr unsigned prep_grain=OZAMX_PREP_GRAIN;
+ inline constexpr unsigned min_compute_work=OZAMX_MIN_COMPUTE_WORK;
+ inline constexpr unsigned loop_order=OZAMX_LOOP_ORDER;
+ inline constexpr unsigned mn_order=OZAMX_MN_ORDER;
++inline constexpr unsigned recon_batch64=OZAMX_RECON_BATCH64;
+ static_assert(cache_block>=32 && cache_block<=256 && 256%cache_block==0);
+ static_assert(prep_grain>0 && min_compute_work>0);
+ static_assert(loop_order<=1 && mn_order<=1);
++static_assert(recon_batch64==1 || recon_batch64==2 || recon_batch64==3 || recon_batch64==4 || recon_batch64==6);
+ }
+--- a/src/gemm.cpp
++++ b/src/gemm.cpp
+@@ -90,6 +90,44 @@
+         _mm512_store_pd(block+i*stride+j,r0);_mm512_store_pd(block+i*stride+j+8,r1);
+     }
+ }
++template<bool Late64,std::size_t Batch>
++inline void accumulate64_batch(double* block,const float* const (&micros)[Batch],std::size_t count,std::size_t stride,int& bad){
++    static_assert(Batch>=2);
++    for(std::size_t i=0;i<TM;++i)for(std::size_t j=0;j<TN;j+=16){
++        __m512d lo=_mm512_load_pd(block+i*stride+j),hi=_mm512_load_pd(block+i*stride+j+8);
++        for(std::size_t q=0;q<count;++q){
++            const auto f=_mm512_load_ps(micros[q]+i*TN+j);if constexpr(!Late64)bad|=nonfinite(f);
++            const auto fl=_mm512_cvtps_pd(_mm512_castps512_ps256(f)),fh=_mm512_cvtps_pd(_mm512_extractf32x8_ps(f,1));
++            lo=_mm512_add_pd(lo,fl);hi=_mm512_add_pd(hi,fh);
++            if constexpr(!Late64)bad|=nonfinite(lo)|nonfinite(hi);
++        }
++        _mm512_store_pd(block+i*stride+j,lo);_mm512_store_pd(block+i*stride+j+8,hi);
++    }
++}
++template<bool Late64,std::size_t Batch>
++inline void run_fp64_batch(double* block,std::size_t stride,const Packed64& p,std::size_t mb,std::size_t nb,std::size_t kb,std::size_t mi,std::size_t nj,unsigned steps,int depth,int& bad){
++    if constexpr(Batch==1){
++        alignas(64) float micro[TM*TN];
++        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){
++            run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,micro,steps);
++            accumulate64<Late64>(block,micro,stride,bad);
++        }
++    }else{
++        // Product order remains diagonal-major, then ai-major. Flush a short tail
++        // without changing the sequence of float-to-double additions.
++        constexpr std::size_t MaxBatch=Batch;
++        alignas(64) float scratch[MaxBatch][TM*TN];
++        std::size_t count=0;
++        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){
++            run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,scratch[count],steps);
++            if(++count==Batch){const float* micros[MaxBatch];for(std::size_t q=0;q<count;++q)micros[q]=scratch[q];accumulate64_batch<Late64,MaxBatch>(block,micros,count,stride,bad);count=0;}
++        }
++        if(count){
++            if(count==1)accumulate64<Late64>(block,scratch[0],stride,bad);
++            else {const float* micros[MaxBatch];for(std::size_t q=0;q<count;++q)micros[q]=scratch[q];accumulate64_batch<Late64,MaxBatch>(block,micros,count,stride,bad);}
++        }
++    }
++}
+ template<class T>inline void zero_block(T* p,std::size_t count){for(std::size_t i=0;i<count;i+=64/sizeof(T))_mm512_store_si512(p+i,_mm512_setzero_si512());}
+ template<class T>void copy_row(T* dst,const T* src,std::size_t n){
+     constexpr std::size_t lanes=64/sizeof(T);std::size_t j=0;for(;j+lanes<=n;j+=lanes)_mm512_storeu_si512(dst+j,_mm512_loadu_si512(src+j));
+@@ -106,7 +144,7 @@
+     span(m,k,lda);span(k,n,ldb);span(m,n,ldc);
+ }
+ int budget_depth(ProductBudget b){switch(b){case ProductBudget::p6:return 3;case ProductBudget::p10:return 4;case ProductBudget::p15:return 5;case ProductBudget::p21:return 6;}throw Error("invalid FP64 product budget");}
+-template<class T,bool Late64=false>GemmTimings gemm_impl(std::size_t m,std::size_t n,std::size_t k,const T* a,std::size_t lda,const T* b,std::size_t ldb,T* c,std::size_t ldc,int depth){
++template<class T,bool Late64=false,bool Wide=false>GemmTimings gemm_impl(std::size_t m,std::size_t n,std::size_t k,const T* a,std::size_t lda,const T* b,std::size_t ldb,T* c,std::size_t ldc,int depth){
+     validate_layout(m,n,k,a,lda,b,ldb,c,ldc);GemmTimings t;
+     if(!k){const auto z0=Clock::now();for(std::size_t i=0;i<m;++i)std::fill(c+i*ldc,c+i*ldc+n,T(0));t.total_seconds=elapsed(z0,Clock::now());return t;}
+     const auto t0=Clock::now();const int prep=preprocessing_threads(std::max(checked_mul(m,k),checked_mul(k,n)));detail::Slices sa,sb;detail::Packed p;bool direct=false;
+@@ -121,22 +159,26 @@
+     }
+     const auto t1=Clock::now();t.split_seconds=elapsed(t0,t1);if(!direct)p=detail::pack_slices(sa,sb,m,n,k,depth,prep);sa={};sb={};
+     const auto t2=Clock::now();t.pack_seconds=elapsed(t1,t2);detail::AlignedBuffer<T> result(checked_mul(m,n));
+-    const std::size_t cb=std::min(m,n)<1024?32:CACHE_BLOCK,nr=ceil_div(m,cb),nc=ceil_div(n,cb),work=checked_mul(nr,nc);
++    const bool small=std::min(m,n)<1024;
++    const std::size_t cb=small?32:CACHE_BLOCK;
++    const std::size_t cbn=small?32:(Wide?(std::is_same_v<T,float>||depth<=4?512:256):CACHE_BLOCK);
++    const std::size_t nr=ceil_div(m,cb),nc=ceil_div(n,cbn),work=checked_mul(nr,nc);
++    const std::size_t stride=cbn+(Wide?64/sizeof(T):0);
+     const auto granularity=std::min(m,n)<1024?tuning::min_compute_work:1;const int nt=detail::team_size(requested_threads(),std::max<std::size_t>(1,ceil_div(work,granularity)));int bad=0;
+ #pragma omp parallel num_threads(nt) if(nt>1) reduction(|:bad)
+     {
+         // Process permission was granted before entry; each task configures its tile state.
+-        load_config();alignas(64) T block[CACHE_BLOCK*CACHE_BLOCK];alignas(64) float micro[TM*TN];
++        load_config();alignas(64) T block[CACHE_BLOCK*((Wide?512:CACHE_BLOCK)+(Wide?64/sizeof(T):0))];alignas(64) float micro[TM*TN];
+ #pragma omp for schedule(static)
+         for(std::size_t w=0;w<work;++w){
+             const auto row=(tuning::mn_order?w%nr:w/nc)*cb;
+-            const auto col=(tuning::mn_order?w/nr:w%nc)*cb;
+-            const auto rows=std::min(cb,m-row),cols=std::min(cb,n-col);zero_block(block,cb*cb);
++            const auto col=(tuning::mn_order?w/nr:w%nc)*cbn;
++            const auto rows=std::min(cb,m-row),cols=std::min(cbn,n-col);zero_block(block,cb*stride);
+             const auto compute_at=[&](std::size_t kb,std::size_t i,std::size_t j){
+                     const unsigned steps=unsigned(ceil_div(std::min(BK,k-kb*BK),TK));
+                     const auto mb=(row+i)/BM,nb=(col+j)/BN,mi=(row+i)%BM,nj=(col+j)%BN;
+-                    if constexpr(std::is_same_v<T,float>){run_fp32_micro<3>(p,mb,nb,kb,mi,nj,micro,steps);accumulate32(block+i*cb+j,micro,cb,bad);}else{
+-                        for(int diagonal=0;diagonal<depth;++diagonal)for(int ai=0;ai<=diagonal;++ai){run_fp64_product<6>(p,ai,diagonal-ai,mb,nb,kb,mi,nj,micro,steps);accumulate64<Late64>(block+i*cb+j,micro,cb,bad);}
++                    if constexpr(std::is_same_v<T,float>){run_fp32_micro<3>(p,mb,nb,kb,mi,nj,micro,steps);accumulate32(block+i*stride+j,micro,stride,bad);}else{
++                        run_fp64_batch<Late64,(Wide?2:1)>(block+i*stride+j,stride,p,mb,nb,kb,mi,nj,steps,depth,bad);
+                     }
+             };
+             if constexpr(tuning::loop_order==0){
+@@ -148,8 +190,8 @@
+             }
+             // Pure addition cannot turn an Inf/NaN component back into a finite
+             // value. Long-K calls classify the finished private block once.
+-            if constexpr(Late64)for(std::size_t q=0;q<cb*cb;q+=8)bad|=nonfinite(_mm512_load_pd(block+q));
+-            for(std::size_t i=0;i<rows;++i)copy_row(result.data()+(row+i)*n+col,block+i*cb,cols);
++            if constexpr(Late64)for(std::size_t q=0;q<cb*stride;q+=8)bad|=nonfinite(_mm512_load_pd(block+q));
++            for(std::size_t i=0;i<rows;++i)copy_row(result.data()+(row+i)*n+col,block+i*stride,cols);
+         }
+         _tile_release();
+     }
+@@ -160,9 +202,14 @@
+ }
+ } // namespace
+ namespace detail {
+-GemmTimings gemm_fp32_native(std::size_t m,std::size_t n,std::size_t k,const float* a,std::size_t lda,const float* b,std::size_t ldb,float* c,std::size_t ldc){return gemm_impl(m,n,k,a,lda,b,ldb,c,ldc,3);}
++GemmTimings gemm_fp32_native(std::size_t m,std::size_t n,std::size_t k,const float* a,std::size_t lda,const float* b,std::size_t ldb,float* c,std::size_t ldc){if(std::min(m,n)>=4096)return gemm_impl<float,false,true>(m,n,k,a,lda,b,ldb,c,ldc,3);
++    return gemm_impl<float,false,false>(m,n,k,a,lda,b,ldb,c,ldc,3);}
+ GemmTimings gemm_fp64_native(std::size_t m,std::size_t n,std::size_t k,const double* a,std::size_t lda,const double* b,std::size_t ldb,double* c,std::size_t ldc,ProductBudget budget){const auto depth=budget_depth(budget);
+-    if(k>=4096)return gemm_impl<double,true>(m,n,k,a,lda,b,ldb,c,ldc,depth);
+-    return gemm_impl<double,false>(m,n,k,a,lda,b,ldb,c,ldc,depth);}
++    if(std::min(m,n)>=4096){
++        if(k>=4096)return gemm_impl<double,true,true>(m,n,k,a,lda,b,ldb,c,ldc,depth);
++        return gemm_impl<double,false,true>(m,n,k,a,lda,b,ldb,c,ldc,depth);
++    }
++    if(k>=4096)return gemm_impl<double,true,false>(m,n,k,a,lda,b,ldb,c,ldc,depth);
++    return gemm_impl<double,false,false>(m,n,k,a,lda,b,ldb,c,ldc,depth);}
+ }
+ } // namespace ozamx

@@ -1,0 +1,56 @@
+Matched GEMM baseline run metadata
+Captured: 2026-10-13 UTC (original machine inventory is bench/8454h/machine_metadata.txt)
+Host: dual-socket Intel Xeon Platinum 8454H, 64 physical cores selected by CPUs 0-63
+Compiler: GCC/G++ 11.4.0, OpenMP 4.5 runtime
+Affinity/env: taskset -c 0-63; OMP_NUM_THREADS=64; OMP_PLACES=cores; OMP_PROC_BIND=close; OMP_DYNAMIC=FALSE
+Lock: flock -x /tmp/ozamx-perf.lock, held across each runner's before+current runs
+Workspace cache: default OZAMX_WORKSPACE_CACHE_BYTES (1 GiB cap per thread-local pool)
+
+Core sweep command:
+bench/run_8454h_baseline.sh --sizes 256,1024,4096 --precision all --threads 64 --reps 5 --budgets 6,10,15,21 --output-dir bench/8454h/runs/final-matched-core
+Archived outputs: bench/8454h/final_before.csv and bench/8454h/final_optimized.csv
+
+8192 extension command:
+bench/run_8454h_baseline.sh --sizes 8192 --precision all --threads 64 --reps 5 --budgets 6,10,15,21 --output-dir bench/8454h/runs/final-matched-8192
+Archived outputs: bench/8454h/final_before_8192.csv and bench/8454h/final_optimized_8192.csv
+
+The runner compiles the frozen original source directly with:
+g++ -O3 -std=c++17 -mamx-tile -mamx-bf16 -fopenmp -Ibench/8454h/before/include \
+  bench/8454h/before/src/gemm.cpp bench/8454h/before/src/runtime.cpp bench/optimization_benchmark.cpp
+It builds current through:
+cmake -S . -B <temporary-build-dir> -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON -DOZAMX_BUILD_PROBE=OFF -DBUILD_TESTING=OFF
+cmake --build <temporary-build-dir> --target ozamx_optimization_benchmark -j
+CMake applies -O3 and -mamx-tile -mamx-bf16 to the library; src/gemm.cpp additionally has -march=sapphirerapids -ffp-contract=off. Both use the identical current benchmark source, which writes a warmup row and then runs 5 measured repetitions on the same generated A/B inputs per configuration. Caller-side input creation is outside the timed GEMM profile.
+
+Source hashes (SHA-256):
+Current src/gemm.cpp: 3d3ece667ad9fa185bc273129345d03c2cd3851308d6314e4f1630c5539517f6
+Current src/kernels.S: 78eb5da725d4223bb354fb8b0decb045d056cd35ea2fa25796fbef987e17722a
+Current src/preprocess.hpp: c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94
+Current include/ozamx/gemm.hpp: 0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5
+CMakeLists.txt: e16e9dd7e210e272139df361590641b5e20b800cecd229bcc0a277c82cadc906
+bench/optimization_benchmark.cpp: 140e2874dfc1027c5d7243b7eba8a0237dc05b001cee196624eef51c58a0a772
+Frozen before src/gemm.cpp: 97257f881d9cccda88cc1918bf874b8c124fbd1c4e7e119ccb12b1849ca51ad0
+Frozen before src/runtime.cpp: be1d2bfc44f179febfbea54bcf5807bbee8aaea7c7539a51e7038a8cc3854474
+Frozen before include/ozamx/gemm.hpp: 0a7143bb72a3450e955bcdbb7302068cb10ca45ec5c9b519917a12315d2f499a
+
+Matched full-sweep CSV row counts: 151 rows per file (15 configurations, each with one warmup row, five repetitions, and four summary rows).
+Matched 8192 CSV row counts: 51 rows per file (5 configurations, each with one warmup row, five repetitions, and four summary rows).
+All paired output checksums and seeds matched between before/current for warmup and every repetition. The checksum is sum(C), not a full element-by-element validation.
+
+8192 optimized-only workspace-capacity experiment (the matched 8192 files above are unchanged):
+Outputs: bench/8454h/supplemental_default_8192.csv and bench/8454h/supplemental_cache4g_8192.csv
+Both outputs were produced by the same CMake-built binary, SHA-256:
+3d2486e27aeedd4a2a6fa2e7e5770b1b3c6a4ea94da8ce502bbf02317f4041d1
+CMake build and both executions were performed while holding flock -x /tmp/ozamx-perf.lock. Build command:
+cmake -S . -B <temporary-build-dir> -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON -DOZAMX_BUILD_PROBE=OFF -DBUILD_TESTING=OFF
+cmake --build <temporary-build-dir> --target ozamx_optimization_benchmark -j
+Common run command:
+taskset -c 0-63 env OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE <binary> \
+  --sizes 8192 --precision all --threads 64 --reps 5 --budgets 6,10,15,21 --output <CSV>
+The second run additionally set OZAMX_WORKSPACE_CACHE_BYTES=4294967296; the first left this variable unset, retaining the default. Same seeds and checksums matched between cap settings for all warmup and rep rows. Both CSVs retain all five reps, including outliers. These are two distinct optimized-only processes; do not mix them into the before/new matched comparison.
+
+Corrected platform microbenchmark (AVX FMA assembly audit):
+Source tools/platform_baseline.cpp SHA-256: 25444b17c9df70fbc743fb621f60256ff2785395a2b41277fa9861303af67b4e
+CSV bench/8454h/platform_baseline.csv SHA-256: e1647ba9df4527bef5e0c84a888058443ced6e14a128710d0fcf28c15812f363
+Audit bench/8454h/platform_instruction_audit.txt SHA-256: fd8d0f8d21d6664c2900632bb5500ea390202e5b4950a15ed4bac17eac2aeb8b
+The disassembly audit confirms eight independent FP32 and FP64 FMA destination-register chains and four AMX TDP instructions per loop. These corrected platform rows supersede earlier AVX FMA values; the invalid merged-chain CSV was kept outside the repository at /tmp/platform_baseline_invalid_fma_merge.csv.

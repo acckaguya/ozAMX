@@ -1,0 +1,16 @@
+Xeon 8454H platform microbenchmark instruction audit
+
+Source SHA-256: 25444b17c9df70fbc743fb621f60256ff2785395a2b41277fa9861303af67b4e
+Compiler: g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Build command used for the benchmark binary:
+  g++ -O3 -std=c++17 -march=sapphirerapids -fopenmp tools/platform_baseline.cpp -o /tmp/platform_baseline_corrected
+Audit command (same optimization/target/OpenMP flags):
+  g++ -O3 -std=c++17 -march=sapphirerapids -fopenmp -c tools/platform_baseline.cpp -o /tmp/platform_baseline_corrected.o
+  objdump -d -Mintel --demangle /tmp/platform_baseline_corrected.o
+
+Inspection of the OpenMP clone's hot loops:
+- FP32 loop at offsets 0x200..0x232 has eight vfmadd231ps instructions, writing zmm11,zmm10,zmm9,zmm8,zmm7,zmm6,zmm5,zmm4, then decrements the loop counter. These are eight independent accumulator dependency chains. Count = 8 vectors x 16 lanes x 2 FLOP/FMA per iteration.
+- FP64 loop at offsets 0x380..0x3b2 has eight vfmadd231pd instructions, writing zmm19,zmm18,zmm17,zmm16,zmm15,zmm14,zmm13,zmm12, then decrements the loop counter. Count = 8 vectors x 8 lanes x 2 FLOP/FMA per iteration.
+- AMX loop at offsets 0xe78..0xe8e has four tdpbf16ps instructions (tmm4..tmm7) per iteration. Count = 4 x (2 x 16 x 16 x 32) FLOP per iteration.
+
+Run conditions for corrected platform_baseline.csv: shared lock /tmp/ozamx-perf.lock held with flock -x; taskset -c 0-63; OMP_NUM_THREADS=64, OMP_PLACES=cores, OMP_PROC_BIND=close, OMP_DYNAMIC=FALSE. The tool itself sweeps teams 1, 32, and 64, with one warmup and five ~100 ms compute repetitions plus five memory repetitions per team. The superseded CSV with merged FMA chains is retained outside the repository at /tmp/platform_baseline_invalid_fma_merge.csv.

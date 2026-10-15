@@ -1,6 +1,20 @@
 # 第三方来源登记
 
-核验日期：2026-10-12（UTC）。论文是复现目标；Intel 文档是 ISA/平台实现依据；oneMKL 是独立的 CPU BLAS 对照依赖。三者用途分开登记。
+原始核验日期：2026-10-12（UTC）；当前8454H资料补充：2026-10-13（北京时间）。论文是复现目标；Intel 文档是 ISA/平台实现依据；oneMKL 是独立的 CPU BLAS 对照依赖。三者用途分开登记。下面原有oneMKL环境及probe记录属于Gold6430历史实验，不表示当前检出已安装那些本地依赖。
+
+## 当前 Xeon Platinum 8454H 架构与 SIMD 资料
+
+新资料集中在 [intel/README.md](intel/README.md)，综合研读见 [intel/8454H_STUDY.md](intel/8454H_STUDY.md)。覆盖AMX、AVX/AVX2、AVX-512、BF16/FP16、缓存/NUMA、线程划分与优化代码参考。
+
+- Intel SDM **v093** 的Vol.1/2B/2C及Optimization Reference Manual **Vol.1 v050**：[原始文件与manifest](intel/manuals/manifest.json)。
+- Intel Intrinsics Guide **v3.6.9**离线包、展开文件与Linux XSTATE规范：[研读索引](intel/simd/STUDY.md)。Linux许可为进程级，独立的task状态分配另作说明。
+- 官方8454H/Gold6430规格、Sapphire Rapids技术概览、调优页面、ISA Extensions（2024-12）、FP16 Technology Guide rev004和Product Brief：[平台manifest](intel/xeon-8454h/manifest.json)。原先登记但未随公开包分发的ISA PDF，现以原始副本保存在该平台目录的`pdfs/`下。
+- 固定commit的Intel AMX/优化手册/AVX示例、oneDNN内核片段及许可证：[代码manifest](intel/examples/manifest.json)、[逐文件研读](intel/examples/STUDY.md)。
+- 当前Linux拓扑、缓存、CPUID/XCR0和进程/worker核验：[机器快照](intel/xeon-8454h/hardware-snapshot/snapshot.json)。
+
+Roofline 模型的Intel集成Roofline说明、Williams–Waterman–Patterson 原始文献和Koskela等人的多层模型论文来源登记及本项目笔记见[roofline来源目录](roofline/SOURCES.md)与[研读笔记](roofline/study.md)。本地只保存一份不足1 MiB的官方论文PDF，不包含Intel Advisor软件或缓存模拟器。
+
+来源URL、版本、获取日期、bytes、SHA和授权边界以新manifest为准；本轮没有修改论文、GEMM实现或历史科学结果。旧实验发布manifest保留其历史身份，新资料库使用独立清单及 [COLLECTION_CHECK.json](intel/COLLECTION_CHECK.json)。
 
 ## 复现目标论文
 
@@ -18,7 +32,7 @@
 - **发布者：** Intel Corporation。
 - **文档：** *Intel Architecture Instruction Set Extensions Programming Reference*，2024 年 12 月 URL 版本。
 - **来源：** <https://cdrdv2-public.intel.com/843860/architecture-instruction-set-extensions-programming-reference-dec-24.pdf>。
-- **本地文件：** `docs/intel-architecture-isa-extensions-dec-2024.pdf`。
+- **当前本地文件：** `intel/xeon-8454h/pdfs/intel-architecture-instruction-set-extensions-programming-reference-dec24.pdf`（2026-10-13重新获取，SHA-256与原登记一致）。
 - **SHA-256：** `bbffe2b3bc6129cd9131a7c4981ab0c4b34fbc89a3032be0c7f822736f4b1bad`。
 - 文档涵盖 AMX tile 配置/操作及 `TDPBF16PS` 等 BF16 指令。本地 PDF 来源页未发现明确再分发授权；请以 Intel 上游页面及文档附带条款为准。实现语义笔记另见 `docs/amx-instruction-notes.md`。
 

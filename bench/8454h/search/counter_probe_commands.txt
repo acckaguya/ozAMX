@@ -1,0 +1,17 @@
+Hardware-counter access probe (recorded 2026-10-13)
+
+Kernel setting reported by the host:
+  cat /proc/sys/kernel/perf_event_paranoid
+  # 4
+
+Example cycles permission probe under the benchmark CPU set:
+  perf stat -e cycles -- taskset -c 0-63 /bin/true
+
+Observed by the tuning task owner: opening the cycles event with perf_event_open
+fails with EACCES (errno 13) at perf_event_paranoid=4. Do not retry with changed
+host settings or privileged access. The search records process software counters
+through getrusage instead: minor/major faults, voluntary/involuntary context
+switches, user/system CPU time, and the process maximum RSS high-water mark.
+
+This file records the probe outcome and a reproducible permission-check command;
+it does not claim that hardware counter samples are available for this search.

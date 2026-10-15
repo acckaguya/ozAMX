@@ -1,0 +1,13 @@
+source_snapshot=bench/8454h/roofline_v4/int8_proto/results/20261014T091812Z-3-debug/source
+source_sha256_file=bench/8454h/roofline_v4/int8_proto/results/20261014T091812Z-3-debug/source/SHA256SUMS
+library=/home/caiweili/ozAMX/bench/8454h/versions/v3_paper_release/v3_release/artifacts/libozamx_v3.a
+library_sha256=73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c
+quality_gate_binary=/tmp/ozamx-int8-36-build/int8_quality_gate
+quality_gate_binary_sha256=4eed035630dec0bacc91c8a2a1610475272e672e80cf307dd22a7feedff1718e
+benchmark_driver_binary=/tmp/ozamx-int8-36-build/int8_benchmark_driver
+benchmark_driver_binary_sha256=72124591cd858410d9ca1f49ae611250ef2a5d6bf6e6418dd631d263fd8fb531
+quality_gate_return_code=1
+quality_gate_json_valid=true
+quality_gate_numeric_cases=16
+performance_data_collected=false
+build_lock=/tmp/ozamx-perf.lock

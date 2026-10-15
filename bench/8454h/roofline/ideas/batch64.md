@@ -1,0 +1,9 @@
+# FP64 reconstruction batching candidate
+
+This candidate keeps each FP64 product kernel call and float microtile in the existing diagonal-major, then `ai`-major order. It stores `Batch` 32×32 FP32 microtiles in 64-byte-aligned scratch, then converts and adds them in that same order while loading and storing each double output block only once per batch. The final short batch is flushed at the budget boundary. `Batch=1` uses the frozen per-product reconstruction path as the control.
+
+The helper is `run_fp64_batch` in the patch. `accumulate64_batch` performs the ordered SIMD conversion/add chain. Eager mode still checks every microtile and every intermediate double sum; long-K late mode still checks the finished private block. FP32 accumulation and private result/C commit are unchanged.
+
+The traffic hypothesis is specific: current FP64 block traffic is 16 bytes per output per product (8-byte double read plus 8-byte double write). With batch size `B`, the block is loaded/stored once per group, reducing this part from `16pMN ceil(K/256)` to `16 ceil(p/B)MN ceil(K/256)` logical bytes per K256 chunk (partial tail included). BF16 microtile stores and their FP32 scratch reads remain per product. Scratch capacity grows by `4096B` bytes per worker: 8 KiB at Batch=2 and 16 KiB at Batch=4, alongside the existing double block. This is a traffic hypothesis; no performance win has been measured.
+
+`OZAMX_RECON_BATCH64` defaults to 1 and accepts 2, 3, 4, or 6 as candidates. The build passes it privately to both the library and native audit target. The isolated Batch=2 and Batch=4 builds passed the 47-case extended test with cache enabled/disabled and the 100-case frozen-baseline equivalence at 1/4/64 threads; every comparison was bitwise identical with zero guard failures. Exact library and source hashes are recorded in [batch64_gate.json](../batch64_gate.json). Performance testing remains unscheduled.

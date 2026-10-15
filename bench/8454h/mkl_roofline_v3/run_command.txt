@@ -1,0 +1,9 @@
+# Executed after root authorized /tmp/ozamx-roofline-production/libozamx.a
+bash bench/8454h/mkl_roofline_v3/run.sh /tmp/ozamx-roofline-production/libozamx.a 73f0764610072b05a3e50afb8ce312fe6b717c361efef7b94e52f20bde63b42c
+
+# Exact benchmark CLI used by run.sh:
+bench/8454h/mkl_roofline_v3/ozamx_benchmark \
+  --sizes 256,1024,4096,8192 --threads 64 --reps 5 --precision all \
+  --budgets 6,10,15,21 --seed 260904 --distribution uniform \
+  --checkpoint bench/8454h/mkl_roofline_v3/checkpoint_roofline_v3 \
+  --output bench/8454h/mkl_roofline_v3/full_roofline_v3.csv

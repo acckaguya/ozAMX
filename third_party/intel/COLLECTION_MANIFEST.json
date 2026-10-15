@@ -1,0 +1,456 @@
+{
+  "metadata": {
+    "source_manifests": 3,
+    "generated_utc": "2026-10-13",
+    "count": 89,
+    "totalbytes": 48716830,
+    "sourceentries": 59
+  },
+  "files": [
+    {
+      "path": "third_party/SOURCES.md",
+      "bytes": 7793,
+      "sha256": "a8372b584477b9332619965921309452fca466bf06212b9968258939a12484f8"
+    },
+    {
+      "path": "third_party/docs/amx-instruction-notes.md",
+      "bytes": 4315,
+      "sha256": "342b97bb264eece6cfffc2b8cf9c0857827b7ebe39cb76d485a72285fbea1524"
+    },
+    {
+      "path": "third_party/intel/8454H_STUDY.md",
+      "bytes": 8731,
+      "sha256": "ff5553d93def06227858599c9a64a34e1df42dc8a744629e6790fba52d475ba0"
+    },
+    {
+      "path": "third_party/intel/COLLECTION_CHECK.json",
+      "bytes": 998,
+      "sha256": "68bd3d5298bc2b4a0ebe987c5df0bef6f68a41e41c47be78a5390748bdb4f457"
+    },
+    {
+      "path": "third_party/intel/README.md",
+      "bytes": 3755,
+      "sha256": "db80a44b9f9d5396ddd8a17bb344678001622d4657315e16fb5026df11d7bfa1"
+    },
+    {
+      "path": "third_party/intel/SOURCES.md",
+      "bytes": 4441,
+      "sha256": "0c6b0afecdb9ac77c55ac5e8d85b889d4ca79619cbd4923569fb9b04db927623"
+    },
+    {
+      "path": "third_party/intel/examples/STUDY.md",
+      "bytes": 15492,
+      "sha256": "1ce32e61e70c609c1fda52d57412ca9dcaf3948f04f660c4e5d02edba8432c19"
+    },
+    {
+      "path": "third_party/intel/examples/amx_intrinsics/License.txt",
+      "bytes": 1058,
+      "sha256": "ff4861a545e771c44968a1e3c6acc55655a6b705755f1095c50c108797599813"
+    },
+    {
+      "path": "third_party/intel/examples/amx_intrinsics/README.upstream.md",
+      "bytes": 1754,
+      "sha256": "cf957ddafd1358ac5fcf0b41721bf22df3c63248b1ce97806af755a69e890289"
+    },
+    {
+      "path": "third_party/intel/examples/amx_intrinsics/test-amxtile.c",
+      "bytes": 3652,
+      "sha256": "d4096cd99c009d38ffb4698193f74af7bdd9eca835311abcdb6bf369446d3a41"
+    },
+    {
+      "path": "third_party/intel/examples/bf16_intrinsics/License.txt",
+      "bytes": 1058,
+      "sha256": "f6daf19323869eade005eb70649930f3d34f8e173da3d88e39a161786ad5169d"
+    },
+    {
+      "path": "third_party/intel/examples/bf16_intrinsics/bf16-example.zip",
+      "bytes": 1797,
+      "sha256": "7160be86a094cb171092c57a55bfc53c85c7402bf189007aad1a39f282b67112"
+    },
+    {
+      "path": "third_party/intel/examples/bf16_intrinsics/testBF16.cpp",
+      "bytes": 2769,
+      "sha256": "bd320a38d5f45a0843b2aebcf53428564f8d1320c699631d2d389a3f7c84e9c2"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/COPYING",
+      "bytes": 608,
+      "sha256": "30df103d5cf31a5917a450eb33a469a5f15b7f65fb00cd08d05c4138e2ffd53c"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/avx512_vector_dp.c",
+      "bytes": 1189,
+      "sha256": "9e4faaeaaaa2fa035d3c006dae833403757f55fa287600ba19e9aca0b4faab17"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/avx512_vector_dp.s",
+      "bytes": 4098,
+      "sha256": "487dddc4f46702078e1ebb4f3b4d843e6b779328c716404458cf27fd82b88306"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/scalar_vector_dp.c",
+      "bytes": 1125,
+      "sha256": "50ee63739b2a795991f32f76cfe681476d131544033c9fba47c220560ebc8c87"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/scalar_vector_dp.s",
+      "bytes": 1839,
+      "sha256": "ab48727cb699245f22bcaf400c681d8a9dc64a2512de063d7efb9523ff41cc55"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/transpose_avx512.c",
+      "bytes": 1162,
+      "sha256": "d2787d99be73a9da2dd780aa50b98d84e060fb52fa75e92ed40df9fd42cf3c38"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap18/transpose_avx512.s",
+      "bytes": 1875,
+      "sha256": "6912376d20408f9c062dd10efb05d60b5c517118daf77660633a45e0cd528920"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/amx_interleaved_gemm.hpp",
+      "bytes": 2183,
+      "sha256": "4459fbb3fd1e8907cdb1086c17cf4d354f97c7c02eb379a4e9a06fa368e7ae2a"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/amx_preload_gemm.hpp",
+      "bytes": 2212,
+      "sha256": "3805e53b6c9a3920dc1091719f38bde6ab3bc153764fff2f07fa878a131cde5f"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/amx_ref_gemm.hpp",
+      "bytes": 2140,
+      "sha256": "719d712f14b585f5559eab5e76417ca7155394ea9371cf46a76da1dcb0f7a1c2"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/bf16_conv.c",
+      "bytes": 1661,
+      "sha256": "590e2ca978c74d15539b7015d5c8c87460ce871367b5a8225e46c2ac26034b92"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/bf16_conv.h",
+      "bytes": 1090,
+      "sha256": "eadcc17d5a562feba9b83fa52848b88d358b61876dd6908648e1e20f54bae2a9"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/ex22_test.cpp",
+      "bytes": 1479,
+      "sha256": "fb6a64caba4bb27e695339792c2b2ea8799f93562b8b34a0c783b1bd0260f26a"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/ex24_test.cpp",
+      "bytes": 1582,
+      "sha256": "68cbbcb552587af8c46d6e4c0d912cd8c16b34bef170214588be66edad963fa5"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/ex4_test.cpp",
+      "bytes": 1093,
+      "sha256": "c78d43359fa0dbfe8c6e58f1057a8935b439ec05b97bba3031f55bd9507ede6a"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_flat_bf16_trans.asm",
+      "bytes": 4195,
+      "sha256": "64d6900b3c94be1fa23ab9d547b406a065cadac6e9a2c95807b3f5bb14a701cd"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_flat_bf16_trans.c",
+      "bytes": 1000,
+      "sha256": "6816aae61e5c93a6fcf0965969d005fb076b0c01f78bef3bfa78fad08b2d7be5"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_flat_bf16_trans.s",
+      "bytes": 4257,
+      "sha256": "54cde6e138bdb8abe0f03b819548a41b38463add269f1ceab0c675013095d1d1"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_vnni_bf16_trans.asm",
+      "bytes": 2616,
+      "sha256": "075cb2029211310cc07aac476942adff28a7d740637e5444d6d4af5005a7c57e"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_vnni_bf16_trans.c",
+      "bytes": 998,
+      "sha256": "003015545dd8ebd4b24e91db1c0fb79c9ce535d7843d86ac506720ecf866c41e"
+    },
+    {
+      "path": "third_party/intel/examples/intel_optimization_manual/chap20/flat_to_vnni_bf16_trans.s",
+      "bytes": 2690,
+      "sha256": "f30a8ff05ae084e2bc77e633832f97271e024ab2b37443118d56828e803f599f"
+    },
+    {
+      "path": "third_party/intel/examples/manifest.json",
+      "bytes": 23867,
+      "sha256": "fe1d29cd74a737cdd6a2018e6e4a81cd61ef578fdbc248b1803a3412ff8b5adc"
+    },
+    {
+      "path": "third_party/intel/examples/onednn_x64/LICENSE",
+      "bytes": 11607,
+      "sha256": "e9fc874fc09801b9acf3411ba72394098473704d832d713404b6c4861a086318"
+    },
+    {
+      "path": "third_party/intel/examples/onednn_x64/jit_avx512_core_amx_copy_kern.cpp",
+      "bytes": 16128,
+      "sha256": "9b578fd03a1ffd69eb2144fcc87bc1fd2fe009f142ca7d92415183f3af34d249"
+    },
+    {
+      "path": "third_party/intel/examples/onednn_x64/jit_avx512_core_amx_gemm_kern.cpp",
+      "bytes": 10925,
+      "sha256": "72d87f4fbd3fbdfe110b33fc3613b20bae6efa1da6654ac870a740e40903d2cb"
+    },
+    {
+      "path": "third_party/intel/examples/onednn_x64/jit_avx512_core_bf16cvt.hpp",
+      "bytes": 13990,
+      "sha256": "0ecc6e38551ba2ef65ec2135c2b86c9af23c026c0cc58a9b8f71772fe2e5bccc"
+    },
+    {
+      "path": "third_party/intel/examples/simd_blog/MandelbrotImage.cpp",
+      "bytes": 6664,
+      "sha256": "e579c6ad1a61cbdc161eca0ebee1821d39fc2c3dab5c09b154fd976bc8eb7462"
+    },
+    {
+      "path": "third_party/intel/examples/simd_blog/MatrixMultiplication.cpp",
+      "bytes": 4781,
+      "sha256": "c7d7891170e9d81c46f73c57b895437b6a245e62f48f8bceb06dcd614ae90d33"
+    },
+    {
+      "path": "third_party/intel/examples/simd_blog/README.upstream.md",
+      "bytes": 548,
+      "sha256": "16c683ab81c3108fc5dfac81a91e24bfb7f52133ccdffd4ace4ac1e71c270b8e"
+    },
+    {
+      "path": "third_party/intel/examples/snapshots/intel-amx-intrinsics-sample.html",
+      "bytes": 140338,
+      "sha256": "8e55491ad6660850d0cc97dbb2eaef1ea0f146755ca56c4d34c77e3dd51420de"
+    },
+    {
+      "path": "third_party/intel/examples/snapshots/intel-avx512-blog.html",
+      "bytes": 151427,
+      "sha256": "4609f9aa1eb1f09e7b21aed006faf2cfde96cdb2ee007e6c076885d4e637a6cc"
+    },
+    {
+      "path": "third_party/intel/examples/snapshots/intel-bf16-instruction-example.html",
+      "bytes": 137453,
+      "sha256": "c0a4e01f87bfc3e05e5a59eb3baf67b446159e1d54017038f669b072c4f86c95"
+    },
+    {
+      "path": "third_party/intel/examples/snapshots/intel-simd-tuning.html",
+      "bytes": 134433,
+      "sha256": "a3768787df4188b0f9076db33d7ba929c2e4b07f49cd8079f65c04f350d263b8"
+    },
+    {
+      "path": "third_party/intel/examples/snapshots/sapphire-rapids-overview.html",
+      "bytes": 179330,
+      "sha256": "ade5c3b5f0d1ce90dc9df8fc432f3f8bdd2b745338d3d924a1abb7c336647b25"
+    },
+    {
+      "path": "third_party/intel/manuals/manifest.json",
+      "bytes": 9380,
+      "sha256": "4b6f844dc37f4e0b2ab001a0005b639796e5abd2937f900348c71ae292b457d6"
+    },
+    {
+      "path": "third_party/intel/manuals/optimization-reference-manual-v1-050.pdf",
+      "bytes": 14832354,
+      "sha256": "4da42303a8d82a0b4e4ffebfdb669d6b57d85a038887421339e25ca37b67d61b"
+    },
+    {
+      "path": "third_party/intel/manuals/sdm-vol1-v093.pdf",
+      "bytes": 3656572,
+      "sha256": "f6ffc430dfa2dada4f791b1ecb462810e59827befe9a9c23f9160941eea642f9"
+    },
+    {
+      "path": "third_party/intel/manuals/sdm-vol2b-v093.pdf",
+      "bytes": 6915682,
+      "sha256": "a261998ace8e07f624bf3e2486bb6cfe950fb8be8d0dc9631bcecb4c5ec953e4"
+    },
+    {
+      "path": "third_party/intel/manuals/sdm-vol2c-v093.pdf",
+      "bytes": 3298721,
+      "sha256": "86651d693340a6fedb9851e459945eafbab83a877d4bbe2e4575fcfdb531bb68"
+    },
+    {
+      "path": "third_party/intel/simd/STUDY.md",
+      "bytes": 19344,
+      "sha256": "711dd04ff20fece07f0417e2e19056a77b024a7f685b792d3ad77c096a5f3870"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline.zip",
+      "bytes": 379338,
+      "sha256": "4de3a0c59a944f153f6dc47cfb2d0e455ef16e54a8878f8882db82237947f5e7"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/data.js",
+      "bytes": 7438486,
+      "sha256": "67307df98241728ff14ea2ad4102a3316b4674d7e4629a7293e39952eec59d69"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/favicon.ico",
+      "bytes": 32988,
+      "sha256": "756a5449b61f75b435e93dcf664bfbb85cd10df000aa271217d7abce835d3386"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/intrinsicsguide.min.js",
+      "bytes": 26561,
+      "sha256": "2ab85a3098d1540fb3cb3ad8f221f6f12a51d195dfe09c8edf66ba1f35f938a8"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/jquery-1.10.2.min.js",
+      "bytes": 93107,
+      "sha256": "0ba081f546084bd5097aa8a73c75931d5aa1fc4d6e846e53c21f98e6a1509988"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/notes.json",
+      "bytes": 4365,
+      "sha256": "169cbe7587ad2ed8fe6aeaa4886c8bdb1f085bd0c454d334e78823865684edb3"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/notices-and-disclaimers.html",
+      "bytes": 2011,
+      "sha256": "3603d70449a544a3ac7e36a0ca0ad2a2d5342987cbbe75e53586990a28d6ce0c"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/perf2.js",
+      "bytes": 445229,
+      "sha256": "b306e94d917ea16ee23f0a398239d6dff2b2bd82846557d9701bb04a2268410d"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/release-notes.html",
+      "bytes": 33999,
+      "sha256": "9d37c243e0596270c064d3facb7fbe17bf3fc8d58bb4e8805209b0c096eba566"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/search-icon.png",
+      "bytes": 1534,
+      "sha256": "bda5b125296dd15645f1872a3257444a2e52dd25a4770244393f32c92cdc4fb0"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/style-offline.min.css",
+      "bytes": 483,
+      "sha256": "306e63ca773d1da8656aa5414b8cee967e7baa7fe268d22bf645d966be110065"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/style.min.css",
+      "bytes": 3711,
+      "sha256": "618ba26a0fa28a26bd226a65a5903ff51298db298394c2f70e01d74f45b3b36e"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/files/x.png",
+      "bytes": 1717,
+      "sha256": "04a4eeb51ae509066c1a48969487107bf87f0afd84896f6c95af68129d7ff63c"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide-offline/Intel Intrinsics Guide/index.html",
+      "bytes": 8672,
+      "sha256": "3255aee39c5dcac99c302afb9366377ee6eed03dabbe7eff936ebb4603c07394"
+    },
+    {
+      "path": "third_party/intel/simd/intrinsics-guide.html",
+      "bytes": 115456,
+      "sha256": "149d216d63e88608590e1e30d82ff5f666283a9b5d02d76c6cffd0978ee5c9d7"
+    },
+    {
+      "path": "third_party/intel/simd/linux-xstate/COPYING.v6.12",
+      "bytes": 496,
+      "sha256": "fb5a425bd3b3cd6071a3a9aff9909a859e7c1158d54d32e07658398cd67eb6a0"
+    },
+    {
+      "path": "third_party/intel/simd/linux-xstate/license-rules-v6.12.rst",
+      "bytes": 18024,
+      "sha256": "eabaa82f704625a0be40f248f0888b236d320121a951ce6880099d5491b5e0ec"
+    },
+    {
+      "path": "third_party/intel/simd/linux-xstate/xstate-latest.html",
+      "bytes": 22182,
+      "sha256": "7f23b01b92029216a099d48f56ec47f707319c363b4a89fb7f3e4e48e607e9f2"
+    },
+    {
+      "path": "third_party/intel/simd/linux-xstate/xstate-v6.12.rst",
+      "bytes": 6635,
+      "sha256": "128dda5bd8d1cabf6f10c947c304e14569e72a06806e3175e6336f7d2b01af50"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/STUDY.md",
+      "bytes": 12718,
+      "sha256": "c9e188a559081c247f1d4162ed5e83bf051cfa285d89e8063afea0aa30066f85"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/local-probes/README.md",
+      "bytes": 1976,
+      "sha256": "a3cc0acec98748507d0a4560228f10ec592c7f15c5192518ad6afa10c121a97c"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/local-probes/amx_exec_probe.c",
+      "bytes": 634,
+      "sha256": "53b4145f20e1b05dc4e4e6926b7e9fd187484bff7a85135cbf0e5d93efc9d619"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/local-probes/amx_perm_probe.c",
+      "bytes": 697,
+      "sha256": "0c23c9ef37d053f508d461451f4b38067c145d8b85ccebf5754018bb94f14234"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/local-probes/amx_thread_probe.c",
+      "bytes": 1448,
+      "sha256": "005afdd1ef54c37cd20ced85e38845aae37c39182efd520d143820d797c13af4"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/local-probes/xstate_probe.c",
+      "bytes": 1356,
+      "sha256": "0ac712fc9bcd15f973658cf2be828695db6ce5b8d5f9a2babfbaa8fb154743f6"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/snapshot.json",
+      "bytes": 16514,
+      "sha256": "37d724b9363d600c7ef827133e33d704566dc982ebed6f554be645809b122184"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/hardware-snapshot/snapshot.txt",
+      "bytes": 11924,
+      "sha256": "9b92b81b1b9b96e83467bfb456f909e14e87f33050610e96573047ed2266b480"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/manifest.json",
+      "bytes": 11962,
+      "sha256": "b27afd4f2e442cc5d9aa50255ec877a48e037ea3a1c221a8774b3718a85449c1"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/pdfs/4th-gen-xeon-product-brief.pdf",
+      "bytes": 635468,
+      "sha256": "6210bc9050e668ab7024eb828c0dbd04bb53ccecac3e7d4f1c5446d4d47d7c37"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/pdfs/intel-architecture-instruction-set-extensions-programming-reference-dec24.pdf",
+      "bytes": 8138628,
+      "sha256": "bbffe2b3bc6129cd9131a7c4981ab0c4b34fbc89a3032be0c7f822736f4b1bad"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/pdfs/intel-avx512-fp16-technology-guide.pdf",
+      "bytes": 518627,
+      "sha256": "c9690ceb4995b9cbf44d447f8fe3d471ef422645428e1c731e917875c126eaae"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/source-html/4th-gen-family-overview.html",
+      "bytes": 179330,
+      "sha256": "ade5c3b5f0d1ce90dc9df8fc432f3f8bdd2b745338d3d924a1abb7c336647b25"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/source-html/ai-tuning-4th-gen.html",
+      "bytes": 190784,
+      "sha256": "ad401a2ca79ed056673101c3f26bf0b2cd2802c3b465d163349ef3d971e7be89"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/source-html/ark-8454h.html",
+      "bytes": 265544,
+      "sha256": "6976aa916a1cd4eac7a7abbb1828f4b00df04eb4631ef315884e1b2ff543f237"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/source-html/ark-gold6430.html",
+      "bytes": 263750,
+      "sha256": "aa0328498182c02d3ceecfa54290adb0c289dbcf48a5cb2136b3f00af15f531c"
+    },
+    {
+      "path": "third_party/intel/xeon-8454h/source-html/media-tuning-4th-gen.html",
+      "bytes": 168227,
+      "sha256": "510e28207b12ef6b72cec7bb61e03fd4a1887fd03da8344c4914c32c3d74df05"
+    }
+  ]
+}

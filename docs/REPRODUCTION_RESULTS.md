@@ -1,5 +1,7 @@
 # ozAMX 论文复现实验结果
 
+本文及其 CSV、checkpoint、图表记录优化前 Gold 6430 上的历史论文复现实验。2026-10-13 的 Platinum 8454H 优化采用独立测量和输出目录，结果见 [8454H_PERFORMANCE_BASELINE.md](8454H_PERFORMANCE_BASELINE.md)；本文结果未由新版内核重新测量。
+
 ## 结论与复现边界
 
 本仓库完成了《BF16 Component-Product Emulation of FP32 and FP64 GEMM on Intel AMX》的独立实现、真实 Intel AMX 执行验证和已计划实验配置。正式主 campaign 覆盖 Table 4 所有 8 个矩阵阶数 × 5 种变体（40/40），每个配置执行 1 次 warm-up 和 10 次 timed repetitions；另外完成 FP32 线程伸缩 18/18 配置，以及 raw oneMKL BF16 headroom 8/8 阶。逐次时间、BLAS/reference 指标、产品次序、MKL元数据保存在原始 CSV 与 checkpoint 中。

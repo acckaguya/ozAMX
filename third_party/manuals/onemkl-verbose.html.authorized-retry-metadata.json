@@ -1,0 +1,10 @@
+{
+  "requested_url": "https://www.intel.com/content/www/us/en/developer/articles/technical/verbose-mode-supported-in-onemkl-112.html",
+  "retrieved_utc": "2026-10-14T13:04:38.910593+00:00",
+  "attempt": "authorized_network_retry",
+  "status": "downloaded",
+  "curl_exit_code": 0,
+  "file": "third_party/manuals/onemkl-verbose.html",
+  "bytes": 137299,
+  "sha256": "b9af96c5c0106c526d1933ca71a02e062f497622b938402578004dfb3ca9fcb2"
+}

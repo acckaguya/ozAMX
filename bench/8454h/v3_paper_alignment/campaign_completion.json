@@ -1,0 +1,21 @@
+{
+  "source_id": "v3-paper-alignment-20261014",
+  "campaign_end_utc": "2026-10-14T09:14:09Z",
+  "hardware_watcher_end_utc": "2026-10-14T09:14:11Z",
+  "expected_configs": 66,
+  "completed_configs": 66,
+  "failed_configs": 0,
+  "validation": {
+    "all_result_csv_rows_status_ok": true,
+    "timed_samples_per_benchmark_config": 10,
+    "timed_samples_per_raw_bf16_config": 10,
+    "all_checkpoints_source_id_match": true,
+    "all_checkpoints_complete": true,
+    "all_checkpoints_completed_repetitions": 10,
+    "manifest": "per_config_manifest.json",
+    "manifest_config_count": 66,
+    "hardware_campaign_end_snapshot": "hardware_samples/20261014T091411.272866107UTC_campaign_end_complete.txt"
+  },
+  "runner_history": "The first runner completed all 40 main configurations, then exited rc=127 due to a shell-script edit/read race before scaling began. Its log and completed data are retained. The corrected runner verified each completed checkpoint and result before skipping those 40 configurations, then completed all 18 scaling and 8 raw BF16 configurations. No V3 library or core source was changed.",
+  "performance_context": "Shared host, nonexclusive CPU access; Ubuntu/GCC 11.4/GNU OpenMP and oneMKL 2026.1 GNU threading. Results are not compiler/OpenMP-identical to the paper's Intel environment."
+}

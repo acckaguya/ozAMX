@@ -1,0 +1,455 @@
+{
+  "experiments": {
+    "bounded_commit_late64_combo": {
+      "csv_directory": "bench/8454h/search/bounded_commit",
+      "isolated_source_tree": "/tmp/ozamx-bounded-late",
+      "notes": "Candidate combines bounded commit and late64. Do not treat in-progress CSVs as final production data until root confirms completion; no source files modified.",
+      "status": "gate_and_alias_overflow_proof_reported_passed; four-pass 7-rep confirmation underway / awaiting final root decision"
+    },
+    "direct_pack": {
+      "benchmark_executable_sha256": "71ac343747a90049e863f01be5c65d93454120d87b9d9303e1bb4316c97e4f19",
+      "candidate_csv": {
+        "path": "bench/8454h/search/direct_pack/fused.csv",
+        "sha256": "960cfd42806a6dfd894a04df4ab1afb3701bf09d0f81eb80bf20cf974ad18fbd"
+      },
+      "candidate_probe_binary_sha256": "fdac58adab2ad2d27879672b0df54bcf97a435611ef548e5592ccf3bdb31595a",
+      "control_csvs": {
+        "bench/8454h/search/direct_pack/default_after.csv": "a416822dd2a7cd8f22f5aba71b1352e4bb1ef325593cf4096a15b58ef9a0e766",
+        "bench/8454h/search/direct_pack/default_before.csv": "2a3f90a756aa698a507ce3897c12b071c67ed5a39376570d1b34c1362157f503"
+      },
+      "isolated_source_tree": "/tmp/ozamx-directpack",
+      "patch_path": "bench/8454h/search/ideas/direct_pack.patch",
+      "patch_sha256": "07e836ab8e1eb224e721a8f43d4c565c655da55d4ffd3716e8150126d2aaa92b",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-directpack/build/ozamx_optimization_benchmark --sizes 1024,4096,8192 --precision all --budgets 6,10,15,21 --threads 64 --reps 5 --output <candidate-or-control.csv>",
+      "reps": 5,
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "bb503da866d73e5d1eae6ca1cf2bb828c202d3482a557ae956545e0b34d29200",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "5e20d094d36330c7868d9f3523e8e0623ddaa3c4cb578cd85b85c54a77e28455",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "7005a3b04a4b3ed5dee8db9338d83176a6e3c361deaf344608a54c8d7f8b7bfe",
+      "status": "measured_ctest_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "checksum_repeatability": "checked per config in CSV",
+        "ctest": "passed",
+        "equivalence_gate": "no separately archived result was found during this read-only review"
+      },
+      "validation_range": {
+        "checksum_repeatability": "checked per config in CSV",
+        "ctest": "passed",
+        "equivalence_gate": "no separately archived result was found during this read-only review"
+      }
+    },
+    "fp32_direct": {
+      "benchmark_executable_sha256": "e4fcc94b112e722286cf4831c1bd5321eb3c40580b67727ac6497fc557a838f0",
+      "candidate_csv": {
+        "path": "bench/8454h/search/fp32_direct/fused.csv",
+        "sha256": "656d4b7e50d51db2c875fee482616f630dd3a2da06a7b3279f12627b7825a2a7"
+      },
+      "candidate_probe_binary_sha256": "5fb6a4b2f8b8e17fc98ed93fedf1c8fdd3f25341e34cbcebba81b4ddf29ad64c",
+      "change_note": "Direct FP32 splitting of three panel components into packed panels; SIMD B loads use masked interleaving. Performance CSV archived; no claim of adoption.",
+      "control_csvs": {
+        "bench/8454h/search/fp32_direct/default_after.csv": "51aebc63ed4d42379291ded86492ba7ce6a843675c03069719ce8762c048342b",
+        "bench/8454h/search/fp32_direct/default_before.csv": "3ad48326579607c024d4ead51cf87dd14ea18ff71747ffb29c9329644c7b7554"
+      },
+      "isolated_source_tree": "/tmp/ozamx-fp32-direct",
+      "patch_path": "bench/8454h/search/ideas/fp32_direct.patch",
+      "patch_sha256": "792e26351d35ec9ffcdaa5e6a7109229f5593458e5d9eb2503a515d4d042b2ed",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-fp32-direct/build/ozamx_optimization_benchmark --sizes <CSV sizes> --precision all --budgets 6,10,15,21 --threads 64 --reps <CSV reps> --output <candidate-or-control.csv>",
+      "reps": 7,
+      "sizes": [
+        256,
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "9055f7f2dccda600f084cf8ec0e7f7ee791f632145cba65a822d2396949391f3",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "a17dda31b6298dfdec1d3a75dfbdae7aa5b81c5d3889f8aff2ee8464dd293b98",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "9cf077d7d6c0f386b4e72eb9e0e2378aa45e3e5bcd5b82e5523fc1f6e4890222",
+      "status": "measured_correctness_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "ctest": "passed",
+        "evidence_file": "bench/8454h/search/ideas/fp32_direct_gate_summary.json",
+        "evidence_source": "root-reported gate tool stdout; stdout not separately archived",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "mismatches": 0
+      }
+    },
+    "fused_max": {
+      "benchmark_executable_sha256": "6c78695de0d16b540ed75cb5886dcabd9a05ffc27c541ac4d02dcc4d38299f3c",
+      "candidate_csv": {
+        "path": "bench/8454h/search/fused_max/fused.csv",
+        "sha256": "d662c90dfbae73ea94abff7d3ce096aa5246eba7b89ede93f638cee2e7a1c0dd"
+      },
+      "candidate_probe_binary_sha256": "14b417dd86bcca2af646d2084185d80c4e7de576bf71a2d18589bbc34bfe03c2",
+      "control_csvs": {
+        "bench/8454h/search/fused_max/default_after.csv": "50d9379f7de1b11ad3d8c298a442d7ad911fb8479a9ffc4c732bc1c560131b3e",
+        "bench/8454h/search/fused_max/default_before.csv": "27fa0a60043dcf1b62d5a7550d595c1f396b575bd8811abaa9493c0ab3c121e4"
+      },
+      "followup": "Four alternating packed-residual/fused-max runs, 7 reps, budgets 6 and 21, queued.",
+      "isolated_source_tree": "/tmp/ozamx-fused-max",
+      "patch_path": "bench/8454h/search/ideas/fused_max.patch",
+      "patch_sha256": "82d9cf8466f51786af24eada61e5c3c37b28e603ccdb8b99a22fca8b9179cf62",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-fused-max/build/ozamx_optimization_benchmark --sizes <CSV sizes> --precision all --budgets 6,10,15,21 --threads 64 --reps <CSV reps> --output <candidate-or-control.csv>",
+      "reps": 5,
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "bb503da866d73e5d1eae6ca1cf2bb828c202d3482a557ae956545e0b34d29200",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "d4d3da05612fc35ceb2c1193713dae780946ad419ec08337e9449084c0da7773",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "36619c12279aaaa74762524fce9609d345c9e0e1d52a7816d2820a0d22ff002d",
+      "status": "measured_correctness_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "comparison_note": "Packed-residual and fused-max are within measured noise; four alternating 7-rep checks are queued.",
+        "ctest": "passed (per root report)",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "source": "root completion message; no independent rerun"
+      }
+    },
+    "late_nonfinite": {
+      "benchmark_executable_sha256": "675296105761b3b71940544f0b747af7fa123ea86165b24f5b7c659183123437",
+      "candidate_csv": {
+        "path": "bench/8454h/search/late_check/late.csv",
+        "sha256": "f505b9c3b9425e47806ce913866b4bc5bcd6134f6b2a4ed8b162a2ea56905d27"
+      },
+      "candidate_probe_binary_sha256": "c559e0319aae959e3c24aadb7957b79dc21f60075f46ab7e422da5b3b95d727b",
+      "control_csvs": {
+        "bench/8454h/search/late_check/eager_after.csv": "86bbebeb24d16f3fdbbe4dc510f2b5d5b6235a23a4f2d9f653560b035364e5c9",
+        "bench/8454h/search/late_check/eager_before.csv": "1baf973be020bc619af1a11b2d2c2064aeddadc526df8be4472cf76f7627d20e"
+      },
+      "isolated_source_tree": "/tmp/ozamx-late-check",
+      "patch_path": "bench/8454h/search/ideas/late_nonfinite.patch",
+      "patch_sha256": "300bddf4f0cf7023cb3261511f8f13cb1543b70083323d07e5f41a54f6fb085b",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-late-check/build/ozamx_optimization_benchmark --sizes 256,1024,4096 --precision all --budgets 6,10,15,21 --threads 64 --reps 7 --output <candidate-or-control.csv>",
+      "reps": 7,
+      "sizes": [
+        256,
+        1024,
+        4096
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "603c140da6050e8d8e5ce7279e48c8523051133b8f942a42f765a82e189d867e",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "4a0321d4d34e9beb111d1af5c71a001dfd45a5a74e304318f17e42f0a589c4a6",
+      "status": "measured_correctness_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "ctest": "passed",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "native_component_stores_bitwise": 147456,
+        "native_reconstruction_outputs_bitwise": 730,
+        "overflow_rejection_C_unchanged": 4
+      },
+      "validation_range": {
+        "ctest": "passed",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "native_component_stores_bitwise": 147456,
+        "native_reconstruction_outputs_bitwise": 730,
+        "overflow_rejection_C_unchanged": 4
+      }
+    },
+    "packed_residual": {
+      "benchmark_executable_sha256": "aedfccfb89eac4e415efc4f2529219d1a9c69aa0ab7f4cbe3f948886dd9d7640",
+      "candidate_csv": {
+        "path": "bench/8454h/search/packed_residual/fused.csv",
+        "sha256": "d3c9bf6f23e60203e5b1462312b8232a7c7c30f51f1af07b4eefc57559c2b0f1"
+      },
+      "candidate_probe_binary_sha256": "b03f7f4d3df414b797e598067d11d5d829915139a2c7e0139a5b51a9cd9c5d9a",
+      "control_csvs": {
+        "bench/8454h/search/packed_residual/default_after.csv": "f89cdd5e470a3c9770bac0d166edb1717f2496c8b86d49c81a663312462026f9",
+        "bench/8454h/search/packed_residual/default_before.csv": "802d598ff558da569c791e9bfc50b02f13a46c184c3c7dcbcf22082c970c7610"
+      },
+      "isolated_source_tree": "/tmp/ozamx-packed-residual",
+      "patch_path": "bench/8454h/search/ideas/packed_residual.patch",
+      "patch_sha256": "11592f04e1886ef33c1c7142c68401818588c815432a8d0177c29232275aaee3",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-packed-residual/build/ozamx_optimization_benchmark --sizes 1024,4096,8192 --precision all --budgets 6,10,15,21 --threads 64 --reps 5 --output <candidate-or-control.csv>",
+      "reps": 5,
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "bb503da866d73e5d1eae6ca1cf2bb828c202d3482a557ae956545e0b34d29200",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "a66d6a9c302f1dc26b32bfdbb95e2e70b79b86195a271317dc4b0a3721e6ecdc",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "42f4d9e39fe5f2ca7df90135a45b1aacb107b82fe9763a683ea7f18f3469cdbf",
+      "status": "measured_correctness_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "ctest": "passed",
+        "evidence": "root-confirmed completion update",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100
+      },
+      "validation_range": {
+        "ctest": "passed",
+        "evidence": "root-confirmed completion update",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100
+      }
+    },
+    "pending_pipeline": {
+      "benchmark_executable_sha256": "c87913cf04410dfad536def29e3e2791cc8c9eac9d319c65ee1ca2354716e6f1",
+      "candidate_csv": {
+        "path": "bench/8454h/search/pending_pipeline/pending.csv",
+        "sha256": "da6b5bcf1c66c4fbbafd2e5161ad6c34719e9b66bb0b8507f00ea648b3c8caca"
+      },
+      "candidate_probe_binary_sha256": "dfb883fa4a4450fb261be4246964ca3cee4bf9258a0de315e5dc3620c20eb072",
+      "control_csvs": {
+        "bench/8454h/search/pending_pipeline/late_after.csv": "e43af958f394445f53c25dd9fc4d009deed8dc50c78cce9933d9c77874d9991e",
+        "bench/8454h/search/pending_pipeline/late_before.csv": "c0a33c24ec0790b210e9060cc72f544341c7cb62be4e3a564c6e7510d13b15f1"
+      },
+      "isolated_source_tree": "/tmp/ozamx-pipelined",
+      "patch_path": "bench/8454h/search/ideas/pending_pipeline.patch",
+      "patch_sha256": "126cd15cb13445fd161e5c04600208769d95645a73fe11a51b87f65acc79f3ab",
+      "reconstructed_benchmark_command": "OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE OZAMX_WORKSPACE_CACHE_BYTES=1073741824 taskset -c 0-63 /tmp/ozamx-pipelined/build/ozamx_optimization_benchmark --sizes 1024,4096,8192 --precision all --budgets 6,10,15,21 --threads 64 --reps 5 --output <candidate-or-control.csv>",
+      "reps": 5,
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "42b1d55fb20a6dce979704ac6b700a597c7322c693003b6a2df5096a64a7a825",
+        "src/kernels.S": "c556a00169bbb5632fe30fb64b89b09287d3cccf6d418344a760e95e9558911b",
+        "src/preprocess.hpp": "c420002405b6e96f5536080019b0f261b246f74118d556dee565482842636f94",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "e4e6835fba650cfb1f1213bfd5fa3e3729b54e781023dc69e8a16f0099f21859",
+      "status": "measured_correctness_passed_performance_under_review",
+      "thread_count": 64,
+      "validation": {
+        "ctest": "passed",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "native_component_stores_bitwise": 147456,
+        "native_reconstruction_outputs_bitwise": 730,
+        "overflow_rejection_C_unchanged": 4
+      },
+      "validation_range": {
+        "ctest": "passed",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "native_component_stores_bitwise": 147456,
+        "native_reconstruction_outputs_bitwise": 730,
+        "overflow_rejection_C_unchanged": 4
+      }
+    },
+    "thread_sweep": {
+      "benchmark_executable_sha256": "8324c3f5d6bc066b0ea2954a17cd026a30e421e23f6e14d2420a89fdc3242997",
+      "command": "bash bench/8454h/search/thread_sweep/run.sh <default benchmark path>",
+      "runs": [
+        {
+          "csv": "thread_sweep/pass0_t64.csv",
+          "csv_sha256": "f9f8ccbc31830071b1b81f872c41c569d161421ee30495f995ac73546ed526ef",
+          "pass": "64_pass0",
+          "threads": 64
+        },
+        {
+          "csv": "thread_sweep/pass1_t32.csv",
+          "csv_sha256": "c9d1a87e2057ccb6648b8940f0277863eb92f05819b71514835868411db1254d",
+          "pass": "32_pass1",
+          "threads": 32
+        },
+        {
+          "csv": "thread_sweep/pass2_t16.csv",
+          "csv_sha256": "36e006b3c6a1091f1e3a970275edf9511214a75fcfdf7d6ab2f88d9dea43db00",
+          "pass": "16_pass2",
+          "threads": 16
+        },
+        {
+          "csv": "thread_sweep/pass3_t32.csv",
+          "csv_sha256": "4e26c0eab024a259408ce3f8198782a152f6bc94f721aae4fbc49965e6b29dd7",
+          "pass": "32_pass3",
+          "threads": 32
+        },
+        {
+          "csv": "thread_sweep/pass4_t64.csv",
+          "csv_sha256": "0e275c2cf65e9cc50ba4b83068d1e1f46cce60dedcc39d74a5e6ab7dc4e9b0ce",
+          "pass": "64_pass4",
+          "threads": 64
+        }
+      ],
+      "source_sha256": {},
+      "source_tree": "/tmp/ozamx-search-default",
+      "status": "measured_thread_count_sweep",
+      "validation_range": "same validated default binary; no source change in thread sweep"
+    },
+    "v2_late64": {
+      "benchmark_executable_sha256": "3f95381a02bdd5ccb84af5fee9da46c0adde04627c8f25365428fb396bbc930b",
+      "budgets": [
+        6,
+        10,
+        15,
+        21
+      ],
+      "candidate_csv": {
+        "path": "bench/8454h/search/v2_late64/late64.csv",
+        "sha256": "4f0741f44929b5dd4b2822a68135e8991dfbe3293db331144b95d729f5e9de6d"
+      },
+      "candidate_probe_binary_sha256": "3fe4db8599d1115d5280c1d56e1fb45d68c3dfd79def3c98f54e41787c5573b3",
+      "change_note": "FP32 remains eager. FP64 defers component/each-accumulation non-finite checks to final block scan; no production source modified.",
+      "confirmation_comparison_json": "bench/8454h/search/v2_late64_confirm/comparison.json",
+      "confirmation_csv_directory": "bench/8454h/search/v2_late64_confirm",
+      "confirmation_findings": {
+        "fp64_n4096_p21_eager_pass_wall_medians_ms": [
+          96.2,
+          93.9
+        ],
+        "fp64_n4096_p21_late64_pass_wall_medians_ms": [
+          89.3,
+          89.8
+        ],
+        "fp64_n8192_p21_eager_pass_wall_medians_ms": [
+          754,
+          763
+        ],
+        "fp64_n8192_p21_late64_pass_wall_medians_ms": [
+          681,
+          654
+        ],
+        "n1024": "mixed across passes"
+      },
+      "confirmation_passes": 4,
+      "confirmation_repetitions_pooled_per_config": 14,
+      "confirmation_reps_per_pass": 7,
+      "control_csvs": {
+        "bench/8454h/search/v2_late64/eager_after.csv": "ffbabe610aed36cf73892eb8b7dea30978c2e73e69ceea128ae2f5a46810dcf0",
+        "bench/8454h/search/v2_late64/eager_before.csv": "1e0b6945917d537e11e253de57fc15b0dfdf339268a3402f53a25a740954d951"
+      },
+      "deployment_scope_proposal": "FP64 K >= 4096 uses late64; lower K remains eager; source-level template specialization required, pending bounded_commit+late64 combination gate/performance decision",
+      "isolated_source_tree": "/tmp/ozamx-v2-late64",
+      "overflow_probe_binary_sha256": "30a5ab1a54ccad76b5d6647cdd8144cfb0d23e4380e021d53b978407de4aa236",
+      "patch_path": "bench/8454h/search/ideas/v2_late64.patch",
+      "patch_sha256": "245b9cdfb0cf3598c7689bb9d5b487a156ee73082cdbc67108ab9d135fb823c4",
+      "precision": "fp64",
+      "reps": 7,
+      "sizes": [
+        1024,
+        4096,
+        8192
+      ],
+      "source_sha256": {
+        "CMakeLists.txt": "fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388",
+        "bench/optimization_benchmark.cpp": "54ca1dea3c988d41cf012191bbaea6e51d39a09020c6b5f14829d7e37b788d05",
+        "include/ozamx/gemm.hpp": "0430c3df107909436d7abf6afa037bfcc6ced94689660a8929fe9e00640241b5",
+        "src/gemm.cpp": "4b671c39e228e2285d2e96df6091453eb24ec69c765d74c4346b8fa7e9de2083",
+        "src/kernels.S": "671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62",
+        "src/preprocess.hpp": "74f8a0f2c650b52282ed6af4461e641cc0c3735a600a076fd87fcfedf1b803e5",
+        "src/runtime.cpp": "63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774",
+        "src/tuning.hpp": "f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071",
+        "tests/validation.cpp": "059450a04960c12dc78b17d63ce270d41f24215f8d0aa53f426daef5bea5e264"
+      },
+      "static_library_sha256": "a60d17edee48d7f0cceda9c2987bbb421ce223751f6b9e588a3265a4d4096f90",
+      "status": "four_pass_confirmation_complete_bounded_commit_combo_pending",
+      "thread_count": 64,
+      "validation": {
+        "bitwise_mismatches": 0,
+        "ctest": "passed",
+        "frozen_v1_c_slots_bitwise": 2322780,
+        "frozen_v1_cases_bitwise": 100,
+        "overflow_and_cancellation_probes": 4
+      },
+      "validation_evidence": "bench/8454h/search/ideas/v2_late64_gate_summary.json",
+      "validation_script_sha256": "374c619a7af7362cd767545d5ea9f6542aca2e4317bb4d8db2211c35bc91e02d"
+    },
+    "v2_workspace_cache_sweep": {
+      "candidate": "/tmp/ozamx-v2-candidate",
+      "cap_repetition_counts": {
+        "1073741824": 2,
+        "2147483648": 2,
+        "4294967296": 1
+      },
+      "comparison_json": "bench/8454h/search/v2_cache/comparison.json",
+      "csv_directory": "bench/8454h/search/v2_cache",
+      "note": "The 4 GiB cap has one pass only; root proposes 2 GiB default pending final choice.",
+      "pass_order_bytes": [
+        1073741824,
+        2147483648,
+        4294967296,
+        2147483648,
+        1073741824
+      ],
+      "status": "measured_five_pass_7rep_sweep"
+    }
+  },
+  "measurement_protocol": {
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "per experiment command",
+    "OMP_PLACES": "cores",
+    "OMP_PROC_BIND": "close",
+    "OZAMX_WORKSPACE_CACHE_BYTES": "1073741824",
+    "command_status": "reconstructed from archived CSV dimensions, thread_sweep/run.sh, and isolated build artifacts; exact per-file command lines were not archived for the custom candidate runs",
+    "compiler": "GCC 11.4.0",
+    "cpu_set": "0-63",
+    "fault_fields": [
+      "minor_faults",
+      "major_faults"
+    ],
+    "lock": "flock -x /tmp/ozamx-perf.lock",
+    "phase_total_field": "total_s",
+    "wall_field": "wall_s",
+    "warmup_rows_excluded_from_steady_medians": true
+  },
+  "schema": "ozamx-kernel-idea-experiments-v1",
+  "study_fingerprint": "c0eafaa4c07f9445406dea2d62abc81d982da40aeae5b34f26c2ea1f4dbc0663"
+}
