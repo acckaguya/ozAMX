@@ -1,5 +1,17 @@
 # Local build and compiler products
 /build/
+**/build/
+**/builds/
+**/build_*/
+**/build-*/
+**/CMakeFiles/
+*.o
+*.o.d
+*.a
+*.so
+*.so.*
+*.dylib
+*.exe
 **/__pycache__/
 *.py[cod]
 *.tmp
@@ -8,6 +20,29 @@
 /bench/campaign.lock
 /bench/campaign_logs/
 /bench/pilot*.csv
+
+# Frozen research packages stay on disk; sources, runners and raw evidence in
+# bench/8454h remain versioned outside this directory.
+/bench/8454h/versions/
+/bench/8454h/local_cleanup/
+/bench/8454h/**/*.pid
+/bench/8454h/**/*.lock
+**/runner.pid
+**/runner.lock
+
+# Generated benchmark/gate executables without a filename extension.
+/bench/8454h/**/candidate
+/bench/8454h/**/v3
+/bench/8454h/**/child_candidate
+/bench/8454h/**/child_control
+/bench/8454h/**/ozamx_benchmark
+/bench/8454h/**/optimization_benchmark_frozen_v2
+/bench/8454h/**/optimization_benchmark_control
+/bench/8454h/**/optimization_benchmark_control0
+/bench/8454h/**/optimization_benchmark_numa1
+/bench/8454h/**/optimization_benchmark_numa_half
+/bench/8454h/**/roofline_kernels
+/bench/8454h/**/raw_bf16_verbose
 
 # Local/vendor environments and machine-specific state
 /third_party/code/

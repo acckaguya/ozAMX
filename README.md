@@ -6,6 +6,8 @@
 
 自有源码采用统一缩进与换行，并在分片、打包、累加还原等关键处补充说明。排版约定、维护命令和本次核对结果见 [代码可读性说明](docs/CODE_READABILITY.md)。
 
+工作区中构建产物、实验记录与冻结包的保留规则，以及Git管理说明见 [工作区整理记录](docs/WORKSPACE_CLEANUP.md)。
+
 ## 环境
 
 当前优化面向双路 Intel Xeon Platinum 8454H（Sapphire Rapids），使用 AMX-BF16 和 AVX-512。架构、指令手册及官方代码实例见 [third_party/intel/README.md](third_party/intel/README.md)；机器实测算力、内存带宽和同机优化前后比较见 [docs/8454H_PERFORMANCE_BASELINE.md](docs/8454H_PERFORMANCE_BASELINE.md)。原 Gold 6430 的实验环境与结果保留在历史文档中。
