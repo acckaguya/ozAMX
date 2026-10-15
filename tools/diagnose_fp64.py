@@ -65,15 +65,17 @@ def decompose_operand(x: np.ndarray) -> tuple[list[np.ndarray], np.ndarray, list
         if maxabs == 0:
             component = np.zeros_like(residual)
             slices.append(component)
-            rounds.append({
-                "slice": index,
-                "max_residual_before": 0.0,
-                "v": None,
-                "sigma": 0.0,
-                "zero_component_count": int(component.size),
-                "component_is_exact_bf16": True,
-                "nonzero_bf16_subnormal_count": 0,
-            })
+            rounds.append(
+                {
+                    "slice": index,
+                    "max_residual_before": 0.0,
+                    "v": None,
+                    "sigma": 0.0,
+                    "zero_component_count": int(component.size),
+                    "component_is_exact_bf16": True,
+                    "nonzero_bf16_subnormal_count": 0,
+                }
+            )
             residual.fill(0.0)
             continue
 
@@ -87,15 +89,17 @@ def decompose_operand(x: np.ndarray) -> tuple[list[np.ndarray], np.ndarray, list
         )
         residual = np.subtract(residual, component)
         slices.append(component)
-        rounds.append({
-            "slice": index,
-            "max_residual_before": maxabs,
-            "v": v,
-            "sigma": sigma,
-            "zero_component_count": int(np.count_nonzero(component == 0)),
-            "component_is_exact_bf16": bool(exactly_bf16),
-            "nonzero_bf16_subnormal_count": int(nonzero_subnormal),
-        })
+        rounds.append(
+            {
+                "slice": index,
+                "max_residual_before": maxabs,
+                "v": v,
+                "sigma": sigma,
+                "zero_component_count": int(np.count_nonzero(component == 0)),
+                "component_is_exact_bf16": bool(exactly_bf16),
+                "nonzero_bf16_subnormal_count": int(nonzero_subnormal),
+            }
+        )
     return slices, residual, rounds
 
 
@@ -110,7 +114,9 @@ def error_metrics(error: np.ndarray, reference: np.ndarray, scaled_denominator: 
     den = np.asarray(scaled_denominator, dtype=np.longdouble)
     e_f = norm_fro(err) / norm_fro(ref)
     nonzero = den > 0
-    scaled_max = np.max(np.abs(err[nonzero]) / den[nonzero]) if np.any(nonzero) else np.longdouble(0)
+    scaled_max = (
+        np.max(np.abs(err[nonzero]) / den[nonzero]) if np.any(nonzero) else np.longdouble(0)
+    )
     return {
         "eF": float(e_f),
         "scaledmax": float(scaled_max),
@@ -155,7 +161,9 @@ def grouped_component_products(a_slices: list[np.ndarray], b_slices: list[np.nda
     return all36, selected21, omitted15, sum_a, sum_b
 
 
-def fp32_component_sum(a_slices: list[np.ndarray], b_slices: list[np.ndarray], selected: bool) -> np.ndarray:
+def fp32_component_sum(
+    a_slices: list[np.ndarray], b_slices: list[np.ndarray], selected: bool
+) -> np.ndarray:
     """Approximate AMX's FP32 product reduction, widening each product in order."""
     n = a_slices[0].shape[0]
     accumulator = np.zeros((n, n), dtype=np.longdouble)
@@ -181,7 +189,9 @@ def decompose_metrics(slices: list[np.ndarray], terminal: np.ndarray, original: 
     return {
         "terminal_residual": relative_residual_metrics(terminal_ld, x),
         "slice_sum_vs_input": relative_residual_metrics(sum_slices - x, x),
-        "terminal_matches_input_minus_slices": relative_residual_metrics((x - sum_slices) - terminal_ld, x),
+        "terminal_matches_input_minus_slices": relative_residual_metrics(
+            (x - sum_slices) - terminal_ld, x
+        ),
         "slices_plus_terminal_vs_input": relative_residual_metrics(reconstruction - x, x),
     }
 
@@ -224,7 +234,9 @@ def diagnose_one(n: int, rng: np.random.Generator, longdouble_bits: int) -> dict
 
     all_slices = a_slices + b_slices
     bf16_check = {
-        "all_12_slices_exactly_bf16": all(bool(np.array_equal(round_to_bf16_f64(x), x)) for x in all_slices),
+        "all_12_slices_exactly_bf16": all(
+            bool(np.array_equal(round_to_bf16_f64(x), x)) for x in all_slices
+        ),
         "nonzero_subnormal_components": sum(
             int(np.count_nonzero((x != 0) & (np.abs(x) < math.ldexp(1.0, -126))))
             for x in all_slices
@@ -243,16 +255,24 @@ def diagnose_one(n: int, rng: np.random.Generator, longdouble_bits: int) -> dict
         "input_slice_reconstruction": input_roundtrip,
         "terminal_decomposition_terms": {
             "R_A_times_B_plus_sum_A_times_R_B": error_metrics(terminal_terms, ref, denominator),
-            "identity_check_ref_minus_full36_minus_terminal_terms": relative_residual_metrics(decomposition_identity, ref),
+            "identity_check_ref_minus_full36_minus_terminal_terms": relative_residual_metrics(
+                decomposition_identity, ref
+            ),
         },
         "products_vs_longdouble_AB": {
             "full36_exact_grouped_products": error_metrics(all36 - ref, ref, denominator),
-            "selected21_exact_grouped_products_i_plus_j_lt_6": error_metrics(selected21 - ref, ref, denominator),
+            "selected21_exact_grouped_products_i_plus_j_lt_6": error_metrics(
+                selected21 - ref, ref, denominator
+            ),
             "omitted_15_products_i_plus_j_ge_6": error_metrics(omitted15, ref, denominator),
-            "full36_minus_selected21_matches_omitted": relative_residual_metrics((all36 - selected21) - omitted15, ref),
+            "full36_minus_selected21_matches_omitted": relative_residual_metrics(
+                (all36 - selected21) - omitted15, ref
+            ),
             "full36_fp32_products_then_widen": error_metrics(fp32_36 - ref, ref, denominator),
             "selected21_fp32_products_then_widen": error_metrics(fp32_21 - ref, ref, denominator),
-            "selected21_fp32_accumulation_delta_vs_exact_selected21": error_metrics(fp32_21 - selected21, ref, denominator),
+            "selected21_fp32_accumulation_delta_vs_exact_selected21": error_metrics(
+                fp32_21 - selected21, ref, denominator
+            ),
         },
     }
 

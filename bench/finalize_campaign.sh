@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Historical Gold campaign maintenance; paths and result names are archival.
+# Current 8454H measurements use run_8454h_baseline.sh and bench/8454h/.
 set -euo pipefail
 cd /data/home/caiwl/ozAMX
 
@@ -11,7 +13,7 @@ elif systemctl --user is-active --quiet ozamx-campaign.service; then
   echo "campaign service is still active; finalization is deferred" >&2
   exit 73
 fi
-exec 9>bench/campaign.lock
+exec 9> bench/campaign.lock
 if ! flock -n 9; then
   echo "campaign/finalization lock is held; refusing to overlap." >&2
   exit 73
@@ -50,8 +52,8 @@ mv bench/diagnostics/alt_256/alternative_validation.json.tmp.$$ \
 
 if [[ ! -x bench/diagnostics/alt_256/native_alternative_accuracy ]]; then
   native_bin_tmp="bench/diagnostics/alt_256/native_alternative_accuracy.tmp.$$"
-  g++ -std=c++17 -O3 -Wall -Wextra -mamx-tile -mamx-bf16 -fopenmp \
-    -Iinclude tools/native_alternative_accuracy.cpp src/runtime.cpp \
+  g++ -std=c++17 -O3 -Wall -Wextra -march=sapphirerapids -ffp-contract=off -fopenmp \
+    -Iinclude tools/native_alternative_accuracy.cpp src/runtime.cpp src/kernels.S \
     -o "$native_bin_tmp"
   mv "$native_bin_tmp" bench/diagnostics/alt_256/native_alternative_accuracy
 fi

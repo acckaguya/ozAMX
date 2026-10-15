@@ -31,12 +31,13 @@ typedef struct __attribute__((packed, aligned(64))) {
 static void sigill(int sig) {
     (void)sig;
     static const char msg[] = "AMX_EXEC=FAIL_SIGILL\n";
-    ssize_t ignored = write(STDOUT_FILENO, msg, sizeof(msg)-1);
+    ssize_t ignored = write(STDOUT_FILENO, msg, sizeof(msg) - 1);
     (void)ignored;
     _exit(3);
 }
 
 int main(void) {
+    /* 除了申请权限，还执行一次已知结果的 BF16 tile 点积来确认指令可用。 */
     signal(SIGILL, sigill);
     unsigned long mask = 0;
     if (syscall(SYS_arch_prctl, ARCH_GET_XCOMP_PERM, &mask) == 0)
@@ -52,18 +53,25 @@ int main(void) {
 
     tilecfg_t cfg = {0};
     cfg.palette_id = 1;
-    cfg.colsb[0] = 64; cfg.rows[0] = 16;
-    cfg.colsb[1] = 64; cfg.rows[1] = 16;
-    cfg.colsb[2] = 64; cfg.rows[2] = 16;
+    cfg.colsb[0] = 64;
+    cfg.rows[0] = 16;
+    cfg.colsb[1] = 64;
+    cfg.rows[1] = 16;
+    cfg.colsb[2] = 64;
+    cfg.rows[2] = 16;
     _tile_loadconfig(&cfg);
-    _tile_zero(0); _tile_zero(1); _tile_zero(2);
-    uint16_t a[16*32], b[32*32];
-    for (int i=0;i<16*32;i++) a[i] = 0x3f80; /* BF16 1.0 */
-    for (int i=0;i<32*32;i++) b[i] = 0x4000; /* BF16 2.0 */
+    _tile_zero(0);
+    _tile_zero(1);
+    _tile_zero(2);
+    uint16_t a[16 * 32], b[32 * 32];
+    for (int i = 0; i < 16 * 32; i++)
+        a[i] = 0x3f80; /* BF16 1.0 */
+    for (int i = 0; i < 32 * 32; i++)
+        b[i] = 0x4000; /* BF16 2.0 */
     _tile_loadd(1, a, 64);
     _tile_loadd(2, b, 64);
     _tile_dpbf16ps(0, 1, 2);
-    float out[16*16] = {0};
+    float out[16 * 16] = {0};
     _tile_stored(0, out, 64);
     _tile_release();
     printf("AMX_EXEC=OK sample_c00=%.1f expected=64.0\n", out[0]);

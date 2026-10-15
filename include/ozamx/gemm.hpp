@@ -6,10 +6,13 @@
 
 namespace ozamx {
 
+// FP64 is decomposed into BF16 slices and uses at most this many ordered
+// slice products; it does not mean that the kernel computes the whole GEMM in
+// FP64 arithmetic. The selected budget trades work for reconstruction accuracy.
 enum class ProductBudget { p6 = 6, p10 = 10, p15 = 15, p21 = 21 };
 
 class Error : public std::runtime_error {
-public:
+  public:
     using std::runtime_error::runtime_error;
 };
 
@@ -30,32 +33,26 @@ struct GemmTimings {
     double total_seconds = 0.0;
 };
 
-// Requests/checks XTILEDATA permission for the calling thread only. This does
-// not execute an AMX instruction. Every worker thread must call it before use.
+// Requests/checks Linux process-wide XTILEDATA permission, initiated by the
+// calling thread. This does not execute AMX. Each task gets its own XSTATE
+// buffer on first use and has independent tile state configured by the GEMM.
 AmxStatus request_amx_permission_for_current_thread();
 
 // Row-major GEMM: A[M,K], B[K,N], C[M,N]. No alpha/beta or transpose modes.
-// Implemented kernels use AMX-BF16 and report unsupported CPU/OS or input
+// Optimized kernels require Sapphire Rapids AVX-512 and AMX-BF16 features,
+// checked by generic runtime dispatch, and report unsupported CPU/OS or input
 // domains through ozamx::Error; they never silently fall back to scalar math.
-void gemm_fp32(std::size_t m, std::size_t n, std::size_t k,
-               const float* a, std::size_t lda,
-               const float* b, std::size_t ldb,
-               float* c, std::size_t ldc);
-GemmTimings gemm_fp32_profiled(std::size_t m, std::size_t n, std::size_t k,
-                               const float* a, std::size_t lda,
-                               const float* b, std::size_t ldb,
-                               float* c, std::size_t ldc);
+void gemm_fp32(std::size_t m, std::size_t n, std::size_t k, const float* a, std::size_t lda,
+               const float* b, std::size_t ldb, float* c, std::size_t ldc);
+GemmTimings gemm_fp32_profiled(std::size_t m, std::size_t n, std::size_t k, const float* a,
+                               std::size_t lda, const float* b, std::size_t ldb, float* c,
+                               std::size_t ldc);
 
-void gemm_fp64(std::size_t m, std::size_t n, std::size_t k,
-               const double* a, std::size_t lda,
-               const double* b, std::size_t ldb,
-               double* c, std::size_t ldc,
-               ProductBudget budget);
-GemmTimings gemm_fp64_profiled(std::size_t m, std::size_t n, std::size_t k,
-                               const double* a, std::size_t lda,
-                               const double* b, std::size_t ldb,
-                               double* c, std::size_t ldc,
-                               ProductBudget budget);
+void gemm_fp64(std::size_t m, std::size_t n, std::size_t k, const double* a, std::size_t lda,
+               const double* b, std::size_t ldb, double* c, std::size_t ldc, ProductBudget budget);
+GemmTimings gemm_fp64_profiled(std::size_t m, std::size_t n, std::size_t k, const double* a,
+                               std::size_t lda, const double* b, std::size_t ldb, double* c,
+                               std::size_t ldc, ProductBudget budget);
 
 const char* product_order_fp32() noexcept;
 const char* product_order_fp64(ProductBudget budget) noexcept;

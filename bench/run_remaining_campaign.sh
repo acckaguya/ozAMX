@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Historical Gold campaign runner; archived paths/checkpoints are retained.
+# Use run_8454h_baseline.sh for current-machine comparisons in a new directory.
 set -euo pipefail
 cd /data/home/caiwl/ozAMX
 
@@ -8,7 +10,7 @@ export MKL_DYNAMIC=FALSE MKL_THREADING_LAYER=GNU
 BENCH=${OZAMX_BENCH:-build/ozamx_benchmark}
 LOGDIR=bench/campaign_logs
 mkdir -p "$LOGDIR"
-exec 9>bench/campaign.lock
+exec 9> bench/campaign.lock
 if ! flock -n 9; then
   echo "$(date -u +%FT%TZ) REFUSED: another campaign owns bench/campaign.lock" | tee -a "$LOGDIR/runner.log" >&2
   exit 73
@@ -16,30 +18,15 @@ fi
 echo "$(date -u +%FT%TZ) LOCK_ACQUIRED pid=$$ lock=bench/campaign.lock" | tee -a "$LOGDIR/runner.log"
 
 run_cfg() {
-  local tag="$1"; shift
+  local tag="$1"
+  shift
   local output="bench/${tag}.csv"
   local checkpoint="bench/${tag}_progress"
   local log="$LOGDIR/${tag}.log"
-  local precision="" size="" budget=""
-  local previous=""
-  for arg in "$@"; do
-    case "$previous:$arg" in
-      --precision:*) precision="$arg" ;;
-      --sizes:*) size="$arg" ;;
-      --budgets:*) budget="$arg" ;;
-    esac
-    case "$arg" in --precision|--sizes|--budgets) previous="$arg" ;; *) previous="" ;; esac
-  done
-  local completed_checkpoint="${checkpoint}.${precision}.${size}.${budget}.json"
-  if [[ "$precision" == fp32 ]]; then
-    budget=6
-    completed_checkpoint="${checkpoint}.${precision}.${size}.${budget}.json"
-  fi
-  if [[ -s "$output" && -f "$completed_checkpoint" ]] && \
-     python3 -c 'import json,sys; raise SystemExit(0 if json.load(open(sys.argv[1])).get("complete") is True else 1)' "$completed_checkpoint"; then
-    echo "$(date -u +%FT%TZ) SKIP_COMPLETE $tag" | tee -a "$LOGDIR/runner.log"
-    return 0
-  fi
+  # Always enter the benchmark's resume validator. A nonempty CSV plus a
+  # `complete` bit does not prove that its source/config/repetition request
+  # matches this invocation; the benchmark checks those fields in each
+  # checkpoint before reusing any recorded repetitions.
   echo "$(date -u +%FT%TZ) START $tag $*" | tee -a "$LOGDIR/runner.log"
   timeout --signal=TERM --kill-after=60 4h taskset -c 0-63 "$BENCH" "$@" \
     --output "$output" --checkpoint "$checkpoint" --resume > /dev/null 2> "$log"
@@ -80,7 +67,7 @@ for n in 256 512 1024 2048 4096 8192 16384 32768; do
     > /dev/null 2> "$LOGDIR/raw_bf16_n${n}.log"
   echo "$(date -u +%FT%TZ) DONE raw_bf16_n${n}" | tee -a "$LOGDIR/runner.log"
 done
-python3 - <<'PY'
+python3 - << 'PY'
 import csv
 from pathlib import Path
 

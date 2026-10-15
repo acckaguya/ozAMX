@@ -6,6 +6,7 @@ import csv
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -28,12 +29,24 @@ def save(fig: plt.Figure, stem: str) -> None:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.25,
-                         "figure.facecolor": "white", "axes.facecolor": "white"})
+    plt.rcParams.update(
+        {
+            "font.size": 9,
+            "axes.grid": True,
+            "grid.alpha": 0.25,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+        }
+    )
     rows = read(BENCH / "final_main_40.csv")
     by = {(r["precision"], int(r["N"]), int(r["budget"])): r for r in rows}
-    variants = [("fp32", 6, "FP32"), ("fp64", 6, "FP64 p6"), ("fp64", 10, "FP64 p10"),
-                ("fp64", 15, "FP64 p15"), ("fp64", 21, "FP64 p21")]
+    variants = [
+        ("fp32", 6, "FP32"),
+        ("fp64", 6, "FP64 p6"),
+        ("fp64", 10, "FP64 p10"),
+        ("fp64", 15, "FP64 p15"),
+        ("fp64", 21, "FP64 p21"),
+    ]
 
     # Full-matrix error relative to MKL reference; this is local measured data.
     fig, ax = plt.subplots(figsize=(7.2, 4.3))
@@ -70,10 +83,25 @@ def main() -> None:
         compute = [float(r["compute_recon_s_mean"]) / t for r, t in zip(rr, totals)]
         xx = [i + (q - 2) * width for i in x]
         ax.bar(xx, split, width, label="split" if q == 0 else None, color="#4C78A8", alpha=0.75)
-        ax.bar(xx, pack, width, bottom=split, label="pack" if q == 0 else None, color="#F2CF5B", alpha=0.8)
+        ax.bar(
+            xx,
+            pack,
+            width,
+            bottom=split,
+            label="pack" if q == 0 else None,
+            color="#F2CF5B",
+            alpha=0.8,
+        )
         bottom = [a + b for a, b in zip(split, pack)]
-        ax.bar(xx, compute, width, bottom=bottom,
-               label="compute + reconstruction" if q == 0 else None, color="#59A14F", alpha=0.75)
+        ax.bar(
+            xx,
+            compute,
+            width,
+            bottom=bottom,
+            label="compute + reconstruction" if q == 0 else None,
+            color="#59A14F",
+            alpha=0.75,
+        )
     ax.set_xticks(x, [str(n) for n in SIZES])
     ax.set_xlabel("Matrix order N")
     ax.set_ylabel("Fraction of AMX end-to-end time")
@@ -81,9 +109,14 @@ def main() -> None:
     ax.set_title("Local reproduction: time breakdown (not paper data)")
     ax.legend(title="Fraction of total")
     fig.subplots_adjust(bottom=0.19)
-    fig.text(0.5, 0.025,
-             "Within each N group, bars left to right: FP32, FP64-p6, FP64-p10, FP64-p15, FP64-p21",
-             ha="center", va="bottom", fontsize=8)
+    fig.text(
+        0.5,
+        0.025,
+        "Within each N group, bars left to right: FP32, FP64-p6, FP64-p10, FP64-p15, FP64-p21",
+        ha="center",
+        va="bottom",
+        fontsize=8,
+    )
     save(fig, "time_breakdown")
 
     # FP32 threading series; report speedup relative to two threads and mean time.
@@ -108,7 +141,9 @@ def main() -> None:
 
     raw = read(BENCH / "raw_bf16.csv")
     fig, ax = plt.subplots(figsize=(7.2, 4.3))
-    ax.loglog([int(r["N"]) for r in raw], [float(r["TFLOP_s"]) for r in raw], marker="o", color="#E15759")
+    ax.loglog(
+        [int(r["N"]) for r in raw], [float(r["TFLOP_s"]) for r in raw], marker="o", color="#E15759"
+    )
     ax.set_xlabel("Matrix order N")
     ax.set_ylabel("oneMKL BF16 GEMM throughput (TFLOP/s)")
     ax.set_title("Local raw BF16 headroom (not paper data)")

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Historical Gold campaign runner; archived paths/checkpoints are retained.
+# Use run_8454h_baseline.sh for current-machine comparisons in a new directory.
 set -euo pipefail
 cd /data/home/caiwl/ozAMX
 export LD_LIBRARY_PATH="$PWD/third_party/code/mkl-2026/venv/lib:${LD_LIBRARY_PATH:-}"

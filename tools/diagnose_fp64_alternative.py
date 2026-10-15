@@ -54,8 +54,7 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def export_native_inputs(export_dir: Path, n: int, seed: int,
-                         a: np.ndarray, b: np.ndarray) -> dict:
+def export_native_inputs(export_dir: Path, n: int, seed: int, a: np.ndarray, b: np.ndarray) -> dict:
     """Persist the exact diagnostic inputs and each method's six BF16 slices."""
     if n != 256 or a.shape != (n, n) or b.shape != (n, n):
         raise ValueError("native accuracy export is defined only for N=256")
@@ -81,14 +80,16 @@ def export_native_inputs(export_dir: Path, n: int, seed: int,
             path = export_dir / filename
             bf16_bits_from_slices(slices).tofile(path)
             files[filename] = {
-                "dtype": "<u2 raw BF16 bits", "shape": [SLICE_COUNT, n, n],
+                "dtype": "<u2 raw BF16 bits",
+                "shape": [SLICE_COUNT, n, n],
                 "sha256": sha256_file(path),
             }
         method_records[method] = {
             "A_file": f"{method}_A.bf16le",
             "B_file": f"{method}_B.bf16le",
             "hypothesis_status": (
-                "paper-literal reference" if method == "paper_literal_rho45"
+                "paper-literal reference"
+                if method == "paper_literal_rho45"
                 else "diagnostic alternative; not attributed to paper authors"
             ),
         }
@@ -105,9 +106,10 @@ def export_native_inputs(export_dir: Path, n: int, seed: int,
     metadata_path = export_dir / "metadata.json"
     metadata_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + "\n")
     checksum_path = export_dir / "checksums.sha256"
-    checksum_path.write_text("".join(
-        f"{record['sha256']}  {filename}\n" for filename, record in files.items()
-    ) + f"{sha256_file(metadata_path)}  metadata.json\n")
+    checksum_path.write_text(
+        "".join(f"{record['sha256']}  {filename}\n" for filename, record in files.items())
+        + f"{sha256_file(metadata_path)}  metadata.json\n"
+    )
     return metadata
 
 
@@ -130,27 +132,28 @@ def decompose(x: np.ndarray, method: str) -> tuple[list[np.ndarray], np.ndarray,
             if method != "direct_bf16_residual":
                 rho = 45 if method == "paper_literal_rho45" else 44
                 sigma = math.ldexp(1.0, v + rho)
-                projected = np.subtract(
-                    np.add(residual, np.float64(sigma)), np.float64(sigma)
-                )
+                projected = np.subtract(np.add(residual, np.float64(sigma)), np.float64(sigma))
             component = round_to_bf16_f64(projected)
 
         exact_bf16 = bool(np.array_equal(round_to_bf16_f64(component), component))
         residual_next = np.subtract(residual, component)
         slices.append(component)
-        layer_info.append({
-            "slice": layer,
-            "v_before": v,
-            "max_residual_before": maxabs,
-            "sigma": sigma,
-            "zero_component_count": int(np.count_nonzero(component == 0.0)),
-            "component_is_exact_bf16": exact_bf16,
-            "max_abs_residual_after": float(np.max(np.abs(residual_next))),
-            "v_after": (
-                ceil_log2_exact_float(float(np.max(np.abs(residual_next))))
-                if np.any(residual_next != 0.0) else None
-            ),
-        })
+        layer_info.append(
+            {
+                "slice": layer,
+                "v_before": v,
+                "max_residual_before": maxabs,
+                "sigma": sigma,
+                "zero_component_count": int(np.count_nonzero(component == 0.0)),
+                "component_is_exact_bf16": exact_bf16,
+                "max_abs_residual_after": float(np.max(np.abs(residual_next))),
+                "v_after": (
+                    ceil_log2_exact_float(float(np.max(np.abs(residual_next))))
+                    if np.any(residual_next != 0.0)
+                    else None
+                ),
+            }
+        )
         residual = residual_next
     return slices, residual, layer_info
 
@@ -168,7 +171,7 @@ def selected_products(a_slices, b_slices, n: int, diagonal_count: int) -> np.nda
     b_ld = [np.asarray(item, dtype=np.longdouble) for item in b_slices]
     result = np.zeros((n, n), dtype=np.longdouble)
     for i, a_part in enumerate(a_ld):
-        permitted_b = b_ld[:max(0, min(SLICE_COUNT, diagonal_count - i))]
+        permitted_b = b_ld[: max(0, min(SLICE_COUNT, diagonal_count - i))]
         if permitted_b:
             result += a_part @ sum_longdouble(permitted_b)
     return result
@@ -184,7 +187,8 @@ def diagnose_method(a, b, ref, denominator, method: str) -> dict:
     return {
         "method": method,
         "hypothesis_status": (
-            "paper-literal reference" if method == "paper_literal_rho45"
+            "paper-literal reference"
+            if method == "paper_literal_rho45"
             else "diagnostic alternative; not attributed to paper authors"
         ),
         "A_layers": a_layers,
@@ -202,8 +206,9 @@ def diagnose_method(a, b, ref, denominator, method: str) -> dict:
     }
 
 
-def diagnose_one(n: int, rng: np.random.Generator, export_dir: Path | None = None,
-                 seed: int | None = None) -> dict:
+def diagnose_one(
+    n: int, rng: np.random.Generator, export_dir: Path | None = None, seed: int | None = None
+) -> dict:
     # Same generation order/seed convention as diagnose_fp64.py: A then B.
     a = rng.uniform(-1.0, 1.0, size=(n, n)).astype(np.float64)
     b = rng.uniform(-1.0, 1.0, size=(n, n)).astype(np.float64)
@@ -218,10 +223,7 @@ def diagnose_one(n: int, rng: np.random.Generator, export_dir: Path | None = Non
         "reference_dtype": "numpy.longdouble",
         "longdouble_storage_bytes": np.dtype(np.longdouble).itemsize,
         "longdouble_mantissa_bits": int(np.finfo(np.longdouble).nmant + 1),
-        "methods": {
-            method: diagnose_method(a, b, ref, denominator, method)
-            for method in METHODS
-        },
+        "methods": {method: diagnose_method(a, b, ref, denominator, method) for method in METHODS},
     }
 
 
@@ -254,9 +256,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--sizes", nargs="+", type=int, default=[256])
     parser.add_argument("--seed", type=int, default=20261012)
-    parser.add_argument("--export-dir", type=Path,
-                        help="persist exact N=256 inputs/slices for the independent AMX diagnostic")
-    parser.add_argument("--self-test", action="store_true", help="scalar-only checks; no matrix products")
+    parser.add_argument(
+        "--export-dir",
+        type=Path,
+        help="persist exact N=256 inputs/slices for the independent AMX diagnostic",
+    )
+    parser.add_argument(
+        "--self-test", action="store_true", help="scalar-only checks; no matrix products"
+    )
     args = parser.parse_args()
     if args.self_test:
         scalar_self_test()
@@ -273,17 +280,26 @@ def main() -> int:
             "direct_bf16_residual": "round BF16 directly from binary64 residual, then FP64 subtraction; diagnostic hypothesis only",
             "diagnostic_rho44": "literal shifted procedure with rho=44; diagnostic hypothesis only",
         },
-        "rho_values": {"paper_literal_rho45": 45, "diagnostic_rho44": 44, "direct_bf16_residual": None},
+        "rho_values": {
+            "paper_literal_rho45": 45,
+            "diagnostic_rho44": 44,
+            "direct_bf16_residual": None,
+        },
         "slice_count": SLICE_COUNT,
         "slice_budgets": {"6": "i+j<3", "10": "i+j<4", "15": "i+j<5", "21": "i+j<6"},
         "seed": args.seed,
         "numpy_version": np.__version__,
         "longdouble_note": "Host numpy.longdouble; inspect reported mantissa bits; not assumed IEEE binary128",
         "random_stream_note": "Each size uses the same per-size PCG64 stream as the original 64,128,256 sweep; smaller A/B draws are advanced and discarded when running a larger size alone.",
-        "sizes": [diagnose_one(
-            n, rng_at_canonical_size(args.seed, n),
-            args.export_dir if n == 256 else None, args.seed,
-        ) for n in args.sizes],
+        "sizes": [
+            diagnose_one(
+                n,
+                rng_at_canonical_size(args.seed, n),
+                args.export_dir if n == 256 else None,
+                args.seed,
+            )
+            for n in args.sizes
+        ],
     }
     print(json.dumps(report, indent=2, ensure_ascii=False))
     return 0

@@ -15,8 +15,10 @@ DOCS = ROOT / "docs"
 SIZES = (256, 512, 1024, 2048, 4096, 8192, 16384, 32768)
 BUDGETS = (6, 10, 15, 21)
 MAIN_SOURCES = [
-    BENCH / "full_sweep.csv", BENCH / "resume_8192_p21.csv",
-    BENCH / "full_sweep_16384.csv", BENCH / "full_sweep_32768_fp32.csv",
+    BENCH / "full_sweep.csv",
+    BENCH / "resume_8192_p21.csv",
+    BENCH / "full_sweep_16384.csv",
+    BENCH / "full_sweep_32768_fp32.csv",
     *(BENCH / f"full_sweep_32768_fp64_clean_p{b}.csv" for b in BUDGETS),
 ]
 
@@ -52,16 +54,33 @@ def require_complete_checkpoint(row: dict[str, str], prefix: str, source: Path) 
     if not path.is_file():
         raise SystemExit(f"missing complete checkpoint for {source.name}: {path.name}")
     checkpoint = json.loads(path.read_text(encoding="utf-8"))
-    expected = {"precision": precision, "N": n, "budget": budget,
-                "threads": int(row["threads"]), "seed": int(row["seed"]),
-                "requested_repetitions": 10, "completed_timed_repetitions": 10,
-                "complete": True}
+    expected = {
+        "precision": precision,
+        "N": n,
+        "budget": budget,
+        "threads": int(row["threads"]),
+        "seed": int(row["seed"]),
+        "requested_repetitions": 10,
+        "completed_timed_repetitions": 10,
+        "complete": True,
+    }
     for key, value in expected.items():
         if checkpoint.get(key) != value:
-            raise SystemExit(f"checkpoint {path.name}: {key}={checkpoint.get(key)!r}, expected {value!r}")
-    for field in ("split_seconds", "pack_seconds", "compute_reconstruction_seconds", "total_seconds"):
+            raise SystemExit(
+                f"checkpoint {path.name}: {key}={checkpoint.get(key)!r}, expected {value!r}"
+            )
+    for field in (
+        "split_seconds",
+        "pack_seconds",
+        "compute_reconstruction_seconds",
+        "total_seconds",
+    ):
         values = checkpoint.get(field)
-        if not isinstance(values, list) or len(values) != 10 or not all(math.isfinite(float(v)) for v in values):
+        if (
+            not isinstance(values, list)
+            or len(values) != 10
+            or not all(math.isfinite(float(v)) for v in values)
+        ):
             raise SystemExit(f"checkpoint {path.name}: invalid {field} raw timings")
 
 
@@ -74,26 +93,46 @@ def sha256(path: Path) -> str:
 
 
 PAPER_TABLE4_EF = {
-    (256, "fp32", 6): 3.02e-7, (512, "fp32", 6): 3.06e-7,
-    (1024, "fp32", 6): 3.59e-7, (2048, "fp32", 6): 3.72e-7,
-    (4096, "fp32", 6): 3.83e-7, (8192, "fp32", 6): 3.97e-7,
-    (16384, "fp32", 6): 4.18e-7, (32768, "fp32", 6): 4.58e-7,
-    (256, "fp64", 6): 1.49e-8, (512, "fp64", 6): 1.49e-8,
-    (1024, "fp64", 6): 1.49e-8, (2048, "fp64", 6): 1.49e-8,
-    (4096, "fp64", 6): 1.49e-8, (8192, "fp64", 6): 1.49e-8,
-    (16384, "fp64", 6): 1.49e-8, (32768, "fp64", 6): 1.49e-8,
-    (256, "fp64", 10): 3.26e-11, (512, "fp64", 10): 3.25e-11,
-    (1024, "fp64", 10): 3.26e-11, (2048, "fp64", 10): 3.25e-11,
-    (4096, "fp64", 10): 3.25e-11, (8192, "fp64", 10): 3.25e-11,
-    (16384, "fp64", 10): 3.25e-11, (32768, "fp64", 10): 3.25e-11,
-    (256, "fp64", 15): 6.95e-14, (512, "fp64", 15): 6.94e-14,
-    (1024, "fp64", 15): 6.97e-14, (2048, "fp64", 15): 6.95e-14,
-    (4096, "fp64", 15): 6.96e-14, (8192, "fp64", 15): 6.96e-14,
-    (16384, "fp64", 15): 6.96e-14, (32768, "fp64", 15): 6.96e-14,
-    (256, "fp64", 21): 5.71e-16, (512, "fp64", 21): 5.88e-16,
-    (1024, "fp64", 21): 6.96e-16, (2048, "fp64", 21): 7.45e-16,
-    (4096, "fp64", 21): 8.19e-16, (8192, "fp64", 21): 9.41e-16,
-    (16384, "fp64", 21): 1.14e-15, (32768, "fp64", 21): 1.46e-15,
+    (256, "fp32", 6): 3.02e-7,
+    (512, "fp32", 6): 3.06e-7,
+    (1024, "fp32", 6): 3.59e-7,
+    (2048, "fp32", 6): 3.72e-7,
+    (4096, "fp32", 6): 3.83e-7,
+    (8192, "fp32", 6): 3.97e-7,
+    (16384, "fp32", 6): 4.18e-7,
+    (32768, "fp32", 6): 4.58e-7,
+    (256, "fp64", 6): 1.49e-8,
+    (512, "fp64", 6): 1.49e-8,
+    (1024, "fp64", 6): 1.49e-8,
+    (2048, "fp64", 6): 1.49e-8,
+    (4096, "fp64", 6): 1.49e-8,
+    (8192, "fp64", 6): 1.49e-8,
+    (16384, "fp64", 6): 1.49e-8,
+    (32768, "fp64", 6): 1.49e-8,
+    (256, "fp64", 10): 3.26e-11,
+    (512, "fp64", 10): 3.25e-11,
+    (1024, "fp64", 10): 3.26e-11,
+    (2048, "fp64", 10): 3.25e-11,
+    (4096, "fp64", 10): 3.25e-11,
+    (8192, "fp64", 10): 3.25e-11,
+    (16384, "fp64", 10): 3.25e-11,
+    (32768, "fp64", 10): 3.25e-11,
+    (256, "fp64", 15): 6.95e-14,
+    (512, "fp64", 15): 6.94e-14,
+    (1024, "fp64", 15): 6.97e-14,
+    (2048, "fp64", 15): 6.95e-14,
+    (4096, "fp64", 15): 6.96e-14,
+    (8192, "fp64", 15): 6.96e-14,
+    (16384, "fp64", 15): 6.96e-14,
+    (32768, "fp64", 15): 6.96e-14,
+    (256, "fp64", 21): 5.71e-16,
+    (512, "fp64", 21): 5.88e-16,
+    (1024, "fp64", 21): 6.96e-16,
+    (2048, "fp64", 21): 7.45e-16,
+    (4096, "fp64", 21): 8.19e-16,
+    (8192, "fp64", 21): 9.41e-16,
+    (16384, "fp64", 21): 1.14e-15,
+    (32768, "fp64", 21): 1.46e-15,
 }
 
 
@@ -102,35 +141,55 @@ def render_final_report(main_by_key, all_main, thread_rows, raw_rows, native_sum
     local_scaled = []
     for n in SIZES:
         vals = []
-        for precision, budget, _label in (("fp32", 6, "FP32"), ("fp64", 6, "p6"),
-                                          ("fp64", 10, "p10"), ("fp64", 15, "p15"),
-                                          ("fp64", 21, "p21")):
+        for precision, budget, _label in (
+            ("fp32", 6, "FP32"),
+            ("fp64", 6, "p6"),
+            ("fp64", 10, "p10"),
+            ("fp64", 15, "p15"),
+            ("fp64", 21, "p21"),
+        ):
             r = main_by_key[(precision, n, budget)]
             vals.append(f"{float(r['eF_mkl']):.3g}")
-        scaled_vals = [f"{float(main_by_key[(p, n, b)]['e_scaled_mkl']):.3g}"
-                       for p, b, _label in (("fp32", 6, "FP32"), ("fp64", 6, "p6"),
-                                            ("fp64", 10, "p10"), ("fp64", 15, "p15"),
-                                            ("fp64", 21, "p21"))]
+        scaled_vals = [
+            f"{float(main_by_key[(p, n, b)]['e_scaled_mkl']):.3g}"
+            for p, b, _label in (
+                ("fp32", 6, "FP32"),
+                ("fp64", 6, "p6"),
+                ("fp64", 10, "p10"),
+                ("fp64", 15, "p15"),
+                ("fp64", 21, "p21"),
+            )
+        ]
         local.append(f"| {n} | " + " | ".join(vals) + " |")
         local_scaled.append(f"| {n} | " + " | ".join(scaled_vals) + " |")
 
     perf = []
     for n in SIZES:
         cells = []
-        for precision, budget, _label in (("fp32", 6, "FP32"), ("fp64", 6, "p6"),
-                                          ("fp64", 10, "p10"), ("fp64", 15, "p15"),
-                                          ("fp64", 21, "p21")):
+        for precision, budget, _label in (
+            ("fp32", 6, "FP32"),
+            ("fp64", 6, "p6"),
+            ("fp64", 10, "p10"),
+            ("fp64", 15, "p15"),
+            ("fp64", 21, "p21"),
+        ):
             r = main_by_key[(precision, n, budget)]
             times = require_ten(r, "raw_total_s", MAIN_SOURCES[0])
-            cells.append(f"{statistics.mean(times):.4g}±{statistics.stdev(times):.2g} / {float(r['mkl_sgemm_dgemm_s']):.4g} / {float(r['speedup']):.3g}")
+            cells.append(
+                f"{statistics.mean(times):.4g}±{statistics.stdev(times):.2g} / {float(r['mkl_sgemm_dgemm_s']):.4g} / {float(r['speedup']):.3g}"
+            )
         perf.append(f"| {n} | " + " | ".join(cells) + " |")
 
     hp = []
     for n in SIZES:
         vals = []
-        for precision, budget, _label in (("fp32", 6, "FP32"), ("fp64", 6, "p6"),
-                                          ("fp64", 10, "p10"), ("fp64", 15, "p15"),
-                                          ("fp64", 21, "p21")):
+        for precision, budget, _label in (
+            ("fp32", 6, "FP32"),
+            ("fp64", 6, "p6"),
+            ("fp64", 10, "p10"),
+            ("fp64", 15, "p15"),
+            ("fp64", 21, "p21"),
+        ):
             r = main_by_key[(precision, n, budget)]
             scope = r["hp_scope"]
             vals.append(f"{float(r['eF_hp']):.3g} ({scope})")
@@ -141,12 +200,16 @@ def render_final_report(main_by_key, all_main, thread_rows, raw_rows, native_sum
         vals = []
         for t in (2, 4, 8, 16, 32, 64):
             r = next(x for x in thread_rows if int(x["N"]) == n and int(x["threads"]) == t)
-            vals.append(f"{float(r['total_s_mean']):.4g}±{statistics.stdev(require_ten(r, 'raw_total_s', BENCH / f'thread_scaling_fp32_n{n}_t{t}.csv')):.2g}")
+            vals.append(
+                f"{float(r['total_s_mean']):.4g}±{statistics.stdev(require_ten(r, 'raw_total_s', BENCH / f'thread_scaling_fp32_n{n}_t{t}.csv')):.2g}"
+            )
         threads.append(f"| {n} | " + " | ".join(vals) + " |")
 
     raw_table = []
     for r in raw_rows:
-        raw_table.append(f"| {r['N']} | {float(r['seconds_mean']):.4g} | {float(r['TFLOP_s']):.4g} | {r['mkl_version']} | `{r['mkl_runtime_path']}` |")
+        raw_table.append(
+            f"| {r['N']} | {float(r['seconds_mean']):.4g} | {float(r['TFLOP_s']):.4g} | {r['mkl_version']} | `{r['mkl_runtime_path']}` |"
+        )
     p21_n256 = main_by_key[("fp64", 256, 21)]
     p21_observed = float(p21_n256["eF_hp"])
     p21_paper = PAPER_TABLE4_EF[(256, "fp64", 21)]
@@ -249,9 +312,18 @@ def render_final_report(main_by_key, all_main, thread_rows, raw_rows, native_sum
 
 def main() -> None:
     import argparse
+
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--validate-only", action="store_true", help="validate raw coverage/checkpoints without writing derived outputs")
-    parser.add_argument("--merge-only", action="store_true", help="write canonical merged CSV/statistics after validation")
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help="validate raw coverage/checkpoints without writing derived outputs",
+    )
+    parser.add_argument(
+        "--merge-only",
+        action="store_true",
+        help="write canonical merged CSV/statistics after validation",
+    )
     args = parser.parse_args()
     if args.validate_only and args.merge_only:
         raise SystemExit("choose at most one finalization phase")
@@ -288,9 +360,7 @@ def main() -> None:
             source_for[key] = path
             all_main.append(row)
 
-    expected = {("fp32", n, 6) for n in SIZES} | {
-        ("fp64", n, b) for n in SIZES for b in BUDGETS
-    }
+    expected = {("fp32", n, 6) for n in SIZES} | {("fp64", n, b) for n in SIZES for b in BUDGETS}
     missing, extra = expected - set(main_by_key), set(main_by_key) - expected
     if missing or extra:
         raise SystemExit(f"main coverage mismatch: missing={sorted(missing)} extra={sorted(extra)}")
@@ -334,7 +404,9 @@ def main() -> None:
         raw_rows.append(row)
 
     if args.validate_only:
-        print(f"validated main={len(all_main)}/40 thread={len(thread_rows)}/18 raw_bf16={len(raw_rows)}/8; every benchmark checkpoint is complete with 10 finite timed samples")
+        print(
+            f"validated main={len(all_main)}/40 thread={len(thread_rows)}/18 raw_bf16={len(raw_rows)}/8; every benchmark checkpoint is complete with 10 finite timed samples"
+        )
         return
 
     # Merge only the explicitly enumerated valid campaign inputs.
@@ -345,30 +417,78 @@ def main() -> None:
         writer.writeheader()
         for row in sorted(all_main, key=lambda r: (int(r["N"]), r["precision"], int(r["budget"]))):
             out = dict(row)
-            out["source_csv"] = source_for[(row["precision"], int(row["N"]), int(row["budget"]))].relative_to(ROOT).as_posix()
+            out["source_csv"] = (
+                source_for[(row["precision"], int(row["N"]), int(row["budget"]))]
+                .relative_to(ROOT)
+                .as_posix()
+            )
             writer.writerow(out)
 
     summary_path = BENCH / "final_timing_statistics.csv"
-    stat_fields = ["campaign", "precision", "budget", "N", "threads", "metric", "n", "mean", "sample_std", "min", "max", "source_csv"]
+    stat_fields = [
+        "campaign",
+        "precision",
+        "budget",
+        "N",
+        "threads",
+        "metric",
+        "n",
+        "mean",
+        "sample_std",
+        "min",
+        "max",
+        "source_csv",
+    ]
     with summary_path.open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=stat_fields, lineterminator="\n")
         w.writeheader()
         for row in all_main + thread_rows:
-            src = (source_for[(row["precision"], int(row["N"]), int(row["budget"]))]
-                   if row in all_main else BENCH / f"thread_scaling_fp32_n{row['N']}_t{row['threads']}.csv")
-            for field, metric in (("raw_split_s", "split_s"), ("raw_pack_s", "pack_s"),
-                                  ("raw_compute_recon_s", "compute_recon_s"), ("raw_total_s", "total_s")):
+            src = (
+                source_for[(row["precision"], int(row["N"]), int(row["budget"]))]
+                if row in all_main
+                else BENCH / f"thread_scaling_fp32_n{row['N']}_t{row['threads']}.csv"
+            )
+            for field, metric in (
+                ("raw_split_s", "split_s"),
+                ("raw_pack_s", "pack_s"),
+                ("raw_compute_recon_s", "compute_recon_s"),
+                ("raw_total_s", "total_s"),
+            ):
                 values = require_ten(row, field, src)
-                w.writerow({"campaign": "main" if row in all_main else "thread", "precision": row["precision"],
-                            "budget": row["budget"], "N": row["N"], "threads": row["threads"], "metric": metric,
-                            "n": 10, "mean": statistics.mean(values), "sample_std": statistics.stdev(values),
-                            "min": min(values), "max": max(values), "source_csv": src.relative_to(ROOT).as_posix()})
+                w.writerow(
+                    {
+                        "campaign": "main" if row in all_main else "thread",
+                        "precision": row["precision"],
+                        "budget": row["budget"],
+                        "N": row["N"],
+                        "threads": row["threads"],
+                        "metric": metric,
+                        "n": 10,
+                        "mean": statistics.mean(values),
+                        "sample_std": statistics.stdev(values),
+                        "min": min(values),
+                        "max": max(values),
+                        "source_csv": src.relative_to(ROOT).as_posix(),
+                    }
+                )
         for row in raw_rows:
             values = row["_samples"]
-            w.writerow({"campaign": "raw_bf16", "precision": "bf16bf16f32", "budget": "", "N": row["N"],
-                        "threads": row["threads"], "metric": "seconds", "n": 10, "mean": statistics.mean(values),
-                        "sample_std": statistics.stdev(values), "min": min(values), "max": max(values),
-                        "source_csv": f"bench/raw_bf16_n{row['N']}.csv"})
+            w.writerow(
+                {
+                    "campaign": "raw_bf16",
+                    "precision": "bf16bf16f32",
+                    "budget": "",
+                    "N": row["N"],
+                    "threads": row["threads"],
+                    "metric": "seconds",
+                    "n": 10,
+                    "mean": statistics.mean(values),
+                    "sample_std": statistics.stdev(values),
+                    "min": min(values),
+                    "max": max(values),
+                    "source_csv": f"bench/raw_bf16_n{row['N']}.csv",
+                }
+            )
 
     # Keep raw original files as-is; this is the aggregate public interface.
     raw_fields = [k for k in raw_rows[0] if not k.startswith("_")]
@@ -378,7 +498,9 @@ def main() -> None:
         w.writerows([{k: v for k, v in row.items() if not k.startswith("_")} for row in raw_rows])
 
     if args.merge_only:
-        print("canonical CSV merge and per-configuration statistics written after successful coverage validation")
+        print(
+            "canonical CSV merge and per-configuration statistics written after successful coverage validation"
+        )
         return
 
     required_artifacts = [
@@ -387,45 +509,85 @@ def main() -> None:
         BENCH / "diagnostics/alt_256/alternative_validation.json",
         BENCH / "diagnostics/alt_256/native_validation.json",
         DOCS / "trace/ctest.log",
-        *(DOCS / "figures" / f"{name}.{suffix}" for name in
-          ("accuracy_vs_size", "speedup_vs_mkl", "time_breakdown", "thread_scaling", "raw_bf16_throughput")
-          for suffix in ("png", "pdf")),
+        *(
+            DOCS / "figures" / f"{name}.{suffix}"
+            for name in (
+                "accuracy_vs_size",
+                "speedup_vs_mkl",
+                "time_breakdown",
+                "thread_scaling",
+                "raw_bf16_throughput",
+            )
+            for suffix in ("png", "pdf")
+        ),
     ]
-    missing_artifacts = [p.relative_to(ROOT).as_posix() for p in required_artifacts if not p.is_file()]
+    missing_artifacts = [
+        p.relative_to(ROOT).as_posix() for p in required_artifacts if not p.is_file()
+    ]
     if missing_artifacts:
-        raise SystemExit(f"final report is deferred; required diagnostic/plot artifacts missing: {missing_artifacts}")
+        raise SystemExit(
+            f"final report is deferred; required diagnostic/plot artifacts missing: {missing_artifacts}"
+        )
     ctest_log = (DOCS / "trace/ctest.log").read_text(encoding="utf-8", errors="replace")
     if "100% tests passed" not in ctest_log:
         raise SystemExit("CTest result log does not contain a passing summary")
-    native_summary = json.loads((BENCH / "diagnostics/alt_256/native_validation.json").read_text(encoding="utf-8"))
-    ctest_summary = {"log": "docs/trace/ctest.log", "sha256": sha256(DOCS / "trace/ctest.log"),
-                     "result": "100% tests passed"}
+    native_summary = json.loads(
+        (BENCH / "diagnostics/alt_256/native_validation.json").read_text(encoding="utf-8")
+    )
+    ctest_summary = {
+        "log": "docs/trace/ctest.log",
+        "sha256": sha256(DOCS / "trace/ctest.log"),
+        "result": "100% tests passed",
+    }
 
     manifest_path = DOCS / "FULL_SWEEP_MANIFEST.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     manifest["status"] = "complete"
-    manifest["completed_utc"] = __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat()
-    manifest["validated_coverage"] = {"main_configs": len(all_main), "expected_main_configs": 40,
-                                      "thread_configs": len(thread_rows), "expected_thread_configs": 18,
-                                      "raw_bf16_sizes": len(raw_rows), "expected_raw_bf16_sizes": 8,
-                                      "timed_repetitions_each": 10, "unique_main_keys": len(main_by_key)}
+    manifest["completed_utc"] = (
+        __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat()
+    )
+    manifest["validated_coverage"] = {
+        "main_configs": len(all_main),
+        "expected_main_configs": 40,
+        "thread_configs": len(thread_rows),
+        "expected_thread_configs": 18,
+        "raw_bf16_sizes": len(raw_rows),
+        "expected_raw_bf16_sizes": 8,
+        "timed_repetitions_each": 10,
+        "unique_main_keys": len(main_by_key),
+    }
     manifest["canonical_ctest"] = ctest_summary
     manifest["native_alternative_diagnostic"] = native_summary
-    manifest["validated_sources_sha256"] = {p.relative_to(ROOT).as_posix(): sha256(p) for p in MAIN_SOURCES}
-    thread_sources = [BENCH / f"thread_scaling_fp32_n{n}_t{t}.csv"
-                      for n in (1024, 4096, 16384) for t in (2, 4, 8, 16, 32, 64)]
+    manifest["validated_sources_sha256"] = {
+        p.relative_to(ROOT).as_posix(): sha256(p) for p in MAIN_SOURCES
+    }
+    thread_sources = [
+        BENCH / f"thread_scaling_fp32_n{n}_t{t}.csv"
+        for n in (1024, 4096, 16384)
+        for t in (2, 4, 8, 16, 32, 64)
+    ]
     raw_sources = [BENCH / f"raw_bf16_n{n}.csv" for n in SIZES]
     manifest["validated_input_sha256"] = {
         p.relative_to(ROOT).as_posix(): sha256(p)
         for p in [*MAIN_SOURCES, *thread_sources, *raw_sources]
     }
-    manifest["derived_outputs"] = ["bench/final_main_40.csv", "bench/final_timing_statistics.csv",
-                                   "bench/raw_bf16.csv", "docs/figures/*.png", "docs/figures/*.pdf"]
-    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    manifest["derived_outputs"] = [
+        "bench/final_main_40.csv",
+        "bench/final_timing_statistics.csv",
+        "bench/raw_bf16.csv",
+        "docs/figures/*.png",
+        "docs/figures/*.pdf",
+    ]
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
     # Replace the old pilot-only status report once the full protocol validates.
     result_path = DOCS / "REPRODUCTION_RESULTS.md"
-    result_path.write_text(render_final_report(main_by_key, all_main, thread_rows, raw_rows, native_summary), encoding="utf-8")
+    result_path.write_text(
+        render_final_report(main_by_key, all_main, thread_rows, raw_rows, native_summary),
+        encoding="utf-8",
+    )
 
     readme = ROOT / "README.md"
     text = readme.read_text(encoding="utf-8")

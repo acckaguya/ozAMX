@@ -10,10 +10,22 @@ from pathlib import Path
 
 METHODS = {"paper_literal_rho45", "direct_bf16_residual", "diagnostic_rho44"}
 BUDGETS = {"6": 6, "10": 10, "15": 15, "21": 21}
-HEADER = ["record_type", "method", "budget", "product", "N", "seed",
-          "eF_selected_longdouble", "scaledmax_selected_longdouble",
-          "eF_selected_fp32_rounded", "scaledmax_selected_fp32_rounded",
-          "eF_actual_amx", "scaledmax_actual_amx", "product_store_mismatches", "max_ulp"]
+HEADER = [
+    "record_type",
+    "method",
+    "budget",
+    "product",
+    "N",
+    "seed",
+    "eF_selected_longdouble",
+    "scaledmax_selected_longdouble",
+    "eF_selected_fp32_rounded",
+    "scaledmax_selected_fp32_rounded",
+    "eF_actual_amx",
+    "scaledmax_actual_amx",
+    "product_store_mismatches",
+    "max_ulp",
+]
 
 
 def finite_tree(value) -> bool:
@@ -37,8 +49,11 @@ def validate_alternative_json(path: Path) -> dict:
     if not isinstance(size_records, list) or len(size_records) != 1:
         raise ValueError("alternative report must contain exactly one N=256 size record")
     size_record = size_records[0]
-    if (not isinstance(size_record, dict) or int(size_record.get("n", -1)) != 256
-            or size_record.get("longdouble_mantissa_bits") != 64):
+    if (
+        not isinstance(size_record, dict)
+        or int(size_record.get("n", -1)) != 256
+        or size_record.get("longdouble_mantissa_bits") != 64
+    ):
         raise ValueError("unexpected N or longdouble format in alternative report")
     expected_slice_budgets = {"6": "i+j<3", "10": "i+j<4", "15": "i+j<5", "21": "i+j<6"}
     if payload.get("slice_count") != 6 or payload.get("slice_budgets") != expected_slice_budgets:
@@ -53,12 +68,18 @@ def validate_alternative_json(path: Path) -> dict:
         if not body.get("all_slices_exact_bf16"):
             raise ValueError(f"{method}: BF16 slice exactness check failed")
         for budget, metrics in errors.items():
-            if not isinstance(metrics, dict) or not {"eF", "scaledmax", "max_abs"}.issubset(metrics):
+            if not isinstance(metrics, dict) or not {"eF", "scaledmax", "max_abs"}.issubset(
+                metrics
+            ):
                 raise ValueError(f"{method}/p{budget}: incomplete error metrics")
-    return {"n": 256, "methods": sorted(methods), "budgets": sorted(BUDGETS, key=int),
-            "reference_dtype": size_record.get("reference_dtype"),
-            "longdouble_storage_bytes": size_record.get("longdouble_storage_bytes"),
-            "longdouble_mantissa_bits": size_record.get("longdouble_mantissa_bits")}
+    return {
+        "n": 256,
+        "methods": sorted(methods),
+        "budgets": sorted(BUDGETS, key=int),
+        "reference_dtype": size_record.get("reference_dtype"),
+        "longdouble_storage_bytes": size_record.get("longdouble_storage_bytes"),
+        "longdouble_mantissa_bits": size_record.get("longdouble_mantissa_bits"),
+    }
 
 
 def validate_native_csv(path: Path) -> dict:
@@ -77,9 +98,14 @@ def validate_native_csv(path: Path) -> dict:
             key = method, budget
             if key in summaries:
                 raise ValueError(f"duplicate native summary {key}")
-            numeric = ("eF_selected_longdouble", "scaledmax_selected_longdouble",
-                       "eF_selected_fp32_rounded", "scaledmax_selected_fp32_rounded",
-                       "eF_actual_amx", "scaledmax_actual_amx")
+            numeric = (
+                "eF_selected_longdouble",
+                "scaledmax_selected_longdouble",
+                "eF_selected_fp32_rounded",
+                "scaledmax_selected_fp32_rounded",
+                "eF_actual_amx",
+                "scaledmax_actual_amx",
+            )
             values = {field: float(row[field]) for field in numeric}
             if not all(math.isfinite(value) for value in values.values()):
                 raise ValueError(f"nonfinite numeric result in native summary {key}")
@@ -98,22 +124,31 @@ def validate_native_csv(path: Path) -> dict:
 
     expected_summaries = {(m, b) for m in METHODS for b in BUDGETS}
     if set(summaries) != expected_summaries:
-        raise ValueError(f"native summary coverage mismatch: missing={expected_summaries-set(summaries)}")
+        raise ValueError(
+            f"native summary coverage mismatch: missing={expected_summaries-set(summaries)}"
+        )
     for method in METHODS:
         for budget, count in BUDGETS.items():
-            expected_products = {(method, budget, f"a{ai}b{di-ai}")
-                                 for di in range({"6": 3, "10": 4, "15": 5, "21": 6}[budget])
-                                 for ai in range(di + 1)}
+            expected_products = {
+                (method, budget, f"a{ai}b{di-ai}")
+                for di in range({"6": 3, "10": 4, "15": 5, "21": 6}[budget])
+                for ai in range(di + 1)
+            }
             observed = {key for key in products if key[:2] == (method, budget)}
             if observed != expected_products:
                 raise ValueError(f"native product coverage mismatch for {method}/{budget}")
     mismatch_products = sum(v["mismatches"] > 0 for v in products.values())
     max_ulp_observed = max((v["max_ulp"] for v in products.values()), default=0)
-    return {"n": 256, "summary_rows": len(summaries), "product_rows": len(products),
-            "methods": sorted(METHODS), "budgets": sorted(BUDGETS, key=int),
-            "products_with_nonzero_mismatch": mismatch_products,
-            "max_product_ulp_difference": max_ulp_observed,
-            "summaries": {f"{m}/p{b}": v for (m, b), v in sorted(summaries.items())}}
+    return {
+        "n": 256,
+        "summary_rows": len(summaries),
+        "product_rows": len(products),
+        "methods": sorted(METHODS),
+        "budgets": sorted(BUDGETS, key=int),
+        "products_with_nonzero_mismatch": mismatch_products,
+        "max_product_ulp_difference": max_ulp_observed,
+        "summaries": {f"{m}/p{b}": v for (m, b), v in sorted(summaries.items())},
+    }
 
 
 def main() -> int:
@@ -122,7 +157,11 @@ def main() -> int:
     group.add_argument("--alternate-json", type=Path)
     group.add_argument("--native-csv", type=Path)
     args = parser.parse_args()
-    result = validate_alternative_json(args.alternate_json) if args.alternate_json else validate_native_csv(args.native_csv)
+    result = (
+        validate_alternative_json(args.alternate_json)
+        if args.alternate_json
+        else validate_native_csv(args.native_csv)
+    )
     print(json.dumps(result, indent=2, ensure_ascii=False, allow_nan=False))
     return 0
 

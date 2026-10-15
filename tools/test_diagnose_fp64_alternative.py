@@ -5,7 +5,10 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
 from diagnose_fp64_alternative import (
-    bf16_bits_from_slices, decompose, round_to_bf16_f64, scalar_self_test,
+    bf16_bits_from_slices,
+    decompose,
+    round_to_bf16_f64,
+    scalar_self_test,
 )
 
 

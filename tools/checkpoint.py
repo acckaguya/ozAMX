@@ -23,11 +23,14 @@ KNOWN_EVIDENCE = (
 
 SECRET_PATTERNS = (
     re.compile(r"(?i)\b(sk-[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9_]{8,})\b"),
-    re.compile(r"(?i)\b(authorization\s*:\s*bearer|api[_ -]?key\s*[=:]|access[_ -]?token\s*[=:]|password\s*[=:])\s*\S+"),
+    re.compile(
+        r"(?i)\b(authorization\s*:\s*bearer|api[_ -]?key\s*[=:]|access[_ -]?token\s*[=:]|password\s*[=:])\s*\S+"
+    ),
 )
 
 
 def clean(value: str) -> str:
+    # Checkpoint 文本可能来自命令行；追加前先清除常见凭据并压平成单行。
     value = value.strip()
     for pattern in SECRET_PATTERNS:
         value = pattern.sub("[REDACTED]", value)
@@ -50,11 +53,22 @@ def bullet_block(label: str, items: list[str]) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--done", action="append", default=[], help="Completed evidence/result; repeatable")
+    parser.add_argument(
+        "--done", action="append", default=[], help="Completed evidence/result; repeatable"
+    )
     parser.add_argument("--pending", action="append", default=[], help="Next work item; repeatable")
-    parser.add_argument("--command", action="append", default=[], help="Command run or intended; label status in text")
-    parser.add_argument("--path", action="append", default=[], help="Project-relative path involved; repeatable")
-    parser.add_argument("--note", action="append", default=[], help="Short factual note; repeatable")
+    parser.add_argument(
+        "--command",
+        action="append",
+        default=[],
+        help="Command run or intended; label status in text",
+    )
+    parser.add_argument(
+        "--path", action="append", default=[], help="Project-relative path involved; repeatable"
+    )
+    parser.add_argument(
+        "--note", action="append", default=[], help="Short factual note; repeatable"
+    )
     args = parser.parse_args()
 
     try:
