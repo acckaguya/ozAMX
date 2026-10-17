@@ -49,7 +49,8 @@
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
-  -DOZAMX_STRICT_PATH=ON -DOZAMX_STRICT_LOCAL_STAGING=ON
+  -DOZAMX_STRICT_PATH=ON -DOZAMX_STRICT_LOCAL_STAGING=ON \
+  -DOZAMX_STRICT_FP64_ROW_PAD_BYTES=64 -DOZAMX_STRICT_PREP_FUSED_DIRECT=ON
 cmake --build build -j8
 python3 tools/run_strict_emulation.py --build build \
   --out bench/8454h/strict_emulation/new_campaign --reps 10
@@ -116,7 +117,7 @@ FP64 对 DGEMM：p6 在 N=8192/16384/32768 为 **1.25/1.39/1.52**（N=4096 为 0
 
 ## 7. strict 布局优化：私有 FP64 block 64 B 行 padding（A1，2026-10-17）
 
-机制：strict 路径的 thread-private FP64 block 逻辑形状仍为 `BM×BN=256×256`，但物理行 striding 从 `256` doubles（2048 B）改为 `264` doubles（2112 B，即每行多 64 B）。这只改变私有累加器的地址映射，不改变分片、product 顺序、每组件 `store→widen→add`、输出 block 所有权或最终 C 字节。默认 `OZAMX_STRICT_FP64_ROW_PAD_BYTES=64`；FP32 block 不 padding。设为 0 可复现旧布局。
+机制：strict 路径的 thread-private FP64 block 逻辑形状仍为 `BM×BN=256×256`，但物理行 striding 从 `256` doubles（2048 B）改为 `264` doubles（2112 B，即每行多 64 B）。这只改变私有累加器的地址映射，不改变分片、product 顺序、每组件 `store→widen→add`、输出 block 所有权或最终 C 字节。默认 `OZAMX_STRICT_FP64_ROW_PAD_BYTES=64`；FP32 block 不 padding。设为 0 可复现旧布局。**已有 build 目录若缓存了 0，需要显式重新配置 `-DOZAMX_STRICT_FP64_ROW_PAD_BYTES=64`，CMake 不会把旧 cache 自动升级到新默认值。**
 
 原因：2048 B 行距是 64 B cache line 的整数倍（32 lines），多行工作集会集中到少数 L1 set；64 B padding 后行距为 33 lines，32 行分散到全部 64 个 set，减少 FP64 reconstruction 的 set 冲突。
 

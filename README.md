@@ -19,7 +19,8 @@
 ## 构建与验证
 
 ```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DOZAMX_ENABLE_OPENMP=ON \
+  -DOZAMX_STRICT_FP64_ROW_PAD_BYTES=64
 cmake --build build -j8
 OMP_NUM_THREADS=64 ctest --test-dir build --output-on-failure
 ```
