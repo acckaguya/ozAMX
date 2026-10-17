@@ -83,6 +83,10 @@
 # Private GitHub CLI configuration, if a local user chooses to keep it in-workspace
 /.github-cli-auth/
 
+# Research-only overlap microbenchmark; strict path does not use it.
+/bench/p4_overlap_micro.cpp
+/bench/p4_overlap_micro.S
+
 # Local-only phase-2 experiment working sets and session traces (kept on disk, never pushed)
 /bench/8454h/paper_alignment/
 /bench/8454h/strict_emulation/
