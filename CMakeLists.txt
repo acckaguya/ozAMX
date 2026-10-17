@@ -16,7 +16,7 @@ option(OZAMX_PACK_NT_STORE "Use non-temporal stores for the packed panel writes 
 option(OZAMX_STRICT_PREP_FUSED_DIRECT "Write BF16 components directly into the packed AMX panels on the strict-emulation path (experimental prep, byte-identical output)" OFF)
 
 set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
-set(OZAMX_STRICT_FP64_ROW_PAD_BYTES 0 CACHE STRING "Private FP64 accumulator row padding bytes (0 or a positive multiple of 64)")
+set(OZAMX_STRICT_FP64_ROW_PAD_BYTES 64 CACHE STRING "Private FP64 accumulator row padding bytes (0 or a positive multiple of 64)")
 set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")
 set(OZAMX_MIN_COMPUTE_WORK 8 CACHE STRING "Small-shape output tasks per worker")
 set(OZAMX_TILELOAD_HINT 1 CACHE STRING "AMX input loads: 0=TILELOADD, 1=TILELOADDT1")

@@ -528,8 +528,12 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
 #pragma omp for collapse(2) schedule(static)
         for (std::size_t mb = 0; mb < p.mblocks; ++mb)
             for (std::size_t nb = 0; nb < p.nblocks; ++nb) {
-                for (std::size_t br = 0; br < BM; ++br)
-                    zero_block(block + br * block_stride, BN);
+                if constexpr (block_pad_elems == 0) {
+                    zero_block(block, BM * BN);
+                } else {
+                    for (std::size_t br = 0; br < BM; ++br)
+                        zero_block(block + br * block_stride, BN);
+                }
                 const auto rows = std::min(BM, m - mb * BM);
                 const auto cols = std::min(BN, n - nb * BN);
 #if OZAMX_STRICT_LOCAL_STAGING && OZAMX_RESEARCH_STAGING_PIPELINE
@@ -613,13 +617,22 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
                 // partial sum is NaN/Inf, later additions cannot make it finite.
                 // One scan preserves rejection and transactional C semantics
                 // while keeping classification out of every component add.
-                for (std::size_t i = 0; i < BM; ++i)
-                    for (std::size_t q = 0; q < BN; q += 64 / sizeof(T)) {
+                if constexpr (block_pad_elems == 0) {
+                    for (std::size_t q = 0; q < BM * BN; q += 64 / sizeof(T)) {
                         if constexpr (std::is_same_v<T, float>)
-                            bad_ref |= nonfinite(_mm512_load_ps(block + i * block_stride + q));
+                            bad_ref |= nonfinite(_mm512_load_ps(block + q));
                         else
-                            bad_ref |= nonfinite(_mm512_load_pd(block + i * block_stride + q));
+                            bad_ref |= nonfinite(_mm512_load_pd(block + q));
                     }
+                } else {
+                    for (std::size_t i = 0; i < BM; ++i)
+                        for (std::size_t q = 0; q < BN; q += 64 / sizeof(T)) {
+                            if constexpr (std::is_same_v<T, float>)
+                                bad_ref |= nonfinite(_mm512_load_ps(block + i * block_stride + q));
+                            else
+                                bad_ref |= nonfinite(_mm512_load_pd(block + i * block_stride + q));
+                        }
+                }
                 for (std::size_t i = 0; i < rows; ++i)
                     copy_row(result.data() + (mb * BM + i) * n + nb * BN,
                              block + i * block_stride, cols);

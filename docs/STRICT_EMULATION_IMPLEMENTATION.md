@@ -113,3 +113,31 @@ FP64 对 DGEMM：p6 在 N=8192/16384/32768 为 **1.25/1.39/1.52**（N=4096 为 0
 ### 6.3 工件边界
 
 历史工件目录 `bench/8454h/paper_alignment/**`（campaign、arms、字节门、配对运行）与 `trace/**` 为本地工作产物，**不随分支推送**；阶段 2 的完整表格、尖刺清单与配对原始数据见本地 `trace/2026-10-16-phase2-headline-results.md`、`trace/2026-10-16-prep-fused-direct.md` 与对应 arms 目录。
+
+## 7. strict 布局优化：私有 FP64 block 64 B 行 padding（A1，2026-10-17）
+
+机制：strict 路径的 thread-private FP64 block 逻辑形状仍为 `BM×BN=256×256`，但物理行 striding 从 `256` doubles（2048 B）改为 `264` doubles（2112 B，即每行多 64 B）。这只改变私有累加器的地址映射，不改变分片、product 顺序、每组件 `store→widen→add`、输出 block 所有权或最终 C 字节。默认 `OZAMX_STRICT_FP64_ROW_PAD_BYTES=64`；FP32 block 不 padding。设为 0 可复现旧布局。
+
+原因：2048 B 行距是 64 B cache line 的整数倍（32 lines），多行工作集会集中到少数 L1 set；64 B padding 后行距为 33 lines，32 行分散到全部 64 个 set，减少 FP64 reconstruction 的 set 冲突。
+
+同进程双库配对（PASSIVE、64 threads、CPU 0–63、8 GiB、10 reps、complete、full-C byte-exact；candidate/control，API 为 paired median）：
+
+| N | 模式 | API ratio | compute ratio | 备注 |
+|---:|---|---:|---:|---|
+| 256 | fp64 p6 | 0.969 | 0.932 | 小尺寸噪声大，未回归 |
+| 256 | fp64 p21 | 0.966 | 0.918 | 小尺寸噪声大，未回归 |
+| 1024 | fp64 p6 | 0.975 | 0.949 | |
+| 1024 | fp64 p21 | 0.963 | 0.873 | 小尺寸样本波动 |
+| 8192 | fp64 p6 | **0.905** | **0.925** | |
+| 8192 | fp64 p10 | **0.965** | **0.957** | |
+| 8192 | fp64 p15 | **0.973** | **0.973** | |
+| 8192 | fp64 p21 | **0.926** | **0.930** | |
+| 16384 | fp64 p6 | **0.935** | **0.923** | 均值比 0.902 |
+| 16384 | fp64 p21 | **0.908** | **0.907** | 均值比 0.862 |
+| 8192 | fp32 p6 | 1.007 | 1.004 | padding 只对 FP64，观察为噪声中性 |
+
+结论：A1 是 strict-compatible（仅布局）且大 N 收益稳定，默认采用。原始配对在本地 `/tmp/a1_pad_pair_*`，不进入推送；本结论不替代论文 Figure 7/9 的跨平台 headline。
+
+## 8. product/reconstruction overlap 的边界
+
+P4（下一 product 的 AMX 与当前 product 的 FP64 widen/add 交错）不属于 strict：重读论文 §6.3/§8.4 可见“每个 AMX product 必须 store、widen、add，之后才 evaluate the next product”。P4 只能作为 `research product/reconstruction overlap`，默认关闭、单独报表，不得混入本严格实现或论文 headline。完整依据见 `trace/2026-10-17-paper-reread-strict-overlap-synthesis.md`。
