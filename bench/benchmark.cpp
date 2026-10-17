@@ -149,7 +149,7 @@ void fill(std::vector<double>& a, std::vector<double>& b, std::size_t n, const O
 struct ErrorMetrics {
     long double ef = 0, scaled = 0;
 };
-constexpr const char* kCheckpointSourceId = "paper-alignment-paired-api-v2-20261016";
+constexpr const char* kCheckpointSourceId = "strict-emulation-paired-api-v3-20261017";
 constexpr const char* kTimingSchema = "api-wall-headline-v2";
 constexpr const char* kMeasurementProtocol = "paired-alternating-api-first-even";
 std::string mkl_version() {

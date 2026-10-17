@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append a small, factual recovery checkpoint for the paper reproduction."""
+"""Append a small, factual recovery checkpoint for strict-emulation work."""
 
 from __future__ import annotations
 
@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "traces" / "continuity-state.md"
 KNOWN_EVIDENCE = (
     "traces/STATE.md",
-    "traces/paper-state.md",
+    "traces/strict-emulation-state.md",
     "traces/environment-state.md",
-    "docs/paper-study.md",
-    "docs/reproduction-spec.md",
+    "docs/PAPER_STUDY.md",
+    "docs/REPRODUCTION_SPEC.md",
     "docs/environment.md",
 )
 

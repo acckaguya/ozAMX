@@ -3,7 +3,7 @@
 
 API wall means are primary; MKL ratios are auxiliary descriptions. Intervals
 describe within-process timing samples, not independent host replications.
-Exit 0 means analysis completed, never a causal or paper-target success claim.
+Exit 0 means analysis completed, never a causal or Figure 7 target-success claim.
 """
 import argparse
 import csv
@@ -18,7 +18,7 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYZER = ROOT / "tools/analyze_paper_alignment.py"
+ANALYZER = ROOT / "tools/analyze_strict_emulation.py"
 WAIT_KEYS = {"OMP_WAIT_POLICY", "GOMP_SPINCOUNT"}
 # Two-sided 95% Student t critical values. Ten samples per arm constrain Welch
 # degrees of freedom to [9, 18]. Flooring df gives a conservative critical value.
@@ -32,7 +32,7 @@ INTERVAL_LIMITATION = (
     "coverage assumes independent, stationary, approximately normal samples. "
     "The ten sequential timings in each process may be correlated and are not "
     "ten independent host/process replications. This sample-level descriptive "
-    "interval does not establish host-level uncertainty, causality, or paper success.")
+    "interval does not establish host-level uncertainty, causality, or reference-target success.")
 
 
 def welch_interval(numerator, denominator):
@@ -48,6 +48,14 @@ def welch_interval(numerator, denominator):
     return {"estimate_s": delta, "lower_s": delta - margin, "upper_s": delta + margin,
             "standard_error_s": math.sqrt(se2), "welch_df": df,
             "critical_df": critical_df, "t_critical": critical}
+
+
+def normalize_declared_scope(scope):
+    """Accept the historical scope key while exposing the current name."""
+    normalized = dict(scope)
+    if "is_full_paper_scope" in normalized and "is_full_reference_scope" not in normalized:
+        normalized["is_full_reference_scope"] = normalized.pop("is_full_paper_scope")
+    return normalized
 
 
 def validate_arm(directory, label, temporary):
@@ -75,15 +83,17 @@ def validate_arm(directory, label, temporary):
     process = subprocess.run(command, capture_output=True, text=True)
     fresh = json.loads(out.read_text()) if out.is_file() else {}
     if process.returncode != 0 or not fresh.get("declared_configuration_coverage") or \
-            not fresh.get("paper_protocol_and_identity_valid"):
+            not fresh.get("reference_protocol_and_identity_valid"):
         raise ValueError(f"{label}: fresh analyzer rejected evidence: "
                          f"{fresh.get('protocol_or_identity_issues', [])} {process.stderr[:500]}")
     if fresh["csv_sha256"] != digest or \
             hashlib.sha256((directory / "results.csv").read_bytes()).hexdigest() != digest:
         raise ValueError(f"{label}: CSV changed during validation")
-    for field in ("declared_scope", "environment_expected", "environment_expected_unset", "reference_sha256"):
+    for field in ("environment_expected", "environment_expected_unset", "reference_sha256"):
         if fresh[field] != claimed[field]:
             raise ValueError(f"{label}: fresh validation contradicts declared {field}")
+    if fresh["declared_scope"] != normalize_declared_scope(claimed["declared_scope"]):
+        raise ValueError(f"{label}: fresh validation contradicts declared declared_scope")
     values = {}
     for row in csv.DictReader(io.StringIO(raw.decode())):
         key = (row["precision"], int(row["budget"]), int(row["N"]))
@@ -153,7 +163,7 @@ def main():
                   "ratio_convention": "API/MKL wall ratios below 1 mean less wall time in the numerator; "
                                       "the auxiliary normalized speedup ratio above 1 means higher MKL/API speedup.",
                   "interval_method_and_limits": INTERVAL_LIMITATION,
-                  "causal_or_paper_target_success_inferred": False}
+                  "causal_or_figure_target_success_inferred": False}
         code = 0
     except (OSError, ValueError, KeyError, TypeError, OverflowError) as error:
         report, code = {"status": "invalid", "error": str(error)}, 2

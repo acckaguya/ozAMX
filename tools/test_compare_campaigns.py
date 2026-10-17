@@ -52,7 +52,7 @@ class CampaignComparisons(unittest.TestCase):
         path.write_text(json.dumps(claimed))
         code, report = self.run_tool()
         self.assertEqual(code, 0, report)
-        self.assertFalse(report["causal_or_paper_target_success_inferred"])
+        self.assertFalse(report["causal_or_figure_target_success_inferred"])
         self.assertTrue(all(a["revalidated_source_policy"] == "snapshot" for a in report["arms"]))
         for row in report["rows"]:
             raw = []

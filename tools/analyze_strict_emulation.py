@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Recompute paired CSV results, cross-check the checkpoint evidence, and show paper targets.
+"""Recompute paired CSV results and validate strict-emulation campaign evidence.
 
 Integrity gates (exit 2 if any fails):
-  * paper protocol / timing schema / single run identity across every CSV row;
+  * reference protocol / timing schema / single run identity across every CSV row;
   * provenance.json status/returncode/source-unchanged and artifact fingerprints;
   * CSV <-> checkpoint cross-checks (identity, hashes, seed, complete, 10 pairs,
     raw sample vectors) for exactly the declared configurations (default: all 40);
   * no missing/extra configs within the explicitly declared size/mode scope.
-Target gate (--require-paper-speedups, exit 1 if missed):
+Figure target gate (--require-figure7-speedups, exit 1 if missed):
   * full 40-configuration coverage and all eight FP32 p6 API speedups >=
-    the paper's Figure 7 points; a partial scope never passes this gate.
+    the reference Figure 7 points; a partial scope never passes this gate.
 Table 4 values remain ratio-only empirical references: no accuracy threshold is invented.
 """
 import argparse
@@ -23,17 +23,23 @@ import statistics
 ROOT = Path(__file__).resolve().parents[1]
 SIZES = [256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
 MODES = [("fp32", 6), ("fp64", 6), ("fp64", 10), ("fp64", 15), ("fp64", 21)]
-SOURCE_ID = "paper-alignment-paired-api-v2-20261016"
+SOURCE_ID = "strict-emulation-paired-api-v3-20261017"
+LEGACY_SOURCE_ID = "paper-alignment-paired-api-v2-20261016"
+ACCEPTED_SOURCE_IDS = frozenset((SOURCE_ID, LEGACY_SOURCE_ID))
 TIMING_SCHEMA = "api-wall-headline-v2"
 MEASUREMENT_PROTOCOL = "paired-alternating-api-first-even"
 SEED_BASE = 260904
 LAUNCH_MASK = "0-63"
-# Same ten frozen sources as run_paper_alignment.py; snapshot policy must not
-# silently accept a provenance manifest with a source entry removed.
-FROZEN_SOURCES = {"CMakeLists.txt", "include/ozamx/gemm.hpp", "src/gemm.cpp",
-                  "src/preprocess.hpp", "src/tuning.hpp", "src/runtime.cpp", "src/kernels.S",
-                  "bench/benchmark.cpp", "tests/paper_alignment_probe.cpp",
-                  "tools/run_paper_alignment.py"}
+# The strict-emulation driver and its historical predecessor freeze the same
+# common sources but different runner paths.  Pairing the source id with the
+# runner snapshot prevents a legacy id from being reused by a new campaign.
+COMMON_FROZEN_SOURCES = {"CMakeLists.txt", "include/ozamx/gemm.hpp", "src/gemm.cpp",
+                         "src/preprocess.hpp", "src/tuning.hpp", "src/runtime.cpp",
+                         "src/kernels.S", "bench/benchmark.cpp"}
+FROZEN_SOURCES = COMMON_FROZEN_SOURCES | {"tests/strict_emulation_probe.cpp",
+                                          "tools/run_strict_emulation.py"}
+LEGACY_FROZEN_SOURCES = COMMON_FROZEN_SOURCES | {"tests/paper_alignment_probe.cpp",
+                                                 "tools/run_paper_alignment.py"}
 REQUIRED_ENV = {
     "LD_LIBRARY_PATH": str(ROOT / "third_party/code/mkl-current/lib"),
     "OMP_NUM_THREADS": "64", "OMP_PLACES": "cores", "OMP_PROC_BIND": "close",
@@ -88,24 +94,24 @@ def declared_scope(parser, args):
     try:
         sizes = [int(n) for n in args.sizes.split(",")] if args.sizes is not None else list(SIZES)
         if not sizes or len(sizes) != len(set(sizes)) or not set(sizes) <= set(SIZES):
-            raise ValueError("--sizes must contain distinct paper sizes")
+            raise ValueError("--sizes must contain distinct protocol sizes")
         if args.modes is not None:
             if args.precision is not None or args.budgets is not None:
                 raise ValueError("--modes cannot be combined with --precision/--budgets")
             names = args.modes.split(",")
             lookup = {f"{p}_p{b}": (p, b) for p, b in MODES}
             if len(names) != len(set(names)) or any(n not in lookup for n in names):
-                raise ValueError("--modes must contain distinct paper modes")
+                raise ValueError("--modes must contain distinct protocol modes")
             modes = [lookup[n] for n in names]
         else:
             budgets = [int(b) for b in args.budgets.split(",")] if args.budgets is not None else None
             if budgets is not None and (len(budgets) != len(set(budgets)) or
                                         not set(budgets) <= {6, 10, 15, 21}):
-                raise ValueError("--budgets must contain distinct paper budgets")
+                raise ValueError("--budgets must contain distinct protocol budgets")
             modes = [(p, b) for p, b in MODES
                      if args.precision in (None, "all", p) and (budgets is None or b in budgets)]
             if not modes or (budgets is not None and {b for _, b in modes} != set(budgets)):
-                raise ValueError("--precision/--budgets select an unsupported paper mode")
+                raise ValueError("--precision/--budgets select an unsupported protocol mode")
         if args.expect_cache_bytes < 0:
             raise ValueError("--expect-cache-bytes must be non-negative")
     except ValueError as error:
@@ -154,7 +160,7 @@ def check_identity(rows, checkpoints, provenance, directory, issues, notes,
             issues.append(f"Missing or mixed {key}")
     if any(int(r["threads"]) != 64 or r["distribution"] != "uniform" or
            int(r["repetitions"]) != 10 for r in rows):
-        issues.append("Paper main protocol requires 64 threads, uniform input, ten timed pairs")
+        issues.append("Reference main protocol requires 64 threads, uniform input, ten timed pairs")
     if any((r["precision"], int(r["budget"])) not in MODES for r in rows):
         issues.append("Unexpected precision/product-budget combination")
     if any(int(r["N"]) not in SIZES for r in rows):
@@ -171,10 +177,24 @@ def check_identity(rows, checkpoints, provenance, directory, issues, notes,
         p = directory / name
         if not p.is_file() or fingerprint(p) != provenance.get("artifact_sha256", {}).get(name):
             issues.append(f"Campaign artifact missing or changed: {name}")
+    checkpoint_source_ids = {c.get("source_id") for c in checkpoints.values()}
+    if len(checkpoint_source_ids) > 1:
+        issues.append(f"mixed checkpoint source_id values: {sorted(str(v) for v in checkpoint_source_ids)}")
+    if checkpoint_source_ids == {LEGACY_SOURCE_ID}:
+        expected_frozen_sources = LEGACY_FROZEN_SOURCES
+    else:
+        expected_frozen_sources = FROZEN_SOURCES
+    manifest_sources = set(provenance.get("source_sha256", {}))
     if source_policy == "snapshot":
-        missing_sources = FROZEN_SOURCES - set(provenance.get("source_sha256", {}))
+        missing_sources = expected_frozen_sources - manifest_sources
         if missing_sources:
             issues.append(f"Frozen source manifest is incomplete: {sorted(missing_sources)}")
+    runner_sources = LEGACY_FROZEN_SOURCES | FROZEN_SOURCES
+    runner_sources -= COMMON_FROZEN_SOURCES
+    unexpected_runners = runner_sources.intersection(manifest_sources - expected_frozen_sources)
+    if unexpected_runners:
+        issues.append(f"Frozen runner source does not match checkpoint source_id: "
+                      f"{sorted(unexpected_runners)}")
     for name, digest in provenance.get("source_sha256", {}).items():
         snapshot = directory / "source_snapshot" / name
         live = ROOT / name
@@ -251,8 +271,8 @@ def check_identity(rows, checkpoints, provenance, directory, issues, notes,
     for r in rows:
         row_by_key.setdefault((r["precision"], int(r["budget"]), int(r["N"])), r)
     for (p, b, n), c in sorted(checkpoints.items()):
-        if c.get("source_id") != SOURCE_ID:
-            issues.append(f"checkpoint {p}.{n}.{b}: wrong source_id")
+        if c.get("source_id") not in ACCEPTED_SOURCE_IDS:
+            issues.append(f"checkpoint {p}.{n}.{b}: wrong source_id {c.get('source_id')!r}")
         if c.get("timing_schema") != TIMING_SCHEMA or c.get("measurement_protocol") != MEASUREMENT_PROTOCOL:
             issues.append(f"checkpoint {p}.{n}.{b}: wrong schema/protocol")
         if c.get("complete") is not True or int(c.get("completed_timed_repetitions", -1)) != 10 or \
@@ -306,11 +326,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv", type=Path)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--require-paper-speedups", action="store_true")
-    parser.add_argument("--sizes", help="comma-separated paper sizes (default: all eight)")
+    parser.add_argument("--require-figure7-speedups", dest="require_figure7_speedups",
+                        action="store_true", help="fail unless all eight Figure 7 targets pass")
+    parser.add_argument("--require-paper-speedups", dest="require_figure7_speedups",
+                        action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--sizes", help="comma-separated protocol sizes (default: all eight)")
     parser.add_argument("--precision", choices=["all", "fp32", "fp64"])
     parser.add_argument("--budgets", "--budget", help="comma-separated product budgets")
-    parser.add_argument("--modes", help="comma-separated paper modes, e.g. fp32_p6,fp64_p6")
+    parser.add_argument("--modes", help="comma-separated protocol modes, e.g. fp32_p6,fp64_p6")
     parser.add_argument("--expect-cache-bytes", type=int, default=2147483648)
     parser.add_argument("--expect-wait", choices=["passive", "runtime"], default="passive")
     parser.add_argument("--source-policy", choices=["current", "live", "snapshot"], default="current",
@@ -337,7 +360,7 @@ def main():
     issues, notes = [], []
     if not full_scope:
         notes.append("Only the explicitly declared subset is validated; this is not full "
-                     "40-configuration coverage or an all-eight paper performance result.")
+                     "40-configuration coverage or an all-eight reference performance result.")
     if not provenance:
         issues.append("Missing campaign provenance")
     checkpoints, ckpt_problems = load_checkpoints(a.csv.parent)
@@ -380,7 +403,7 @@ def main():
         if not (math.isfinite(ef) and math.isfinite(scaled)):
             issues.append(f"{key}: non-finite error metrics")
         mode = f"{precision}_p{budget}"
-        paper = reference["table4_accuracy"]["values_as_printed_before_scale"].get(str(n), {}).get(mode)
+        reference_table4 = reference["table4_accuracy"]["values_as_printed_before_scale"].get(str(n), {}).get(mode)
         entry = {"precision": precision, "budget": budget, "N": n, "repetitions": len(api),
                  "api_mean_s": mean, "api_median_s": statistics.median(api),
                  "api_sample_sd_s": statistics.stdev(api) if len(api) > 1 else None,
@@ -390,18 +413,18 @@ def main():
                  "split_mean_s": float(row["split_s_mean"]), "pack_mean_s": float(row["pack_s_mean"]),
                  "compute_reconstruct_mean_s": float(row["compute_recon_s_mean"])}
         if precision == "fp32" and n in target:
-            entry.update(paper_speedup_target=target[n],
-                         paper_speedup_target_met=speedup >= target[n])
-        if paper:
+            entry.update(figure7_speedup_target=target[n],
+                         figure7_speedup_target_met=speedup >= target[n])
+        if reference_table4:
             scale = reference["table4_modes"][mode]
-            entry.update(paper_eF=paper[0] * scale["eF_scale"],
-                         eF_over_paper=ef / (paper[0] * scale["eF_scale"]))
+            entry.update(reference_eF=reference_table4[0] * scale["eF_scale"],
+                         eF_over_reference=ef / (reference_table4[0] * scale["eF_scale"]))
         result.append(entry)
         print(f'{precision} p{budget} N={n}: {entry["effective_TFLOP_s"]:.4f} TF/s, '
               f'{speedup:.4f}x MKL, eF={ef:.5g}')
 
     speeds = [r for r in result if r["precision"] == "fp32" and r["budget"] == 6 and r["N"] in target]
-    targets_met = all(r.get("paper_speedup_target_met", False) for r in speeds)
+    targets_met = all(r.get("figure7_speedup_target_met", False) for r in speeds)
     integrity_ok = not issues and len(result) == len(expected_keys)
     full_coverage = full_scope and integrity_ok and eight_ok and len(result) == 40
     all_targets = full_coverage and len(speeds) == 8 and targets_met
@@ -409,18 +432,18 @@ def main():
               "reference": str(reference_path), "reference_sha256": fingerprint(reference_path),
               "configurations": len(result), "expected_configurations": len(expected_keys),
               "declared_scope": {"sizes": sizes, "modes": [f"{p}_p{b}" for p, b in modes],
-                                 "is_full_paper_scope": full_scope},
+                                 "is_full_reference_scope": full_scope},
               "declared_configuration_coverage": integrity_ok,
               "full_40_configuration_coverage": full_coverage,
               "source_policy": source_policy, "environment_expected": required_env,
               "environment_expected_unset": absent_env,
               "eight_size_coverage_per_mode": eight_report,
-              "paper_protocol_and_identity_valid": not issues,
+              "reference_protocol_and_identity_valid": not issues,
               "protocol_or_identity_issues": issues,
-              "paper_fp32_speedup_targets_all_met": all_targets,
+              "figure7_fp32_speedups_all_met": all_targets,
               "fp32_speedup_targets": {
-                  str(r["N"]): {"observed": r["api_speedup"], "target": r["paper_speedup_target"],
-                                "met": r["paper_speedup_target_met"]}
+                  str(r["N"]): {"observed": r["api_speedup"], "target": r["figure7_speedup_target"],
+                                "met": r["figure7_speedup_target_met"]}
                   for r in speeds},
               "resume_events": [{k: v for k, v in e.items() if k != "environment"}
                                 for e in provenance.get("resume_events", [])] if provenance else [],
@@ -434,7 +457,7 @@ def main():
     temporary.replace(a.out)
     if not integrity_ok:
         return 2
-    if a.require_paper_speedups and not all_targets:
+    if a.require_figure7_speedups and not all_targets:
         return 1
     return 0
 

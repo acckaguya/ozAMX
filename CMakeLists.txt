@@ -3,15 +3,20 @@ project(ozamx VERSION 0.4.0 LANGUAGES C CXX ASM)
 
 option(OZAMX_ENABLE_OPENMP "Enable OpenMP parallel execution" ON)
 option(OZAMX_BUILD_PROBE "Build the standalone AMX instruction probe" ON)
-option(OZAMX_PAPER_ALIGNED "Use the paper's fixed 256 blocks, full slices and immediate FP64 reconstruction" ON)
-option(OZAMX_PAPER_LOCAL_STAGING "Copy component panels to worker-local buffers in the paper path" ON)
-option(OZAMX_PAPER_TASK_TEAMS "Limit paper-path teams to their independent panel tasks (experimental scheduling)" OFF)
-option(OZAMX_PAPER_PACK_USED_SLICES "Pack only the component slices a product budget reads (experimental prep)" OFF)
+option(OZAMX_STRICT_PATH "Use the reference algorithm's fixed 256 blocks, full slices and immediate FP64 reconstruction" ON)
+option(OZAMX_STRICT_LOCAL_STAGING "Copy component panels to worker-local buffers in the strict-emulation path" ON)
+option(OZAMX_RESEARCH_STAGING_PIPELINE "Research-only double-buffered panel staging; changes strict stage order and is not a strict-emulation default" OFF)
+option(OZAMX_PREP_SINGLE_REGION "Run the strict-emulation path split A and split B loops in one OpenMP parallel region" OFF)
+option(OZAMX_COMMIT_IN_COMPUTE "Commit the finished strict-emulation path result inside the compute parallel region" OFF)
+option(OZAMX_SINGLE_TASK_SERIAL "Run the strict-emulation path single-output-task compute/commit and one-panel splits without forking a team" OFF)
+option(OZAMX_RESEARCH_TASK_TEAMS "Research-only team-size limiting to independent panel tasks; changes strict scheduling" OFF)
+option(OZAMX_RESEARCH_PACK_USED_SLICES "Research-only packing of just the budget slices; strict-emulation precomputes all slices" OFF)
 option(OZAMX_PREP_FUSED_MAX "Collect the next FP64 global max while updating residuals (experimental prep, byte-identical output)" OFF)
 option(OZAMX_PACK_NT_STORE "Use non-temporal stores for the packed panel writes (experimental prep, byte-identical output)" OFF)
-option(OZAMX_PAPER_PREP_FUSED_DIRECT "Write BF16 components directly into the packed AMX panels on the paper path (experimental prep, byte-identical output)" OFF)
+option(OZAMX_STRICT_PREP_FUSED_DIRECT "Write BF16 components directly into the packed AMX panels on the strict-emulation path (experimental prep, byte-identical output)" OFF)
 
 set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
+set(OZAMX_STRICT_FP64_ROW_PAD_BYTES 0 CACHE STRING "Private FP64 accumulator row padding bytes (0 or a positive multiple of 64)")
 set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")
 set(OZAMX_MIN_COMPUTE_WORK 8 CACHE STRING "Small-shape output tasks per worker")
 set(OZAMX_TILELOAD_HINT 1 CACHE STRING "AMX input loads: 0=TILELOADD, 1=TILELOADDT1")
@@ -19,20 +24,24 @@ set(OZAMX_LOAD_SCHEDULE 0 CACHE STRING "FP64 loads: 0=interleaved, 1=all before 
 set(OZAMX_LOOP_ORDER 0 CACHE STRING "Compute loops: 0=BK outer, 1=microtile outer")
 set(OZAMX_MN_ORDER 0 CACHE STRING "Output task order: 0=row major, 1=column major")
 set(OZAMX_TUNING_DEFINITIONS)
-foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER)
+foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE LOOP_ORDER MN_ORDER STRICT_FP64_ROW_PAD_BYTES)
   if(NOT "${OZAMX_${knob}}" MATCHES "^[0-9]+$")
     message(FATAL_ERROR "OZAMX_${knob} must be a nonnegative integer")
   endif()
   list(APPEND OZAMX_TUNING_DEFINITIONS "OZAMX_${knob}=${OZAMX_${knob}}")
 endforeach()
 list(APPEND OZAMX_TUNING_DEFINITIONS
-  "OZAMX_PAPER_ALIGNED=$<BOOL:${OZAMX_PAPER_ALIGNED}>"
-  "OZAMX_PAPER_LOCAL_STAGING=$<BOOL:${OZAMX_PAPER_LOCAL_STAGING}>"
-  "OZAMX_PAPER_TASK_TEAMS=$<BOOL:${OZAMX_PAPER_TASK_TEAMS}>"
-  "OZAMX_PAPER_PACK_USED_SLICES=$<BOOL:${OZAMX_PAPER_PACK_USED_SLICES}>"
+  "OZAMX_STRICT_PATH=$<BOOL:${OZAMX_STRICT_PATH}>"
+  "OZAMX_STRICT_LOCAL_STAGING=$<BOOL:${OZAMX_STRICT_LOCAL_STAGING}>"
+  "OZAMX_RESEARCH_STAGING_PIPELINE=$<BOOL:${OZAMX_RESEARCH_STAGING_PIPELINE}>"
+  "OZAMX_PREP_SINGLE_REGION=$<BOOL:${OZAMX_PREP_SINGLE_REGION}>"
+  "OZAMX_COMMIT_IN_COMPUTE=$<BOOL:${OZAMX_COMMIT_IN_COMPUTE}>"
+  "OZAMX_SINGLE_TASK_SERIAL=$<BOOL:${OZAMX_SINGLE_TASK_SERIAL}>"
+  "OZAMX_RESEARCH_TASK_TEAMS=$<BOOL:${OZAMX_RESEARCH_TASK_TEAMS}>"
+  "OZAMX_RESEARCH_PACK_USED_SLICES=$<BOOL:${OZAMX_RESEARCH_PACK_USED_SLICES}>"
   "OZAMX_PREP_FUSED_MAX=$<BOOL:${OZAMX_PREP_FUSED_MAX}>"
   "OZAMX_PACK_NT_STORE=$<BOOL:${OZAMX_PACK_NT_STORE}>"
-  "OZAMX_PAPER_PREP_FUSED_DIRECT=$<BOOL:${OZAMX_PAPER_PREP_FUSED_DIRECT}>")
+  "OZAMX_STRICT_PREP_FUSED_DIRECT=$<BOOL:${OZAMX_STRICT_PREP_FUSED_DIRECT}>")
 
 add_library(ozamx STATIC src/runtime.cpp src/gemm.cpp src/kernels.S)
 target_include_directories(ozamx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -121,8 +130,8 @@ if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/validation.cpp")
   target_link_libraries(ozamx_alias_output_probe PRIVATE ozamx)
   target_compile_options(ozamx_alias_output_probe PRIVATE -march=sapphirerapids -ffp-contract=off)
   add_test(NAME ozamx_alias_output_probe COMMAND ozamx_alias_output_probe)
-  add_executable(ozamx_paper_alignment_probe tests/paper_alignment_probe.cpp)
-  target_link_libraries(ozamx_paper_alignment_probe PRIVATE ozamx)
-  target_compile_options(ozamx_paper_alignment_probe PRIVATE -O2 -ffp-contract=off)
-  add_test(NAME ozamx_paper_alignment_probe COMMAND ozamx_paper_alignment_probe)
+  add_executable(ozamx_strict_emulation_probe tests/strict_emulation_probe.cpp)
+  target_link_libraries(ozamx_strict_emulation_probe PRIVATE ozamx)
+  target_compile_options(ozamx_strict_emulation_probe PRIVATE -O2 -ffp-contract=off)
+  add_test(NAME ozamx_strict_emulation_probe COMMAND ozamx_strict_emulation_probe)
 endif()

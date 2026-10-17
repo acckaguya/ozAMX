@@ -196,9 +196,9 @@ inline int team_size(int requested, std::size_t work) {
                                                : int(work)));
 }
 // Experimental scheduling only: each stage supplies its own independent panel
-// count. The default keeps the paper path's requested team, including idle work.
-inline int paper_team_size(int requested, std::size_t tasks) {
-    return tuning::paper_task_teams ? team_size(requested, tasks) : requested;
+// count. The default keeps the strict-emulation path's requested team, including idle work.
+inline int strict_team_size(int requested, std::size_t tasks) {
+    return tuning::research_task_teams ? team_size(requested, tasks) : requested;
 }
 struct Slices {
     AlignedBuffer<std::uint16_t> data;
@@ -258,7 +258,7 @@ inline bool valid_shape(const void* p, std::size_t rows, std::size_t cols, std::
 }
 
 // One static task is either one SIMD chunk (adaptive path) or a complete
-// 256x256 input panel (paper path). The numeric body is shared; in particular
+// 256x256 input panel (strict-emulation path). The numeric body is shared; in particular
 // panel scheduling never changes the FP64 global maximum or shift scope.
 struct MatrixTraversal {
     struct Region { std::size_t row, row_end, col, col_end; };
@@ -281,20 +281,15 @@ struct MatrixTraversal {
     }
 };
 
-inline Slices split_fp32(const float* src, std::size_t rows, std::size_t cols, std::size_t ld,
-                         int threads, bool panel_static = false) {
-    if (threads < 1 || !valid_shape(src, rows, cols, ld))
-        throw Error("invalid FP32 input shape");
-    Slices out;
-    out.count = mul(rows, cols);
-    out.slices = 3;
-    out.data = AlignedBuffer<std::uint16_t>(mul(out.count, 3));
-    int bad = 0;
-    const MatrixTraversal traversal{rows, cols, 16, panel_static};
+// Shared numeric loop for the FP32 split. split_fp32 drives it from its own
+// parallel region; split_fp32_pair drives the A and B calls from one region
+// (OZAMX_PREP_SINGLE_REGION). The worksharing construct is deliberately
+// orphaned: callers must invoke this from inside an OpenMP parallel region.
+inline void split_fp32_loop(const float* src, std::size_t cols, std::size_t ld,
+                            const MatrixTraversal& traversal, Slices& out, int& bad) {
     const auto chunks = traversal.tasks();
-    const int nt = panel_static ? paper_team_size(threads, chunks) : team_size(threads, chunks);
 #if defined(__AVX512BW__)
-#pragma omp parallel for reduction(| : bad) schedule(static) num_threads(nt) if (chunks > 1)
+#pragma omp for schedule(static) reduction(| : bad)
     for (std::size_t u = 0; u < chunks; ++u) {
         const auto region = traversal.region(u);
         for (auto row = region.row; row < region.row_end; ++row)
@@ -342,7 +337,7 @@ inline Slices split_fp32(const float* src, std::size_t rows, std::size_t cols, s
     }
 #else
     (void)chunks;
-#pragma omp parallel for reduction(| : bad) schedule(static) num_threads(nt) if (out.count > 16384)
+#pragma omp for schedule(static) reduction(| : bad)
     for (std::size_t tail = 0; tail < out.count; ++tail) {
         std::size_t i = tail / cols, j = tail % cols;
         float r = src[i * ld + j];
@@ -363,25 +358,88 @@ inline Slices split_fp32(const float* src, std::size_t rows, std::size_t cols, s
         }
     }
 #endif
+}
+
+inline Slices split_fp32(const float* src, std::size_t rows, std::size_t cols, std::size_t ld,
+                         int threads, bool panel_static = false) {
+    if (threads < 1 || !valid_shape(src, rows, cols, ld))
+        throw Error("invalid FP32 input shape");
+    Slices out;
+    out.count = mul(rows, cols);
+    out.slices = 3;
+    out.data = AlignedBuffer<std::uint16_t>(mul(out.count, 3));
+    int bad = 0;
+    const MatrixTraversal traversal{rows, cols, 16, panel_static};
+    const auto chunks = traversal.tasks();
+    const int nt = panel_static ? strict_team_size(threads, chunks) : team_size(threads, chunks);
+#if defined(__AVX512BW__)
+#pragma omp parallel num_threads(nt) if (chunks > 1)
+    {
+        split_fp32_loop(src, cols, ld, traversal, out, bad);
+    }
+#else
+    (void)chunks;
+#pragma omp parallel num_threads(nt) if (out.count > 16384)
+    {
+        split_fp32_loop(src, cols, ld, traversal, out, bad);
+    }
+#endif
     if (bad)
         throw Error("FP32 input/residual is non-finite or outside the supported normal range");
     return out;
 }
 
-// Large aligned FP32 inputs generate BF16 directly in the AMX panel layout.
-inline void split_direct32(const float* src, std::size_t rows, std::size_t cols, std::size_t ld,
-                           int threads, std::array<AlignedBuffer<std::uint16_t>, 6>& output,
-                           bool is_a, std::size_t panel_columns) {
-    if (threads < 1 || rows % 256 || cols % 256 || !valid_shape(src, rows, cols, ld))
-        throw Error("invalid direct FP32 input shape");
-    const auto count = mul(rows, cols);
-    for (int s = 0; s < 3; ++s)
-        output[s] = AlignedBuffer<std::uint16_t>(count);
-    int bad = 0;
-    const auto chunks = mul(rows, divup(cols, 16));
-    const int nt = team_size(threads, chunks);
+#if OZAMX_PREP_SINGLE_REGION
+// R1a: both FP32 splits share one parallel region. Each worksharing loop keeps
+// the singleton's schedule(static) iteration space, so the static partition,
+// the written bytes and the accept/reject behavior are unchanged.
+inline void split_fp32_pair(const float* a, std::size_t arows, std::size_t acols, std::size_t lda,
+                            const float* b, std::size_t brows, std::size_t bcols, std::size_t ldb,
+                            int threads, bool panel_static, Slices& sa, Slices& sb) {
+    if (threads < 1 || !valid_shape(a, arows, acols, lda) || !valid_shape(b, brows, bcols, ldb))
+        throw Error("invalid FP32 input shape");
+    sa.count = mul(arows, acols);
+    sa.slices = 3;
+    sa.data = AlignedBuffer<std::uint16_t>(mul(sa.count, 3));
+    sb.count = mul(brows, bcols);
+    sb.slices = 3;
+    sb.data = AlignedBuffer<std::uint16_t>(mul(sb.count, 3));
+    int bad_a = 0, bad_b = 0;
+    const MatrixTraversal ta{arows, acols, 16, panel_static};
+    const MatrixTraversal tb{brows, bcols, 16, panel_static};
+    const auto chunks_a = ta.tasks(), chunks_b = tb.tasks();
+    const int nta = panel_static ? strict_team_size(threads, chunks_a) : team_size(threads, chunks_a);
+    const int ntb = panel_static ? strict_team_size(threads, chunks_b) : team_size(threads, chunks_b);
+    const int nt = std::max(nta, ntb);
 #if defined(__AVX512BW__)
-#pragma omp parallel for reduction(| : bad) schedule(static) num_threads(nt) if (chunks > 1)
+#pragma omp parallel num_threads(nt) if (chunks_a > 1 || chunks_b > 1)
+    {
+        split_fp32_loop(a, acols, lda, ta, sa, bad_a);
+        split_fp32_loop(b, bcols, ldb, tb, sb, bad_b);
+    }
+#else
+    (void)chunks_a;
+    (void)chunks_b;
+#pragma omp parallel num_threads(nt) if (sa.count > 16384 || sb.count > 16384)
+    {
+        split_fp32_loop(a, acols, lda, ta, sa, bad_a);
+        split_fp32_loop(b, bcols, ldb, tb, sb, bad_b);
+    }
+#endif
+    if (bad_a || bad_b)
+        throw Error("FP32 input/residual is non-finite or outside the supported normal range");
+}
+#endif
+
+// Large aligned FP32 inputs generate BF16 directly in the AMX panel layout.
+// Shared numeric loop for the fused FP32 direct writer, driven by an enclosing
+// parallel region (see split_direct32 / split_direct32_pair).
+inline void split_direct32_loop(const float* src, std::size_t rows, std::size_t cols,
+                                std::size_t ld, std::array<AlignedBuffer<std::uint16_t>, 6>& output,
+                                bool is_a, std::size_t panel_columns, int& bad) {
+    const auto chunks = mul(rows, divup(cols, 16));
+#if defined(__AVX512BW__)
+#pragma omp for schedule(static) reduction(| : bad)
     for (std::size_t u = 0; u < chunks; ++u) {
         std::size_t row = u / divup(cols, 16), col = (u % divup(cols, 16)) * 16;
         int lanes = int(std::min<std::size_t>(16, cols - col));
@@ -440,7 +498,8 @@ inline void split_direct32(const float* src, std::size_t rows, std::size_t cols,
     }
 #else
     (void)chunks;
-#pragma omp parallel for reduction(| : bad) schedule(static) num_threads(nt) if (count > 16384)
+    const auto count = mul(rows, cols);
+#pragma omp for schedule(static) reduction(| : bad)
     for (std::size_t tail = 0; tail < count; ++tail) {
         std::size_t i = tail / cols, j = tail % cols;
         float r = src[i * ld + j];
@@ -465,9 +524,88 @@ inline void split_direct32(const float* src, std::size_t rows, std::size_t cols,
         }
     }
 #endif
+}
+
+inline void split_direct32(const float* src, std::size_t rows, std::size_t cols, std::size_t ld,
+                           int threads, std::array<AlignedBuffer<std::uint16_t>, 6>& output,
+                           bool is_a, std::size_t panel_columns) {
+    if (threads < 1 || rows % 256 || cols % 256 || !valid_shape(src, rows, cols, ld))
+        throw Error("invalid direct FP32 input shape");
+    const auto count = mul(rows, cols);
+    for (int s = 0; s < 3; ++s)
+        output[s] = AlignedBuffer<std::uint16_t>(count);
+    int bad = 0;
+    const auto chunks = mul(rows, divup(cols, 16));
+    const int nt = team_size(threads, chunks);
+#if OZAMX_SINGLE_TASK_SERIAL
+    // R2: a side with exactly one 256x256 panel has no parallel work worth a
+    // 64-thread fork. The same loop body runs on the encountering thread in a
+    // serialized region (the loop carries a reduction, so it needs a parallel
+    // context; if(false) forks nothing).
+    if ((rows / 256) * (cols / 256) == 1) {
+#pragma omp parallel num_threads(1) if (false)
+        { split_direct32_loop(src, rows, cols, ld, output, is_a, panel_columns, bad); }
+        if (bad)
+            throw Error("FP32 input/residual is non-finite or outside the supported normal range");
+        return;
+    }
+#endif
+#if defined(__AVX512BW__)
+#pragma omp parallel num_threads(nt) if (chunks > 1)
+    {
+        split_direct32_loop(src, rows, cols, ld, output, is_a, panel_columns, bad);
+    }
+#else
+    (void)chunks;
+#pragma omp parallel num_threads(nt) if (count > 16384)
+    {
+        split_direct32_loop(src, rows, cols, ld, output, is_a, panel_columns, bad);
+    }
+#endif
     if (bad)
         throw Error("FP32 input/residual is non-finite or outside the supported normal range");
 }
+
+#if OZAMX_PREP_SINGLE_REGION
+// R1a: one parallel region drives the A and B direct-writer loops. Every
+// iteration writes a disjoint panel chunk, and each loop keeps the singleton's
+// schedule(static) iteration space, so panels stay byte-identical.
+inline void split_direct32_pair(const float* a, std::size_t arows, std::size_t acols, std::size_t lda,
+                                const float* b, std::size_t brows, std::size_t bcols, std::size_t ldb,
+                                int threads, std::array<AlignedBuffer<std::uint16_t>, 6>& out_a,
+                                bool a_is_a, std::size_t a_panels,
+                                std::array<AlignedBuffer<std::uint16_t>, 6>& out_b,
+                                bool b_is_a, std::size_t b_panels) {
+    if (threads < 1 || arows % 256 || acols % 256 || !valid_shape(a, arows, acols, lda) ||
+        brows % 256 || bcols % 256 || !valid_shape(b, brows, bcols, ldb))
+        throw Error("invalid direct FP32 input shape");
+    const auto count_a = mul(arows, acols), count_b = mul(brows, bcols);
+    for (int s = 0; s < 3; ++s)
+        out_a[s] = AlignedBuffer<std::uint16_t>(count_a);
+    for (int s = 0; s < 3; ++s)
+        out_b[s] = AlignedBuffer<std::uint16_t>(count_b);
+    int bad_a = 0, bad_b = 0;
+    const auto chunks_a = mul(arows, divup(acols, 16)), chunks_b = mul(brows, divup(bcols, 16));
+    const int nt = std::max(team_size(threads, chunks_a), team_size(threads, chunks_b));
+#if defined(__AVX512BW__)
+#pragma omp parallel num_threads(nt) if (chunks_a > 1 || chunks_b > 1)
+    {
+        split_direct32_loop(a, arows, acols, lda, out_a, a_is_a, a_panels, bad_a);
+        split_direct32_loop(b, brows, bcols, ldb, out_b, b_is_a, b_panels, bad_b);
+    }
+#else
+    (void)chunks_a;
+    (void)chunks_b;
+#pragma omp parallel num_threads(nt) if (count_a > 16384 || count_b > 16384)
+    {
+        split_direct32_loop(a, arows, acols, lda, out_a, a_is_a, a_panels, bad_a);
+        split_direct32_loop(b, brows, bcols, ldb, out_b, b_is_a, b_panels, bad_b);
+    }
+#endif
+    if (bad_a || bad_b)
+        throw Error("FP32 input/residual is non-finite or outside the supported normal range");
+}
+#endif
 
 inline Packed split_pack_direct32(const float* a, const float* b, std::size_t m, std::size_t n,
                                   std::size_t k, std::size_t lda, std::size_t ldb, int threads) {
@@ -476,8 +614,13 @@ inline Packed split_pack_direct32(const float* a, const float* b, std::size_t m,
     p.mblocks = m / 256;
     p.nblocks = n / 256;
     p.kblocks = k / 256;
+#if OZAMX_PREP_SINGLE_REGION
+    split_direct32_pair(a, m, k, lda, b, k, n, ldb, threads, p.a, true, p.kblocks, p.b, false,
+                        p.nblocks);
+#else
     split_direct32(a, m, k, lda, threads, p.a, true, p.kblocks);
     split_direct32(b, k, n, ldb, threads, p.b, false, p.nblocks);
+#endif
     return p;
 }
 
@@ -501,7 +644,7 @@ inline Slices split_fp64(const double* src, std::size_t rows, std::size_t cols, 
     auto n = out.count;
     const MatrixTraversal traversal{rows, cols, 8, panel_static};
     const auto chunks = traversal.tasks();
-    int nt = panel_static ? paper_team_size(threads, chunks) : team_size(threads, divup(n, 8));
+    int nt = panel_static ? strict_team_size(threads, chunks) : team_size(threads, divup(n, 8));
     double sigma = 0, global_max = 0;
     int whole_zero = 0;
 #pragma omp parallel num_threads(nt) if (n > 8192)                                                 \
@@ -716,30 +859,18 @@ inline Slices split_fp64(const double* src, std::size_t rows, std::size_t cols, 
 }
 // The residual uses panel order too, so projections and next-max collection
 // stream contiguous vectors without a separate dense-slice packing pass.
-inline void split_packed_residual64(const double* src, std::size_t rows, std::size_t cols,
-                                    std::size_t ld, int threads, int stored_slices,
-                                    std::array<AlignedBuffer<std::uint16_t>, 6>& output, bool is_a,
-                                    std::size_t panel_columns) {
-    if (threads < 1 || stored_slices < 1 || stored_slices > 6 || rows % 256 || cols % 256 ||
-        !valid_shape(src, rows, cols, ld))
-        throw Error("invalid packed residual FP64 input shape");
-    const auto count = mul(rows, cols);
-    for (int s = 0; s < stored_slices; ++s)
-        output[s] = AlignedBuffer<std::uint16_t>(count);
-    AlignedBuffer<double> residual(count);
-    int bad = 0, input_bad = 0;
-    auto n = count;
-    // Fused-writer callers on the paper path keep the requested team (the
-    // strict configuration's 64 threads) instead of shrinking it to the vector
-    // count; this mirrors paper_team_size exactly, including its experimental
-    // task-team rule. The legacy adaptive path keeps the old sizing.
-    int nt = tuning::paper_prep_fused_direct ? paper_team_size(threads, divup(n, 8))
-                                             : team_size(threads, divup(n, 8));
-    double sigma = 0, global_max = 0, next_max = 0;
-    int whole_zero = 0;
-#pragma omp parallel num_threads(nt) if (n > 8192)                                                 \
-    shared(bad, input_bad, sigma, whole_zero, global_max, next_max)
-    {
+// Shared FP64 residual/projection body, driven by an enclosing parallel
+// region. split_packed_residual64 calls it once per operand; the merged
+// split_packed_residual64_pair calls it for A and B from one region. All
+// projection rounds, shift values, max scopes, barriers and the per-product
+// numeric order are unchanged.
+inline void split_packed_residual64_loop(const double* src, std::size_t cols, std::size_t ld,
+                                         std::size_t n, int stored_slices,
+                                         std::array<AlignedBuffer<std::uint16_t>, 6>& output,
+                                         AlignedBuffer<double>& residual, bool is_a,
+                                         std::size_t panel_columns, int& bad, int& input_bad,
+                                         double& sigma, double& global_max, double& next_max,
+                                         int& whole_zero) {
         const auto classify = [](__m512d x) {
             const auto bits = _mm512_castpd_si512(x),
                        ex = _mm512_and_si512(_mm512_srli_epi64(bits, 52), _mm512_set1_epi64(0x7ff)),
@@ -919,12 +1050,109 @@ inline void split_packed_residual64(const double* src, std::size_t rows, std::si
 #pragma omp single
             { global_max = next_max; }
         }
+}
+
+inline void split_packed_residual64(const double* src, std::size_t rows, std::size_t cols,
+                                    std::size_t ld, int threads, int stored_slices,
+                                    std::array<AlignedBuffer<std::uint16_t>, 6>& output, bool is_a,
+                                    std::size_t panel_columns) {
+    if (threads < 1 || stored_slices < 1 || stored_slices > 6 || rows % 256 || cols % 256 ||
+        !valid_shape(src, rows, cols, ld))
+        throw Error("invalid packed residual FP64 input shape");
+    const auto count = mul(rows, cols);
+    for (int s = 0; s < stored_slices; ++s)
+        output[s] = AlignedBuffer<std::uint16_t>(count);
+    AlignedBuffer<double> residual(count);
+    int bad = 0, input_bad = 0;
+    auto n = count;
+    // The team sizing stays outside the shared body so the singleton call and
+    // the merged R1a pair use exactly the same rule per operand.
+    const int nt = tuning::strict_prep_fused_direct ? strict_team_size(threads, divup(n, 8))
+                                                   : team_size(threads, divup(n, 8));
+    double sigma = 0, global_max = 0, next_max = 0;
+    int whole_zero = 0;
+#if OZAMX_SINGLE_TASK_SERIAL
+    // R2: one 256x256 panel on this side -> same body, no team fork (the six
+    // projection rounds, their barriers and criticals run with a team of one).
+    if ((rows / 256) * (cols / 256) == 1) {
+#pragma omp parallel num_threads(1) if (false)                                                 \
+    shared(bad, input_bad, sigma, whole_zero, global_max, next_max)
+        {
+            split_packed_residual64_loop(src, cols, ld, n, stored_slices, output, residual, is_a,
+                                         panel_columns, bad, input_bad, sigma, global_max,
+                                         next_max, whole_zero);
+        }
+        if (input_bad)
+            throw Error("FP64 inputs must be finite and lie within the normal BF16 exponent range");
+        if (bad)
+            throw Error("FP64 decomposition produced an unsupported slice or residual");
+        return;
+    }
+#endif
+#pragma omp parallel num_threads(nt) if (n > 8192)                                                 \
+    shared(bad, input_bad, sigma, whole_zero, global_max, next_max)
+    {
+        split_packed_residual64_loop(src, cols, ld, n, stored_slices, output, residual, is_a,
+                                     panel_columns, bad, input_bad, sigma, global_max, next_max,
+                                     whole_zero);
     }
     if (input_bad)
         throw Error("FP64 inputs must be finite and lie within the normal BF16 exponent range");
     if (bad)
         throw Error("FP64 decomposition produced an unsupported slice or residual");
 }
+
+#if OZAMX_PREP_SINGLE_REGION
+// R1a: one parallel region runs the A then B identical bodies. A single
+// residual scratch (fully rewritten by each classification pass, bodies
+// separated by the round barriers) keeps the singleton's peak footprint. The
+// per-side state is private to each body, so the global-max scope per operand
+// is unchanged.
+inline void split_packed_residual64_pair(
+    const double* a, std::size_t arows, std::size_t acols, std::size_t lda, const double* b,
+    std::size_t brows, std::size_t bcols, std::size_t ldb, int threads, int stored_slices,
+    std::array<AlignedBuffer<std::uint16_t>, 6>& out_a, bool a_is_a, std::size_t a_panels,
+    std::array<AlignedBuffer<std::uint16_t>, 6>& out_b, bool b_is_a, std::size_t b_panels) {
+    if (threads < 1 || stored_slices < 1 || stored_slices > 6 ||
+        arows % 256 || acols % 256 || !valid_shape(a, arows, acols, lda) ||
+        brows % 256 || bcols % 256 || !valid_shape(b, brows, bcols, ldb))
+        throw Error("invalid packed residual FP64 input shape");
+    const auto na = mul(arows, acols), nb = mul(brows, bcols);
+    for (int s = 0; s < stored_slices; ++s)
+        out_a[s] = AlignedBuffer<std::uint16_t>(na);
+    for (int s = 0; s < stored_slices; ++s)
+        out_b[s] = AlignedBuffer<std::uint16_t>(nb);
+    AlignedBuffer<double> residual(std::max(na, nb));
+    int bad_a = 0, input_bad_a = 0, bad_b = 0, input_bad_b = 0;
+    const int nta = tuning::strict_prep_fused_direct ? strict_team_size(threads, divup(na, 8))
+                                                    : team_size(threads, divup(na, 8));
+    const int ntb = tuning::strict_prep_fused_direct ? strict_team_size(threads, divup(nb, 8))
+                                                    : team_size(threads, divup(nb, 8));
+    const int nt = std::max(nta, ntb);
+    double sigma_a = 0, global_max_a = 0, next_max_a = 0;
+    double sigma_b = 0, global_max_b = 0, next_max_b = 0;
+    int whole_zero_a = 0, whole_zero_b = 0;
+#pragma omp parallel num_threads(nt) if (na > 8192 || nb > 8192)                                 \
+    shared(bad_a, input_bad_a, bad_b, input_bad_b, sigma_a, global_max_a, next_max_a,           \
+           sigma_b, global_max_b, next_max_b, whole_zero_a, whole_zero_b)
+    {
+        split_packed_residual64_loop(a, acols, lda, na, stored_slices, out_a, residual, a_is_a,
+                                     a_panels, bad_a, input_bad_a, sigma_a, global_max_a,
+                                     next_max_a, whole_zero_a);
+        split_packed_residual64_loop(b, bcols, ldb, nb, stored_slices, out_b, residual, b_is_a,
+                                     b_panels, bad_b, input_bad_b, sigma_b, global_max_b,
+                                     next_max_b, whole_zero_b);
+    }
+    if (input_bad_a)
+        throw Error("FP64 inputs must be finite and lie within the normal BF16 exponent range");
+    if (bad_a)
+        throw Error("FP64 decomposition produced an unsupported slice or residual");
+    if (input_bad_b)
+        throw Error("FP64 inputs must be finite and lie within the normal BF16 exponent range");
+    if (bad_b)
+        throw Error("FP64 decomposition produced an unsupported slice or residual");
+}
+#endif
 
 inline Packed split_pack_direct64(const double* a, const double* b, std::size_t m, std::size_t n,
                                   std::size_t k, std::size_t lda, std::size_t ldb, int depth,
@@ -934,8 +1162,13 @@ inline Packed split_pack_direct64(const double* a, const double* b, std::size_t 
     p.mblocks = m / 256;
     p.nblocks = n / 256;
     p.kblocks = k / 256;
+#if OZAMX_PREP_SINGLE_REGION
+    split_packed_residual64_pair(a, m, k, lda, b, k, n, ldb, threads, depth, p.a, true, p.kblocks,
+                                 p.b, false, p.nblocks);
+#else
     split_packed_residual64(a, m, k, lda, threads, depth, p.a, true, p.kblocks);
     split_packed_residual64(b, k, n, ldb, threads, depth, p.b, false, p.nblocks);
+#endif
     return p;
 }
 
@@ -970,7 +1203,7 @@ inline Packed pack_slices(const Slices& as, const Slices& bs, std::size_t m, std
 #endif
     const auto atasks = panel_static ? aw/PP_BM : aw;
     const auto btasks = panel_static ? bw/(PP_BK/2) : bw;
-    int nt = panel_static ? paper_team_size(threads, std::max(atasks, btasks))
+    int nt = panel_static ? strict_team_size(threads, std::max(atasks, btasks))
                           : team_size(threads, std::max(aw, bw));
 #pragma omp parallel num_threads(nt) if (ac > 8192 || bc > 8192)
     {

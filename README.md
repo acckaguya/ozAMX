@@ -4,7 +4,7 @@
 
 论文方法、8454H架构、版本演进、精度差距、oneMKL对照、roofline搜索及冻结归档的完整梳理见 [项目总结](docs/PROJECT_SUMMARY.md)（截至2026年10月14日）。
 
-`codex/paper-alignment` 分支默认采用固定 256 宏块、宏块预处理、块内 staging 和 FP64 逐组件即时重建。实现范围、验证及性能达标状态见 [论文对齐实现](docs/PAPER_ALIGNED_IMPLEMENTATION.md)；此前的独立审查见 [综合审查报告](docs/audit/COMPREHENSIVE_REVIEW.md)。方法组织更接近论文不等于性能或 FP64 误差表已复现。
+`codex/strict-emulation` 分支默认采用固定 256 宏块、宏块预处理、块内 staging 和 FP64 逐组件即时重建。实现范围、验证及性能达标状态见 [严格模拟实现](docs/STRICT_EMULATION_IMPLEMENTATION.md)；此前的独立审查见 [综合审查报告](docs/audit/COMPREHENSIVE_REVIEW.md)。方法组织更接近论文不等于性能或 FP64 误差表已复现。
 
 自有源码采用统一缩进与换行，并在分片、打包、累加还原等关键处补充说明。排版约定、维护命令和本次核对结果见 [代码可读性说明](docs/CODE_READABILITY.md)。
 
@@ -26,9 +26,9 @@ OMP_NUM_THREADS=64 ctest --test-dir build --output-on-failure
 
 需要支持 Sapphire Rapids 的 GCC/binutils（本机验证 GCC 11.4）。公共运行时先检查 CPU、OS 扩展状态及 Linux 进程级 AMX 权限，然后进入目标架构内核；每个 worker 管理自己的 tile 状态。不支持的平台会报告错误。验证覆盖真实 AMX GEMM、所有产品预算、非整块尺寸、带 padding 的 stride、异常输入和输出保护。
 
-生产计算由 [src/kernels.S](src/kernels.S) 的手写 AMX 内核和 [src/preprocess.hpp](src/preprocess.hpp) 的 AVX-512 分片、VNNI 打包配合完成；[src/gemm.cpp](src/gemm.cpp) 使用向量累加、FP64 拓宽还原、边缘复制和分块调度。packed panels 按 32 级微块连续排列，工作缓冲按 64 字节对齐；K 累加块为 256，以保留数值顺序。工作区池在调用线程内复用，默认最多保留 2 GiB，可在进程启动前设置 `OZAMX_WORKSPACE_CACHE_BYTES=0` 禁用，或设为其他字节上限。默认论文路径先保存完整三片/六片，再打包；每个输出块完成后扫描非有限值，全部通过才提交 C。历史 V3 配置、最终 oneMKL 对照、搜索与验证见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md)。
+生产计算由 [src/kernels.S](src/kernels.S) 的手写 AMX 内核和 [src/preprocess.hpp](src/preprocess.hpp) 的 AVX-512 分片、VNNI 打包配合完成；[src/gemm.cpp](src/gemm.cpp) 使用向量累加、FP64 拓宽还原、边缘复制和分块调度。packed panels 按 32 级微块连续排列，工作缓冲按 64 字节对齐；K 累加块为 256，以保留数值顺序。工作区池在调用线程内复用，默认最多保留 2 GiB，可在进程启动前设置 `OZAMX_WORKSPACE_CACHE_BYTES=0` 禁用，或设为其他字节上限。默认严格模拟路径先保存完整三片/六片，再打包；每个输出块完成后扫描非有限值，全部通过才提交 C。历史 V3 配置、最终 oneMKL 对照、搜索与验证见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md)。
 
-当前 CMake 项目版本为 0.4.0。`OZAMX_PAPER_ALIGNED=ON` 为本分支默认；设为 `OFF` 可构建原自适应调度作受控对照，原路径仍含此前有限域的 CompactWide FP32 优化。`OZAMX_PAPER_LOCAL_STAGING=OFF` 只在论文路径关闭局部面板复制，用于单变量实验。历史 V4 的构建、数值/事务 gate、matched V3 对照见 [V4 验证报告](docs/8454H_V4_CURRENT_MAIN_VALIDATION.md)，不能当作本分支的新测量。V3 历史数据和冻结副本见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md) 与 [V3 release archive](bench/8454h/versions/v3_release/README.md)。不可变的 [冻结 V2 release archive](bench/8454h/versions/v2_release/README.md) 和 [V2 source snapshot](bench/8454h/versions/v2/README.md) 保留作历史对照。物理缓存层级/DRAM 流量 PMU 计数仍未测量。
+当前 CMake 项目版本为 0.4.0。`OZAMX_STRICT_PATH=ON` 为本分支默认；设为 `OFF` 可构建原自适应调度作受控对照，原路径仍含此前有限域的 CompactWide FP32 优化。`OZAMX_STRICT_LOCAL_STAGING=OFF` 只在严格模拟路径关闭局部面板复制，用于单变量实验。历史 V4 的构建、数值/事务 gate、matched V3 对照见 [V4 验证报告](docs/8454H_V4_CURRENT_MAIN_VALIDATION.md)，不能当作本分支的新测量。V3 历史数据和冻结副本见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md) 与 [V3 release archive](bench/8454h/versions/v3_release/README.md)。不可变的 [冻结 V2 release archive](bench/8454h/versions/v2_release/README.md) 和 [V2 source snapshot](bench/8454h/versions/v2/README.md) 保留作历史对照。物理缓存层级/DRAM 流量 PMU 计数仍未测量。
 
 复现当前机器的前后比较，无需 oneMKL：
 
@@ -42,15 +42,15 @@ runner 用同一计时驱动构建存档原版与新版，固定输入、CPU aff
 本机当前可用 Intel oneMKL 2026.1，CMake 会从 `third_party/code/mkl-current` 自动查找头文件和运行库。新 driver 使用完整 API headline、逐次 MKL 样本和同轮交替计时；新 checkpoint 绑定实际二进制、库与环境，拒绝旧版续跑。以下使用新前缀，不覆盖历史 campaign：
 
 ```sh
-mkdir -p bench/local-paper
+mkdir -p bench/local-strict-emulation
 LD_LIBRARY_PATH="$PWD/third_party/code/mkl-current/lib" \
 OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE \
 MKL_NUM_THREADS=64 MKL_DYNAMIC=FALSE MKL_THREADING_LAYER=GNU \
 OZAMX_WORKSPACE_CACHE_BYTES=2147483648 taskset -c 0-63 build/ozamx_benchmark \
   --sizes 256,1024,4096,8192 --threads 64 --reps 5 --precision all \
   --budgets 6,10,15,21 --seed 260904 --distribution uniform \
-  --checkpoint bench/local-paper/checkpoint \
-  --output bench/local-paper/results.csv
+  --checkpoint bench/local-strict-emulation/checkpoint \
+  --output bench/local-strict-emulation/results.csv
 ```
 
 命令对每个配置执行五次计时，另先执行一次 warm-up。它覆盖 FP32 p6 和 FP64 p6/p10/p15/p21，并记录 oneMKL GEMM、完整 ozAMX API 时间和精度指标。历史 Gold 6430 大规模 campaign 保存在 [历史复现结果](docs/REPRODUCTION_RESULTS.md) 与 [campaign runner](bench/run_remaining_campaign.sh) 中；其中的环境前缀和队列配置仅适用于当时的 campaign。

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Negative fixtures for tools/analyze_paper_alignment.py.
+"""Negative fixtures for tools/analyze_strict_emulation.py.
 
-Copies a completed (or in-progress) paper-alignment campaign directory into a
+Copies a completed (or in-progress) historical campaign directory into a
 temporary directory, mutates exactly one thing per fixture, and asserts that the
 analyzer refuses the mutated evidence (exit code 2) with the expected issue.
 The campaign directory itself is only read, never modified.
@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYZER = ROOT / "tools/analyze_paper_alignment.py"
+ANALYZER = ROOT / "tools/analyze_strict_emulation.py"
 
 
 def read_report(out):
@@ -28,7 +28,8 @@ def read_report(out):
 
 def run_analyzer(directory, out):
     process = subprocess.run([sys.executable, str(ANALYZER), str(directory / "results.csv"),
-                              "--out", str(out)], capture_output=True, text=True)
+                              "--out", str(out), "--source-policy", "snapshot"],
+                             capture_output=True, text=True)
     report = read_report(out)
     issues = report["protocol_or_identity_issues"] if report else []
     return process.returncode, issues, process.stderr
@@ -97,7 +98,7 @@ def main():
             copy_campaign(source, clean)
             code, issues, stderr = run_analyzer(clean, tmp / "clean.analysis.json")
             report = read_report(tmp / "clean.analysis.json")
-            if code != 0 or not report or not report["paper_protocol_and_identity_valid"]:
+            if code != 0 or not report or not report["reference_protocol_and_identity_valid"]:
                 failures.append(f"clean campaign failed integrity: rc={code} issues={issues} {stderr[:300]}")
             else:
                 print("clean: integrity valid (rc=0)")

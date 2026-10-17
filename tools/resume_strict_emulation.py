@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Resume an interrupted paper-alignment campaign under its frozen identity.
+"""Resume an interrupted strict-emulation campaign under its frozen identity.
 
-`tools/run_paper_alignment.py` freezes the ten campaign sources plus the
+`tools/run_strict_emulation.py` freezes the ten campaign sources plus the
 candidate/libozamx.a/CMakeCache artifacts and records them in the campaign's
 provenance.json.  If the campaign process is interrupted (for example by a
 usage-limit shutdown of the supervising session), this tool continues the SAME
@@ -30,7 +30,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ["CMakeLists.txt", "include/ozamx/gemm.hpp", "src/gemm.cpp", "src/preprocess.hpp",
            "src/tuning.hpp", "src/runtime.cpp", "src/kernels.S", "bench/benchmark.cpp",
-           "tests/paper_alignment_probe.cpp", "tools/run_paper_alignment.py"]
+           "tests/strict_emulation_probe.cpp", "tools/run_strict_emulation.py"]
 ARTIFACTS = ["candidate", "libozamx.a", "CMakeCache.txt"]
 
 
@@ -103,8 +103,8 @@ def main():
         fail(f"launch environment no longer matches the frozen campaign: {mismatched}")
 
     event = {"resumed_utc": now(),
-             "runner": "tools/resume_paper_alignment.py",
-             "runner_sha256": sha(ROOT / "tools/resume_paper_alignment.py"),
+             "runner": "tools/resume_strict_emulation.py",
+             "runner_sha256": sha(ROOT / "tools/resume_strict_emulation.py"),
              "command": command,
              "environment": recorded_environment,
              "status_before": provenance.get("status")}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the paired paper campaign with immutable local artifacts and provenance."""
+"""Run the paired strict-emulation campaign with immutable artifacts and provenance."""
 import argparse
 import datetime
 import fcntl
@@ -11,9 +11,10 @@ import shutil
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
+CAMPAIGN_ROOT = ROOT / "bench/8454h/strict_emulation"
 SOURCES = ["CMakeLists.txt", "include/ozamx/gemm.hpp", "src/gemm.cpp", "src/preprocess.hpp",
            "src/tuning.hpp", "src/runtime.cpp", "src/kernels.S", "bench/benchmark.cpp",
-           "tests/paper_alignment_probe.cpp", "tools/run_paper_alignment.py"]
+           "tests/strict_emulation_probe.cpp", "tools/run_strict_emulation.py"]
 
 def sha(path):
     h = hashlib.sha256()
@@ -28,7 +29,8 @@ def now():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--build", type=Path, required=True)
-    parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--out", type=Path, required=True,
+                        help=f"new campaign directory (normally under {CAMPAIGN_ROOT})")
     parser.add_argument("--sizes", default="256,512,1024,2048,4096,8192,16384,32768")
     parser.add_argument("--precision", choices=["all", "fp32", "fp64"], default="all")
     parser.add_argument("--budgets", default="6,10,15,21")
@@ -70,7 +72,7 @@ def main():
                   "source_sha256": {p: sha(ROOT/p) for p in SOURCES},
                   "artifact_sha256": {p: sha(out/p) for p in ["candidate", "libozamx.a", "CMakeCache.txt"]},
                   "protocol": "One warmup per routine, 10 timed pairs by default; even API first, odd MKL first; API headline includes setup and teardown.",
-                  "scope": "Shared 8454H/GNU host, not paper 8462Y+/Intel/fixed-frequency host; no paper performance success is implied."}
+                  "scope": "Shared 8454H/GNU host, not the 8462Y+/Intel/fixed-frequency reference host; no Figure 7 performance success is implied."}
     manifest = out/"provenance.json"
     def save():
         temporary = out/"provenance.json.tmp"

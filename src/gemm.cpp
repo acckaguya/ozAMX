@@ -392,43 +392,47 @@ int budget_depth(ProductBudget b) {
     throw Error("invalid FP64 product budget");
 }
 
-#if OZAMX_PAPER_PREP_FUSED_DIRECT
+#if OZAMX_STRICT_PREP_FUSED_DIRECT
 // Two-stage prep kept as the fused path's fallback for shapes whose rows or
 // columns are not multiples of 256 (the direct writer requires full panels).
 template <class T>
-detail::Packed paper_prep_split_pack(const T* a, std::size_t lda, const T* b, std::size_t ldb,
+detail::Packed strict_prep_split_pack(const T* a, std::size_t lda, const T* b, std::size_t ldb,
                                      std::size_t m, std::size_t n, std::size_t k, int slices,
                                      int depth, int threads, detail::Slices& sa, detail::Slices& sb,
                                      Clock::time_point& t1) {
     if constexpr (std::is_same_v<T, float>) {
+#if OZAMX_PREP_SINGLE_REGION
+        detail::split_fp32_pair(a, m, k, lda, b, k, n, ldb, threads, true, sa, sb);
+#else
         sa = detail::split_fp32(a, m, k, lda, threads, true);
         sb = detail::split_fp32(b, k, n, ldb, threads, true);
+#endif
     } else {
         sa = detail::split_fp64(a, m, k, lda, threads, slices, true);
         sb = detail::split_fp64(b, k, n, ldb, threads, slices, true);
     }
     t1 = Clock::now();
-    const int packed_slices = tuning::paper_pack_used_slices ? depth : slices;
+    const int packed_slices = tuning::research_pack_used_slices ? depth : slices;
     return detail::pack_slices(sa, sb, m, n, k, packed_slices, threads, true);
 }
 #endif
 
-// The reference execution follows paper sections 6.1--6.3. Keep the older
+// The reference execution follows reference Sections 6.1--6.3. Keep the older
 // adaptive path below available for controlled comparisons. Neither path
 // changes the public API's transactional output or aliasing guarantees.
 template <class T>
-GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T* a,
+GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t k, const T* a,
                            std::size_t lda, const T* b, std::size_t ldb, T* c,
                            std::size_t ldc, int depth) {
     validate_layout(m, n, k, a, lda, b, ldb, c, ldc);
     const auto t0 = Clock::now();
     const int threads = requested_threads();
     // All six FP64 planes are computed by split at every product budget.
-    // The experimental OZAMX_PAPER_PACK_USED_SLICES option can additionally
+    // The experimental OZAMX_RESEARCH_PACK_USED_SLICES option can additionally
     // skip packing planes that the selected budget never reads; split still
     // produces all six so the run-time domain checks are unchanged.
     constexpr int slices = std::is_same_v<T, float> ? 3 : 6;
-#if OZAMX_PAPER_PREP_FUSED_DIRECT
+#if OZAMX_STRICT_PREP_FUSED_DIRECT
     // The fused prep writes the BF16 components directly into the packed AMX
     // panels for aligned shapes, so no dense Slices buffer is materialized; the
     // direct writers were audited byte-identical to split+pack_slices
@@ -449,25 +453,29 @@ GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T
         }
         t1 = Clock::now();
     } else {
-        p = paper_prep_split_pack(a, lda, b, ldb, m, n, k, slices, depth, threads, sa, sb, t1);
+        p = strict_prep_split_pack(a, lda, b, ldb, m, n, k, slices, depth, threads, sa, sb, t1);
     }
 #else
-    // With OZAMX_PAPER_PREP_FUSED_DIRECT off this block is the pre-change
+    // With OZAMX_STRICT_PREP_FUSED_DIRECT off this block is the pre-change
     // two-stage prep verbatim ("split+pack" plus sa={};sb={}; below), so the
     // OFF build stays single-variable against the frozen tree.
     detail::Slices sa, sb;
     if constexpr (std::is_same_v<T, float>) {
+#if OZAMX_PREP_SINGLE_REGION
+        detail::split_fp32_pair(a, m, k, lda, b, k, n, ldb, threads, true, sa, sb);
+#else
         sa = detail::split_fp32(a, m, k, lda, threads, true);
         sb = detail::split_fp32(b, k, n, ldb, threads, true);
+#endif
     } else {
         sa = detail::split_fp64(a, m, k, lda, threads, slices, true);
         sb = detail::split_fp64(b, k, n, ldb, threads, slices, true);
     }
     const auto t1 = Clock::now();
-    const int packed_slices = tuning::paper_pack_used_slices ? depth : slices;
+    const int packed_slices = tuning::research_pack_used_slices ? depth : slices;
     auto p = detail::pack_slices(sa, sb, m, n, k, packed_slices, threads, true);
 #endif
-    const int compute_threads = detail::paper_team_size(threads, checked_mul(p.mblocks, p.nblocks));
+    const int compute_threads = detail::strict_team_size(threads, checked_mul(p.mblocks, p.nblocks));
     sa = {};
     sb = {};
     detail::AlignedBuffer<T> result(checked_mul(m, n));
@@ -476,37 +484,99 @@ GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T
     // and reintroduce avoidable allocation/first-touch costs on every call.
     // Allocation failures remain outside OpenMP; workers first-touch their own
     // regions, with no multi-megabyte thread-stack arrays.
-    detail::AlignedBuffer<T> blocks(checked_mul(std::size_t(compute_threads), BM * BN));
-#if OZAMX_PAPER_LOCAL_STAGING
+    // The private block can optionally pad each row by whole cache lines. This
+    // changes only the accumulator address mapping; the logical BM x BN block,
+    // product order, and FP64 addition order are unchanged.
+    constexpr std::size_t block_pad_elems =
+        std::is_same_v<T, double> ? tuning::strict_fp64_row_pad_bytes / sizeof(T) : 0;
+    const std::size_t block_stride = BN + block_pad_elems;
+    const std::size_t block_elems = BM * block_stride;
+    detail::AlignedBuffer<T> blocks(checked_mul(std::size_t(compute_threads), block_elems));
+#if OZAMX_STRICT_LOCAL_STAGING
     const auto worker_panels = checked_mul(std::size_t(depth), BM * BK);
+#if OZAMX_RESEARCH_STAGING_PIPELINE
+    // Double buffering keeps two panel slots per worker ((kb & 1) selects the
+    // slot) so the copy of kb+1 can run before the micro loop of kb. Same
+    // pooled allocation shape with twice the per-worker extent; OFF keeps the
+    // single-slot layout unchanged. The option is inert without local staging.
+    const auto worker_slots = checked_mul(std::size_t(2), worker_panels);
+    detail::AlignedBuffer<std::uint16_t> local_a(checked_mul(std::size_t(compute_threads), worker_slots));
+    detail::AlignedBuffer<std::uint16_t> local_b(checked_mul(std::size_t(compute_threads), worker_slots));
+#else
     detail::AlignedBuffer<std::uint16_t> local_a(checked_mul(std::size_t(compute_threads), worker_panels));
     detail::AlignedBuffer<std::uint16_t> local_b(checked_mul(std::size_t(compute_threads), worker_panels));
 #endif
+#endif
     const auto t2 = Clock::now();
     int bad = 0;
-#pragma omp parallel num_threads(compute_threads) if (compute_threads > 1) reduction(| : bad)
-    {
-        int worker = 0;
-#ifdef _OPENMP
-        worker = omp_get_thread_num();
+#if OZAMX_SINGLE_TASK_SERIAL
+    // Output-task gate: exactly one (mb,nb) block means the 64-thread compute
+    // region would fork a team for a single task. Run the identical body on
+    // the main thread instead (the orphaned `omp for` executes serially with a
+    // team of one); every other shape keeps the existing parallel region.
+    const bool single_task = checked_mul(p.mblocks, p.nblocks) == 1;
+    // Small commits stay serial after the bad check (no commit region fork).
+    const bool small_commit = checked_mul(m, n) <= std::size_t(BM * BN);
 #endif
-        auto* block = blocks.data() + std::size_t(worker) * BM * BN;
+    // Shared compute body. `bad_ref` is the reduction-private copy inside the
+    // parallel region and the plain accumulator on the single-task serial path;
+    // staging slots, per-block/micro/product order and the scan are unchanged.
+    const auto compute_body = [&](int worker, int& bad_ref) __attribute__((always_inline)) {
+        auto* block = blocks.data() + std::size_t(worker) * block_elems;
         alignas(64) float micro[TM * TN];
         load_config();
 #pragma omp for collapse(2) schedule(static)
         for (std::size_t mb = 0; mb < p.mblocks; ++mb)
             for (std::size_t nb = 0; nb < p.nblocks; ++nb) {
-                zero_block(block, BM * BN);
+                for (std::size_t br = 0; br < BM; ++br)
+                    zero_block(block + br * block_stride, BN);
                 const auto rows = std::min(BM, m - mb * BM);
                 const auto cols = std::min(BN, n - nb * BN);
+#if OZAMX_STRICT_LOCAL_STAGING && OZAMX_RESEARCH_STAGING_PIPELINE
+                // Staging pipeline: slot (kb & 1) holds the panels of the KB
+                // being multiplied and slot ((kb + 1) & 1) is filled with the
+                // next KB before this KB's micro loop runs. Copied bytes, copy
+                // counts and copy order equal the single-buffer loop's; only
+                // the destination slot moves. The first KB of each output
+                // block is staged here, before the loop.
+                const auto stage_panels = [&](unsigned slot, std::size_t plane_kb) {
+                    for (int s = 0; s < depth; ++s) {
+                        const auto* ap = p.a[s].data() + (mb * p.kblocks + plane_kb) * BM * BK;
+                        const auto* bp = p.b[s].data() + (plane_kb * p.nblocks + nb) * BK * BN;
+                        auto* staged_a = local_a.data() + std::size_t(worker) * worker_slots +
+                                         std::size_t(slot) * worker_panels + s * BM * BK;
+                        auto* staged_b = local_b.data() + std::size_t(worker) * worker_slots +
+                                         std::size_t(slot) * worker_panels + s * BK * BN;
+                        std::memcpy(staged_a, ap, BM * BK * sizeof(std::uint16_t));
+                        std::memcpy(staged_b, bp, BK * BN * sizeof(std::uint16_t));
+                    }
+                };
+                const auto bind_panels = [&](unsigned slot, const std::uint16_t** panel_a,
+                                             const std::uint16_t** panel_b) {
+                    for (int s = 0; s < depth; ++s) {
+                        panel_a[s] = local_a.data() + std::size_t(worker) * worker_slots +
+                                     std::size_t(slot) * worker_panels + s * BM * BK;
+                        panel_b[s] = local_b.data() + std::size_t(worker) * worker_slots +
+                                     std::size_t(slot) * worker_panels + s * BK * BN;
+                    }
+                };
+                if (p.kblocks)
+                    stage_panels(0u, 0); // no previous iteration to hide behind
+#endif
                 for (std::size_t kb = 0; kb < p.kblocks; ++kb) {
                     const unsigned steps = unsigned(ceil_div(std::min(BK, k - kb * BK), TK));
                     const std::uint16_t* aa[6]{};
                     const std::uint16_t* bb[6]{};
+#if OZAMX_STRICT_LOCAL_STAGING && OZAMX_RESEARCH_STAGING_PIPELINE
+                    const unsigned cur = unsigned(kb & 1u);
+                    if (kb + 1 < p.kblocks)
+                        stage_panels(cur ^ 1u, kb + 1u); // one KB ahead, before the micro loop
+                    bind_panels(cur, aa, bb);
+#else
                     for (int s = 0; s < depth; ++s) {
                         const auto* ap = p.a[s].data() + (mb * p.kblocks + kb) * BM * BK;
                         const auto* bp = p.b[s].data() + (kb * p.nblocks + nb) * BK * BN;
-#if OZAMX_PAPER_LOCAL_STAGING
+#if OZAMX_STRICT_LOCAL_STAGING
                         auto* staged_a = local_a.data() + std::size_t(worker) * worker_panels + s * BM * BK;
                         auto* staged_b = local_b.data() + std::size_t(worker) * worker_panels + s * BK * BN;
                         std::memcpy(staged_a, ap, BM * BK * sizeof(std::uint16_t));
@@ -518,6 +588,7 @@ GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T
                         bb[s] = bp;
 #endif
                     }
+#endif
                     for (std::size_t i = 0; i < rows; i += TM)
                         for (std::size_t j = 0; j < cols; j += TN) {
                             const auto ai = i * BK, bi = j * BK;
@@ -525,13 +596,15 @@ GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T
                                 const std::uint16_t* am[3] = {aa[0] + ai, aa[1] + ai, aa[2] + ai};
                                 const std::uint16_t* bm[3] = {bb[0] + bi, bb[1] + bi, bb[2] + bi};
                                 ozamx_bf16_six(am, bm, micro, steps);
-                                accumulate32<true>(block + i * BN + j, micro, BN, bad);
+                                accumulate32<true>(block + i * block_stride + j, micro, block_stride,
+                                                   bad_ref);
                             } else {
                                 for (int diagonal = 0; diagonal < depth; ++diagonal)
                                     for (int s = 0; s <= diagonal; ++s) {
                                         ozamx_bf16_product(aa[s] + ai, bb[diagonal - s] + bi,
                                                            micro, steps);
-                                        accumulate64<true>(block + i * BN + j, micro, BN, bad);
+                                        accumulate64<true>(block + i * block_stride + j, micro,
+                                                           block_stride, bad_ref);
                                     }
                             }
                         }
@@ -540,23 +613,95 @@ GemmTimings gemm_paper_impl(std::size_t m, std::size_t n, std::size_t k, const T
                 // partial sum is NaN/Inf, later additions cannot make it finite.
                 // One scan preserves rejection and transactional C semantics
                 // while keeping classification out of every component add.
-                for (std::size_t q = 0; q < BM * BN; q += 64 / sizeof(T)) {
-                    if constexpr (std::is_same_v<T, float>)
-                        bad |= nonfinite(_mm512_load_ps(block + q));
-                    else
-                        bad |= nonfinite(_mm512_load_pd(block + q));
-                }
+                for (std::size_t i = 0; i < BM; ++i)
+                    for (std::size_t q = 0; q < BN; q += 64 / sizeof(T)) {
+                        if constexpr (std::is_same_v<T, float>)
+                            bad_ref |= nonfinite(_mm512_load_ps(block + i * block_stride + q));
+                        else
+                            bad_ref |= nonfinite(_mm512_load_pd(block + i * block_stride + q));
+                    }
                 for (std::size_t i = 0; i < rows; ++i)
                     copy_row(result.data() + (mb * BM + i) * n + nb * BN,
-                             block + i * BN, cols);
+                             block + i * block_stride, cols);
             }
         _tile_release();
+    };
+#if OZAMX_SINGLE_TASK_SERIAL
+    if (single_task) {
+        // Worker slot 0 mirrors what the old serialized inner region reported
+        // (the buffers are per-call, so concurrent callers never share them).
+        const int worker = 0;
+        int nested = 0;
+#ifdef _OPENMP
+        nested = omp_in_parallel();
+#endif
+        if (nested) {
+            // Called from inside an existing team: the orphaned worksharing
+            // loop would bind to that outer team, so bind it to a serialized
+            // inner region instead (if(false) forks no threads).
+#pragma omp parallel num_threads(1) if (false)
+            { compute_body(worker, bad); }
+        } else {
+            // Plain top-level call: no parallel region at all; the orphaned
+            // `omp for` executes serially with a team of one.
+            compute_body(worker, bad);
+        }
+    } else
+#endif
+    {
+#if OZAMX_COMMIT_IN_COMPUTE
+        // Shared commit gate: every thread ORs its private `bad` reduction copy
+        // here before the barrier; the region commits C only when no thread found
+        // a non-finite component. The throw stays outside the region.
+        int bad_commit = 0;
+#pragma omp parallel num_threads(compute_threads) if (compute_threads > 1) reduction(| : bad) shared(bad_commit)
+#else
+#pragma omp parallel num_threads(compute_threads) if (compute_threads > 1) reduction(| : bad)
+#endif
+        {
+            int worker = 0;
+#ifdef _OPENMP
+            worker = omp_get_thread_num();
+#endif
+            compute_body(worker, bad);
+#if OZAMX_COMMIT_IN_COMPUTE
+#if OZAMX_SINGLE_TASK_SERIAL
+            if (!small_commit) {
+#endif
+                if (bad) {
+#pragma omp atomic
+                    bad_commit |= 1;
+                }
+#pragma omp barrier
+                if (!bad_commit) {
+#pragma omp for schedule(static)
+                    for (std::size_t i = 0; i < m; ++i)
+                        copy_row(c + i * ldc, result.data() + i * n, n);
+                }
+#if OZAMX_SINGLE_TASK_SERIAL
+            }
+#endif
+#endif
+        }
     }
     if (bad)
         throw Error("AMX component product or reconstructed output became non-finite");
+#if OZAMX_SINGLE_TASK_SERIAL
+    if (small_commit) {
+        for (std::size_t i = 0; i < m; ++i)
+            copy_row(c + i * ldc, result.data() + i * n, n);
+    }
+#if !OZAMX_COMMIT_IN_COMPUTE
+    else
+#endif
+#endif
+#if !OZAMX_COMMIT_IN_COMPUTE
+    {
 #pragma omp parallel for num_threads(compute_threads) if (compute_threads > 1) schedule(static)
-    for (std::size_t i = 0; i < m; ++i)
-        copy_row(c + i * ldc, result.data() + i * n, n);
+        for (std::size_t i = 0; i < m; ++i)
+            copy_row(c + i * ldc, result.data() + i * n, n);
+    }
+#endif
     const auto t3 = Clock::now();
     return {elapsed(t0, t1), elapsed(t1, t2), elapsed(t2, t3), elapsed(t0, t3)};
 }
@@ -730,8 +875,8 @@ namespace detail {
 GemmTimings gemm_fp32_native(std::size_t m, std::size_t n, std::size_t k, const float* a,
                              std::size_t lda, const float* b, std::size_t ldb, float* c,
                              std::size_t ldc) {
-#if OZAMX_PAPER_ALIGNED
-    return gemm_paper_impl(m, n, k, a, lda, b, ldb, c, ldc, 3);
+#if OZAMX_STRICT_PATH
+    return gemm_strict_emulation_impl(m, n, k, a, lda, b, ldb, c, ldc, 3);
 #else
     if (std::min(m, n) >= 4096) {
         // CACHE_BLOCK=128 且尺寸落在 4096..8192 时启用紧凑宽域几何，降低工作集。
@@ -746,8 +891,8 @@ GemmTimings gemm_fp64_native(std::size_t m, std::size_t n, std::size_t k, const 
                              std::size_t lda, const double* b, std::size_t ldb, double* c,
                              std::size_t ldc, ProductBudget budget) {
     const auto depth = budget_depth(budget);
-#if OZAMX_PAPER_ALIGNED
-    return gemm_paper_impl(m, n, k, a, lda, b, ldb, c, ldc, depth);
+#if OZAMX_STRICT_PATH
+    return gemm_strict_emulation_impl(m, n, k, a, lda, b, ldb, c, ldc, depth);
 #else
     if (std::min(m, n) >= 4096) {
         if (k >= 4096)

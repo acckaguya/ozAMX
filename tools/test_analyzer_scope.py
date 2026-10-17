@@ -19,8 +19,8 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYZER = ROOT / "tools/analyze_paper_alignment.py"
-SPEC = importlib.util.spec_from_file_location("paper_analyzer", ANALYZER)
+ANALYZER = ROOT / "tools/analyze_strict_emulation.py"
+SPEC = importlib.util.spec_from_file_location("strict_emulation_analyzer", ANALYZER)
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 SCOPE = ["--sizes", "8192,16384", "--precision", "fp32", "--budget", "6"]
@@ -84,7 +84,7 @@ class ScopeFixtures(unittest.TestCase):
             checkpoint = json.loads(path.read_text())
             checkpoint["run_identity"] = row["run_identity"]
             if selected_targets_pass:
-                # Synthetic speedups above both selected paper targets, with
+                # Synthetic speedups above both selected Figure 7 targets, with
                 # mutually consistent raw vectors, means, and checkpoints.
                 times = [3 * t for t in MODULE.parse_floats(row["raw_api_call_wall_s"])]
                 row["raw_mkl_gemm_s"] = ";".join(format(t, ".17g") for t in times)
@@ -98,32 +98,47 @@ class ScopeFixtures(unittest.TestCase):
             path.write_text(json.dumps(checkpoint))
         self.save()
 
-    def analyze(self, *arguments):
+    def analyze(self, *arguments, source_policy="snapshot"):
         out = Path(self.tmp.name) / "report.json"
         out.unlink(missing_ok=True)
-        result = subprocess.run([sys.executable, str(ANALYZER),
-                                 str(self.directory / "results.csv"), "--out", str(out),
-                                 *arguments], capture_output=True, text=True)
+        command = [sys.executable, str(ANALYZER), str(self.directory / "results.csv"),
+                   "--out", str(out), *arguments]
+        if not any(arg == "--source-policy" or arg.startswith("--source-policy=")
+                   for arg in arguments):
+            command.extend(["--source-policy", source_policy])
+        result = subprocess.run(command, capture_output=True, text=True)
         self.assertTrue(out.is_file(), result.stderr)
         return result.returncode, json.loads(out.read_text())
 
-    def assert_rejected(self, arguments, issue):
-        code, report = self.analyze(*arguments)
+    def assert_rejected(self, arguments, issue, source_policy="snapshot"):
+        code, report = self.analyze(*arguments, source_policy=source_policy)
         self.assertEqual(code, 2, report)
         self.assertTrue(any(issue in text for text in report["protocol_or_identity_issues"]), report)
         self.assertFalse(report["declared_configuration_coverage"])
         self.assertFalse(report["full_40_configuration_coverage"])
-        self.assertFalse(report["paper_fp32_speedup_targets_all_met"])
+        self.assertFalse(report["figure7_fp32_speedups_all_met"])
 
-    def test_complete_default_unchanged(self):
+    def use_new_source_snapshots(self):
+        snapshot_root = self.directory / "source_snapshot"
+        for old_name, new_name in (
+                ("tests/paper_alignment_probe.cpp", "tests/strict_emulation_probe.cpp"),
+                ("tools/run_paper_alignment.py", "tools/run_strict_emulation.py")):
+            old, new = snapshot_root / old_name, snapshot_root / new_name
+            old.rename(new)
+            new.write_bytes((ROOT / new_name).read_bytes())
+            self.provenance["source_sha256"].pop(old_name)
+            self.provenance["source_sha256"][new_name] = hashlib.sha256(new.read_bytes()).hexdigest()
+        self.save()
+
+    def test_complete_historical_campaign_snapshot_unchanged(self):
         code, report = self.analyze()
         self.assertEqual(code, 0, report)
         self.assertTrue(report["declared_configuration_coverage"])
         self.assertTrue(report["full_40_configuration_coverage"])
-        self.assertEqual(report["source_policy"], "current")
+        self.assertEqual(report["source_policy"], "snapshot")
         self.assertEqual(report["environment_expected"], MODULE.REQUIRED_ENV)
         self.assertEqual(report["expected_configurations"], 40)
-        self.assertEqual(report["paper_fp32_speedup_targets_all_met"],
+        self.assertEqual(report["figure7_fp32_speedups_all_met"],
                          all(point["met"] for point in report["fp32_speedup_targets"].values()))
 
     def test_partial_2g_and_modes_alias(self):
@@ -135,7 +150,7 @@ class ScopeFixtures(unittest.TestCase):
                 self.assertTrue(report["declared_configuration_coverage"])
                 self.assertEqual(report["expected_configurations"], 2)
                 self.assertFalse(report["full_40_configuration_coverage"])
-                self.assertFalse(report["paper_fp32_speedup_targets_all_met"])
+                self.assertFalse(report["figure7_fp32_speedups_all_met"])
 
     def test_partial_8g(self):
         self.partial(cache_bytes=CACHE_8G)
@@ -158,14 +173,24 @@ class ScopeFixtures(unittest.TestCase):
         self.partial()
         self.assert_rejected([], "missing campaign configurations")
 
-    def test_partial_selected_targets_all_pass_still_not_full_paper_success(self):
+    def test_partial_selected_targets_all_pass_still_not_full_figure7_success(self):
         self.partial(selected_targets_pass=True)
-        code, report = self.analyze(*SCOPE, "--require-paper-speedups")
+        code, report = self.analyze(*SCOPE, "--require-figure7-speedups")
         self.assertEqual(code, 1, report)
         self.assertTrue(report["declared_configuration_coverage"])
         self.assertTrue(all(point["met"] for point in report["fp32_speedup_targets"].values()))
         self.assertFalse(report["full_40_configuration_coverage"])
-        self.assertFalse(report["paper_fp32_speedup_targets_all_met"])
+        self.assertFalse(report["figure7_fp32_speedups_all_met"])
+
+    def test_hidden_legacy_figure7_gate_alias(self):
+        self.partial(selected_targets_pass=True)
+        code, report = self.analyze(*SCOPE, "--require-paper-speedups")
+        self.assertEqual(code, 1, report)
+        self.assertTrue(report["declared_configuration_coverage"])
+        help_result = subprocess.run([sys.executable, str(ANALYZER), "--help"],
+                                     capture_output=True, text=True)
+        self.assertEqual(help_result.returncode, 0, help_result.stderr)
+        self.assertNotIn("--require-paper-speedups", help_result.stdout)
 
     def test_runtime_wait_must_be_unset(self):
         self.partial(runtime_wait=True)
@@ -197,11 +222,25 @@ class ScopeFixtures(unittest.TestCase):
         self.assert_rejected([*SCOPE, "--source-policy", "snapshot"], "snapshot differs")
         self.provenance["source_sha256"]["src/tuning.hpp"] = hashlib.sha256(path.read_bytes()).hexdigest()
         self.save()
-        self.assert_rejected(SCOPE, "working tree source differs")
+        self.assert_rejected(SCOPE, "working tree source differs", source_policy="current")
         code, report = self.analyze(*SCOPE, "--source-policy", "snapshot")
         self.assertEqual(code, 0, report)
         self.assertEqual(report["source_policy"], "snapshot")
         self.assertTrue(report["declared_configuration_coverage"])
+
+    def test_new_source_id_accepts_matching_source_snapshots(self):
+        self.use_new_source_snapshots()
+        for path in self.directory.glob("checkpoint.*.json"):
+            checkpoint = json.loads(path.read_text())
+            checkpoint["source_id"] = MODULE.SOURCE_ID
+            path.write_text(json.dumps(checkpoint))
+        code, report = self.analyze()
+        self.assertEqual(code, 0, report)
+        self.assertTrue(report["declared_configuration_coverage"])
+
+    def test_legacy_source_id_rejects_new_source_snapshots(self):
+        self.use_new_source_snapshots()
+        self.assert_rejected([], "Frozen source manifest is incomplete")
 
 
 if __name__ == "__main__":
