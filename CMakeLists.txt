@@ -15,6 +15,21 @@ option(OZAMX_PREP_FUSED_MAX "Collect the next FP64 global max while updating res
 option(OZAMX_PACK_NT_STORE "Use non-temporal stores for the packed panel writes (experimental prep, byte-identical output)" OFF)
 option(OZAMX_STRICT_PREP_FUSED_DIRECT "Write BF16 components directly into the packed AMX panels on the strict-emulation path (experimental prep, byte-identical output)" OFF)
 
+# Fail loudly instead of silently ignoring a pre-rename option from an old
+# build command. The new names distinguish strict defaults from research-only
+# scheduling/prep knobs.
+macro(ozamx_reject_legacy_option old_name new_name)
+  if(DEFINED ${old_name})
+    message(FATAL_ERROR "${old_name} was renamed to ${new_name}; reconfigure with -D${new_name}=...")
+  endif()
+endmacro()
+ozamx_reject_legacy_option(OZAMX_PAPER_ALIGNED OZAMX_STRICT_PATH)
+ozamx_reject_legacy_option(OZAMX_PAPER_LOCAL_STAGING OZAMX_STRICT_LOCAL_STAGING)
+ozamx_reject_legacy_option(OZAMX_PAPER_STAGING_PIPELINE OZAMX_RESEARCH_STAGING_PIPELINE)
+ozamx_reject_legacy_option(OZAMX_PAPER_TASK_TEAMS OZAMX_RESEARCH_TASK_TEAMS)
+ozamx_reject_legacy_option(OZAMX_PAPER_PACK_USED_SLICES OZAMX_RESEARCH_PACK_USED_SLICES)
+ozamx_reject_legacy_option(OZAMX_PAPER_PREP_FUSED_DIRECT OZAMX_STRICT_PREP_FUSED_DIRECT)
+
 set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
 set(OZAMX_STRICT_FP64_ROW_PAD_BYTES 64 CACHE STRING "Private FP64 accumulator row padding bytes (0 or a positive multiple of 64)")
 set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")

@@ -65,10 +65,25 @@ def main():
     if not provenance.get("command"):
         fail("provenance.json has no recorded command")
 
+    def frozen_source(p):
+        # New campaigns freeze paths that still exist in the live tree. Legacy
+        # campaigns froze the pre-rename probe/runner paths; those files are
+        # intentionally absent now, so compare against the campaign's own
+        # source_snapshot copy instead of rewriting historical provenance.
+        live = ROOT / p
+        if live.is_file():
+            return live
+        snapshot = out / "source_snapshot" / p
+        return snapshot if snapshot.is_file() else None
+
+    def frozen_hash(p):
+        source = frozen_source(p)
+        return None if source is None else sha(source)
+
     changed = [p for p, digest in provenance["source_sha256"].items()
-               if not (ROOT / p).is_file() or sha(ROOT / p) != digest]
+               if frozen_hash(p) != digest]
     if changed:
-        fail("frozen sources changed: " + ", ".join(changed))
+        fail("frozen sources changed or missing: " + ", ".join(changed))
     for name, digest in provenance["artifact_sha256"].items():
         if name not in ARTIFACTS:
             fail(f"unexpected recorded artifact {name}")

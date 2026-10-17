@@ -21,9 +21,9 @@
 
 `OZAMX_STRICT_PATH=OFF` 保留原自适应路径。`OZAMX_STRICT_LOCAL_STAGING=OFF` 在严格模拟路径中仅关闭复制，其他数学/几何/预处理定义保持相同，用于区分 staging 的贡献。
 
-`OZAMX_RESEARCH_STAGING_PIPELINE`、`OZAMX_RESEARCH_TASK_TEAMS`、`OZAMX_RESEARCH_PACK_USED_SLICES` 和 `OZAMX_STRICT_FP64_ROW_PAD_BYTES` 是搜索用开关，默认分别为 OFF/OFF/OFF/0；它们不构成论文严格默认路径。若采用其中任何候选，必须另列单变量证据与字节门，不得把它写成论文原始调度。
+`OZAMX_RESEARCH_STAGING_PIPELINE`、`OZAMX_RESEARCH_TASK_TEAMS`、`OZAMX_RESEARCH_PACK_USED_SLICES` 是 research-only 开关，默认均为 OFF；`OZAMX_STRICT_FP64_ROW_PAD_BYTES` 是仅改变私有累加器布局的 strict 优化，默认 **64**（证据见 §7）。改变 product/reconstruction 物理顺序的候选不得进入 strict。
 
-实验开关（全部默认 OFF，不进入严格路径）：`OZAMX_RESEARCH_TASK_TEAMS`、`OZAMX_RESEARCH_PACK_USED_SLICES`、`OZAMX_PREP_FUSED_MAX`、`OZAMX_PACK_NT_STORE`，以及阶段 2 采用的 `OZAMX_STRICT_PREP_FUSED_DIRECT`（见 §6）。
+其余实验开关（默认 OFF）：`OZAMX_PREP_FUSED_MAX`、`OZAMX_PACK_NT_STORE`，以及阶段 2 采用的 `OZAMX_STRICT_PREP_FUSED_DIRECT`（见 §6）。
 
 ## 2. 保留的 API 行为与优化边界
 
