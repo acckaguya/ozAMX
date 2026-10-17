@@ -83,6 +83,16 @@
 # Private GitHub CLI configuration, if a local user chooses to keep it in-workspace
 /.github-cli-auth/
 
+# Local teaching/paper-study workspace (not part of the strict-emulation branch).
+/MISSION.md
+/NOTES.md
+/RESOURCES.md
+/assets/
+/learning-records/
+/lessons/
+/reference/
+/tools/run_external_reviewer.py
+
 # Research-only overlap microbenchmark; strict path does not use it.
 /bench/p4_overlap_micro.cpp
 /bench/p4_overlap_micro.S
