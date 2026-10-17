@@ -1,5 +1,27 @@
 #pragma once
 
+#ifndef OZAMX_PAPER_ALIGNED
+#define OZAMX_PAPER_ALIGNED 1
+#endif
+#ifndef OZAMX_PAPER_LOCAL_STAGING
+#define OZAMX_PAPER_LOCAL_STAGING 1
+#endif
+#ifndef OZAMX_PAPER_TASK_TEAMS
+#define OZAMX_PAPER_TASK_TEAMS 0
+#endif
+#ifndef OZAMX_PAPER_PACK_USED_SLICES
+#define OZAMX_PAPER_PACK_USED_SLICES 0
+#endif
+#ifndef OZAMX_PREP_FUSED_MAX
+#define OZAMX_PREP_FUSED_MAX 0
+#endif
+#ifndef OZAMX_PACK_NT_STORE
+#define OZAMX_PACK_NT_STORE 0
+#endif
+#ifndef OZAMX_PAPER_PREP_FUSED_DIRECT
+#define OZAMX_PAPER_PREP_FUSED_DIRECT 0
+#endif
+
 // Numerically equivalent tuning space. BK and each output's product order stay
 // fixed; these parameters only change independent work scheduling and locality.
 // CACHE_BLOCK controls M/N cache tiles; PREP_GRAIN is preprocessing work per
@@ -21,6 +43,11 @@
 #define OZAMX_MN_ORDER 0
 #endif
 namespace ozamx::tuning {
+inline constexpr bool paper_task_teams = OZAMX_PAPER_TASK_TEAMS;
+inline constexpr bool paper_pack_used_slices = OZAMX_PAPER_PACK_USED_SLICES;
+inline constexpr bool prep_fused_max = OZAMX_PREP_FUSED_MAX;
+inline constexpr bool pack_nt_store = OZAMX_PACK_NT_STORE;
+inline constexpr bool paper_prep_fused_direct = OZAMX_PAPER_PREP_FUSED_DIRECT;
 inline constexpr unsigned cache_block = OZAMX_CACHE_BLOCK;
 inline constexpr unsigned prep_grain = OZAMX_PREP_GRAIN;
 inline constexpr unsigned min_compute_work = OZAMX_MIN_COMPUTE_WORK;

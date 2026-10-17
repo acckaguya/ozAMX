@@ -82,3 +82,17 @@
 
 # Private GitHub CLI configuration, if a local user chooses to keep it in-workspace
 /.github-cli-auth/
+
+# Local-only phase-2 experiment working sets and session traces (kept on disk, never pushed)
+/bench/8454h/paper_alignment/
+/trace/
+
+# Local-only audit raw data / process files (report MDs remain tracked)
+/docs/audit/evidence/
+/docs/audit/independent/run_*/
+/docs/audit/file_inventory.json.gz
+/docs/audit/DELIVERY_MANIFEST.sha256
+/docs/audit/SCHEDULED_RESUME.json
+/docs/audit/scheduled_resume.log
+/docs/audit/resume_in_five_hours.sh
+/docs/audit/RESUME_CHECKPOINT.md

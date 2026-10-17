@@ -3,6 +3,13 @@ project(ozamx VERSION 0.4.0 LANGUAGES C CXX ASM)
 
 option(OZAMX_ENABLE_OPENMP "Enable OpenMP parallel execution" ON)
 option(OZAMX_BUILD_PROBE "Build the standalone AMX instruction probe" ON)
+option(OZAMX_PAPER_ALIGNED "Use the paper's fixed 256 blocks, full slices and immediate FP64 reconstruction" ON)
+option(OZAMX_PAPER_LOCAL_STAGING "Copy component panels to worker-local buffers in the paper path" ON)
+option(OZAMX_PAPER_TASK_TEAMS "Limit paper-path teams to their independent panel tasks (experimental scheduling)" OFF)
+option(OZAMX_PAPER_PACK_USED_SLICES "Pack only the component slices a product budget reads (experimental prep)" OFF)
+option(OZAMX_PREP_FUSED_MAX "Collect the next FP64 global max while updating residuals (experimental prep, byte-identical output)" OFF)
+option(OZAMX_PACK_NT_STORE "Use non-temporal stores for the packed panel writes (experimental prep, byte-identical output)" OFF)
+option(OZAMX_PAPER_PREP_FUSED_DIRECT "Write BF16 components directly into the packed AMX panels on the paper path (experimental prep, byte-identical output)" OFF)
 
 set(OZAMX_CACHE_BLOCK 128 CACHE STRING "Output cache block: 32, 64, 128, 256")
 set(OZAMX_PREP_GRAIN 16384 CACHE STRING "Input elements per preprocessing worker")
@@ -18,6 +25,14 @@ foreach(knob CACHE_BLOCK PREP_GRAIN MIN_COMPUTE_WORK TILELOAD_HINT LOAD_SCHEDULE
   endif()
   list(APPEND OZAMX_TUNING_DEFINITIONS "OZAMX_${knob}=${OZAMX_${knob}}")
 endforeach()
+list(APPEND OZAMX_TUNING_DEFINITIONS
+  "OZAMX_PAPER_ALIGNED=$<BOOL:${OZAMX_PAPER_ALIGNED}>"
+  "OZAMX_PAPER_LOCAL_STAGING=$<BOOL:${OZAMX_PAPER_LOCAL_STAGING}>"
+  "OZAMX_PAPER_TASK_TEAMS=$<BOOL:${OZAMX_PAPER_TASK_TEAMS}>"
+  "OZAMX_PAPER_PACK_USED_SLICES=$<BOOL:${OZAMX_PAPER_PACK_USED_SLICES}>"
+  "OZAMX_PREP_FUSED_MAX=$<BOOL:${OZAMX_PREP_FUSED_MAX}>"
+  "OZAMX_PACK_NT_STORE=$<BOOL:${OZAMX_PACK_NT_STORE}>"
+  "OZAMX_PAPER_PREP_FUSED_DIRECT=$<BOOL:${OZAMX_PAPER_PREP_FUSED_DIRECT}>")
 
 add_library(ozamx STATIC src/runtime.cpp src/gemm.cpp src/kernels.S)
 target_include_directories(ozamx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -106,4 +121,8 @@ if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/validation.cpp")
   target_link_libraries(ozamx_alias_output_probe PRIVATE ozamx)
   target_compile_options(ozamx_alias_output_probe PRIVATE -march=sapphirerapids -ffp-contract=off)
   add_test(NAME ozamx_alias_output_probe COMMAND ozamx_alias_output_probe)
+  add_executable(ozamx_paper_alignment_probe tests/paper_alignment_probe.cpp)
+  target_link_libraries(ozamx_paper_alignment_probe PRIVATE ozamx)
+  target_compile_options(ozamx_paper_alignment_probe PRIVATE -O2 -ffp-contract=off)
+  add_test(NAME ozamx_paper_alignment_probe COMMAND ozamx_paper_alignment_probe)
 endif()

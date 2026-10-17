@@ -4,6 +4,8 @@
 
 论文方法、8454H架构、版本演进、精度差距、oneMKL对照、roofline搜索及冻结归档的完整梳理见 [项目总结](docs/PROJECT_SUMMARY.md)（截至2026年10月14日）。
 
+`codex/paper-alignment` 分支默认采用固定 256 宏块、宏块预处理、块内 staging 和 FP64 逐组件即时重建。实现范围、验证及性能达标状态见 [论文对齐实现](docs/PAPER_ALIGNED_IMPLEMENTATION.md)；此前的独立审查见 [综合审查报告](docs/audit/COMPREHENSIVE_REVIEW.md)。方法组织更接近论文不等于性能或 FP64 误差表已复现。
+
 自有源码采用统一缩进与换行，并在分片、打包、累加还原等关键处补充说明。排版约定、维护命令和本次核对结果见 [代码可读性说明](docs/CODE_READABILITY.md)。
 
 工作区中构建产物、实验记录与冻结包的保留规则，以及Git管理说明见 [工作区整理记录](docs/WORKSPACE_CLEANUP.md)。
@@ -24,9 +26,9 @@ OMP_NUM_THREADS=64 ctest --test-dir build --output-on-failure
 
 需要支持 Sapphire Rapids 的 GCC/binutils（本机验证 GCC 11.4）。公共运行时先检查 CPU、OS 扩展状态及 Linux 进程级 AMX 权限，然后进入目标架构内核；每个 worker 管理自己的 tile 状态。不支持的平台会报告错误。验证覆盖真实 AMX GEMM、所有产品预算、非整块尺寸、带 padding 的 stride、异常输入和输出保护。
 
-生产计算由 [src/kernels.S](src/kernels.S) 的手写 AMX 内核和 [src/preprocess.hpp](src/preprocess.hpp) 的 AVX-512 分片、VNNI 打包配合完成；[src/gemm.cpp](src/gemm.cpp) 使用向量累加、FP64 拓宽还原、边缘复制和分块调度。packed panels 按 32 级微块连续排列，工作缓冲按 64 字节对齐；K 累加块仍为 256，以保留数值顺序。工作区池在调用线程内复用，默认最多保留 2 GiB，可在进程启动前设置 `OZAMX_WORKSPACE_CACHE_BYTES=0` 禁用，或设为其他字节上限。 M/N 至少 1024 且 M/N/K 均为 256 倍数时，分片直接生成 AMX panels；FP64 同时复用 packed 顺序的残差。K≥4096 的 FP64 路径在完整私有输出块上检查非有限值，之后才写回 C。当前 V3 配置、最终 oneMKL 对照、搜索与验证见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md)。
+生产计算由 [src/kernels.S](src/kernels.S) 的手写 AMX 内核和 [src/preprocess.hpp](src/preprocess.hpp) 的 AVX-512 分片、VNNI 打包配合完成；[src/gemm.cpp](src/gemm.cpp) 使用向量累加、FP64 拓宽还原、边缘复制和分块调度。packed panels 按 32 级微块连续排列，工作缓冲按 64 字节对齐；K 累加块为 256，以保留数值顺序。工作区池在调用线程内复用，默认最多保留 2 GiB，可在进程启动前设置 `OZAMX_WORKSPACE_CACHE_BYTES=0` 禁用，或设为其他字节上限。默认论文路径先保存完整三片/六片，再打包；每个输出块完成后扫描非有限值，全部通过才提交 C。历史 V3 配置、最终 oneMKL 对照、搜索与验证见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md)。
 
-当前工作树的 CMake 项目版本为 0.4.0，含一项经验证的 CompactWide FP32 调度候选：仅当 `CACHE_BLOCK=128`、`min(M,N)≥4096`、`max(M,N)≤8192` 且 `4096≤K≤8192` 时使用 256×256 输出块；其他形状和 FP64 仍走既有调度。完整构建、数值/事务 gate、OpenMP 与 no-OpenMP 检查、matched V3 对照及独立 oneMKL 参考记录见 [当前主线验证报告](docs/8454H_V4_CURRENT_MAIN_VALIDATION.md)。V3 基线报告、正式 oneMKL 数据及历史 matched recheck 在 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md)；可重建源码、验证工件及生产库的冻结副本见 [V3 release archive](bench/8454h/versions/v3_release/README.md)。不可变的 [冻结 V2 release archive](bench/8454h/versions/v2_release/README.md) 和原始 [V2 source snapshot](bench/8454h/versions/v2/README.md) 保留作历史对照。[搜索日志](docs/8454H_ROOFLINE_SEARCH_LOG.md) 汇总取舍与 NUMA 负结果，[分层模型](docs/8454H_ROOFLINE_MODEL.md) 与[校准报告和图](docs/8454H_ROOFLINE_CALIBRATION.md) 给出实测 AMX、TILELOAD 和逻辑载荷参考。物理缓存层级/DRAM 流量 PMU 计数仍未测量。
+当前 CMake 项目版本为 0.4.0。`OZAMX_PAPER_ALIGNED=ON` 为本分支默认；设为 `OFF` 可构建原自适应调度作受控对照，原路径仍含此前有限域的 CompactWide FP32 优化。`OZAMX_PAPER_LOCAL_STAGING=OFF` 只在论文路径关闭局部面板复制，用于单变量实验。历史 V4 的构建、数值/事务 gate、matched V3 对照见 [V4 验证报告](docs/8454H_V4_CURRENT_MAIN_VALIDATION.md)，不能当作本分支的新测量。V3 历史数据和冻结副本见 [V3 Roofline 结果](docs/8454H_ROOFLINE_RESULTS.md) 与 [V3 release archive](bench/8454h/versions/v3_release/README.md)。不可变的 [冻结 V2 release archive](bench/8454h/versions/v2_release/README.md) 和 [V2 source snapshot](bench/8454h/versions/v2/README.md) 保留作历史对照。物理缓存层级/DRAM 流量 PMU 计数仍未测量。
 
 复现当前机器的前后比较，无需 oneMKL：
 
@@ -37,18 +39,18 @@ bash bench/run_8454h_baseline.sh --sizes 256,1024,4096 \
 
 runner 用同一计时驱动构建存档原版与新版，固定输入、CPU affinity 和线程设置，串行执行并保存每轮原始记录。独立机器微基准使用 `--hardware`。逐位等价验证方法见 [bench/8454h/](bench/8454h/)。
 
-本机当前可用 Intel oneMKL 2026.1，CMake 会从 `third_party/code/mkl-current` 自动查找头文件和运行库。以下是 V3 当前机器复现入口；所有结果使用 `bench/local-v3/` 的新前缀，不覆盖正式 campaign 工件：
+本机当前可用 Intel oneMKL 2026.1，CMake 会从 `third_party/code/mkl-current` 自动查找头文件和运行库。新 driver 使用完整 API headline、逐次 MKL 样本和同轮交替计时；新 checkpoint 绑定实际二进制、库与环境，拒绝旧版续跑。以下使用新前缀，不覆盖历史 campaign：
 
 ```sh
-mkdir -p bench/local-v3
+mkdir -p bench/local-paper
 LD_LIBRARY_PATH="$PWD/third_party/code/mkl-current/lib" \
 OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE \
 MKL_NUM_THREADS=64 MKL_DYNAMIC=FALSE MKL_THREADING_LAYER=GNU \
 OZAMX_WORKSPACE_CACHE_BYTES=2147483648 taskset -c 0-63 build/ozamx_benchmark \
   --sizes 256,1024,4096,8192 --threads 64 --reps 5 --precision all \
   --budgets 6,10,15,21 --seed 260904 --distribution uniform \
-  --checkpoint bench/local-v3/checkpoint \
-  --output bench/local-v3/results.csv
+  --checkpoint bench/local-paper/checkpoint \
+  --output bench/local-paper/results.csv
 ```
 
 命令对每个配置执行五次计时，另先执行一次 warm-up。它覆盖 FP32 p6 和 FP64 p6/p10/p15/p21，并记录 oneMKL GEMM、完整 ozAMX API 时间和精度指标。历史 Gold 6430 大规模 campaign 保存在 [历史复现结果](docs/REPRODUCTION_RESULTS.md) 与 [campaign runner](bench/run_remaining_campaign.sh) 中；其中的环境前缀和队列配置仅适用于当时的 campaign。
