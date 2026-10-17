@@ -85,6 +85,7 @@
 
 # Local-only phase-2 experiment working sets and session traces (kept on disk, never pushed)
 /bench/8454h/paper_alignment/
+/bench/8454h/strict_emulation/
 /trace/
 
 # Local-only audit raw data / process files (report MDs remain tracked)
