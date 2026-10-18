@@ -65,3 +65,10 @@ GNU ACTIVE 作为等待策略对照：N8192 FP32 约 0.1460 s，与 Intel 0.1432
 ## 原始产物
 
 本地 `/tmp/intel_omp_*`、`/tmp/gnu_*` CSV 和日志保留；未推送。分支只保存本报告和后续可复现 runner。
+
+## 尚未完成/已判无效
+
+- 小矩阵 N=256/512/1024 的 Intel runtime 对照有一轮出现了数倍差异，但测试窗口与另外的 benchmark 重叠，CPU 0–63 被并发占用，已判为**无效数据**，不能引用。
+- 小矩阵需要等 CPU 0–63 完全空闲后，重新做同进程三臂/交替进程对照；当前只能确认 GNU ACTIVE 与 Intel ACTIVE 都值得复测，不能宣称 Intel 有 5× 收益。
+- N=16384 p21 的 Intel 对照因 NUMA 尖刺未完成，不能给正式结论。
+- A1 的 N=32768 20 对补证属于 strict 优化工作，不在本 Intel 分支内；需要另开 strict tuning 分支完成。
