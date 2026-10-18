@@ -1,1 +1,0 @@
-taskset -c 0-63 /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/build/raw_bf16 --sizes 16384 --threads 64 --reps 10 --seed 260904 --output /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/results/raw_bf16_n16384.csv --checkpoint /home/caiweili/ozAMX/bench/8454h/v3_paper_alignment/checkpoints/raw_bf16_n16384.json --resume 

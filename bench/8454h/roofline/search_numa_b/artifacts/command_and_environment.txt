@@ -1,8 +1,0 @@
-Compiler command: g++ -std=c++17 -O3 -march=sapphirerapids -ffp-contract=off -fopenmp -I/tmp/ozamx-roof-numa-b/include <clone>/bench/optimization_benchmark.cpp <matching libozamx.a> -o <benchmark>
-Per-process argv: --sizes 4096,8192 --precision all --threads 64 --budgets 6,21 --reps 5 --output <raw CSV>
-CPU affinity: taskset -c 0-63
-OpenMP: OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE
-Workspace cache: OZAMX_WORKSPACE_CACHE_BYTES=4294967296
-NUMA locality: Linux syscall(SYS_getcpu,&cpu,&node,nullptr), once per copy worker and once per compute worker; CSV reports copy-team node 0/node 1/fallback worker counts per call.
-Run order: frozen_4g_a, control0_4g, numa1_4g_a, frozen_4g_b, numa1_4g_b, frozen_4g_c
-Measured rows: 1 warmup + 5 repetitions for each size/precision/budget; warmups are retained in raw CSV and excluded from comparison medians.

@@ -2,7 +2,7 @@
 
 日期：2026-10-16。本阶段只修改 `bench/benchmark.cpp` 与本文，不修改既有审计数据、计算公式或数学验收阈值。生产计算路径与 CMake 开关由主代理负责。
 
-命名边界：`paper-alignment-paired-api-v2-20261016`、`paper_protocol_and_identity_valid`、`paper_fp32_speedup_targets_all_met` 以及 `bench/8454h/paper_alignment/**` 是 2026-10-16 历史工件的原始标识，保留不改。后续新结果字段使用 `reference_protocol_and_identity_valid` 与 `figure7_fp32_speedups_all_met`。
+命名边界：`paper-alignment-paired-api-v2-20261016`、`paper_protocol_and_identity_valid`、`paper_fp32_speedup_targets_all_met` 以及 `历史本地 benchmark 工件（未纳入 clean 分支）` 是 2026-10-16 历史工件的原始标识，保留不改。后续新结果字段使用 `reference_protocol_and_identity_valid` 与 `figure7_fp32_speedups_all_met`。
 
 ## 完成的证据修复
 
@@ -103,11 +103,11 @@ N32实际GEMM、真实CSV公式重算、同身份续跑、改变环境/二进制
 - 逐模式八尺寸覆盖：`fp32_p6`、`fp64_p6/p10/p15/p21` 每个模式必须恰好覆盖 8 个尺寸；checkpoint 集合必须恰等于 40 配置；否则 exit 2。
 - 退出码语义：0=完整且 8 个 FP32 尺寸全部达到 Figure 7 点值；1=完整性通过但未达标；2=身份/协议/覆盖失败。
 - 报告原子写入（`.tmp` + rename），并记录 `reference_sha256`（本次 `58a480b8fb221b53022e7e6d278f746c723a8e61d088be4ecee07444046796d8`）与 `csv_sha256`。
-- 本次最终判定：`full_40_configuration_coverage=true`、`paper_protocol_and_identity_valid=true`、`issues=[]`、`notes=[]`、`paper_fp32_speedup_targets_all_met=false` → **exit 1**（完整但未达标）。分析器输出留存 `bench/8454h/paper_alignment/analyzer_main_passive_2g.log`。
+- 本次最终判定：`full_40_configuration_coverage=true`、`paper_protocol_and_identity_valid=true`、`issues=[]`、`notes=[]`、`paper_fp32_speedup_targets_all_met=false` → **exit 1**（完整但未达标）。分析器输出留存 `本地历史分析日志（未纳入 clean 分支）`。
 
 ### 负向夹具（`tools/test_analyzer_negative_fixtures.py`）
 
-只读复制 campaign 后逐项单点突变，要求 exit 2 且命中对应问题；`--require-complete-clean` 额外断言未突变副本 exit 0。2026-10-16 第二轮运行（日志 `bench/8454h/paper_alignment/analyzer_negative_fixtures.log`）：
+只读复制 campaign 后逐项单点突变，要求 exit 2 且命中对应问题；`--require-complete-clean` 额外断言未突变副本 exit 0。2026-10-16 第二轮运行（日志 `本地历史负向日志（未纳入 clean 分支）`）：
 
 | 夹具 | 突变 | 结果 |
 |---|---|---|

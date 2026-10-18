@@ -1,6 +1,6 @@
 # 三种 FP64 六层分解的原生 AMX 对照诊断
 
-本文描述历史 Gold 实验的数值诊断协议。下列构建命令已适配当前 SIMD/汇编实现；历史输入和诊断结果保持原样，当前机器的核心验收见 [8454H 基线](8454H_PERFORMANCE_BASELINE.md)。Python 导出器另外需要 NumPy。
+本文描述历史 Gold 实验的数值诊断协议。下列构建命令已适配当前 SIMD/汇编实现；历史输入和诊断结果保持原样，当前机器的核心验收见 [strict-emulation 实现与结果](STRICT_EMULATION_IMPLEMENTATION.md)。Python 导出器另外需要 NumPy。
 
 本诊断针对同一组 N=256 输入，分别导出论文字面 `rho=45`、直接 BF16 residual 舍入和诊断性 `rho=44` 的六层切片。后两者是数值假设对照，不归因于论文作者。它复用 `tools/native_kernel_audit.cpp` 所包含的私有 AMX panel kernel，逐个 component product 执行真实 AMX FP32 store，并按预算的对角线次序 widen、累加至 FP64。long-double 独立 dot 仅作参考，不代替 AMX 执行。
 

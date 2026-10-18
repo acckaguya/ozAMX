@@ -1,8 +1,8 @@
 # 严格模拟实现与性能验收记录
 
-分支：`codex/strict-emulation`（原 `codex/paper-alignment`）。起点：`b5523b1` 加用户原有注释/排版；原修改补丁保存在 `bench/8454h/paper_alignment/user_gemm_before.patch`，原未跟踪论文笔记保留。本阶段获得用户明确授权修改实现。此前只读审查的原始附件不覆盖。
+分支：`codex/strict-emulation`（原 `codex/paper-alignment`）。起点：`b5523b1` 加用户原有注释/排版；原修改补丁保存在 `历史本地补丁（未纳入 clean 分支）`，原未跟踪论文笔记保留。本阶段获得用户明确授权修改实现。此前只读审查的原始附件不覆盖。
 
-命名边界：活跃实现、文档和构建开关使用 strict-emulation 命名；`bench/8454h/paper_alignment/**`、`bench/8454h/v3_paper_alignment/**`、历史 `source_id`、旧 JSON 字段、旧工具名和旧临时库路径保留创建时名称，属于不可改写的历史工件。后续新结果字段使用 `reference_protocol_and_identity_valid` 与 `figure7_fp32_speedups_all_met`。
+命名边界：活跃实现、文档和构建开关使用 strict-emulation 命名；`历史本地 benchmark 工件（未纳入 clean 分支）`、`历史本地 V3 工件（未纳入 clean 分支）`、历史 `source_id`、旧 JSON 字段、旧工具名和旧临时库路径保留创建时名称，属于不可改写的历史工件。后续新结果字段使用 `reference_protocol_and_identity_valid` 与 `figure7_fp32_speedups_all_met`。
 
 2026-10-17 重新精读论文 §7–§8、Table 2–4、Figure 6–10 的协议核对与图表读数见本地（未推送）`trace/2026-10-17-paper-reread-experiments.md`。
 
@@ -39,7 +39,7 @@
 
 形状覆盖 `65×289×513`、`25×41×289`、`257×33×65`、`17×263×257`，包括两轴宏块边界、微块尾部、跨 BK 和非连续 leading dimension。四种 FP64 预算、C padding、输入保护全部检查；本例组件转换改变数为零，不泛化为所有输入的定理。
 
-已通过：默认 OpenMP 的四项 CTest；staging-off 的新全输出 probe；关闭 OpenMP 的四项 CTest。日志均在 `bench/8454h/paper_alignment/`。现有 alias/overflow/late 路径检查与新参考互相补充，不把原宽松误差门当作 Table4 验收。
+已通过：默认 OpenMP 的四项 CTest；staging-off 的新全输出 probe；关闭 OpenMP 的四项 CTest。日志均在 `本地历史测试日志（未纳入 clean 分支）`。现有 alias/overflow/late 路径检查与新参考互相补充，不把原宽松误差门当作 Table4 验收。
 
 新 benchmark 的 N32 五模式实跑、同身份恢复两套 raw 向量逐字相同，以及改变等待环境后的拒绝恢复均通过。详见 `benchmark_contract/summary.json` 和 [benchmark 专项说明](STRICT_EMULATION_BENCHMARK_REVIEW.md)。
 
@@ -66,11 +66,11 @@ Table4 是未披露输入的经验点，误差倍率单独报告，不用改容�
 
 ## 5. 当前已有的独立结果与限制
 
-最终版本（staging ON，`libozamx.a` SHA-256 `dfb8d08e…`，与正式 campaign 同库）通过独立审计程序的198次调用校验（180次计时、0例正确性失败、两项负控均被捕获）：N4096 普通输入 4.9526 有效TFLOP/s、SGEMM 6.1692、速度比 **0.803×**；dyadic 精确输入 5.1706 / 6.5362、0.791×（`bench/8454h/paper_alignment/independent_final/analysis.json`）。
+最终版本（staging ON，`libozamx.a` SHA-256 `dfb8d08e…`，与正式 campaign 同库）通过独立审计程序的198次调用校验（180次计时、0例正确性失败、两项负控均被捕获）：N4096 普通输入 4.9526 有效TFLOP/s、SGEMM 6.1692、速度比 **0.803×**；dyadic 精确输入 5.1706 / 6.5362、0.791×（`trace/2026-10-16-phase2-headline-results.md`）。
 
-staging 单变量同批对照（`bench/8454h/paper_alignment/matched_staging_*/matched_calls.json`，control=OFF、candidate=ON，输出逐字节一致）：FP32 N4096 比值 1.102、N8192 1.056（ON 更慢，属纯额外拷贝）；FP64 p6 为 1.012/1.012 约持平；p21 为 0.920/1.009，无稳定收益。严格模拟路径因此默认保留 staging（保真），OFF 仅作工程上限对照。
+staging 单变量同批对照（`trace/2026-10-16-phase2-headline-results.md`，control=OFF、candidate=ON，输出逐字节一致）：FP32 N4096 比值 1.102、N8192 1.056（ON 更慢，属纯额外拷贝）；FP64 p6 为 1.012/1.012 约持平；p21 为 0.920/1.009，无稳定收益。严格模拟路径因此默认保留 staging（保真），OFF 仅作工程上限对照。
 
-正式40配置 campaign（`bench/8454h/paper_alignment/main_passive_2g_20261016/`）已完整：达标检查器 `--require-figure7-speedups` 判定 exit 1——完整性/身份通过，FP32 完整API速度比 0.215/0.154/0.267/0.661/0.882/1.064/0.769/0.811（N=256…32768），全部未达论文Figure 7点值 2.56/2.17/1.70/1.39/1.14/1.16/1.25/1.32；FP64 eF 约为论文 p6/p10/p15 的 5.70/11.1/21.9 倍（只做比率，不设阈值）。完整表格、大N分配器空档与结论边界见 [RESULTS_20261016.md](strict_emulation/RESULTS_20261016.md)。没有对 Intel 工具链、频率或 PMU 计数作未经执行的声明；未修改系统全局设置。
+正式40配置 campaign（`trace/2026-10-16-phase2-headline-results.md`）已完整：达标检查器 `--require-figure7-speedups` 判定 exit 1——完整性/身份通过，FP32 完整API速度比 0.215/0.154/0.267/0.661/0.882/1.064/0.769/0.811（N=256…32768），全部未达论文Figure 7点值 2.56/2.17/1.70/1.39/1.14/1.16/1.25/1.32；FP64 eF 约为论文 p6/p10/p15 的 5.70/11.1/21.9 倍（只做比率，不设阈值）。完整表格、大N分配器空档与结论边界见 [RESULTS_20261016.md](strict_emulation/RESULTS_20261016.md)。没有对 Intel 工具链、频率或 PMU 计数作未经执行的声明；未修改系统全局设置。
 
 ## 6. 阶段 2：严格模拟配置内的性能搜索（2026-10-16）
 
@@ -113,7 +113,7 @@ FP64 对 DGEMM：p6 在 N=8192/16384/32768 为 **1.25/1.39/1.52**（N=4096 为 0
 
 ### 6.3 工件边界
 
-历史工件目录 `bench/8454h/paper_alignment/**`（campaign、arms、字节门、配对运行）与 `trace/**` 为本地工作产物，**不随分支推送**；阶段 2 的完整表格、尖刺清单与配对原始数据见本地 `trace/2026-10-16-phase2-headline-results.md`、`trace/2026-10-16-prep-fused-direct.md` 与对应 arms 目录。
+历史工件目录 `历史本地 benchmark 工件（未纳入 clean 分支）`（campaign、arms、字节门、配对运行）与 `trace/**` 为本地工作产物，**不随分支推送**；阶段 2 的完整表格、尖刺清单与配对原始数据见本地 `trace/2026-10-16-phase2-headline-results.md`、`trace/2026-10-16-prep-fused-direct.md` 与对应 arms 目录。
 
 ## 7. strict 布局优化：私有 FP64 block 64 B 行 padding（A1，2026-10-17）
 

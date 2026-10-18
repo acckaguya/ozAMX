@@ -1,6 +1,0 @@
-Compiler: g++ -std=c++17 -O3 -march=sapphirerapids -ffp-contract=off -fopenmp -I/tmp/ozamx-roof-numa-half/include, matching source-header ABI for control and candidate.
-Per-call: --sizes 4096,8192 --precision all --threads 64 --budgets 6,21 --reps 5 --output <CSV>
-CPU: taskset -c 0-63; OMP_NUM_THREADS=64 OMP_PLACES=cores OMP_PROC_BIND=close OMP_DYNAMIC=FALSE
-Cache: OZAMX_WORKSPACE_CACHE_BYTES=2147483648
-Order: frozen_2g_a, control0_2g, numa_half_2g_a, frozen_2g_b, numa_half_2g_b, frozen_2g_c
-Warmup: 1/config, retained in CSV and excluded from median; measured reps=5/config.

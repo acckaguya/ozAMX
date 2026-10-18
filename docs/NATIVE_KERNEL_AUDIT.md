@@ -1,6 +1,6 @@
 # AMX 原生乘积与面板验收
 
-本文最初记录 Gold 6430 上的诊断。2026-10-13 已用当前 8454H 的 tile-contiguous 打包及汇编内核复查，下列验收计数仍全部通过；当前源码 hash 与验证工件见 [validation_results.json](../bench/8454h/validation_results.json)。
+本文最初记录 Gold 6430 上的诊断。2026-10-13 已用当前 8454H 的 tile-contiguous 打包及汇编内核复查，下列验收计数仍全部通过；历史验证工件已从 clean 分支移除；当前源码 hash 以构建产物为准。
 
 本记录只检查 BF16 component dot 的原生 AMX 路径、VNNI packing、padding 和 FP64 重建顺序；它不替代端到端精度报告，也不证明所有 FP64 输入域均受支持。
 

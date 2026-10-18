@@ -1,5 +1,0 @@
-{
-  "status": "complete",
-  "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group1_fp64_n8192_b15/matched_calls.json",
-  "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/kernel_schedule_runs/kernel_schedule_20261014T142400Z/matched/group1_fp64_n8192_b15/metadata.json"
-}

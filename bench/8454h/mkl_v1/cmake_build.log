@@ -1,6 +1,0 @@
-Scanning dependencies of target ozamx
-[ 25%] Building CXX object CMakeFiles/ozamx.dir/src/gemm.cpp.o
-[ 50%] Building CXX object CMakeFiles/ozamx.dir/src/runtime.cpp.o
-[ 75%] Building ASM object CMakeFiles/ozamx.dir/src/kernels.S.o
-[100%] Linking CXX static library libozamx.a
-[100%] Built target ozamx

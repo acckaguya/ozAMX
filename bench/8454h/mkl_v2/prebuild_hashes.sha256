@@ -1,9 +1,0 @@
-bfef9e13aa628c54517d0ebcdf07ca874f9195b0d4ff5ebcf0935724046871ef  bench/8454h/mkl_v2/benchmark_v2.cpp
-fb6a13df2bd2e1c3611e856378ccf587a5ea422df66d3418e4a152ec6822c388  /tmp/ozamx-v2-candidate/CMakeLists.txt
-6c1e2635725914a52d010ea91eabeaff516c3f3311190f2e7d5dc7ab0dc6520d  /tmp/ozamx-v2-candidate/src/gemm.cpp
-74f8a0f2c650b52282ed6af4461e641cc0c3735a600a076fd87fcfedf1b803e5  /tmp/ozamx-v2-candidate/src/preprocess.hpp
-671f24332c1a69d7ecf8ead73bffbf5b12b9457766082fd122df1a6e37ee2a62  /tmp/ozamx-v2-candidate/src/kernels.S
-63a3df726c220dddd51dc1e962d1d2169c74722a4e9452b76a4d731a0c500774  /tmp/ozamx-v2-candidate/src/runtime.cpp
-f5e7cf65257476fe88aa31b5b27554f69af5fbb939d288625c0dedee8ef76071  /tmp/ozamx-v2-candidate/src/tuning.hpp
-adf0d236d1927d46802b4eeb0dde87932c148fbb2c254130fbffc99765aedc85  /tmp/ozamx-v2-candidate/build/libozamx.a
-61301679df0d1e6b231fd63e2c7d2b78a99d096615ed4e7d2ccd9da257f43d5e  /tmp/ozamx-v2-candidate/candidate

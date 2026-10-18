@@ -1,6 +1,6 @@
 # 复现规范：AMX 上以 BF16 component products 模拟 FP32/FP64 GEMM
 
-本文保留原论文复现的数值规范；下文实现和计时细节描述优化前版本。2026-10-13 的 8454H 优化保留产品顺序与 BK=256，更新了 SIMD 分片/打包、内存布局、调度、权限缓存和累加还原。当前实现与同机测量见 [8454H_PERFORMANCE_BASELINE.md](8454H_PERFORMANCE_BASELINE.md)。
+本文保留原论文复现的数值规范；下文实现和计时细节描述优化前版本。2026-10-13 的 8454H 优化保留产品顺序与 BK=256，更新了 SIMD 分片/打包、内存布局、调度、权限缓存和累加还原。当前实现与同机测量见 [strict-emulation 实现与结果](STRICT_EMULATION_IMPLEMENTATION.md)。
 
 ## 来源与实验对象
 
@@ -66,7 +66,7 @@ for r = 0..5:
 - 所有分片都预先分解、打包为 block-contiguous 缓冲。A split 平行处理 `(BM,BK)`；B split 和 VNNI packing 平行处理 `(BK,BN)`；计算对独立 `(BM,BN)` 输出块做 collapse/static 分派；一个输出块由一个线程独占，BK 面板顺序遍历。
 - FP32 loop nesting：对每个 BK=256 面板清零四个 C tiles；遍历 BK 内 32 个 K 值的子面板，对每个 K 子面板按 `11,10,20,00,01,02` 更新同一组驻留 C tiles；六产品链对 BK 内每个子面板重复。完成 256 reduction 后才 store 一次临时 32×32 FP32 微块、加进 thread-private 256×256 FP32 block。论文没有逐字给出嵌套循环伪码；本复现选择此 nesting 以匹配 §6.2/图4 宣称的跨产品 tile reuse 与 12→7 panel-load 计数；论文未明确给出完整 loop 伪码。
 - FP64 loop nesting（本复现的实现契约/工程选择）：对每个 BK=256 面板，按选中 product 顺序逐项处理；每项内部遍历该 BK 的所有 K 子面板，将这个单独 product 的 reduction 累加到 FP32 tiles；BK partial 完成后立即 store、FP32→FP64 转换并加入 private FP64 输出 block，然后再进入下一个 product。每个输出块的 BK panels 顺序执行。论文 Eq.(16) 是 full-K 组件积的数学抽象，文中未明确完整 BK panel loop；逐 BK partial widen/add 是本复现为限制 FP32 accumulation range而采用的 schedule，不应写成论文明确要求的唯一物理执行次序。
-- 本复现的 `load_config()`/`_tile_release()` 在每次调用的 compute 段内执行；该实现计时边界见 `REPRODUCTION_RESULTS.md`。论文只说明一次性 permission/config setup 不计 steady-state，没有给出逐调用/逐线程具体实现细节，不能把本复现的配置开销描述成作者原始行为。
+- 本复现的 `load_config()`/`_tile_release()` 在每次调用的 compute 段内执行；该实现计时边界见 `STRICT_EMULATION_IMPLEMENTATION.md`。论文只说明一次性 permission/config setup 不计 steady-state，没有给出逐调用/逐线程具体实现细节，不能把本复现的配置开销描述成作者原始行为。
 
 ## 论文实验协议
 

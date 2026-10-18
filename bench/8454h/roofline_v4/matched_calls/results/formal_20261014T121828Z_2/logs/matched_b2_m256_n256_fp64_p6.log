@@ -1,7 +1,0 @@
-command: /usr/bin/python3 /home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/run_matched.py --control-lib /home/caiweili/ozAMX/bench/8454h/versions/v3_release/artifacts/libozamx_v3.a --candidate-lib /home/caiweili/ozAMX/bench/8454h/roofline_v4/search_runs/screen_20261014_20261014T094029Z_retry2/builds/stage1_15_b2_m256_n256_p64_h1_l1__mode3_b2_m256_n256_p64_h1_l1/libozamx.a --candidate-tag b2_m256_n256_fp64_p6 --result-dir /home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p6 --sizes 1024 4096 8192 --reps 7 --warmups 1 --precision fp64 --lock-held --budget 6
-
-{
-  "status": "complete",
-  "journal": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p6/matched_calls.json",
-  "metadata": "/home/caiweili/ozAMX/bench/8454h/roofline_v4/matched_calls/results/formal_20261014T121828Z_2/b2_m256_n256/fp64_p6/metadata.json"
-}

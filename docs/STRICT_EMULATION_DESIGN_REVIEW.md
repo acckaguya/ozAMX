@@ -1,6 +1,6 @@
 # 严格模拟实现方案审查
 
-日期：2026-10-16。对象：`codex/strict-emulation` 后续实现工作。依据：本地论文§6（PDF/印刷pp.13–17）、§7（pp.17–19），[综合审查](audit/COMPREHENSIVE_REVIEW.md)、[论文概念审查](audit/PAPER_AND_CONCEPT_REVIEW.md)，以及公共头文件和 `gemm_impl` 调度/提交部分的定点阅读。本审查使用codebase-design的Module/Interface/Seam原则；未运行负载、未修改生产代码。
+日期：2026-10-16。对象：`codex/strict-emulation` 后续实现工作。依据：本地论文§6（PDF/印刷pp.13–17）、§7（pp.17–19），[strict 实现](STRICT_EMULATION_IMPLEMENTATION.md)、[论文研读](PAPER_STUDY.md)，以及公共头文件和 `gemm_impl` 调度/提交部分的定点阅读。本审查使用codebase-design的Module/Interface/Seam原则；未运行负载、未修改生产代码。
 
 ## 1. 首要决策
 
