@@ -8,7 +8,9 @@ option(OZAMX_STRICT_LOCAL_STAGING "Copy component panels to worker-local buffers
 option(OZAMX_RESEARCH_STAGING_PIPELINE "Research-only double-buffered panel staging; changes strict stage order and is not a strict-emulation default" OFF)
 option(OZAMX_PREP_SINGLE_REGION "Run the strict-emulation path split A and split B loops in one OpenMP parallel region" OFF)
 option(OZAMX_COMMIT_IN_COMPUTE "Commit the finished strict-emulation path result inside the compute parallel region" OFF)
-option(OZAMX_SINGLE_TASK_SERIAL "Run the strict-emulation path single-output-task compute/commit and one-panel splits without forking a team" OFF)
+option(OZAMX_SINGLE_TASK_COMPUTE "Run the strict-emulation path single-output-task compute/commit without forking a team" OFF)
+option(OZAMX_SINGLE_TASK_PREP_FP64 "Serialize FP64 single-panel decomposition before compute (legacy R2 prep gate)" OFF)
+option(OZAMX_SINGLE_TASK_SERIAL "Legacy alias enabling single-task compute and FP64 single-panel decomposition serialization" OFF)
 option(OZAMX_RESEARCH_TASK_TEAMS "Research-only team-size limiting to independent panel tasks; changes strict scheduling" OFF)
 option(OZAMX_RESEARCH_PACK_USED_SLICES "Research-only packing of just the budget slices; strict-emulation precomputes all slices" OFF)
 option(OZAMX_PREP_FUSED_MAX "Collect the next FP64 global max while updating residuals (experimental prep, byte-identical output)" OFF)
@@ -51,6 +53,8 @@ list(APPEND OZAMX_TUNING_DEFINITIONS
   "OZAMX_RESEARCH_STAGING_PIPELINE=$<BOOL:${OZAMX_RESEARCH_STAGING_PIPELINE}>"
   "OZAMX_PREP_SINGLE_REGION=$<BOOL:${OZAMX_PREP_SINGLE_REGION}>"
   "OZAMX_COMMIT_IN_COMPUTE=$<BOOL:${OZAMX_COMMIT_IN_COMPUTE}>"
+  "OZAMX_SINGLE_TASK_COMPUTE=$<BOOL:${OZAMX_SINGLE_TASK_COMPUTE}>"
+  "OZAMX_SINGLE_TASK_PREP_FP64=$<BOOL:${OZAMX_SINGLE_TASK_PREP_FP64}>"
   "OZAMX_SINGLE_TASK_SERIAL=$<BOOL:${OZAMX_SINGLE_TASK_SERIAL}>"
   "OZAMX_RESEARCH_TASK_TEAMS=$<BOOL:${OZAMX_RESEARCH_TASK_TEAMS}>"
   "OZAMX_RESEARCH_PACK_USED_SLICES=$<BOOL:${OZAMX_RESEARCH_PACK_USED_SLICES}>"

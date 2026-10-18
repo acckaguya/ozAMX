@@ -509,14 +509,15 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
 #endif
     const auto t2 = Clock::now();
     int bad = 0;
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL
     // Output-task gate: exactly one (mb,nb) block means the 64-thread compute
-    // region would fork a team for a single task. Run the identical body on
-    // the main thread instead (the orphaned `omp for` executes serially with a
-    // team of one); every other shape keeps the existing parallel region.
+    // region would fork a team for a single task. Run the identical body in an
+    // explicit team-of-one region instead; every other shape keeps the existing
+    // parallel region.
     const bool single_task = checked_mul(p.mblocks, p.nblocks) == 1;
-    // Small commits stay serial after the bad check (no commit region fork).
-    const bool small_commit = checked_mul(m, n) <= std::size_t(BM * BN);
+    // C1 keeps the small commit gate tied to the single-output-task path;
+    // N512/N1024 commits remain parallel unless a separate C2 threshold is used.
+    const bool small_commit = single_task;
 #endif
     // Shared compute body. `bad_ref` is the reduction-private copy inside the
     // parallel region and the plain accumulator on the single-task serial path;
@@ -639,26 +640,13 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
             }
         _tile_release();
     };
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL
     if (single_task) {
-        // Worker slot 0 mirrors what the old serialized inner region reported
-        // (the buffers are per-call, so concurrent callers never share them).
-        const int worker = 0;
-        int nested = 0;
-#ifdef _OPENMP
-        nested = omp_in_parallel();
-#endif
-        if (nested) {
-            // Called from inside an existing team: the orphaned worksharing
-            // loop would bind to that outer team, so bind it to a serialized
-            // inner region instead (if(false) forks no threads).
+        // Always provide a valid one-thread worksharing context. The previous
+        // path executed the orphaned `omp for` at top level, which is not a
+        // portable OpenMP construct (notably with Intel libiomp).
 #pragma omp parallel num_threads(1) if (false)
-            { compute_body(worker, bad); }
-        } else {
-            // Plain top-level call: no parallel region at all; the orphaned
-            // `omp for` executes serially with a team of one.
-            compute_body(worker, bad);
-        }
+        { compute_body(0, bad); }
     } else
 #endif
     {
@@ -678,7 +666,7 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
 #endif
             compute_body(worker, bad);
 #if OZAMX_COMMIT_IN_COMPUTE
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL
             if (!small_commit) {
 #endif
                 if (bad) {
@@ -691,7 +679,7 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
                     for (std::size_t i = 0; i < m; ++i)
                         copy_row(c + i * ldc, result.data() + i * n, n);
                 }
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL
             }
 #endif
 #endif
@@ -699,7 +687,7 @@ GemmTimings gemm_strict_emulation_impl(std::size_t m, std::size_t n, std::size_t
     }
     if (bad)
         throw Error("AMX component product or reconstructed output became non-finite");
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL
     if (small_commit) {
         for (std::size_t i = 0; i < m; ++i)
             copy_row(c + i * ldc, result.data() + i * n, n);

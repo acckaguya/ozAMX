@@ -537,19 +537,6 @@ inline void split_direct32(const float* src, std::size_t rows, std::size_t cols,
     int bad = 0;
     const auto chunks = mul(rows, divup(cols, 16));
     const int nt = team_size(threads, chunks);
-#if OZAMX_SINGLE_TASK_SERIAL
-    // R2: a side with exactly one 256x256 panel has no parallel work worth a
-    // 64-thread fork. The same loop body runs on the encountering thread in a
-    // serialized region (the loop carries a reduction, so it needs a parallel
-    // context; if(false) forks nothing).
-    if ((rows / 256) * (cols / 256) == 1) {
-#pragma omp parallel num_threads(1) if (false)
-        { split_direct32_loop(src, rows, cols, ld, output, is_a, panel_columns, bad); }
-        if (bad)
-            throw Error("FP32 input/residual is non-finite or outside the supported normal range");
-        return;
-    }
-#endif
 #if defined(__AVX512BW__)
 #pragma omp parallel num_threads(nt) if (chunks > 1)
     {
@@ -1071,7 +1058,7 @@ inline void split_packed_residual64(const double* src, std::size_t rows, std::si
                                                    : team_size(threads, divup(n, 8));
     double sigma = 0, global_max = 0, next_max = 0;
     int whole_zero = 0;
-#if OZAMX_SINGLE_TASK_SERIAL
+#if OZAMX_SINGLE_TASK_PREP_FP64 || OZAMX_SINGLE_TASK_SERIAL
     // R2: one 256x256 panel on this side -> same body, no team fork (the six
     // projection rounds, their barriers and criticals run with a team of one).
     if ((rows / 256) * (cols / 256) == 1) {

@@ -15,6 +15,12 @@
 #ifndef OZAMX_COMMIT_IN_COMPUTE
 #define OZAMX_COMMIT_IN_COMPUTE 0
 #endif
+#ifndef OZAMX_SINGLE_TASK_COMPUTE
+#define OZAMX_SINGLE_TASK_COMPUTE 0
+#endif
+#ifndef OZAMX_SINGLE_TASK_PREP_FP64
+#define OZAMX_SINGLE_TASK_PREP_FP64 0
+#endif
 #ifndef OZAMX_SINGLE_TASK_SERIAL
 #define OZAMX_SINGLE_TASK_SERIAL 0
 #endif
@@ -62,7 +68,8 @@ inline constexpr bool research_task_teams = OZAMX_RESEARCH_TASK_TEAMS;
 inline constexpr bool research_staging_pipeline = OZAMX_RESEARCH_STAGING_PIPELINE;
 inline constexpr bool prep_single_region = OZAMX_PREP_SINGLE_REGION;
 inline constexpr bool commit_in_compute = OZAMX_COMMIT_IN_COMPUTE;
-inline constexpr bool single_task_serial = OZAMX_SINGLE_TASK_SERIAL;
+inline constexpr bool single_task_compute = OZAMX_SINGLE_TASK_COMPUTE || OZAMX_SINGLE_TASK_SERIAL;
+inline constexpr bool single_task_prep_fp64 = OZAMX_SINGLE_TASK_PREP_FP64 || OZAMX_SINGLE_TASK_SERIAL;
 inline constexpr bool research_pack_used_slices = OZAMX_RESEARCH_PACK_USED_SLICES;
 inline constexpr bool prep_fused_max = OZAMX_PREP_FUSED_MAX;
 inline constexpr bool pack_nt_store = OZAMX_PACK_NT_STORE;
